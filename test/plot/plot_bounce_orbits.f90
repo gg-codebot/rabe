@@ -74,7 +74,7 @@ program plot_bounce_orbits
     ! call field%mock_field_3d_init(perturbed_field_2D)
     ! call field%get_iota(s_tor, iota)
 
-    call field%boozer_field_init(nc_file)
+    call field%init_from_vmec(nc_file)
     call field%fix_to_surface(s_tor)
     call field%get_iota(s_tor, iota)
 

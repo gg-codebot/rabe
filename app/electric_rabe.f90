@@ -117,7 +117,7 @@ program electric_rabe
     n_nu = size(nu_star)
     allocate (lambda_off(n_nu, n_Omega_hat))
 
-    call field%boozer_field_init(field_file, grid_refinement=6)
+    call field%init_from_vmec(field_file, grid_refinement=6)
     do this = 1, n_stor
         call field%fix_to_surface(s_tor(this))
         call field%get_iota(s_tor(this), iota)
@@ -250,7 +250,8 @@ program electric_rabe
                    call initialize_radial_drift_spline(grid%t, radial_drift_sin(idx, :))
                     call get_flux_mode(grid%t(1), grid%t(grid%n), flux_mode(idx))
                 end do
-        call get_g_modes_from_fieldlines(flock, l_c, g_off_modes, covariant_factor)
+                call get_g_modes_from_fieldlines(flock, l_c, g_off_modes, &
+                                                 covariant_factor)
         lambda_off_modes(:, id_nu, idx_Omega) = pi*g_off_modes%sin_coeffs*flux_mode/average%normalization
                lambda_off(id_nu, idx_Omega) = sum(lambda_off_modes(:, id_nu, idx_Omega))
 
@@ -349,7 +350,7 @@ program electric_rabe
 
 contains
 
-  subroutine get_g_modes_from_fieldlines(flock, l_c, g_off_modes, covariant_factor)
+    subroutine get_g_modes_from_fieldlines(flock, l_c, g_off_modes, covariant_factor)
         use fit_functions, only: S_A, S_B
         use fieldline_labels, only: allocate_modes
         type(flock_of_fieldlines_t), intent(in) :: flock

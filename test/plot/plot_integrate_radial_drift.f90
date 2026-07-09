@@ -37,7 +37,7 @@ program plot_integrate_radial_drift
 
     character(len=*), parameter :: nc_file = "input/wout_squid_20230921_v1_shifted.nc"
 
-    call field%boozer_field_init(nc_file, grid_refinement=5)
+    call field%init_from_vmec(nc_file, grid_refinement=5)
     call field%fix_to_surface(s_tor)
     call field%get_iota(s_tor, iota)
     call field%get_covariant_components(B_covariant_theta, B_covariant_phi)

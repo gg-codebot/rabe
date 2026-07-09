@@ -24,11 +24,11 @@ program test_trace_till_bounce
     real(dp), dimension(n_bounces, ndim_simple) :: z_bounce_ref
     logical :: test_failed
 
-    call bfield%boozer_field_init(nc_filename, &
-                                  radial_spline_order=5, &
-                                  angular_spline_order=5, &
-                                  grid_refinement=5, &
-                                  use_B_r_covariant=.false.)
+    call bfield%init_from_vmec(nc_filename, &
+                               radial_spline_order=5, &
+                               angular_spline_order=5, &
+                               grid_refinement=5, &
+                               use_B_r_covariant=.false.)
 
     test_failed = .false.
 
@@ -37,15 +37,15 @@ program test_trace_till_bounce
     call params_init(nfperiods=bfield%nfp, dtaumin_in=dtaumin_in)
     z_start = [0.5_dp, 6.2319269065015011_dp, 0.34860621153343652_dp, 1.0_dp, -0.1_dp, 0.0_dp, 0.0_dp]
 
-    z_bounce_ref(1, :) = [4.0419130794376634E-01, 6.0365708273104213E+00, &
-                          5.0430593251401215E+00, 1.0000000000000002E+00, &
-                          -2.7822181191809768E-21]
-    z_bounce_ref(2, :) = [4.0493842511538775E-01, 6.0434631646087142E+00, &
-                          1.7569417065699922E+00, 9.9999999999999989E-01, &
-                          2.1000115451565121E-21]
-    z_bounce_ref(3, :) = [4.0164172878932580E-01, 6.0610633762317665E+00, &
-                          4.8167018386562095E+00, 1.0000000000000000E+00, &
-                          -5.2359841756454391E-21]
+    z_bounce_ref(1, :) = [4.0419130794376634e-01, 6.0365708273104213e+00, &
+                          5.0430593251401215e+00, 1.0000000000000002e+00, &
+                          -2.7822181191809768e-21]
+    z_bounce_ref(2, :) = [4.0493842511538775e-01, 6.0434631646087142e+00, &
+                          1.7569417065699922e+00, 9.9999999999999989e-01, &
+                          2.1000115451565121e-21]
+    z_bounce_ref(3, :) = [4.0164172878932580e-01, 6.0610633762317665e+00, &
+                          4.8167018386562095e+00, 1.0000000000000000e+00, &
+                          -5.2359841756454391e-21]
 
     do i_bounce = 1, n_bounces
         call trace_orbit_till_bounce(z_start, z_end)
