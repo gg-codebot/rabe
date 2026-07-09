@@ -17,8 +17,6 @@ contains
         use field_along_fieldline, only: set_field_and_fieldline
         use field_along_fieldline, only: unset_field_and_fieldline
         use field_along_fieldline, only: B_mod_along_fieldline, dB_dphi_along_fieldline
-        use constants, only: eps
-
         class(field_t), intent(in) :: field
         real(dp), intent(in) :: N_tor, M_pol
         real(dp), intent(in), optional :: retol

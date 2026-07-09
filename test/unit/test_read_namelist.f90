@@ -1,8 +1,9 @@
 program test_read_namelist
-    use constants, only: dp, pi
+    use constants, only: dp
     use utils, only: not_same
     use read_file, only: read_namelist
     use read_file, only: field_file, &
+                         field_type, &
                          M_pol, &
                          N_tor, &
                          s_tor, &
@@ -23,6 +24,7 @@ program test_read_namelist
     logical :: test_failed
 
     character(len=*), parameter :: test_field_file = "test.nc"
+    character(len=*), parameter :: test_field_type = "booz_xform"
     real(dp), parameter :: test_M_pol = -1.0_dp
     real(dp), parameter :: test_N_tor = 2.0_dp
     real(dp), dimension(:), allocatable :: test_s_tor
@@ -37,6 +39,7 @@ program test_read_namelist
     allocate (test_s_tor, source=[0.25_dp, 0.5_dp])
     call write_test_file(test_file, &
                          test_field_file=test_field_file, &
+                         test_field_type=test_field_type, &
                          test_M_pol=test_M_pol, &
                          test_N_tor=test_N_tor, &
                          test_s_tor=test_s_tor, &
@@ -52,6 +55,13 @@ program test_read_namelist
         print *, "test_read_namelist failed: bc_filename"
         print *, "found: ", field_file
         print *, "expected: ", test_field_file
+        test_failed = .true.
+    end if
+    if (field_type /= test_field_type) then
+        print *, "-------------------------------------------------------------"
+        print *, "test_read_namelist failed: field_type"
+        print *, "found: ", trim(field_type)
+        print *, "expected: ", test_field_type
         test_failed = .true.
     end if
     if (not_same(M_pol, &
@@ -196,7 +206,8 @@ contains
                                test_sign_sqrtg, &
                                test_max_n_fieldlines, &
                                test_should_calc_shaing_callen, &
-                               test_n_eta)
+                               test_n_eta, &
+                               test_field_type)
 
         character(len=*), intent(in) :: filename
         character(len=*), intent(in), optional :: test_field_file
@@ -210,6 +221,7 @@ contains
         integer, intent(in), optional :: test_max_n_fieldlines
         logical, intent(in), optional :: test_should_calc_shaing_callen
         integer, intent(in), optional :: test_n_eta
+        character(len=*), intent(in), optional :: test_field_type
 
         integer :: unit
 
@@ -217,6 +229,9 @@ contains
         write (unit, "(A)") "&rabe_config"
         if (present(test_field_file)) then
             write (unit, "(A,A,A)") "field_file = '", test_field_file, "',"
+        end if
+        if (present(test_field_type)) then
+            write (unit, "(A,A,A)") "field_type = '", test_field_type, "',"
         end if
         if (present(test_M_pol)) then
             write (unit, "(A,F4.1,A)") "M_pol = ", test_M_pol, ","

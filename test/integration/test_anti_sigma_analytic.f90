@@ -6,7 +6,6 @@ program test_anti_sigma_analytic
     use surface_average_mod, only: surface_average_t, calc_surface_averages
     use fieldline_labels, only: fourier_transform_over_label
     use fieldline_labels, only: fieldline_modes_t
-    use utils, only: linspace
     use utils, only: not_same
     implicit none
 

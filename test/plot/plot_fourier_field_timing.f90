@@ -64,7 +64,7 @@ program plot_fourier_field_timing
         tmp_B = B_modes(k_mode); B_modes(k_mode) = B_modes(j); B_modes(j) = tmp_B
     end do
 
-    call bfield%boozer_field_init(nc_filename, &
+    call bfield%init_from_vmec(nc_filename, &
                                   radial_spline_order=5, &
                                   angular_spline_order=5, &
                                   grid_refinement=3)

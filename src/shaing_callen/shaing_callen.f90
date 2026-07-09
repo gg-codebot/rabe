@@ -71,6 +71,7 @@ contains
         integer :: n_eta, n_fieldlines
         real(dp) :: avg_well_length
         real(dp), dimension(:), allocatable :: avg_lambda_over_B_squared
+        real(dp), dimension(size(eta_grid)) :: fieldline_avg_loB2
 
         n_eta = size(eta_grid)
         n_fieldlines = size(flock%fieldlines)
@@ -79,8 +80,9 @@ contains
         avg_lambda_over_B_squared = 0.0_dp
         allocate (this_field, source=field)
         do this = 1, n_fieldlines
-            avg_lambda_over_B_squared = avg_lambda_over_B_squared + &
-                        calc_avg_lambda_over_B_squared(flock%fieldlines(this), eta_grid)
+            call calc_avg_lambda_over_B_squared(flock%fieldlines(this), eta_grid, &
+                                                fieldline_avg_loB2)
+            avg_lambda_over_B_squared = avg_lambda_over_B_squared + fieldline_avg_loB2
             avg_well_length = avg_well_length + &
                               flock%fieldlines(this)%phi_max(2) - &
                               flock%fieldlines(this)%phi_max(1)
@@ -102,8 +104,8 @@ contains
 
     end function calc_avg_B_squared_over_avg_lambda
 
-    function calc_avg_lambda_over_B_squared(fieldline, eta_grid) &
-        result(avg_lambda_over_B_squared)
+    subroutine calc_avg_lambda_over_B_squared(fieldline, eta_grid, &
+                                              avg_lambda_over_B_squared)
         use integrate_substituted, only: integrate_1d_substituted
         use shaing_callen_wrappers, only: wrapper_lambda_over_B_squared
         use shaing_callen_wrappers, only: this_eta, null_eta
@@ -111,7 +113,7 @@ contains
         use fieldline_mod, only: fieldline_t
         type(fieldline_t), intent(in) :: fieldline
         real(dp), dimension(:), intent(in) :: eta_grid
-        real(dp), dimension(size(eta_grid)) :: avg_lambda_over_B_squared
+        real(dp), dimension(:), intent(out) :: avg_lambda_over_B_squared
 
         integer :: this
 
@@ -128,7 +130,7 @@ contains
 
         this_fieldline = null_fieldline
 
-    end function calc_avg_lambda_over_B_squared
+    end subroutine calc_avg_lambda_over_B_squared
 
     !>
     !! \brief Preliminary proxy to estimate the deviation of Lambda_LC from the
@@ -214,6 +216,7 @@ contains
         real(dp), dimension(size(flock%fieldlines)) :: w_l, phi_l, xi_0, B_l
         real(dp), dimension(size(flock%fieldlines)) :: dphimax_dxi0
         real(dp), dimension(size(eta_grid)) :: lambda_l
+        real(dp), dimension(size(eta_grid)) :: fieldline_avg_loB2
         real(dp) :: M_pol, nfp
         integer :: this, that
 
@@ -230,9 +233,9 @@ contains
             do that = 1, size(eta_grid)
                 lambda_l(that) = sqrt(calc_lambda_squared(B_l(this), eta_grid(that)))
             end do
-            res = res + &
-                  calc_avg_lambda_over_B_squared(flock%fieldlines(this), eta_grid)* &
-                  dphimax_dxi0(this)/lambda_l
+            call calc_avg_lambda_over_B_squared(flock%fieldlines(this), eta_grid, &
+                                                fieldline_avg_loB2)
+            res = res + fieldline_avg_loB2*dphimax_dxi0(this)/lambda_l
         end do
         deallocate (this_field)
         res = res/sum(flock%fieldlines%integral_one_over_B_squared)

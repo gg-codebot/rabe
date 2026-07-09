@@ -1,5 +1,4 @@
 program plot_deviation_poloidal_anti_sigma
-    use myplot_module, only: myplot
     use constants, only: dp, pi
     use utils, only: linspace
     use anti_sigma_field, only: anti_sigma_field_t

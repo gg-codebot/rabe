@@ -1,6 +1,7 @@
 program test_handle_multiple_maxima
     use constants, only: dp
     use make_fieldline, only: maxima_t, pick_maximum_on_each_side
+    use utils, only: not_same
     use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
 
     implicit none
@@ -18,7 +19,7 @@ contains
         character(len=*), intent(in) :: label
         real(dp), intent(in) :: phi_max(2), expected(2)
 
-        if (any(phi_max /= expected)) then
+        if (not_same(phi_max, expected)) then
             print *, "-------------------------------------------------------------"
             print *, "FAILED: ", label
             print *, "phi_max(1): got ", phi_max(1), " expected ", expected(1)
@@ -31,7 +32,7 @@ contains
         character(len=*), intent(in) :: label
         real(dp), intent(in) :: phi_max_error(2), expected(2)
 
-        if (any(phi_max_error /= expected)) then
+        if (not_same(phi_max_error, expected)) then
             print *, "-------------------------------------------------------------"
             print *, "FAILED: ", label
             print *, "phi_max_error(1): got ", phi_max_error(1), &

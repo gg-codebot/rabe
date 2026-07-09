@@ -1,5 +1,4 @@
 program plot_helical_anti_sigma_small_aspect
-    use myplot_module, only: myplot
     use constants, only: dp, pi
     use utils, only: linspace
     use anti_sigma_field, only: anti_sigma_field_t

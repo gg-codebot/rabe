@@ -217,9 +217,11 @@ contains
         real(dp), dimension(4) :: phi_limits, theta_limits
         integer, parameter :: n_points = 300
         real(dp), dimension(n_points) :: phi, theta
-        real(dp), dimension(n_points, n_points) :: B_mesh
+        real(dp), dimension(:, :), allocatable :: B_mesh
         integer :: theta_idx, phi_idx
         character(len=100) :: label
+
+        allocate (B_mesh(n_points, n_points))
 
         n_fieldlines = size(fieldlines)
 
@@ -288,9 +290,11 @@ contains
         real(dp), dimension(n_points) :: phi, theta
         real(dp), dimension(n_points) :: chi, xi
         real(dp) :: phi_temp, theta_temp
-        real(dp), dimension(n_points, n_points) :: B_mesh
+        real(dp), dimension(:, :), allocatable :: B_mesh
         integer :: xi_idx, chi_idx
         character(len=100) :: label
+
+        allocate (B_mesh(n_points, n_points))
 
         n_fieldlines = size(fieldlines)
 
@@ -441,10 +445,12 @@ contains
         real(dp) :: phi_range
         real(dp), dimension(2) :: phi_ends, theta_ends
         real(dp), dimension(n_points) :: phi, theta
-        real(dp), dimension(n_points, n_points) :: drift_mesh
+        real(dp), dimension(:, :), allocatable :: drift_mesh
         integer :: theta_idx, phi_idx
         character(len=100) :: label, title
         character(len=*), parameter :: cmap = "coolwarm"
+
+        allocate (drift_mesh(n_points, n_points))
 
         write (title, "(A,F4.2)") "Local radial drift for $\eta=$", eta
 

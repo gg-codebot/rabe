@@ -42,7 +42,7 @@ contains
                 n(idx) = i_n
             end do
         end do
-        n = n*field%nfp
+        n = n*nint(field%nfp)
 
         allocate (rmnc(number_of_modes))
         allocate (zmns(number_of_modes))

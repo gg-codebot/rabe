@@ -3,6 +3,8 @@ module boozer_field
     use constants, only: dp
     use field_base, only: field_3D_t
     use boozer_sub, only: get_boozer_coordinates, splint_boozer_coord
+    use boozer_chartmap, only: load_boozer_from_chartmap
+    use boozmn_reader, only: load_boozer_from_boozmn
 
     implicit none
     private
@@ -14,14 +16,25 @@ module boozer_field
 
     public :: boozer_field_t
 
+    !>
+    !! \brief Field in Boozer coordinates, loadable from several file formats.
+    !!
+    !! \details Call one init_from_* loader, then fix_to_surface before any
+    !! evaluation. Only one Boozer field can be active at a time (singleton —
+    !! the splines live in module-global state). Calling a loader a second
+    !! time aborts.
+    !<
     type, extends(field_3D_t) :: boozer_field_t
+        logical :: initialized = .false.
         logical :: fixed_to_surface = .false.
         real(dp) :: fixed_stor
         real(dp) :: nfp
         real(dp) :: psi_tor_edge
         real(dp) :: R
     contains
-        procedure :: boozer_field_init
+        procedure :: init_from_vmec
+        procedure :: init_from_boozmn
+        procedure :: init_from_chartmap
         procedure :: evaluate
         procedure :: get_iota
         procedure :: get_covariant_components
@@ -36,22 +49,18 @@ module boozer_field
 contains
 
     !>
-    !! \brief Load Boozer-coordinate splines from a VMEC netCDF file.
+    !! \brief Load Boozer-coordinate splines from a VMEC wout netCDF file.
     !!
-    !! \details Call boozer_field_init to load, then fix_to_surface before any evaluation.
-    !! Only one Boozer field can be active at a time (singleton — the splines are
-    !! stored in module-global state). Calling boozer_field_init a second time aborts.
-    !! Reasonable defaults: radial_spline_order=5, angular_spline_order=5, grid_refinement=6.
+    !! \details Reasonable defaults: radial_spline_order=5,
+    !! angular_spline_order=5, grid_refinement=6.
     !!
     !! \param[in] vmec_file path to VMEC .nc file
     !<
-    subroutine boozer_field_init(self, vmec_file, &
-                                 radial_spline_order, &
-                                 angular_spline_order, &
-                                 grid_refinement, &
-                                 use_B_r_covariant)
-        use vector_potentail_mod, only: torflux
-        use new_vmec_stuff_mod, only: nper, rmajor
+    subroutine init_from_vmec(self, vmec_file, &
+                              radial_spline_order, &
+                              angular_spline_order, &
+                              grid_refinement, &
+                              use_B_r_covariant)
         use boozer_coordinates_mod, only: use_B_r
         class(boozer_field_t), intent(inout) :: self
         character(len=*), intent(in) :: vmec_file
@@ -60,10 +69,7 @@ contains
         integer, intent(in), optional :: grid_refinement
         logical, intent(in), optional :: use_B_r_covariant
 
-        if (initialized) error stop &
-            "boozer_field_init: a Boozer field is already loaded; "// &
-            "only one can be active at a time (singleton)."
-
+        call assert_no_active_field("init_from_vmec")
         if (present(use_B_r_covariant)) then
             use_B_r = use_B_r_covariant
         else
@@ -73,11 +79,59 @@ contains
                                     radial_spline_order, &
                                     angular_spline_order, &
                                     grid_refinement)
+        call finish_init(self)
+
+    end subroutine init_from_vmec
+
+    !>
+    !! \brief Load Boozer-coordinate splines from a booz_xform boozmn netCDF file.
+    !!
+    !! \details The boozmn file fixes its own grid and spline orders.
+    !<
+    subroutine init_from_boozmn(self, boozmn_file)
+        class(boozer_field_t), intent(inout) :: self
+        character(len=*), intent(in) :: boozmn_file
+
+        call assert_no_active_field("init_from_boozmn")
+        call load_boozer_from_boozmn(boozmn_file)
+        call finish_init(self)
+
+    end subroutine init_from_boozmn
+
+    !>
+    !! \brief Load Boozer-coordinate splines from an extended chartmap netCDF file.
+    !!
+    !! \details The chartmap carries its own grid and spline orders.
+    !<
+    subroutine init_from_chartmap(self, chartmap_file)
+        class(boozer_field_t), intent(inout) :: self
+        character(len=*), intent(in) :: chartmap_file
+
+        call assert_no_active_field("init_from_chartmap")
+        call load_boozer_from_chartmap(chartmap_file)
+        call finish_init(self)
+
+    end subroutine init_from_chartmap
+
+    subroutine assert_no_active_field(caller)
+        character(len=*), intent(in) :: caller
+
+        if (initialized) error stop caller// &
+            ": a Boozer field is already loaded; "// &
+            "only one can be active at a time (singleton)."
+    end subroutine assert_no_active_field
+
+    subroutine finish_init(self)
+        use vector_potentail_mod, only: torflux
+        use new_vmec_stuff_mod, only: nper, rmajor
+        class(boozer_field_t), intent(inout) :: self
+
         self%psi_tor_edge = -torflux*cm2m**2.0_dp*gauss2tesla
         self%nfp = real(nper, dp)
         self%R = rmajor
         initialized = .true.
-    end subroutine boozer_field_init
+        self%initialized = .true.
+    end subroutine finish_init
 
     subroutine evaluate(self, x, bmod, sqrtg, bder, &
                         hcovar, hctrvr, hcurl)
@@ -92,7 +146,7 @@ contains
                     d2A_phi_dr2, d3A_phi_dr3, &
                     B_vartheta_B, dB_vartheta_B, d2B_vartheta_B, &
                     B_varphi_B, dB_varphi_B, d2B_varphi_B, &
-                    Bmod_B, B_r
+                    Bmod_B, sqrt_g_ss_B, B_r
         real(dp), dimension(3) :: dBmod_B, dB_r
         real(dp), dimension(6) :: d2Bmod_B, d2B_r
 
@@ -102,7 +156,7 @@ contains
 
         if (.not. initialized) then
             error stop "boozer_field_evaluate: field not initialized. "// &
-                "Call boozer_field_init first!"
+                "Call an init_from_* loader first!"
         end if
 
         r = x(1)
@@ -119,7 +173,8 @@ contains
                                  B_varphi_B, dB_varphi_B, &
                                  d2B_varphi_B, &
                                  Bmod_B, dBmod_B, d2Bmod_B, &
-                                 B_r, dB_r, d2B_r)
+                                 B_r, dB_r, d2B_r, &
+                                 sqrt_g_ss_B)
 
         aiota = -dA_phi_dr/dA_theta_dr
 
@@ -170,7 +225,7 @@ contains
         real(dp) :: B_vartheta_B, B_varphi_B
         real(dp) :: dB_vartheta_B, d2B_vartheta_B
         real(dp) :: dB_varphi_B, d2B_varphi_B
-        real(dp) :: Bmod_B, B_r
+        real(dp) :: Bmod_B, sqrt_g_ss_B, B_r
         real(dp), dimension(3) :: dBmod_B, dB_r
         real(dp), dimension(6) :: d2Bmod_B, d2B_r
 
@@ -183,7 +238,8 @@ contains
                                  B_varphi_B, dB_varphi_B, &
                                  d2B_varphi_B, &
                                  Bmod_B, dBmod_B, d2Bmod_B, &
-                                 B_r, dB_r, d2B_r)
+                                 B_r, dB_r, d2B_r, &
+                                 sqrt_g_ss_B)
 
         iota = -dA_phi_dr/dA_theta_dr
     end subroutine get_iota
@@ -204,7 +260,7 @@ contains
         real(dp) :: d2A_phi_dr2, d3A_phi_dr3
         real(dp) :: dB_vartheta_B, d2B_vartheta_B
         real(dp) :: dB_varphi_B, d2B_varphi_B
-        real(dp) :: Bmod_B, B_r
+        real(dp) :: Bmod_B, sqrt_g_ss_B, B_r
         real(dp), dimension(3) :: dBmod_B, dB_r
         real(dp), dimension(6) :: d2Bmod_B, d2B_r
 
@@ -220,7 +276,8 @@ contains
                                  B_phi_covariant, dB_varphi_B, &
                                  d2B_varphi_B, &
                                  Bmod_B, dBmod_B, d2Bmod_B, &
-                                 B_r, dB_r, d2B_r)
+                                 B_r, dB_r, d2B_r, &
+                                 sqrt_g_ss_B)
 
         B_phi_covariant = B_phi_covariant*cm2m*gauss2tesla
         B_theta_covariant = B_theta_covariant*cm2m*gauss2tesla
@@ -252,7 +309,9 @@ contains
 
         if (.not. self%fixed_to_surface) &
             error stop "compute_B_sqrtg_dB_dx: call fix_stor first"
-        x = [self%fixed_stor, theta, phi]
+        x(1) = self%fixed_stor
+        x(2) = theta
+        x(3) = phi
         call self%evaluate(x, B_mod, sqrtg, dlnB_dx, hcovar, &
                            hctrvr, hcurl)
         dB_dx = dlnB_dx*B_mod
@@ -268,7 +327,9 @@ contains
 
         if (.not. self%fixed_to_surface) &
             error stop "compute_B_and_dB_dx: call fix_stor first"
-        x = [self%fixed_stor, theta, phi]
+        x(1) = self%fixed_stor
+        x(2) = theta
+        x(3) = phi
         call self%evaluate(x, B_mod, dummy_sqrtg, dlnB_dx, hcovar, &
                            hctrvr, hcurl)
         dB_dx = dlnB_dx*B_mod
@@ -284,7 +345,9 @@ contains
 
         if (.not. self%fixed_to_surface) &
             error stop "compute_B_mod: call fix_stor first"
-        x = [self%fixed_stor, theta, phi]
+        x(1) = self%fixed_stor
+        x(2) = theta
+        x(3) = phi
         call self%evaluate(x, B_mod, dummy_sqrtg, dummy_dB_dx, &
                            hcovar, hctrvr, hcurl)
     end subroutine compute_B_mod

@@ -46,7 +46,7 @@ for m in flock_methods:
 
 # Methods on BoozerField
 boozer_methods = [
-    "boozer_field_init",
+    "init_from_vmec",
     "fix_to_surface",
     "get_iota",
 ]

@@ -50,7 +50,7 @@ contains
             r = 1.0_dp/(r - a)
         end do
 
-        p = p1*sign(1.0_dp, x); q = q1
+        p = merge(p1, -p1, x >= 0.0_dp); q = q1
     end subroutine rational_approx
 
 end module diophantine

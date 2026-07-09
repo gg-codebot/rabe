@@ -48,6 +48,7 @@ contains
         real(dp) :: x(n_coarse), value(n_coarse)
         real(dp), dimension(:, :), allocatable :: brackets
         real(dp), dimension(:), allocatable :: errors
+        real(dp) :: nan_value
         integer :: i, n_maxima
 
         call linspace(interval(1), interval(2), n_coarse, x)
@@ -59,11 +60,12 @@ contains
                 n_maxima = n_maxima + 1
         end do
 
+        nan_value = ieee_value(0.0_dp, ieee_quiet_nan)
         allocate (brackets(2, n_maxima))
         allocate (location(n_maxima))
-        location = ieee_value(location, ieee_quiet_nan)
+        location = nan_value
         allocate (errors(n_maxima))
-        errors = ieee_value(errors, ieee_quiet_nan)
+        errors = nan_value
 
         n_maxima = 0
         do i = 2, n_coarse - 1
@@ -112,15 +114,18 @@ contains
                 if (i_max == 1) then
                     err = x_sub(2) - x_sub(1)
                     if (cannot_resolve_at_edge(val_sub(1:2))) exit
-                    subinterval = [x_sub(1), x_sub(2)]
+                    subinterval(1) = x_sub(1)
+                    subinterval(2) = x_sub(2)
                 else if (i_max == n_refine) then
                     err = x_sub(n_refine) - x_sub(n_refine - 1)
                     if (cannot_resolve_at_edge(val_sub(n_refine - 1:n_refine))) exit
-                    subinterval = [x_sub(n_refine - 1), x_sub(n_refine)]
+                    subinterval(1) = x_sub(n_refine - 1)
+                    subinterval(2) = x_sub(n_refine)
                 else
                     err = x_sub(i_max + 1) - x_sub(i_max - 1)
                     if (cannot_resolve(val_sub(i_max - 1:i_max + 1))) exit
-                    subinterval = [x_sub(i_max - 1), x_sub(i_max + 1)]
+                    subinterval(1) = x_sub(i_max - 1)
+                    subinterval(2) = x_sub(i_max + 1)
                 end if
                 if (err <= machine_spacing) exit
                 if (err/bracket_width <= machine_eps) exit

@@ -1,11 +1,9 @@
 program test_I_integral_helical_anti_sigma
-    use myplot_module, only: myplot
     use constants, only: dp, pi
-    use utils, only: linspace, not_same
+    use utils, only: not_same
     use anti_sigma_field, only: anti_sigma_field_t
     use fieldline_mod, only: flock_of_fieldlines_t
     use make_fieldline, only: make_flock_of_fieldlines
-    use deviation, only: calc_deviation
 
     use plot_quantities, only: plot_fieldlines_over_field
     use plot_quantities, only: plot_delta_eta
@@ -25,11 +23,6 @@ program test_I_integral_helical_anti_sigma
                            (1.0_dp + 6.0_dp*abs(eps_0))
     real(dp), parameter :: B_max = B_0*(1.0_dp + abs(eps_0))
     real(dp), parameter :: delta_A_1 = 0.25_dp*eps_ratio*(1.0_dp + 6.0_dp*abs(eps_0))
-    real(dp), parameter :: psi_edge = abs(-0.28274_dp)/(2.0_dp*pi) !Tm^2
-    real(dp), parameter :: dr_dpsi = 1.0_dp/0.0661777_dp/psi_edge/100.0_dp
-    real(dp), parameter :: J_pol_over_N_tor = -4.0_dp*1e6
-    real(dp), parameter :: I_tor = 0.0_dp
-    real(dp), parameter :: R = 8.0_dp
     type(anti_sigma_field_t) :: field
     real(dp), dimension(2), parameter :: chi_max = [+pi, -pi]
 

@@ -3,7 +3,7 @@ program test_shaing_callen_against_quasi_symmetric
     use fieldline_mod, only: flock_of_fieldlines_t
     use make_fieldline, only: make_flock_from_labels
     use constants, only: dp, pi
-    use utils, only: linspace, not_same
+    use utils, only: linspace
 
     use test_shaing_callen_mod, only: test_trapped_fraction_against_qs
     use test_shaing_callen_mod, only: test_calc_avg_normalized_B_squared_dphimax_dxi0

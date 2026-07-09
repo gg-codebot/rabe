@@ -10,7 +10,6 @@ program test_fieldline
     !The minimum/maximum chi of a single mode field
     !-cos(chi) with chi = M*theta - N*phi
     real(dp), parameter :: chi_max = pi
-    real(dp), parameter :: chi_min = 0.0_dp
 
     ! B = B_0 + B_amplitude*cos(theta_mode*theta - phi_mode*phi)
     ! min at chi=0 (B=0.7), max at chi=pi (B=1.3)

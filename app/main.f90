@@ -1,9 +1,10 @@
 program main
     use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
-    use constants, only: dp, pi
+    use constants, only: dp
     use netcdf_mod, only: netcdf_t
     use read_file, only: read_namelist, &
                          field_file, &
+                         field_type, &
                          M_pol, &
                          N_tor, &
                          s_tor, &
@@ -73,7 +74,16 @@ program main
         allocate (remainder(n_stor))
     end if
 
-    call field%boozer_field_init(field_file, grid_refinement=6)
+    select case (trim(field_type))
+    case ('vmec_nc')
+        call field%init_from_vmec(field_file, grid_refinement=6)
+    case ('booz_xform')
+        call field%init_from_boozmn(field_file)
+    case ('chartmap')
+        call field%init_from_chartmap(field_file)
+    case default
+        error stop "main: unknown field_type"
+    end select
     do this = 1, n_stor
         call reset_failed_check_counter()
         call field%fix_to_surface(s_tor(this))

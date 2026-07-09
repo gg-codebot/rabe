@@ -41,8 +41,11 @@ rabe_lib (main static library)
 │                       compute_nabla_s, compute_B_sqrtg_dB_dx, compute_B_and_dB_dx,
 │                       get_covariant_components)
 ├── vmec_lib (src/vmec/)
-│   boozer_field.f90  - Concrete field_t from VMEC .nc files (type boozer_field_t)
-│   boozer_converter.F90 - VMEC-to-Boozer coordinate conversion
+│   boozer_field.f90  - Concrete field_t type boozer_field_t with one loader
+│                       per input format: init_from_vmec (VMEC wout),
+│                       init_from_boozmn (boozmn), init_from_chartmap
+│                       (extended chartmap); loaders live in libneo
+│                       (boozer_sub, boozer_chartmap, boozmn_reader)
 ├── fieldline_lib (src/fieldline/) — see src/fieldline/README.md
 │   fieldline.f90, fieldline_integrals.f90, fieldline_integrands.f90,
 │   fieldline_labels.f90, make_fieldline.f90, surface_average.f90
@@ -66,14 +69,16 @@ External dependencies: NetCDF-Fortran, libneo, quadpack.
 ### Application flow (`app/main.f90`)
 
 1. Read namelist configuration from `rabe.in`
-2. Initialize `boozer_field_t` from VMEC `.nc` file
+2. Select the `boozer_field_t` loader from `field_type` (`vmec_nc` ->
+   `init_from_vmec`, `booz_xform` -> `init_from_boozmn`, `chartmap` ->
+   `init_from_chartmap`) and initialize from the `.nc` file named by `field_file`
 3. Per flux surface: fix field, compute field lines, deviation factors, surface averages, optionally Shaing-Callen trapped fraction; if `unsafe_mode = .true.` and a sanity check fails, NaN-fill that surface's outputs instead of halting
 4. Write results to `rabe.nc` (NetCDF)
 
 ### Key derived types
 
 - `field_t` - Abstract base for magnetic field (in `field_base`)
-- `boozer_field_t` - Field from VMEC `.nc` files (in `boozer_field`), init with `boozer_field_init(vmec_file, ...)`
+- `boozer_field_t` - Field in Boozer coordinates (in `boozer_field`); load with `init_from_vmec(vmec_file, ...)`, `init_from_boozmn(boozmn_file)`, or `init_from_chartmap(chartmap_file)`
 - `fieldline_t` - Field line representation (in `fieldline_mod`)
 - `surface_average_t` - Surface-averaged quantities (in `surface_average_mod`)
 - `netcdf_t` - NetCDF output handle (in `netcdf_mod`)

@@ -1,12 +1,11 @@
 program test_pert_anti_sigma_analytic
-    use constants, only: dp, pi
+    use constants, only: dp
     use anti_sigma_field, only: anti_sigma_field_t
     use mock_perturbed_field, only: mock_perturbed_field_t
     use fieldline_mod, only: flock_of_fieldlines_t
     use make_fieldline, only: make_flock_of_fieldlines
     use fieldline_labels, only: fourier_transform_over_label
     use fieldline_labels, only: fieldline_modes_t
-    use utils, only: linspace
     use utils, only: not_same
 
     use plot_quantities, only: plot_delta_eta

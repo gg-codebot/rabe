@@ -17,7 +17,7 @@ SHOULD_CALC_SHAING_CALLEN = True
 N_ETA = 100
 
 field = BoozerField()
-field.boozer_field_init(
+field.init_from_vmec(
     FIELD_FILE, radial_spline_order=5, angular_spline_order=5, grid_refinement=6
 )
 print(f"R = {field.r}")

@@ -140,7 +140,8 @@ contains
 
         if (.not. self%initialized) &
             error stop "compute_B_and_dB_dx: fourier_field_t not initialized"
-        x = [theta, phi]
+        x(1) = theta
+        x(2) = phi
         call evaluate_splines_2d_der(self%spl, x, B_mod, dy)
         dB_dx(1) = 0.0_dp
         dB_dx(2) = dy(1)

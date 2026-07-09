@@ -22,7 +22,7 @@ program plot_fourier_field_accuracy
 
     integer, parameter :: n_check = 100
     real(dp) :: theta_check(n_check), phi_check(n_check)
-    real(dp) :: B_ref(n_check), dB_ref(n_check, 3)
+    real(dp) :: B_ref(n_check), dB_ref(3, n_check)
     real(dp) :: B_spl, dB_spl(3)
     real(dp) :: rnd, rel_err_B, rel_err_dB
     real(dp) :: ref_line_B(n_sweep), ref_line_dB(n_sweep)
@@ -59,7 +59,7 @@ program plot_fourier_field_accuracy
 
     do i = 1, n_check
         call hfield%compute_B_and_dB_dx(theta_check(i), phi_check(i), &
-                                        B_ref(i), dB_ref(i, :))
+                                        B_ref(i), dB_ref(:, i))
     end do
 
     do k = 1, n_sweep
@@ -76,8 +76,8 @@ program plot_fourier_field_accuracy
             call sfield%compute_B_and_dB_dx(theta_check(i), phi_check(i), &
                                             B_spl, dB_spl)
             rel_err_B = abs(B_spl - B_ref(i))/abs(B_ref(i))
-            rel_err_dB = maxval(abs(dB_spl(2:3) - dB_ref(i, 2:3)))/ &
-                         maxval(abs(dB_ref(i, 2:3)))
+            rel_err_dB = maxval(abs(dB_spl(2:3) - dB_ref(2:3, i)))/ &
+                         maxval(abs(dB_ref(2:3, i)))
             max_rel_err_B(k) = max(max_rel_err_B(k), rel_err_B)
             max_rel_err_dB(k) = max(max_rel_err_dB(k), rel_err_dB)
         end do

@@ -1,5 +1,4 @@
 program plot_anti_sigma
-    use myplot_module, only: myplot
     use constants, only: dp, pi
     use utils, only: linspace
     use anti_sigma_field, only: anti_sigma_field_t
@@ -18,8 +17,6 @@ program plot_anti_sigma
     type(mock_perturbed_field_t) :: perturbed_field
     real(dp), parameter :: B_max = B_0*(1.0_dp + abs(eps_0) + abs(eps_1)) + abs(B_pert)
     real(dp), parameter :: B_min = B_0*(1.0_dp - abs(eps_0) - abs(eps_1)) - abs(B_pert)
-
-    real(dp), parameter :: phi_tol = 8e-5
 
     real(dp), parameter :: iota = 1.0_dp
     integer, parameter :: n_eta = 100

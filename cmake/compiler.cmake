@@ -15,10 +15,10 @@ if(CMAKE_Fortran_COMPILER_ID MATCHES "GNU")
  " -finit-real=nan"
  " -Wall "
  " -Wextra "
- " -Warray-temporaries "
  " -Wconversion "
  " -fimplicit-none "
  " -Wno-unused-variable -Wno-unused-dummy-argument -Wno-unused-label "
+ " -Wno-do-subscript "
  " -Wshadow "
  " -Wno-external-argument-mismatch "  # GCC 15 bug
   )

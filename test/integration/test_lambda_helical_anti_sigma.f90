@@ -1,6 +1,6 @@
 program test_lambda_helical_anti_sigma
-    use constants, only: dp, pi
-    use utils, only: linspace, not_same
+    use constants, only: dp
+    use utils, only: not_same
     use anti_sigma_field, only: anti_sigma_field_t
     use fieldline_mod, only: fieldline_t, flock_of_fieldlines_t
     use make_fieldline, only: make_flock_of_fieldlines

@@ -24,3 +24,13 @@ add_executable(test_stellarator_symmetry_qa.x test_stellarator_symmetry_qa.f90)
 target_link_libraries(test_stellarator_symmetry_qa.x vmec_lib utils_lib)
 add_test(TestStellaratorSymmetryQA test_stellarator_symmetry_qa.x)
 set_tests_properties(TestStellaratorSymmetryQA PROPERTIES LABELS "quick")
+
+add_executable(test_chartmap.x test_chartmap.f90)
+target_link_libraries(test_chartmap.x vmec_lib utils_lib)
+add_test(TestChartmap test_chartmap.x)
+set_tests_properties(TestChartmap PROPERTIES LABELS "quick")
+
+add_executable(test_booz_xform_signs.x test_booz_xform_signs.f90)
+target_link_libraries(test_booz_xform_signs.x vmec_lib utils_lib LIBNEO::boozer)
+add_test(TestBoozXformSigns test_booz_xform_signs.x)
+set_tests_properties(TestBoozXformSigns PROPERTIES LABELS "quick")

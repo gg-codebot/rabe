@@ -39,7 +39,7 @@ add_custom_command(
                 fourier_field_t
                 fourier_field_init
                 boozer_field_t
-                boozer_field_init
+                init_from_vmec
                 fix_to_surface
                 get_iota
                 get_covariant_components

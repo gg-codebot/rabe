@@ -6,6 +6,7 @@ module read_file
     implicit none
 
     character(len=100), public, protected :: field_file
+    character(len=20), public, protected :: field_type
     real(dp), public, protected :: M_pol
     real(dp), public, protected :: N_tor
     real(dp), dimension(:), allocatable, public, protected :: s_tor
@@ -22,6 +23,7 @@ module read_file
 
     namelist /rabe_config/ &
         field_file, &
+        field_type, &
         M_pol, &
         N_tor, &
         s_tor, &
@@ -64,6 +66,7 @@ contains
         nan_value = ieee_value(nan_value, ieee_quiet_nan)
 
         ! Default values
+        field_type = 'vmec_nc'
         unsafe_mode = .false.
         should_calc_shaing_callen = .false.
         n_eta = 100
@@ -134,6 +137,14 @@ contains
 
         if (len(trim(field_file)) == 0) then
             print *, "field_file is empty!"
+            is_valid = .false.
+        end if
+        if (len(trim(field_type)) == 0 .or. &
+            (trim(field_type) /= 'vmec_nc' .and. &
+             trim(field_type) /= 'booz_xform' .and. &
+             trim(field_type) /= 'chartmap')) then
+            print *, "field_type must be 'vmec_nc', 'booz_xform', or 'chartmap'"
+            is_valid = .false.
         end if
         if (ieee_is_nan(M_pol)) then
             print *, "M_pol is NaN!"

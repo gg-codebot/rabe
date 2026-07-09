@@ -27,7 +27,7 @@ program test_surface_area
     real(dp) :: dummy(4)
     integer :: i, j
 
-    call bfield%boozer_field_init(nc_filename, &
+    call bfield%init_from_vmec(nc_filename, &
                                   radial_spline_order=5, &
                                   angular_spline_order=5, &
                                   grid_refinement=3)
