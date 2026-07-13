@@ -15,78 +15,65 @@ module precession
 
     logical, parameter :: ignore_magnetic_drift = .true.
 
+    type :: bounce_integrals_t
+        real(dp) :: M_pol, N_tor, nfp, iota
+        real(dp), dimension(:), allocatable :: t, eta
+        real(dp), dimension(:), allocatable :: avg_I_j
+        real(dp), dimension(:), allocatable :: avg_bounce_time_weighted
+        real(dp), dimension(:), allocatable :: avg_magnetic_drift_weighted
+        real(dp), dimension(:, :), allocatable :: radial_drift_sin
+        integer :: n_modes
+    end type bounce_integrals_t
+
 contains
 
-    subroutine compute_precession_correction(field, flock, &
-                                             l_c, Omega_hat, s_tor, &
-                                             correction, flux_modes_out)
+    subroutine setup_bounce_integrals(field, flock, s_tor, bounce_integrals)
         use field_instance, only: initialize_field_instance
         use fourier, only: real_ft
-        use surface_average_mod, only: calc_surface_averages
-        use surface_average_mod, only: surface_average_t
-        use splines_instance, only: initialize_splines
-        use splines_instance, only: initialize_prefactor
-        use splines_instance, only: initialize_radial_drift_spline
-        use splines_instance, only: get_flux_mode
-        use splines_instance, only: initialize_startup
         class(field_3D_t), intent(in) :: field
         type(flock_of_fieldlines_t), intent(in) :: flock
-        real(dp), intent(in) :: l_c
-        real(dp), intent(in) :: Omega_hat
         real(dp), intent(in) :: s_tor
-        real(dp), intent(out) :: correction
-        real(dp), dimension(:), allocatable, intent(out), optional :: flux_modes_out
+        type(bounce_integrals_t), intent(out) :: bounce_integrals
 
         type(fieldline_for_precession_t), dimension(:), allocatable :: fieldlines
-        real(dp) :: phi_bottom, B_bottom, lowest_B_max, eta_t, eta_c
+        real(dp) :: eta_t, eta_c
         type(integration_grid_t) :: grid
 
         real(dp), dimension(:, :), allocatable :: radial_drift_weighted
         real(dp), dimension(:, :), allocatable :: radial_drift_cos
-        real(dp), dimension(:, :), allocatable :: radial_drift_sin
-        real(dp), dimension(:), allocatable :: bounce_time_weighted
-        real(dp), dimension(:), allocatable :: I_j
-        real(dp), dimension(:), allocatable :: poloidal_drift_weighted
-        real(dp), dimension(:), allocatable :: electric_drift_weighted
-        real(dp), dimension(:), allocatable :: magnetic_drift_weighted
-
-        real(dp), dimension(:), allocatable :: flux_mode
-        real(dp) :: M_pol, N_tor, nfp, iota
-        real(dp) :: mode_factor
-        type(surface_average_t) :: average
 
         integer :: n_fieldlines
-        integer :: n_modes
         integer :: idx
 
         n_fieldlines = size(flock%fieldlines)
         allocate (fieldlines(n_fieldlines))
         fieldlines%fieldline_t = flock%fieldlines
 
-        M_pol = flock%M_pol
-        N_tor = flock%N_tor
-        nfp = flock%nfp
-        iota = flock%iota
-        fieldlines%M_pol = M_pol
-        fieldlines%N_tor = N_tor
-        fieldlines%nfp = nfp
-        if (ieee_is_nan(M_pol)) then
-            print *, "M_pol: ", M_pol
+        bounce_integrals%M_pol = flock%M_pol
+        bounce_integrals%N_tor = flock%N_tor
+        bounce_integrals%nfp = flock%nfp
+        bounce_integrals%iota = flock%iota
+        fieldlines%M_pol = bounce_integrals%M_pol
+        fieldlines%N_tor = bounce_integrals%N_tor
+        fieldlines%nfp = bounce_integrals%nfp
+        if (ieee_is_nan(bounce_integrals%M_pol)) then
+            print *, "M_pol: ", bounce_integrals%M_pol
             error stop "Error: M_pol is NaN."
         end if
-        if (ieee_is_nan(N_tor)) then
-            print *, "N_tor: ", N_tor
+        if (ieee_is_nan(bounce_integrals%N_tor)) then
+            print *, "N_tor: ", bounce_integrals%N_tor
             error stop "Error: N_tor is NaN."
         end if
-        if (ieee_is_nan(nfp)) then
-            print *, "nfp: ", nfp
+        if (ieee_is_nan(bounce_integrals%nfp)) then
+            print *, "nfp: ", bounce_integrals%nfp
             error stop "Error: nfp is NaN."
         end if
-        if (ieee_is_nan(iota)) then
-            print *, "iota: ", iota
+        if (ieee_is_nan(bounce_integrals%iota)) then
+            print *, "iota: ", bounce_integrals%iota
             error stop "Error: iota is NaN."
         end if
-        if (abs(M_pol*iota - N_tor) < machine_eps) then
+        if (abs(bounce_integrals%M_pol*bounce_integrals%iota - bounce_integrals%N_tor) &
+            < machine_eps) then
             print *, "Error-Resonant: M_pol*iota - N_tor must not be zero."
             error stop
         end if
@@ -99,79 +86,100 @@ contains
 
         call initialize_field_instance(field)
         allocate (radial_drift_weighted(n_fieldlines, grid%n))
-        allocate (bounce_time_weighted(grid%n))
-        allocate (I_j(grid%n))
-        allocate (magnetic_drift_weighted(grid%n))
-        allocate (electric_drift_weighted(grid%n))
-        bounce_time_weighted = 0.0_dp
-        I_j = 0.0_dp
-        magnetic_drift_weighted = 0.0_dp
+        allocate (bounce_integrals%avg_bounce_time_weighted(grid%n))
+        allocate (bounce_integrals%avg_I_j(grid%n))
+        allocate (bounce_integrals%avg_magnetic_drift_weighted(grid%n))
+        bounce_integrals%avg_bounce_time_weighted = 0.0_dp
+        bounce_integrals%avg_I_j = 0.0_dp
+        bounce_integrals%avg_magnetic_drift_weighted = 0.0_dp
         do idx = 1, n_fieldlines
             call compute_bounce_integrals(field, &
                                           fieldlines(idx), &
                                           s_tor, &
                                           fieldlines(idx)%grid)
             radial_drift_weighted(idx, :) = fieldlines(idx)%grid%radial_drift_weighted
-            bounce_time_weighted = bounce_time_weighted + &
-                                   fieldlines(idx)%grid%bounce_time_weighted
-            I_j = I_j + fieldlines(idx)%grid%I_j
-            magnetic_drift_weighted = magnetic_drift_weighted + fieldlines(idx)%grid%poloidal_drift_weighted
+            bounce_integrals%avg_bounce_time_weighted = &
+                bounce_integrals%avg_bounce_time_weighted + &
+                fieldlines(idx)%grid%bounce_time_weighted
+            bounce_integrals%avg_I_j = bounce_integrals%avg_I_j + &
+                                       fieldlines(idx)%grid%I_j
+            bounce_integrals%avg_magnetic_drift_weighted = &
+                bounce_integrals%avg_magnetic_drift_weighted + &
+                fieldlines(idx)%grid%poloidal_drift_weighted
         end do
         if (ignore_magnetic_drift) then
-            magnetic_drift_weighted = 0.0_dp
+            bounce_integrals%avg_magnetic_drift_weighted = 0.0_dp
         else
-            magnetic_drift_weighted = magnetic_drift_weighted/n_fieldlines
+            bounce_integrals%avg_magnetic_drift_weighted = &
+                bounce_integrals%avg_magnetic_drift_weighted/n_fieldlines
         end if
-        bounce_time_weighted = bounce_time_weighted/n_fieldlines
-        I_j = I_j/n_fieldlines
-        electric_drift_weighted = Omega_hat*bounce_time_weighted
-        allocate (poloidal_drift_weighted(grid%n))
-        poloidal_drift_weighted = magnetic_drift_weighted + electric_drift_weighted
+        bounce_integrals%avg_bounce_time_weighted = &
+            bounce_integrals%avg_bounce_time_weighted/n_fieldlines
+        bounce_integrals%avg_I_j = bounce_integrals%avg_I_j/n_fieldlines
 
-        n_modes = n_fieldlines/2 + 1
-        allocate (radial_drift_cos(n_modes, grid%n))
-        allocate (radial_drift_sin(n_modes, grid%n))
+        bounce_integrals%n_modes = n_fieldlines/2 + 1
+        allocate (radial_drift_cos(bounce_integrals%n_modes, grid%n))
+        allocate (bounce_integrals%radial_drift_sin(bounce_integrals%n_modes, grid%n))
         do idx = 1, grid%n
             call real_ft(fieldlines%xi_0, &
                          radial_drift_weighted(:, idx), &
                          radial_drift_cos(:, idx), &
-                         radial_drift_sin(:, idx))
+                         bounce_integrals%radial_drift_sin(:, idx))
         end do
 
-        call initialize_splines(grid%t, &
-                                grid%eta, &
-                                I_j, &
-                                poloidal_drift_weighted)
-
-        allocate (flux_mode(n_modes))
-        flux_mode(1) = 0.0_dp
-        do idx = 2, n_modes
-            mode_factor = 0.5_dp*real(idx - 1, dp)*l_c*nfp/(M_pol*iota - N_tor)
-            call initialize_prefactor(mode_factor)
-            call initialize_startup(grid%t, grid%eta, I_j, mode_factor)
-            call initialize_radial_drift_spline(grid%t, radial_drift_sin(idx, :))
-            call get_flux_mode(grid%t(1), grid%t(grid%n), flux_mode(idx))
-        end do
-
-        call calc_surface_averages(flock, average)
-        correction = pi*sum(flux_mode)/average%normalization
-
-        if (present(flux_modes_out)) then
-            flux_modes_out = flux_mode
-        end if
+        bounce_integrals%t = grid%t
+        bounce_integrals%eta = grid%eta
 
         deallocate (fieldlines)
         deallocate (radial_drift_weighted)
-        deallocate (bounce_time_weighted)
-        deallocate (I_j)
+        deallocate (radial_drift_cos)
+
+    end subroutine setup_bounce_integrals
+
+    subroutine compute_flux_modes(bounce_integrals, l_c, Omega_hat, flux_modes)
+        use splines_instance, only: initialize_splines
+        use splines_instance, only: initialize_prefactor
+        use splines_instance, only: initialize_radial_drift_spline
+        use splines_instance, only: get_flux_mode
+        use splines_instance, only: initialize_startup
+        type(bounce_integrals_t), intent(in) :: bounce_integrals
+        real(dp), intent(in) :: l_c
+        real(dp), intent(in) :: Omega_hat
+        real(dp), dimension(:), allocatable, intent(out) :: flux_modes
+
+        real(dp), dimension(:), allocatable :: poloidal_drift_weighted
+        real(dp), dimension(:), allocatable :: electric_drift_weighted
+        real(dp) :: mode_factor
+        integer :: idx
+
+        allocate (electric_drift_weighted(size(bounce_integrals%t)))
+        electric_drift_weighted = Omega_hat*bounce_integrals%avg_bounce_time_weighted
+        poloidal_drift_weighted = bounce_integrals%avg_magnetic_drift_weighted + &
+                                  electric_drift_weighted
+
+        call initialize_splines(bounce_integrals%t, &
+                                bounce_integrals%eta, &
+                                bounce_integrals%avg_I_j, &
+                                poloidal_drift_weighted)
+
+        allocate (flux_modes(bounce_integrals%n_modes))
+        flux_modes(1) = 0.0_dp
+        do idx = 2, bounce_integrals%n_modes
+            mode_factor = 0.5_dp*real(idx - 1, dp)*l_c*bounce_integrals%nfp/ &
+                 (bounce_integrals%M_pol*bounce_integrals%iota - bounce_integrals%N_tor)
+            call initialize_prefactor(mode_factor)
+            call initialize_startup(bounce_integrals%t, bounce_integrals%eta, &
+                                    bounce_integrals%avg_I_j, mode_factor)
+            call initialize_radial_drift_spline(bounce_integrals%t, &
+                                              bounce_integrals%radial_drift_sin(idx, :))
+            call get_flux_mode(bounce_integrals%t(1), &
+                          bounce_integrals%t(size(bounce_integrals%t)), flux_modes(idx))
+        end do
+
         deallocate (poloidal_drift_weighted)
         deallocate (electric_drift_weighted)
-        deallocate (magnetic_drift_weighted)
-        deallocate (radial_drift_cos)
-        deallocate (radial_drift_sin)
-        deallocate (flux_mode)
 
-    end subroutine compute_precession_correction
+    end subroutine compute_flux_modes
 
     function get_smallest_maximum(fieldlines) result(smallest_maximum)
         class(fieldline_t), dimension(:), intent(in) :: fieldlines
