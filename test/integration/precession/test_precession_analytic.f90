@@ -48,6 +48,15 @@ program test_precession_analytic
     real(dp) :: shift
     logical, dimension(:), allocatable :: is_barely_trapped
     logical, dimension(:), allocatable :: is_deeply_trapped
+    ! Achievable tolerances scale with the eta_tol window (fractional pitch
+    ! distance from each limit), from the neglected terms of the exact
+    ! pendulum result tau ~ (2/pi)*K(k), k^2 = (eta_t - eta)/(eta_t - eta_c):
+    !   deeply trapped (keeps 1 + k^2/4):  err ~ (9/64)*eta_tol^2,
+    !     floored at ~2e-4 by treating the metric weight 1/B as 1/B_min
+    !   barely trapped (leading log only): err ~ eta_tol/2
+    !     (eta_tol/4 from the dropped (k'^2/4)*(ln(4/k')-1) term,
+    !      doubled by the single-point shift fit)
+    ! => for eta_tol = 1e-2: deep ~2e-4, barely ~5e-3 (separate tolerances TODO)
     real(dp), parameter :: retol = -1e-8_dp, eta_tol = 1e-2_dp
     real(dp) :: eta_c, eta_t
 
