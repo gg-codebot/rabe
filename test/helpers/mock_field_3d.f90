@@ -8,6 +8,7 @@ module mock_field_3d
     type, extends(field_3D_t) :: mock_field_3d_t
         class(field_t), allocatable :: field_2D
         real(dp) :: psi_tor_edge = 1.0_dp
+        real(dp) :: iota = 1.0_dp
     contains
         procedure :: mock_field_3d_init
         procedure :: compute_B_sqrtg_dB_dx
@@ -89,6 +90,7 @@ contains
         real(dp), intent(out) :: bmod, sqrtg
         real(dp), intent(out) :: bder(3), hcovar(3), hctrvr(3), hcurl(3)
 
+        real(dp) :: B_vartheta, B_varphi
         real(dp) :: B_mod, dB_dx(3)
 
         if (any(ieee_is_nan(x))) then
@@ -101,13 +103,25 @@ contains
 
         bmod = B_mod
         bder = dB_dx/B_mod
-        hcovar = 0.0_dp
-        hcovar(3) = 1.0_dp
-        hctrvr = 0.0_dp
-        hctrvr(2) = 1.0_dp
-        hctrvr(3) = 1.0_dp
-        hcurl = 0.0_dp
-        sqrtg = self%psi_tor_edge/(B_mod*hcovar(3))
+        call self%get_covariant_components(B_vartheta, B_varphi)
+        ! covariant unit vector consistent with covariant components of B
+        hcovar(1) = 0.0_dp ! choice for mock field to have zero radial covariant
+        hcovar(2) = B_vartheta/B_mod
+        hcovar(3) = B_varphi/B_mod
+        ! contravariant unit vector consistent with Boozer relation
+        ! B_ctrvr_varphi = B_squared/(B_varphi + iota*B_vartheta)
+        ! and defintion of iota
+        hctrvr(1) = 0.0_dp
+        hctrvr(3) = B_mod/(B_varphi + self%iota*B_vartheta)
+        hctrvr(2) = self%iota*hctrvr(3)
+
+        sqrtg = self%psi_tor_edge/(B_mod*hctrvr(3))
+
+        ! as for the mock field dB/ds=0 and radial covariant component is zero
+        hcurl(1) = -(hcovar(3)*dB_dx(2) - hcovar(2)*dB_dx(3))/B_mod
+        hcurl(2) = 0.0_dp
+        hcurl(3) = 0.0_dp
+        hcurl = hcurl/sqrtg
 
         if (ieee_is_nan(bmod)) then
             print *, "bmod is NaN!"
