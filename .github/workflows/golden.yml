@@ -31,8 +31,6 @@ jobs:
           ldd --version | head -1
           cmake --version | head -1
           make --version | head -1
-          pkg-config --modversion netcdf
-          pkg-config --modversion netcdf-fortran
           python --version
         '
 

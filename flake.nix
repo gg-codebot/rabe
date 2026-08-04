@@ -9,16 +9,12 @@
     let
       systems = [ "x86_64-linux" ];
       forAll = f: nixpkgs.lib.genAttrs systems (s: f nixpkgs.legacyPackages.${s});
-      # Default stdenv on this pin is gcc 11, so netcdf-fortran's .mod files
-      # match the gfortran the project is built with.
       toolchain = pkgs: [
         pkgs.gfortran
         pkgs.cmake
         pkgs.gnumake
         pkgs.pkg-config
         pkgs.git
-        pkgs.netcdf
-        pkgs.netcdffortran
       ];
       # Python for the golden-record compare; only needed where the test runs.
       pyenv = pkgs: pkgs.python3.withPackages (ps: [ ps.xarray ps.numpy ps.netcdf4 ]);

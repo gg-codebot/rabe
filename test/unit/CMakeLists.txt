@@ -39,7 +39,6 @@ add_test(TestFitFunctions test_fit_functions.x)
 set_tests_properties(TestFitFunctions PROPERTIES LABELS "quick")
 
 add_executable(test_netcdf.x test_netcdf.f90)
-target_include_directories(test_netcdf.x PRIVATE ${NetCDF_Fortran_INCLUDE_DIRS})
 target_link_libraries(test_netcdf.x utils_lib netcdf_lib)
 add_test(TestNetcdf test_netcdf.x)
 set_tests_properties(TestNetcdf PROPERTIES LABELS "quick")
