@@ -31,14 +31,12 @@ jobs:
           CIBW_ARCHS_LINUX: x86_64
           CIBW_MANYLINUX_X86_64_IMAGE: manylinux_2_28
           CIBW_BEFORE_ALL_LINUX: |
-            dnf install -y epel-release
-            dnf install -y netcdf-fortran-devel gcc-gfortran cmake
+            dnf install -y gcc-gfortran cmake
 
           CIBW_ARCHS_MACOS: auto
-          CIBW_BEFORE_ALL_MACOS: brew install gcc netcdf-fortran pkg-config
+          CIBW_BEFORE_ALL_MACOS: brew install gcc
           CIBW_ENVIRONMENT_MACOS: >-
             FC=$(brew --prefix)/bin/gfortran
-            PKG_CONFIG_PATH=$(brew --prefix)/lib/pkgconfig:$(brew --prefix netcdf-fortran)/lib/pkgconfig
             MACOSX_DEPLOYMENT_TARGET=${{ matrix.macos_target }}
 
           CIBW_TEST_COMMAND: >-

@@ -1,0 +1,29 @@
+name: flang smoke test
+
+# Runs nightly rather than on every push: LLVM/flang is still only secondary
+on:
+  schedule:
+    - cron: '0 3 * * *'
+  workflow_dispatch:
+
+jobs:
+  flang-smoke-test:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Install LLVM/flang
+      run: |
+        wget https://apt.llvm.org/llvm.sh
+        chmod +x llvm.sh
+        sudo ./llvm.sh 19
+        sudo apt-get install -y flang-19
+
+    - name: Configure with flang
+      env:
+        FC: flang-new-19
+      run: make
+
+    - name: Build and run tests
+      run: make test

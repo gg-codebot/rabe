@@ -1,7 +1,6 @@
 module integrate
     use constants, only: dp
     use, intrinsic :: ieee_arithmetic, only: ieee_is_nan
-    use quadpack_double, only: qag => dqag
 
     implicit none
 
@@ -20,6 +19,7 @@ module integrate
 contains
 
     subroutine integrate_1d(f, a, b, result)
+        use quadpack_double, only: qag => dqag
         procedure(integrand_i) :: f
         real(dp), intent(in) :: a, b
         real(dp), intent(out) :: result

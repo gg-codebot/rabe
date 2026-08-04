@@ -9,9 +9,9 @@ add_library(helpers_lib STATIC
   bc_file.f90
 )
 target_link_libraries(helpers_lib PRIVATE offset_lib
-                                          myplot_lib
                                           utils_lib
                                           field_lib
                                           vmec_lib
                                           fieldline_lib
-                                          shaing_callen_lib)
+                                          shaing_callen_lib
+                                          myplot_lib)

@@ -2,9 +2,6 @@ module boozer_field
 
     use constants, only: dp
     use field_base, only: field_t
-    use boozer_sub, only: get_boozer_coordinates, splint_boozer_coord
-    use boozer_chartmap, only: load_boozer_from_chartmap
-    use boozmn_reader, only: load_boozer_from_boozmn
 
     implicit none
     private
@@ -55,6 +52,7 @@ contains
                               angular_spline_order, &
                               grid_refinement)
         use boozer_coordinates_mod, only: use_B_r
+        use boozer_sub, only: get_boozer_coordinates
         class(boozer_field_t), intent(inout) :: self
         character(len=*), intent(in) :: vmec_file
             !! path to VMEC .nc file
@@ -76,6 +74,7 @@ contains
     !!
     !! The boozmn file fixes its own grid and spline orders.
     subroutine init_from_boozmn(self, boozmn_file)
+        use boozmn_reader, only: load_boozer_from_boozmn
         class(boozer_field_t), intent(inout) :: self
         character(len=*), intent(in) :: boozmn_file
 
@@ -89,6 +88,7 @@ contains
     !!
     !! The chartmap carries its own grid and spline orders.
     subroutine init_from_chartmap(self, chartmap_file)
+        use boozer_chartmap, only: load_boozer_from_chartmap
         class(boozer_field_t), intent(inout) :: self
         character(len=*), intent(in) :: chartmap_file
 
@@ -121,6 +121,7 @@ contains
     subroutine evaluate(self, x, bmod, sqrtg, bder, &
                         hcovar, hctrvr, hcurl)
         use vector_potentail_mod, only: torflux
+        use boozer_sub, only: splint_boozer_coord
         class(boozer_field_t), intent(in) :: self
         real(dp), intent(in) :: x(3)
         real(dp), intent(out) :: bmod, sqrtg
@@ -197,6 +198,7 @@ contains
     !> Return the rotational transform iota at flux surface stor.
     subroutine get_iota(self, stor, iota)
         use new_vmec_stuff_mod, only: nper
+        use boozer_sub, only: splint_boozer_coord
 
         class(boozer_field_t), intent(in) :: self
         real(dp), intent(in) :: stor
@@ -233,6 +235,7 @@ contains
     !!
     !! Requires fix_to_surface to have been called first.
     subroutine get_covariant_components(self, B_theta_covariant, B_phi_covariant)
+        use boozer_sub, only: splint_boozer_coord
         class(boozer_field_t), intent(in) :: self
 
         real(dp), intent(out) :: B_theta_covariant, B_phi_covariant
@@ -331,6 +334,7 @@ contains
     end subroutine compute_B_mod
 
     subroutine compute_nabla_s(self, theta, phi, nabla_s)
+        use boozer_sub, only: splint_boozer_coord
         class(boozer_field_t), intent(in) :: self
         real(dp), intent(in) :: theta, phi
         real(dp), intent(out) :: nabla_s

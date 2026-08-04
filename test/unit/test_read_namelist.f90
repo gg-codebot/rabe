@@ -240,7 +240,9 @@ contains
             write (unit, "(A,F4.1,A)") "N_tor = ", test_N_tor, ","
         end if
         if (present(test_s_tor)) then
-            write (unit, "(A,*(G0.3,1X),A)") "s_tor = ", test_s_tor, ","
+            write (unit, "(A)", advance="no") "s_tor = "
+            write (unit, "(*(G0.3,1X))", advance="no") test_s_tor
+            write (unit, "(A)") ","
         end if
         if (present(test_s_tor_min)) then
             write (unit, "(A,G0.3,A)") "s_tor_min = ", test_s_tor_min, ","

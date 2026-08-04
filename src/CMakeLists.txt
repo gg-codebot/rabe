@@ -12,7 +12,7 @@ target_link_libraries(read_file_lib PRIVATE utils_lib fieldline_lib)
 add_subdirectory(error_handling)
 add_subdirectory(utils)
 add_subdirectory(netcdf)
-add_subdirectory(vmec)
+add_subdirectory(vmec) # also provides the `interpolate` target via include(libneo)
 add_subdirectory(field)
 add_subdirectory(fieldline)
 add_subdirectory(offset)
@@ -23,11 +23,12 @@ target_link_libraries(rabe_lib INTERFACE
     git_version_lib
     read_file_lib
     utils_lib
-    netcdf_lib
     error_handling_lib
     field_lib
-    vmec_lib
+    fourier_field_lib
     fieldline_lib
     shaing_callen_lib
     offset_lib
+    netcdf_lib
+    vmec_lib
 )

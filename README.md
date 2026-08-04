@@ -55,23 +55,21 @@ boundary correction derived by Helander, Geiger and Maasberg [4].
 
 - Fortran compiler (gfortran)
 - CMake >= 3.24
-- [NetCDF-Fortran](https://github.com/Unidata/netcdf-fortran)
 
 On Debian/Ubuntu:
 
 ```bash
-sudo apt-get install gfortran cmake libnetcdf-dev libnetcdff-dev pkg-config
+sudo apt-get install gfortran cmake
 ```
 
 On macOS (Homebrew):
 
 ```bash
-brew install gfortran netcdf-fortran pkg-config
+brew install gfortran
 export FC=$(ls $(brew --prefix)/bin/gfortran-* | sort -V | tail -1)
-export PKG_CONFIG_PATH=$(brew --prefix)/lib/pkgconfig:$(brew --prefix netcdf-fortran)/lib/pkgconfig
 ```
 
-Make sure that `FC` and `PKG_CONFIG_PATH` point to your installed gfortran compiler and Netcdf-Fortran package, respectively.
+Make sure that `FC` points to your installed gfortran compiler.
 
 ## Example
 
@@ -139,7 +137,7 @@ As a wheel (no compiler required if a matching binary is available):
 pip install rabe
 ```
 
-Or directly from source (requires the same Fortran and NetCDF prerequisites
+Or directly from source (requires the same Fortran prerequisites
 listed under Prerequisites above):
 
 ```bash
@@ -310,14 +308,11 @@ By default the build fetches a pinned libneo commit. Two explicit options change
 
 ## Third Party
 
-System libraries required at build time:
-
-- [NetCDF-Fortran](https://github.com/Unidata/netcdf-fortran) for NetCDF output
-
 Fetched automatically during build:
 
 - [libneo](https://github.com/itpplasma/libneo) for field file I/O; pass `-DLIBNEO_PATH=<dir>` to use a local checkout instead (MIT)
 - [`quadpack`](https://github.com/jacobwilliams/quadpack) for numerical integration (BSD-3-Clause)
+- [`fortio`](https://github.com/lazy-fortran/fortio) for NetCDF input/output (MIT)
 - [`pyplot-fortran`](https://github.com/jacobwilliams/pyplot-fortran) optional for visualization; source and license under `plot_lib` (BSD-3-Clause)
 
 ## Citing

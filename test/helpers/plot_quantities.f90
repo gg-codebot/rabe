@@ -1,6 +1,5 @@
 module plot_quantities
     use constants, only: dp, pi
-    use myplot_module, only: myplot
     use fieldline_mod, only: fieldline_t, flock_of_fieldlines_t
     use utils, only: linspace
     use field_base, only: field_t
@@ -19,6 +18,7 @@ module plot_quantities
 contains
 
     subroutine plot_maxima_over_label(fieldlines, iota_p)
+        use myplot_module, only: myplot
         type(fieldline_t), dimension(:), intent(in) :: fieldlines
         real(dp), intent(in) :: iota_p
 
@@ -43,6 +43,7 @@ contains
 
     subroutine plot_field_along_chi_line(field, chi, M_pol, N_tor)
         use utils, only: linspace
+        use myplot_module, only: myplot
         class(field_t), intent(in) :: field
         real(dp), intent(in) :: chi, M_pol, N_tor
 
@@ -74,6 +75,7 @@ contains
     end subroutine plot_field_along_chi_line
 
     subroutine plot_spectra(flock)
+        use myplot_module, only: myplot
         type(flock_of_fieldlines_t), intent(in) :: flock
 
         type(fieldline_modes_t) :: modes
@@ -112,6 +114,7 @@ contains
 
     subroutine plot_deviation_spectrum(flock)
         use fit_functions, only: S_B
+        use myplot_module, only: myplot
         type(flock_of_fieldlines_t), intent(in) :: flock
 
         type(fieldline_modes_t) :: modes
@@ -151,6 +154,7 @@ contains
     end subroutine plot_deviation_spectrum
 
     subroutine plot_delta_eta_modes(flock)
+        use myplot_module, only: myplot
         type(flock_of_fieldlines_t), intent(in) :: flock
 
         type(fieldline_modes_t) :: fieldline_modes
@@ -206,6 +210,7 @@ contains
     end function eval_modes
 
     subroutine plot_fieldlines_over_field(fieldlines, field)
+        use myplot_module, only: myplot
 
         type(fieldline_t), dimension(:), intent(in) :: fieldlines
         class(field_t), intent(in) :: field
@@ -274,6 +279,7 @@ contains
 
     subroutine plot_fieldlines_over_field_chi_xi(fieldlines, field, M_pol, N_tor, &
                                                  nfp)
+        use myplot_module, only: myplot
 
         type(fieldline_t), dimension(:), intent(in) :: fieldlines
         class(field_t), intent(in) :: field
@@ -397,6 +403,7 @@ contains
     end subroutine convert_to_theta_phi
 
     subroutine plot_phi_max_over_xi_0(fieldlines, M_pol, nfp)
+        use myplot_module, only: myplot
         type(fieldline_t), dimension(:), intent(in) :: fieldlines
         real(dp), intent(in) :: M_pol, nfp
         type(myplot) :: plt
@@ -434,6 +441,7 @@ contains
 
     subroutine plot_fieldline_over_local_drift(fieldline, field, eta, interval)
         use fieldline_integrands, only: local_radial_drift
+        use myplot_module, only: myplot
         type(fieldline_t), intent(in) :: fieldline
         class(field_t), intent(in) :: field
         real(dp), intent(in) :: eta
@@ -503,6 +511,7 @@ contains
                                                interval)
         use fieldline_integrands, only: local_radial_drift
         use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
+        use myplot_module, only: myplot
         class(field_t), intent(in) :: field
         type(fieldline_t), intent(in) :: fieldline
         real(dp), dimension(:), intent(in) :: etas
@@ -577,6 +586,7 @@ contains
     end subroutine plot_local_drift_over_fieldline
 
     subroutine plot_delta_eta(fieldlines, iota_p, delta_eta_1)
+        use myplot_module, only: myplot
         type(fieldline_t), dimension(:), intent(in) :: fieldlines
         real(dp), intent(in) :: iota_p
         real(dp), intent(in), optional :: delta_eta_1
@@ -604,6 +614,7 @@ contains
     end subroutine plot_delta_eta
 
     subroutine plot_delta_A(fieldlines, delta_A_1_analytic)
+        use myplot_module, only: myplot
         type(fieldline_t), dimension(:), intent(in) :: fieldlines
         real(dp), intent(in), optional :: delta_A_1_analytic
 
@@ -627,6 +638,7 @@ contains
     end subroutine plot_delta_A
 
     subroutine plot_I(fieldlines, I_0_analytic, I_1_analytic, eps_0, eps_1)
+        use myplot_module, only: myplot
         type(fieldline_t), dimension(:), intent(in) :: fieldlines
         real(dp), intent(in) :: I_0_analytic, I_1_analytic, eps_0, eps_1
 
@@ -685,6 +697,7 @@ contains
     end subroutine plot_I
 
     subroutine plot_I_factor(fieldlines, eps_0, eps_1)
+        use myplot_module, only: myplot
         type(fieldline_t), dimension(:), intent(in) :: fieldlines
         real(dp), intent(in) :: eps_0, eps_1
 
@@ -721,6 +734,7 @@ contains
     subroutine plot_deviation(off_factor_A, off_factor_B, &
                               off_factor_A_analytic, off_factor_B_analytic, &
                               lambda_off_external)
+        use myplot_module, only: myplot
         real(dp), intent(in) :: off_factor_A, off_factor_B
 
         real(dp), intent(in), optional :: off_factor_A_analytic
@@ -815,6 +829,7 @@ contains
 
     subroutine plot_asymptotic_model(off_factor_A, off_factor_B, &
                                      lambda_SC, Lambda_S)
+        use myplot_module, only: myplot
         real(dp), intent(in) :: off_factor_A, off_factor_B
         real(dp), intent(in) :: lambda_SC, Lambda_S
 
@@ -877,6 +892,7 @@ contains
     subroutine plot_B_along_fieldline(field, &
                                       fieldline, &
                                       interval)
+        use myplot_module, only: myplot
         class(field_t), intent(in) :: field
         type(fieldline_t), intent(in) :: fieldline
         real(dp), intent(in), optional :: interval(2)
@@ -932,6 +948,7 @@ contains
     end subroutine plot_B_along_fieldline
 
     subroutine compare_modes(modes, labels)
+        use myplot_module, only: myplot
         type(modes_t), dimension(:), intent(in) :: modes
         character(len=*), dimension(:), intent(in) :: labels
 

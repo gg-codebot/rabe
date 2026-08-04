@@ -52,7 +52,7 @@ rabe_lib (main static library)
 ├── shaing_callen_lib (src/shaing_callen/)
 │   shaing_callen.f90, shaing_callen_integration.f90, shaing_callen_wrappers.f90
 ├── netcdf_lib (src/netcdf/)
-│   netcdf.f90 - NetCDF output via type netcdf_t
+│   netcdf.f90 - NetCDF output via type netcdf_t (backed by fortio)
 ├── error_handling_lib (src/error_handling/)
 │   error_handling.f90 - Sanity-check helpers: failed_sanity_check(),
 │                        reset_failed_check_counter(), did_fail_any_sanity_check(),
@@ -61,7 +61,8 @@ rabe_lib (main static library)
     coefficients.f90, deviation.f90, fit_functions.f90, read_file.f90
 ```
 
-External dependencies: NetCDF-Fortran, libneo, quadpack.
+External dependencies (all fetched at build time): fortio, libneo, quadpack.
+No system NetCDF library is required.
 
 ### Application flow (`app/main.f90`)
 

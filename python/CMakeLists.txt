@@ -81,6 +81,7 @@ target_link_libraries(_rabe PRIVATE
     offset_lib
     vmec_lib
     field_lib
+    fourier_field_lib
     fieldline_lib
     utils_lib
     error_handling_lib

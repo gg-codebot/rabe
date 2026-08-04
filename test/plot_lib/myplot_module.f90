@@ -144,19 +144,30 @@ contains
         character(len=:), allocatable :: str
 
         character(len=25) :: val_str
-        integer :: i
+        character(len=:), allocatable :: buf
+        integer :: i, p, l
 
-        str = '['
+        allocate (character(len=26*size(arr) + 2) :: buf)
+        buf(1:1) = '['
+        p = 1
         do i = 1, size(arr)
-            if (i > 1) str = str//','
+            if (i > 1) then
+                buf(p + 1:p + 1) = ','
+                p = p + 1
+            end if
             if (ieee_is_nan(arr(i))) then
-                str = str//'np.nan'
+                buf(p + 1:p + 6) = 'np.nan'
+                p = p + 6
             else
                 write (val_str, '(ES23.15E3)') arr(i)
-                str = str//trim(adjustl(val_str))
+                val_str = adjustl(val_str)
+                l = len_trim(val_str)
+                buf(p + 1:p + l) = val_str(1:l)
+                p = p + l
             end if
         end do
-        str = str//']'
+        buf(p + 1:p + 1) = ']'
+        str = buf(1:p + 1)
     end function array_to_string
 
     subroutine add_contour(self, x, y, f, levels, colorbar, filled, cmap)

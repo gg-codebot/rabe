@@ -1291,7 +1291,9 @@
 
     integer                     :: i         !! counter
     integer                     :: istat     !! IO status
+    integer                     :: p, l      !! buffer position, value length
     character(len=max_real_len) :: tmp       !! dummy string
+    character(len=:),allocatable :: buf       !! pre-sized output buffer
     logical                     :: tuple
 
     if (present(is_tuple)) then
@@ -1300,11 +1302,18 @@
         tuple = .false.
     end if
 
-    if (tuple) then
-        str = '('
-    else
-        str = '['
+    allocate(character(len=(max_real_len+1)*size(v)+12) :: buf)
+    p = 0
+    if (use_numpy) then
+        buf(p+1:p+9) = 'np.array('
+        p = p + 9
     end if
+    if (tuple) then
+        buf(p+1:p+1) = '('
+    else
+        buf(p+1:p+1) = '['
+    end if
+    p = p + 1
 
     do i=1, size(v)
         if (fmt=='*') then
@@ -1317,18 +1326,27 @@
             str = '****'
             return
         end if
-        str = str//trim(adjustl(tmp))
-        if (i<size(v)) str = str // ','
+        tmp = adjustl(tmp)
+        l = len_trim(tmp)
+        buf(p+1:p+l) = tmp(1:l)
+        p = p + l
+        if (i<size(v)) then
+            buf(p+1:p+1) = ','
+            p = p + 1
+        end if
     end do
 
     if (tuple) then
-        str = str // ')'
+        buf(p+1:p+1) = ')'
     else
-        str = str // ']'
+        buf(p+1:p+1) = ']'
     end if
-
-    !convert to numpy array if necessary:
-    if (use_numpy) str = 'np.array('//str//')'
+    p = p + 1
+    if (use_numpy) then
+        buf(p+1:p+1) = ')'
+        p = p + 1
+    end if
+    str = buf(1:p)
 
     end subroutine vec_to_string
 !*****************************************************************************************
@@ -1345,19 +1363,37 @@
     character(len=:), allocatable, intent(out) :: str       !! real values stringified
     logical,                       intent(in)  :: use_numpy !! activate numpy python module usage
 
-    integer                      :: i         !! counter
+    integer                      :: i, p, l, max_row
     character(len=:),allocatable :: tmp       !! dummy string
+    character(len=:),allocatable :: buf       !! pre-sized output buffer
 
-    str = '['
+    max_row = (max_real_len+1)*size(v,2) + 12
+    allocate(character(len=size(v,1)*(max_row+1)+12) :: buf)
+    p = 0
+    if (use_numpy) then
+        buf(p+1:p+9) = 'np.array('
+        p = p + 9
+    end if
+    buf(p+1:p+1) = '['
+    p = p + 1
     do i=1, size(v,1)  !rows
         call vec_to_string(v(i,:), fmt, tmp, use_numpy)  !one row at a time
-        str = str//trim(adjustl(tmp))
-        if (i<size(v,1)) str = str // ','
+        tmp = adjustl(tmp)
+        l = len_trim(tmp)
+        buf(p+1:p+l) = tmp(1:l)
+        p = p + l
+        if (i<size(v,1)) then
+            buf(p+1:p+1) = ','
+            p = p + 1
+        end if
     end do
-    str = str // ']'
-
-    !convert to numpy array if necessary:
-    if (use_numpy) str = 'np.array('//str//')'
+    buf(p+1:p+1) = ']'
+    p = p + 1
+    if (use_numpy) then
+        buf(p+1:p+1) = ')'
+        p = p + 1
+    end if
+    str = buf(1:p)
 
     end subroutine matrix_to_string
 !*****************************************************************************************

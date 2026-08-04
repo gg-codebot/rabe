@@ -1,6 +1,5 @@
 module netcdf_mod
     use constants, only: dp
-    use netcdf
 
     implicit none
     private
@@ -53,6 +52,7 @@ module netcdf_mod
 contains
 
     subroutine netcdf_create(this, filename)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: filename
         integer :: status
@@ -70,6 +70,7 @@ contains
     end subroutine netcdf_create
 
     subroutine netcdf_add_global_attr(this, attr_name, attr_value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: attr_name
         character(len=*), intent(in) :: attr_value
@@ -89,6 +90,7 @@ contains
     end subroutine netcdf_add_global_attr
 
     subroutine netcdf_def_dim(this, dim_name, dim_length)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: dim_name
         integer, intent(in) :: dim_length
@@ -115,6 +117,7 @@ contains
     end subroutine
 
     subroutine netcdf_add_real(this, var_name)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         integer :: status, var_id
@@ -140,6 +143,7 @@ contains
     end subroutine netcdf_add_real
 
     subroutine netcdf_add_real_1d(this, var_name, dim_name)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         character(len=*), intent(in) :: dim_name
@@ -180,6 +184,7 @@ contains
     end subroutine netcdf_add_real_1d
 
     subroutine netcdf_add_int_1d(this, var_name, dim_name)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         character(len=*), intent(in) :: dim_name
@@ -223,6 +228,7 @@ contains
 
     subroutine netcdf_add_attr(this, var_name, attr_name, &
                                attr_value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         character(len=*), intent(in) :: attr_name
@@ -255,6 +261,7 @@ contains
     end subroutine netcdf_add_attr
 
     subroutine netcdf_end_define(this)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         integer :: status
 
@@ -273,6 +280,7 @@ contains
     end subroutine netcdf_end_define
 
     subroutine netcdf_write_real(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         real(dp), intent(in) :: value
@@ -303,6 +311,7 @@ contains
     end subroutine netcdf_write_real
 
     subroutine netcdf_write_real_1d(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         real(dp), dimension(:), intent(in) :: value
@@ -333,6 +342,7 @@ contains
     end subroutine netcdf_write_real_1d
 
     subroutine netcdf_write_int_1d(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         integer, dimension(:), intent(in) :: value
@@ -364,6 +374,7 @@ contains
     end subroutine netcdf_write_int_1d
 
     subroutine netcdf_close(this)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         integer :: status
 
@@ -382,6 +393,7 @@ contains
     end subroutine netcdf_close
 
     subroutine netcdf_open(this, filename)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: filename
         integer :: status
@@ -399,6 +411,7 @@ contains
     end subroutine netcdf_open
 
     subroutine netcdf_read_real(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         real(dp), intent(out) :: value
@@ -416,6 +429,7 @@ contains
     end subroutine netcdf_read_real
 
     subroutine netcdf_read_real_1d(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         real(dp), dimension(:), intent(out) :: value
@@ -433,6 +447,7 @@ contains
     end subroutine netcdf_read_real_1d
 
     subroutine netcdf_read_int_1d(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         integer, dimension(:), intent(out) :: value
@@ -452,6 +467,7 @@ contains
     end subroutine netcdf_read_int_1d
 
     subroutine netcdf_read_global_attr(this, attr_name, attr_value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: attr_name
         character(len=*), intent(out) :: attr_value
@@ -467,6 +483,7 @@ contains
     end subroutine netcdf_read_global_attr
 
     subroutine netcdf_read_attr(this, var_name, attr_name, attr_value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         character(len=*), intent(in) :: attr_name
@@ -494,6 +511,7 @@ contains
     end subroutine netcdf_final
 
     subroutine check_netcdf_status(status, operation)
+        use netcdf
         integer, intent(in) :: status
         character(len=*), intent(in) :: operation
 
