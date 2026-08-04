@@ -9,13 +9,11 @@ module error_handling
 
 contains
 
-    !>
-    !! \brief Toggle unsafe mode for sanity checks.
+    !> Toggle unsafe mode for sanity checks.
     !!
-    !! \details When .true., a failed check increments the counter instead of halting,
+    !! When .true., a failed check increments the counter instead of halting,
     !! allowing surface-by-surface iteration to continue. Call
     !! did_fail_any_sanity_check to detect failures.
-    !<
     subroutine set_unsafe_mode(value)
         logical, intent(in) :: value
         unsafe_mode = value
@@ -30,16 +28,12 @@ contains
         end if
     end subroutine failed_sanity_check
 
-    !>
-    !! \brief Reset the failed sanity check counter to zero.
-    !<
+    !> Reset the failed sanity check counter to zero.
     subroutine reset_failed_check_counter()
         failed_check_counter = 0
     end subroutine reset_failed_check_counter
 
-    !>
-    !! \brief Return .true. if any sanity check has failed since the last reset.
-    !<
+    !> Return .true. if any sanity check has failed since the last reset.
     function did_fail_any_sanity_check()
         logical :: did_fail_any_sanity_check
         did_fail_any_sanity_check = (failed_check_counter > 0)

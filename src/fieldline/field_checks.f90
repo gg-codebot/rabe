@@ -34,8 +34,8 @@ contains
         real(dp) :: B_min_error, B_max_error, B_range_error
         real(dp) :: height_error
 
-        !> as M_pol and N_tor are whole numbers that must no both be zero
-        !> M_pol*pi - N_tor should never zero
+        ! as M_pol and N_tor are whole numbers that must no both be zero
+        ! M_pol*pi - N_tor should never zero
         if (abs(M_pol*pi - N_tor) < 1e-8) then
             print *, "Error: (M_pol*pi - N_tor) must not be (close) zero."
             print *, "abs(M_pol*iota - N_tor) = ", abs(M_pol*pi - N_tor)
@@ -87,8 +87,8 @@ contains
 
         call unset_field_and_fieldline()
 
-        !> is the B-difference of origin and minimum significant
-        !> compared to the B-range?
+        ! is the B-difference of origin and minimum significant
+        ! compared to the B-range?
         B_range = B_max - B_min
         B_range_error = B_min_error + B_max_error
         call field%compute_B_mod(0.0_dp, 0.0_dp, B_at_origin)

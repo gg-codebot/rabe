@@ -15,11 +15,10 @@ module make_fieldline
 
 contains
 
-    !>
-    !! \brief Build a flock of field lines spanning the region between neighbouring
+    !> Build a flock of field lines spanning the region between neighbouring
     !! maxima contours centered around the minima contours through the field origin.
     !!
-    !! \details The field lines are placed equidistant in the label `xi`, spaced so that the
+    !! The field lines are placed equidistant in the label `xi`, spaced so that the
     !! discrete set still displays stellarator symmetry. To achieve this symmetry
     !! respecting spacing with < `max_n_fieldlines`, `iota` needs to be approximated.
     !! Its approximation is then used as rotational transform of the field lines.
@@ -27,27 +26,25 @@ contains
     !! `N_tor` must equal `nfp` when nonzero; use `N_tor=0`, `M_pol=1` for QA.
     !! If the violation is too strong, maxima of contours of the omnigenous field
     !! are not merely deformed, but also split. Results should be treated with caution.
-    !!
-    !! \param[in] max_n_fieldlines upper bound on number of field lines
-    !! \param[in] iota rotational transform of field lines
-    !! \param[in] field magnetic field representation in Boozer coordinates
-    !! \param[in] M_pol poloidal helicity mode number; may be negative
-    !! \param[in] N_tor toroidal helicity mode number; must equal nfp when nonzero
-    !! \param[in] nfp number of field periods; must be positive integer
-    !! \param[out] split_maxima 1 if a split of maxima contours was detected
-    !<
     subroutine make_flock_of_fieldlines(flock, max_n_fieldlines, iota, &
                                         field, M_pol, N_tor, nfp, &
                                         split_maxima)
         use fieldline_labels, only: get_labels
         type(flock_of_fieldlines_t), intent(inout) :: flock
         integer, intent(in) :: max_n_fieldlines
+            !! upper bound on number of field lines
         real(dp), intent(in) :: iota
+            !! rotational transform of field lines
         class(field_t), intent(in) :: field
+            !! magnetic field representation in Boozer coordinates
         real(dp), intent(in) :: M_pol
+            !! poloidal helicity mode number; may be negative
         real(dp), intent(in) :: N_tor
+            !! toroidal helicity mode number; must equal nfp when nonzero
         real(dp), intent(in) :: nfp
+            !! number of field periods; must be positive integer
         integer, intent(out), optional :: split_maxima
+            !! 1 if a split of maxima contours was detected
 
         real(dp), allocatable :: xi_0(:)
         real(dp) :: approx_iota
@@ -114,8 +111,8 @@ contains
             print *, "Origin of provided field suggests that this is not the case!"
             call failed_sanity_check()
         end if
-        !> if the origin of the ideal omnigenous field is a minimum (above)
-        !> we can put the labels along the chi = 0 line
+        ! if the origin of the ideal omnigenous field is a minimum (above)
+        ! we can put the labels along the chi = 0 line
         flock%fieldlines%theta_0 = N_tor*flock%fieldlines%xi_0/nfp
         flock%fieldlines%phi_0 = M_pol*flock%fieldlines%xi_0/nfp
 
@@ -175,12 +172,12 @@ contains
                 split_maxima = 1
             end if
         end if
-        !> If eta_b is chosen exactly to be 1/B_max, one relies that
-        !> B_max/B_max = 1 so that the pitchparameter does not become negative on
-        !> the field line hitting the global maximum. However,
-        !> B_max/Bmax = 1 +- ULP (~2.2e-16)
-        !> due to floating point arithmetic. To not be dependend on machine/compiler
-        !> specifics, we add a small buffer that does not change the physics.
+        ! If eta_b is chosen exactly to be 1/B_max, one relies that
+        ! B_max/B_max = 1 so that the pitchparameter does not become negative on
+        ! the field line hitting the global maximum. However,
+        ! B_max/Bmax = 1 +- ULP (~2.2e-16)
+        ! due to floating point arithmetic. To not be dependend on machine/compiler
+        ! specifics, we add a small buffer that does not change the physics.
         flock%eta_b = (1.0_dp - 2.0_dp*machine_eps) &
                       /get_global_B_max(flock%fieldlines)
         flock%fieldlines%eta_b = flock%eta_b

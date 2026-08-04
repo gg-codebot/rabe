@@ -16,14 +16,12 @@ module boozer_field
 
     public :: boozer_field_t
 
-    !>
-    !! \brief Field in Boozer coordinates, loadable from several file formats.
+    !> Field in Boozer coordinates, loadable from several file formats.
     !!
-    !! \details Call one init_from_* loader, then fix_to_surface before any
+    !! Call one init_from_* loader, then fix_to_surface before any
     !! evaluation. Only one Boozer field can be active at a time (singleton —
     !! the splines live in module-global state). Calling a loader a second
     !! time aborts.
-    !<
     type, extends(field_t) :: boozer_field_t
         logical :: initialized = .false.
         logical :: fixed_to_surface = .false.
@@ -48,14 +46,10 @@ module boozer_field
 
 contains
 
-    !>
-    !! \brief Load Boozer-coordinate splines from a VMEC wout netCDF file.
+    !> Load Boozer-coordinate splines from a VMEC wout netCDF file.
     !!
-    !! \details Reasonable defaults: radial_spline_order=5,
+    !! Reasonable defaults: radial_spline_order=5,
     !! angular_spline_order=5, grid_refinement=6.
-    !!
-    !! \param[in] vmec_file path to VMEC .nc file
-    !<
     subroutine init_from_vmec(self, vmec_file, &
                               radial_spline_order, &
                               angular_spline_order, &
@@ -63,6 +57,7 @@ contains
         use boozer_coordinates_mod, only: use_B_r
         class(boozer_field_t), intent(inout) :: self
         character(len=*), intent(in) :: vmec_file
+            !! path to VMEC .nc file
         integer, intent(in), optional :: radial_spline_order
         integer, intent(in), optional :: angular_spline_order
         integer, intent(in), optional :: grid_refinement
@@ -77,11 +72,9 @@ contains
 
     end subroutine init_from_vmec
 
-    !>
-    !! \brief Load Boozer-coordinate splines from a booz_xform boozmn netCDF file.
+    !> Load Boozer-coordinate splines from a booz_xform boozmn netCDF file.
     !!
-    !! \details The boozmn file fixes its own grid and spline orders.
-    !<
+    !! The boozmn file fixes its own grid and spline orders.
     subroutine init_from_boozmn(self, boozmn_file)
         class(boozer_field_t), intent(inout) :: self
         character(len=*), intent(in) :: boozmn_file
@@ -92,11 +85,9 @@ contains
 
     end subroutine init_from_boozmn
 
-    !>
-    !! \brief Load Boozer-coordinate splines from an extended chartmap netCDF file.
+    !> Load Boozer-coordinate splines from an extended chartmap netCDF file.
     !!
-    !! \details The chartmap carries its own grid and spline orders.
-    !<
+    !! The chartmap carries its own grid and spline orders.
     subroutine init_from_chartmap(self, chartmap_file)
         class(boozer_field_t), intent(inout) :: self
         character(len=*), intent(in) :: chartmap_file
@@ -203,15 +194,13 @@ contains
 
     end subroutine evaluate
 
-    !>
-    !! \brief Return the rotational transform iota at flux surface stor.
-    !! \param[in] stor normalized toroidal flux s, range [0, 1]
-    !<
+    !> Return the rotational transform iota at flux surface stor.
     subroutine get_iota(self, stor, iota)
         use new_vmec_stuff_mod, only: nper
 
         class(boozer_field_t), intent(in) :: self
         real(dp), intent(in) :: stor
+            !! normalized toroidal flux s, range [0, 1]
         real(dp), intent(out) :: iota
 
         real(dp) :: A_phi, A_theta, dA_phi_dr, dA_theta_dr
@@ -238,13 +227,11 @@ contains
         iota = -dA_phi_dr/dA_theta_dr
     end subroutine get_iota
 
-    !>
-    !! \brief Return covariant B_theta and B_phi for the surface fixed by fix_to_surface.
+    !> Return covariant B_theta and B_phi for the surface fixed by fix_to_surface.
     !!
-    !! \details These are flux-surface constants in Boozer coordinates, angle-independent, SI: T*m.
+    !! These are flux-surface constants in Boozer coordinates, angle-independent, SI: T*m.
     !!
     !! Requires fix_to_surface to have been called first.
-    !<
     subroutine get_covariant_components(self, B_theta_covariant, B_phi_covariant)
         class(boozer_field_t), intent(in) :: self
 
@@ -277,16 +264,13 @@ contains
         B_theta_covariant = B_theta_covariant*cm2m*gauss2tesla
     end subroutine get_covariant_components
 
-    !>
-    !! \brief Fix the field to the flux surface at normalized toroidal flux stor.
+    !> Fix the field to the flux surface at normalized toroidal flux stor.
     !!
-    !! \details Must be called before any compute_* call or get_covariant_components.
-    !!
-    !! \param stor[in] normalized toroidal flux s, range [0, 1]
-    !<
+    !! Must be called before any compute_* call or get_covariant_components.
     subroutine fix_to_surface(self, stor)
         class(boozer_field_t), intent(inout) :: self
         real(dp), intent(in) :: stor
+            !! normalized toroidal flux s, range [0, 1]
 
         self%fixed_stor = stor
         self%fixed_to_surface = .true.

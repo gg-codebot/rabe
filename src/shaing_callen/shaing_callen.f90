@@ -8,19 +8,16 @@ module shaing_callen_mod
 
 contains
 
-    !>
-    !! \brief Shaing-Callen lambda_LC: computed from the trapped particle fraction
+    !> Shaing-Callen lambda_LC: computed from the trapped particle fraction
     !!
-    !! \details Following the formula of Landreman and Catto (Phys. Plasmas 2012).
-    !!
-    !! \param[in] n_eta number of evaluation points to compute trapped fraction integral
-    !! \param[in] dr_dAtheta converting lambda_LC to be used with gradients of label r
-    !<
+    !! Following the formula of Landreman and Catto (Phys. Plasmas 2012).
     function calc_lambda_LC(flock, field, n_eta, dr_dAtheta) result(lambda_LC)
         type(flock_of_fieldlines_t), intent(in) :: flock
         class(field_t), intent(in) :: field
         integer, intent(in) :: n_eta
+            !! number of evaluation points to compute trapped fraction integral
         real(dp), intent(in) :: dr_dAtheta
+            !! converting lambda_LC to be used with gradients of label r
         real(dp) :: lambda_LC
 
         real(dp) :: trapped_fraction, helicity_factor
@@ -132,15 +129,10 @@ contains
 
     end subroutine calc_avg_lambda_over_B_squared
 
-    !>
-    !! \brief Preliminary proxy to estimate the deviation of Lambda_LC from the
+    !> Preliminary proxy to estimate the deviation of Lambda_LC from the
     !! true Shaing-Callen coefficient due to non-omnigeneity.
     !!
-    !! \details It does not account for bootstrap resonances.
-    !!
-    !! \param[in] n_eta number of evaluation points to compute trapped fraction integral
-    !! \param[in] dr_dAtheta converting lambda_LC to be used with gradients of label r
-    !<
+    !! It does not account for bootstrap resonances.
     function get_non_omnigenous_remainder(flock, field, n_eta, dr_dAtheta) &
         result(remainder)
         use shaing_callen_integration, only: get_eta_integration_grid
@@ -148,7 +140,9 @@ contains
         type(flock_of_fieldlines_t), intent(in) :: flock
         class(field_t), intent(in) :: field
         integer, intent(in) :: n_eta
+            !! number of evaluation points to compute trapped fraction integral
         real(dp), intent(in) :: dr_dAtheta
+            !! converting lambda_LC to be used with gradients of label r
         real(dp) :: remainder
 
         real(dp), dimension(:), allocatable :: eta_grid

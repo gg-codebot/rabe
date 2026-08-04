@@ -34,6 +34,7 @@ add_custom_command(
             -k ${CMAKE_CURRENT_SOURCE_DIR}/kind_map.py
             --joint-modules ${CMAKE_CURRENT_SOURCE_DIR}/joint_modules.py
             --class-names ${CMAKE_CURRENT_SOURCE_DIR}/class_names.py
+            --conf-file ${CMAKE_CURRENT_SOURCE_DIR}/docs_conf.py
             ${F90WRAP_SOURCES}
             --only
                 fourier_field_t
@@ -62,6 +63,7 @@ add_custom_command(
     DEPENDS ${F90WRAP_SOURCES} ${CMAKE_CURRENT_SOURCE_DIR}/kind_map.py
             ${CMAKE_CURRENT_SOURCE_DIR}/joint_modules.py
             ${CMAKE_CURRENT_SOURCE_DIR}/class_names.py
+            ${CMAKE_CURRENT_SOURCE_DIR}/docs_conf.py
     WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
     COMMENT "Generating f90wrap Python bindings"
     VERBATIM
