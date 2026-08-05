@@ -27,13 +27,14 @@ module precession
 
 contains
 
-    subroutine setup_bounce_integrals(field, flock, s_tor, bounce_integrals)
+    subroutine setup_bounce_integrals(field, flock, s_tor, bounce_integrals, n_eta)
         use field_instance, only: initialize_field_instance
         use fourier, only: real_ft
         class(field_3D_t), intent(in) :: field
         type(flock_of_fieldlines_t), intent(in) :: flock
         real(dp), intent(in) :: s_tor
         type(bounce_integrals_t), intent(out) :: bounce_integrals
+        integer, intent(in), optional :: n_eta
 
         type(fieldline_for_precession_t), dimension(:), allocatable :: fieldlines
         real(dp) :: eta_t, eta_c
@@ -81,7 +82,7 @@ contains
         eta_c = 1.0_dp/get_smallest_maximum(fieldlines)
         call set_fieldline_minima(field, fieldlines)
         eta_t = 1.0_dp/get_biggest_minimum(fieldlines)
-        call set_integration_grids(eta_t, eta_c, grid)
+        call set_integration_grids(eta_t, eta_c, grid, n_eta=n_eta)
         fieldlines%grid = grid
 
         call initialize_field_instance(field)

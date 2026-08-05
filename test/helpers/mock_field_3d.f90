@@ -115,6 +115,7 @@ contains
         hctrvr(3) = B_mod/(B_varphi + self%iota*B_vartheta)
         hctrvr(2) = self%iota*hctrvr(3)
 
+        ! radial coordinate is s_tor so that dpsi_dr = psi_tor_edge
         sqrtg = self%psi_tor_edge/(B_mod*hctrvr(3))
 
         ! as for the mock field dB/ds=0 and radial covariant component is zero

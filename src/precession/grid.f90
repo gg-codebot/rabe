@@ -34,16 +34,17 @@ module grid_mod
 
 contains
 
-    subroutine set_integration_grids(eta_t, eta_c, grid)
+    subroutine set_integration_grids(eta_t, eta_c, grid, n_eta)
         use utils, only: linspace
         use, intrinsic :: ieee_arithmetic, only: ieee_quiet_nan, ieee_value
         real(dp), intent(in) :: eta_t, eta_c
         type(integration_grid_t), intent(out) :: grid
+        integer, intent(in), optional :: n_eta
 
         real(dp) :: eta_mid
         real(dp) :: t_start, t_end
-        integer, parameter :: n = 200
-        real(dp), dimension(n) :: t
+        integer :: n
+        real(dp), dimension(:), allocatable :: t
 
         if (ieee_is_nan(eta_t)) then
             print *, "Error: eta_t is NaN."
@@ -58,11 +59,23 @@ contains
             error stop
         end if
 
+        if (present(n_eta)) then
+            if (n_eta < 2) then
+                print *, "Error: n_eta must be at least 2."
+                error stop
+            end if
+            n = n_eta
+        else
+            n = 200
+        end if
+
         if (allocated(grid%eta)) deallocate (grid%eta)
         if (allocated(grid%t)) deallocate (grid%t)
+        if (allocated(t)) deallocate (t)
 
         allocate (grid%eta(n))
         allocate (grid%t(n))
+        allocate (t(n))
         t_start = (eta_t - eta_c)**0.5_dp
         t_end = 0.0_dp
         call linspace(t_start, t_end, n, t)
