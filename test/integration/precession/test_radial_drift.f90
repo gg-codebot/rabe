@@ -9,11 +9,12 @@ program test_radial_drift
     use precession, only: setup_bounce_integrals
     use utils, only: linspace, not_same
     use myplot_module, only: myplot
+    use grid_mod, only: fieldline_for_precession_t
 
     implicit none
 
     real(dp), parameter :: M_pol = 0.0_dp, N_tor = 2.0_dp
-    real(dp), parameter :: B_0 = 1.0_dp, eps_0 = -0.0225_dp, &
+    real(dp), parameter :: B_0 = 2.0_dp, eps_0 = -0.0225_dp, &
                            eps_1 = -0.0001_dp
     type(anti_sigma_field_t) :: field_2D
     real(dp), parameter :: B_pert = 0.0000_dp, M_pol_pert = 1.0_dp, &
@@ -40,11 +41,16 @@ program test_radial_drift
     real(dp), dimension(:, :), allocatable :: modes_I_B, modes_dIV_deta
     real(dp) :: reltol, delta_eta, delta_trapped
     real(dp) :: B_min, B_varphi, B_vartheta
+    type(fieldline_for_precession_t), dimension(:), allocatable :: fieldlines
 
     logical :: test_failed
 
     logical :: should_plot = .true.
     type(myplot) :: plt
+    integer :: n_plot_points = 100
+    real(dp), dimension(:), allocatable :: xi_0_plot
+    real(dp), dimension(:), allocatable :: I_j, dIV_deta
+    real(dp), dimension(n_eta) :: sum_modes
     character(len=256) :: label
 
     test_failed = .false.
@@ -68,7 +74,7 @@ program test_radial_drift
                                 N_tor, &
                                 nfp)
 
-    call setup_bounce_integrals(field, flock, s_tor, bounce_integrals, n_eta=n_eta)
+    call setup_bounce_integrals(field, flock, s_tor, bounce_integrals, n_eta=n_eta, fieldlines_out=fieldlines)
 
     call field%get_covariant_components(B_theta_covar, B_phi_covar)
     ! Mock field is a right-handed system (sqrtg>0), so dAtheta_dr = dpsi_dr
@@ -93,7 +99,8 @@ program test_radial_drift
         print *, "test_precession_analytic failed: radial drift"
         print *, "found: ", drift_1
         print *, "expected: ", drift_1_analytic
-      print *, "relative error: ", abs(drift_1 - drift_1_analytic)/abs(drift_1_analytic)
+        print *, "relative error: ", abs(drift_1 - drift_1_analytic)/ &
+            abs(drift_1_analytic)
         test_failed = .true.
     end if
 
@@ -103,35 +110,71 @@ program test_radial_drift
                             legend=.true., &
                             title="normalized radial drift for barely trapped", &
                             fontsize=20)
-        allocate (drift(n_fieldlines))
+        allocate (drift(n_plot_points))
+        allocate (xi_0_plot(n_plot_points))
+        call linspace(0.0_dp, 2.0_dp*pi, n_plot_points, xi_0_plot)
         do idx = n_eta - 9, n_eta - 1
-            write (label, '(A,F6.3)') "numeric, eta = ", bounce_integrals%eta(idx)
+            write (label, '(A,F6.3)') "numeric mode, eta = ", bounce_integrals%eta(idx)
 
-            drift = bounce_integrals%radial_drift_sin(2, idx)*sin(xi_0)
-            drift = drift/(2.0_dp*bounce_integrals%t(idx))
-            call plt%add_plot(xi_0, &
+            drift = bounce_integrals%radial_drift_sin(2, idx)*sin(xi_0_plot)
+            drift = drift/(2.0_dp*bounce_integrals%t(idx))*B_0
+            call plt%add_plot(xi_0_plot, &
                               drift, &
-                              label=label, linestyle="-o", linewidth=2)
+                              label=label, linestyle="--", linewidth=2)
         end do
 
-        allocate (analytic_drift(n_fieldlines))
-        analytic_drift = drift_1_analytic*sin(xi_0)
-        call plt%add_plot(xi_0, &
+        allocate (analytic_drift(n_plot_points))
+        analytic_drift = drift_1_analytic*sin(xi_0_plot)
+        call plt%add_plot(xi_0_plot, &
                           analytic_drift, &
                           label="analytic", linestyle="-", linewidth=4)
+        deallocate (drift)
+        allocate (drift(n_fieldlines))
+        do idx = 1, n_fieldlines
+            drift(idx) = fieldlines(idx)%grid%radial_drift_weighted(n_eta - 1)
+            drift(idx) = drift(idx)/(2.0_dp*bounce_integrals%t(n_eta - 1))*B_0
+        end do
+        write (label, '(A,F6.3)') "numeric, eta = ", bounce_integrals%eta(n_eta - 1)
+        call plt%add_plot(xi_0, &
+                          drift, &
+                          label=label, linestyle="s", markersize=10)
         call plt%show()
+
+        call plt%initialize(xlabel="$\sqrt{\eta - \eta_c}$", &
+                            ylabel="$\sum |$drift$^m|/|$drift$^1|$ [1]", &
+                            legend=.true., &
+                            title="sum of modes m > 1", &
+                            fontsize=20)
+        do idx = 1, n_eta
+            sum_modes(idx) = sum(abs(bounce_integrals%radial_drift_sin(:, idx)))
+        sum_modes(idx) = sum_modes(idx) - abs(bounce_integrals%radial_drift_sin(2, idx))
+            sum_modes(idx) = sum_modes(idx)/(2.0_dp*bounce_integrals%t(idx))*B_0
+        end do
+        sum_modes = sum_modes/abs(drift_1)
+        call plt%add_plot(bounce_integrals%t(1:n_eta - 1), &
+                          sum_modes(1:n_eta - 1), &
+                          label="normalized by m=1 mode", linestyle="-", linewidth=4)
+        call plt%show()
+
         call plt%initialize(xlabel="$\xi_0$", &
                             ylabel="drift [1]", &
                             legend=.true., &
-                            title="other modes", &
+                            title="comparison $\partial_\eta I_\mathcal{V}$ to $I_j$", &
                             fontsize=20)
-        write (label, '(A,F6.3)') "numeric, eta = ", bounce_integrals%eta(idx)
-
-        drift = sum(abs(bounce_integrals%radial_drift_sin), dim=2)
-        drift = drift/(2.0_dp*bounce_integrals%t(idx))
+        allocate (I_j(n_fieldlines))
+        allocate (dIV_deta(n_fieldlines))
+        do idx = 1, n_fieldlines
+            I_j(idx) = fieldlines(idx)%grid%I_j(n_eta - 1)
+            drift(idx) = fieldlines(idx)%grid%normalized_radial_drift(n_eta - 1)*B_0
+        end do
+        dIV_deta = calc_dIV_deta(drift, dAtheta_dr, B_theta_covar, B_phi_covar, iota)
         call plt%add_plot(xi_0, &
-                          drift, &
-                          label=label, linestyle="-o", linewidth=2)
+                          -1.5_dp*B_0*(I_j - sum(I_j)/n_fieldlines), &
+                          label="$I_j - \bar{I_j}$", linestyle="-o", linewidth=4)
+        call plt%add_plot(xi_0, &
+                          dIV_deta, &
+                     label="$\partial_\eta I_\mathcal{V}$", linestyle="-o", linewidth=4)
+        call plt%show()
     end if
 
     if (test_failed) error stop
@@ -178,6 +221,15 @@ contains
 
         dIV_deta = drift*0.75_dp/(B_phi_covar + iota*B_theta_covar)*dAtheta_dr/B_0
 
+        if (ieee_is_nan(dIV_deta)) then
+            print *, "dIV_deta is NaN!"
+            print *, "drift = ", drift
+            print *, "dAtheta_dr = ", dAtheta_dr
+            print *, "B_theta_covar = ", B_theta_covar
+            print *, "B_phi_covar = ", B_phi_covar
+            print *, "iota = ", iota
+            error stop
+        end if
     end function calc_dIV_deta
 
 end program test_radial_drift

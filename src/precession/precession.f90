@@ -27,7 +27,7 @@ module precession
 
 contains
 
-    subroutine setup_bounce_integrals(field, flock, s_tor, bounce_integrals, n_eta)
+    subroutine setup_bounce_integrals(field, flock, s_tor, bounce_integrals, n_eta, fieldlines_out)
         use field_instance, only: initialize_field_instance
         use fourier, only: real_ft
         class(field_3D_t), intent(in) :: field
@@ -35,6 +35,7 @@ contains
         real(dp), intent(in) :: s_tor
         type(bounce_integrals_t), intent(out) :: bounce_integrals
         integer, intent(in), optional :: n_eta
+        type(fieldline_for_precession_t), dimension(:), allocatable, intent(out), optional :: fieldlines_out
 
         type(fieldline_for_precession_t), dimension(:), allocatable :: fieldlines
         real(dp) :: eta_t, eta_c
@@ -131,6 +132,10 @@ contains
         bounce_integrals%t = grid%t
         bounce_integrals%eta = grid%eta
 
+        if (present(fieldlines_out)) then
+            allocate (fieldlines_out(n_fieldlines))
+            fieldlines_out = fieldlines
+        end if
         deallocate (fieldlines)
         deallocate (radial_drift_weighted)
         deallocate (radial_drift_cos)
