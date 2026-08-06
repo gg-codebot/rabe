@@ -173,7 +173,7 @@ contains
         well_depth = 1.0_dp - fieldline%B_min*fieldline%eta_b
         deep_trapped_bounce_time = 4.0_dp*pi/abs(h_ctrvr(2))/sqrt(well_depth) &
                                   /abs(fieldline%M_pol*fieldline%iota - fieldline%N_tor)
-        time_step = deep_trapped_bounce_time/10.0_dp
+        time_step = deep_trapped_bounce_time/50.0_dp
         call params_init(fieldline%nfp, &
                          time_step, &
                          rlarm_in=lamor_radius)
