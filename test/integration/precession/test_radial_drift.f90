@@ -129,7 +129,10 @@ program test_radial_drift
         call get_dIV_deta_and_antiderivative(fieldlines, idx, B_0, dAtheta_dr, &
                                B_theta_covar, B_phi_covar, iota, dIV_deta, int_dIV_deta)
         call get_I_j_and_derivative(fieldlines, idx, xi_0, I_j, dIj_dxi0)
-        abstol = maxval(abs(dIV_deta))*reltol
+        ! comparing to I_j and not J_V -> domninant error comes from extra 1/B
+        ! in integral, so when applying const B_0 postum
+        ! -> relative error is proporitional to variation eps_0
+        abstol = maxval(abs(dIV_deta))*abs(eps_0)*4.0_dp
         if (not_same(dIV_deta, 1.5_dp*B_0*dIj_dxi0, &
                      reltol_in=0.0_dp, abstol_in=abstol)) then
             print *, "test_precession_analytic failed: dIV_deta vs dIj_dxi0"
@@ -138,7 +141,8 @@ program test_radial_drift
             print *, "max rel error: ", max_error/maxval(abs(dIV_deta))
             test_failed = .true.
         end if
-        abstol = maxval(abs(int_dIV_deta))*reltol
+        ! same as for dIV_deta check above
+        abstol = maxval(abs(int_dIV_deta))*abs(eps_0)*4.0_dp
         if (not_same(int_dIV_deta, &
                      1.5_dp*B_0*(I_j - I_j(1)), &
                      reltol_in=0.0_dp, abstol_in=abstol)) then
