@@ -53,8 +53,3 @@ add_executable(plot_fourier_field_timing.x plot_fourier_field_timing.f90)
 target_link_libraries(plot_fourier_field_timing.x myplot_lib rabe_lib helpers_lib)
 add_test(PlotFourierFieldTiming plot_fourier_field_timing.x)
 set_tests_properties(PlotFourierFieldTiming PROPERTIES LABELS "plot")
-
-add_executable(plot_fourier_field_accuracy.x plot_fourier_field_accuracy.f90)
-target_link_libraries(plot_fourier_field_accuracy.x myplot_lib rabe_lib helpers_lib)
-add_test(PlotFourierFieldAccuracy plot_fourier_field_accuracy.x)
-set_tests_properties(PlotFourierFieldAccuracy PROPERTIES LABELS "plot")

@@ -6,6 +6,7 @@ module utils
     interface not_same
         module procedure not_same_scalar
         module procedure not_same_array
+        module procedure not_same_matrix
     end interface
 
 contains
@@ -109,5 +110,45 @@ contains
             end if
         end do
     end function contains_nan
+
+    function not_same_matrix(matrix_1, matrix_2, reltol_in, abstol_in)
+        real(dp), dimension(:, :), intent(in) :: matrix_1, matrix_2
+        real(dp), intent(in), optional :: reltol_in, abstol_in
+        logical :: not_same_matrix
+
+        real(dp) :: reltol, abstol
+        integer :: rows_1, cols_1, col
+        integer :: rows_2, cols_2
+
+        if (present(reltol_in)) then
+            reltol = reltol_in
+        else
+            reltol = 0.0_dp
+        end if
+        if (present(abstol_in)) then
+            abstol = abstol_in
+        else
+            abstol = reltol
+        end if
+
+        not_same_matrix = .false.
+
+        rows_1 = size(matrix_1, 1)
+        cols_1 = size(matrix_1, 2)
+        rows_2 = size(matrix_2, 1)
+        cols_2 = size(matrix_2, 2)
+        if (rows_1 /= rows_2 .or. cols_1 /= cols_2) then
+            print *, "Error in not_same_matrix: matrices must have the same dimensions."
+            print *, "Matrix 1 dimensions: ", rows_1, "x", cols_1
+            print *, "Matrix 2 dimensions: ", rows_2, "x", cols_2
+            error stop
+        end if
+        do col = 1, cols_1
+            if (not_same_array(matrix_1(:, col), matrix_2(:, col), reltol, abstol)) then
+                not_same_matrix = .true.
+                return
+            end if
+        end do
+    end function not_same_matrix
 
 end module utils

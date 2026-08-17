@@ -13,7 +13,7 @@ program plot_fourier_field_accuracy
 
     real(dp), parameter :: B_vartheta_covariant = 0.0_dp
     real(dp), parameter :: B_varphi_covariant = 1.0_dp
-    integer, parameter :: n_sweep = 13
+    integer, parameter :: n_sweep = 8
     integer :: n_grids(n_sweep)
     real(dp) :: n_grids_dp(n_sweep)
 
@@ -28,13 +28,21 @@ program plot_fourier_field_accuracy
     real(dp) :: ref_line_B(n_sweep), ref_line_dB(n_sweep)
     integer, parameter :: nfp = 2
 
+    logical :: test_failed
+    real(dp) :: tol = 1e-1
+    integer :: n_seed
+    integer, allocatable :: seed(:)
+
     type(horner_fourier_field_t) :: hfield
     type(fourier_field_t) :: sfield
     integer :: i, k
 
+    logical :: should_plot = .false.
     type(myplot) :: plt
 
-    n_grids = [15, 20, 30, 40, 50, 75, 100, 150, 200, 300, 500, 750, 1000]
+    test_failed = .false.
+
+    n_grids = [8, 16, 32, 64, 128, 256, 512, 1024] + 1
 
     k_mode = 0
     do m_idx = 1, n_m
@@ -52,6 +60,11 @@ program plot_fourier_field_accuracy
 
     call hfield%horner_fourier_field_init(m, n, B_modes, nfp=nfp)
 
+    ! for reproducibile test results we set the seed
+    call random_seed(size=n_seed)
+    allocate (seed(n_seed))
+    seed = 123456789
+    call random_seed(put=seed)
     do i = 1, n_check
         call random_number(rnd); theta_check(i) = rnd*2.0_dp*pi
         call random_number(rnd); phi_check(i) = rnd*2.0_dp*pi/nfp
@@ -67,7 +80,7 @@ program plot_fourier_field_accuracy
 
         call fourier_field_init(sfield, m, n, B_modes, &
                                 B_vartheta_covariant, B_varphi_covariant, &
-                                nfp=nfp, n_grid=n_grids(k))
+                                nfp=nfp, n_grid_in=n_grids(k))
 
         max_rel_err_B(k) = 0.0_dp
         max_rel_err_dB(k) = 0.0_dp
@@ -91,26 +104,43 @@ program plot_fourier_field_accuracy
     ref_line_B = max_rel_err_B(n_sweep)*(n_grids_dp(n_sweep)/n_grids_dp)**6
     ref_line_dB = max_rel_err_dB(n_sweep)*(n_grids_dp(n_sweep)/n_grids_dp)**5
 
-    ! --- Plot ---
-    call plt%initialize( &
-        xlabel="n grid", &
-        ylabel="max relative error", &
-        title="fourier_field_t accuracy vs. grid size (order-5 spline)", &
-        legend=.true.)
-    call plt%add_plot(n_grids_dp, max_rel_err_B, &
-                      label="B", &
-                      linestyle="-o", &
-                      xscale="log", &
-                      yscale="log")
-    call plt%add_plot(n_grids_dp, max_rel_err_dB, &
-                      label="dB/dx", &
-                      linestyle="-s")
-    call plt%add_plot(n_grids_dp, ref_line_B, &
-                      label="n^-6 (B)", &
-                      linestyle="--")
-    call plt%add_plot(n_grids_dp, ref_line_dB, &
-                      label="n^-5 (dB/dx)", &
-                      linestyle=":")
-    call plt%show()
+    do k = 1, n_sweep
+        if (n_grids(k) >= 30) then ! need sufficient points for asymptotics
+            if (max_rel_err_B(k) > (1.0_dp + tol)*ref_line_B(k) &
+                .or. max_rel_err_dB(k) > (1.0_dp + tol)*ref_line_dB(k)) then
+                print *, "test failed: fourier field accuracy for n_grid = ", n_grids(k)
+                print *, " rel_err_B = ", max_rel_err_B(k)
+                print *, " expected rel_err_B = ", ref_line_B(k)
+                print *, " rel_err_dB = ", max_rel_err_dB(k)
+                print *, " expected rel_err_dB = ", ref_line_dB(k)
+                test_failed = .true.
+            end if
+        end if
+    end do
+
+    if (should_plot) then
+        call plt%initialize( &
+            xlabel="n grid", &
+            ylabel="max relative error", &
+            title="fourier_field_t accuracy vs. grid size (order-5 spline)", &
+            legend=.true.)
+        call plt%add_plot(n_grids_dp, max_rel_err_B, &
+                          label="B", &
+                          linestyle="-o", &
+                          xscale="log", &
+                          yscale="log")
+        call plt%add_plot(n_grids_dp, max_rel_err_dB, &
+                          label="dB/dx", &
+                          linestyle="-s")
+        call plt%add_plot(n_grids_dp, ref_line_B, &
+                          label="n^-6 (B)", &
+                          linestyle="--")
+        call plt%add_plot(n_grids_dp, ref_line_dB, &
+                          label="n^-5 (dB/dx)", &
+                          linestyle=":")
+        call plt%show()
+    end if
+
+    if (test_failed) error stop "test failed: fourier field accuracy"
 
 end program plot_fourier_field_accuracy

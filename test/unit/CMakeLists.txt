@@ -82,3 +82,13 @@ add_executable(plot_fit_functions.x plot_fit_functions.f90)
 target_link_libraries(plot_fit_functions.x offset_lib utils_lib myplot_lib)
 add_test(PlotFitFunctions plot_fit_functions.x)
 set_tests_properties(PlotFitFunctions PROPERTIES LABELS "plot")
+
+add_executable(test_fourier_field_accuracy.x test_fourier_field_accuracy.f90)
+target_link_libraries(test_fourier_field_accuracy.x myplot_lib rabe_lib helpers_lib)
+add_test(TestFourierFieldAccuracy test_fourier_field_accuracy.x)
+set_tests_properties(TestFourierFieldAccuracy PROPERTIES LABELS "quick")
+
+add_executable(test_fft.x test_fft.f90)
+target_link_libraries(test_fft.x rabe_lib helpers_lib)
+add_test(TestFFT test_fft.x)
+set_tests_properties(TestFFT PROPERTIES LABELS "quick")

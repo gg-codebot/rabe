@@ -196,4 +196,92 @@ contains
 
     end subroutine get_covariant_components
 
+    !> Convert Fourier coefficients to a magnetic field on a grid using
+    !! recurrence relations.
+    subroutine ift_modes_to_B(m, n, B_mn, B, theta, phi, nfp, n_grid)
+        use utils, only: linspace
+        use constants, only: pi
+        integer, intent(in) :: m(:)
+            !! poloidal mode numbers (flat array, length mn_max)
+        integer, intent(in) :: n(:)
+            !! toroidal mode numbers normalised to nfp (flat array, length mn_max)
+        real(dp), intent(in) :: B_mn(:)
+            !! Fourier coefficients of B in Tesla (flat array, length mn_max)
+        integer, intent(in), optional :: nfp
+            !! number of field periods
+        real(dp), intent(out), allocatable :: theta(:)
+            !! poloidal angles in radians (flat array, length n_grid)
+        real(dp), intent(out), allocatable :: phi(:)
+            !! toroidal angles in radians (flat array, length n_grid)
+        real(dp), intent(out), allocatable :: B(:, :)
+            !! magnetic field in Tesla (2D array, size n_grid x n_grid)
+        integer, intent(in), optional :: n_grid
+            !! spline grid points per angle direction
+
+        integer, parameter :: n_grid_default = 200
+
+        integer :: n_theta, n_phi, i_theta, i_phi
+        integer :: number_of_modes, i_mode
+        complex(dp) :: imag
+        complex(dp), dimension(:), allocatable :: exp_dtheta, exp_dphi
+        complex(dp), dimension(:), allocatable :: exp_phi, exp_phase
+        real(dp) :: dtheta, dphi, acc
+        real(dp), allocatable :: m_real(:), n_real(:)
+        real(dp) :: nfp_real
+
+        if (.not. present(nfp)) then
+            nfp_real = 1.0_dp
+        elseif (nfp > 0) then
+            nfp_real = real(nfp, dp)
+        else
+            print *, "Error: nfp must be positive!"
+            error stop
+        end if
+
+        if (.not. present(n_grid)) then
+            n_theta = n_grid_default
+            n_phi = n_grid_default
+        elseif (n_grid >= 2) then
+            n_theta = n_grid
+            n_phi = n_grid
+        else
+            print *, "Error: n_grid must be at least 2!"
+            error stop
+        end if
+
+        allocate (theta(n_theta), phi(n_phi))
+        allocate (B(n_theta, n_phi))
+
+        call linspace(0.0_dp, 2.0_dp*pi, n_theta, theta)
+        call linspace(0.0_dp, 2.0_dp*pi/nfp_real, n_phi, phi)
+
+        number_of_modes = size(m)
+        allocate (m_real(number_of_modes), n_real(number_of_modes))
+        m_real = real(m, dp)
+        n_real = real(n, dp)*nfp_real
+
+        allocate (exp_dtheta(number_of_modes), exp_dphi(number_of_modes))
+        imag = (0.0_dp, 1.0_dp)
+        dtheta = theta(2) - theta(1)
+        exp_dtheta = exp(imag*m_real*dtheta)
+        dphi = phi(2) - phi(1)
+        exp_dphi = exp(-imag*n_real*dphi)
+
+        allocate (exp_phi(number_of_modes), exp_phase(number_of_modes))
+        exp_phi = (1.0_dp, 0.0_dp)
+
+        do i_phi = 1, n_phi
+            exp_phase = exp_phi
+            do i_theta = 1, n_theta
+                acc = 0.0_dp
+                do i_mode = 1, number_of_modes
+                    acc = acc + B_mn(i_mode)*real(exp_phase(i_mode), dp)
+                end do
+                B(i_theta, i_phi) = acc
+                exp_phase = exp_phase*exp_dtheta
+            end do
+            exp_phi = exp_phi*exp_dphi
+        end do
+    end subroutine ift_modes_to_B
+
 end module horner_fourier_field
