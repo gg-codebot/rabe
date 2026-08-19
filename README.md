@@ -3,6 +3,8 @@
 
 # rabe
 
+[![Documentation](https://img.shields.io/badge/docs-FORD-blue)](https://itpplasma.github.io/rabe/)
+
 An implementation of the nea**r**-omnigenous, **a**symptotic **b**ootstrap **e**xpressions of Ref. [1,2].
 
 ## Summary

@@ -1,0 +1,53 @@
+name: docs
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  docs:
+    runs-on: ubuntu-22.04
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install FORD
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y graphviz
+        pip install ford
+
+    - name: Build documentation
+      run: |
+        set -o pipefail
+        ford ford.md 2>&1 | tee ford.log
+
+    - name: Fail on FORD warnings
+      run: |
+        if grep -Eiq '^\s*(warning|error)' ford.log; then
+          echo "FORD reported warnings:"
+          grep -Ein '^\s*(warning|error)' ford.log
+          exit 1
+        fi
+
+    - name: Deploy to GitHub Pages
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build/ford
+        # Docs own the branch root; keep_files preserves the benchmark
+        # dashboard published to dev/bench/ by benchmark.yml.
+        keep_files: true
