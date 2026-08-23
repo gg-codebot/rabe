@@ -3,12 +3,16 @@ module shaing_callen_wrappers
     use fieldline_mod, only: fieldline_t
     use field_base, only: field_t
     implicit none
+    private
 
     class(field_t), allocatable :: this_field
     type(fieldline_t) :: this_fieldline
     type(fieldline_t) :: null_fieldline
     real(dp) :: this_eta
     real(dp), parameter :: null_eta = -1.0_dp
+
+    public :: this_field, this_fieldline, null_fieldline, this_eta, null_eta
+    public :: wrapper_lambda_over_B_squared
 
 contains
 

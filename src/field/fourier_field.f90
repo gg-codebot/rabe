@@ -5,6 +5,9 @@ module fourier_field
     use interpolate, only: SplineData2D, construct_splines_2d, evaluate_splines_2d_der
 
     implicit none
+    private
+
+    public :: fourier_field_t, fourier_field_init, ifft_modes_to_B
 
     type, extends(field_t) :: fourier_field_t
         !! Magnetic field from a flat list of Boozer Fourier modes,

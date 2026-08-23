@@ -4,6 +4,7 @@ module make_fieldline
     use fieldline_mod, only: fieldline_t, flock_of_fieldlines_t
 
     implicit none
+    private
 
     type :: maxima_t
         integer :: n
@@ -12,6 +13,10 @@ module make_fieldline
         real(dp), dimension(:), allocatable :: B_error
         real(dp), dimension(:), allocatable :: phi_error
     end type maxima_t
+
+    public :: maxima_t, make_flock_of_fieldlines, make_flock_from_labels
+    public :: find_maxima_along_fieldline, pick_maximum_on_each_side
+    public :: get_global_B_max, is_not_integer
 
 contains
 

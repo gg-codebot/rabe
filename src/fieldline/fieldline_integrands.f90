@@ -3,6 +3,10 @@ module fieldline_integrands
     use field_base, only: field_t
 
     implicit none
+    private
+
+    public :: local_radial_drift, lambda_over_B_squared, B_squared
+    public :: calc_lambda_squared, nabla_s_over_B_squared
 
 contains
 

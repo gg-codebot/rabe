@@ -1,6 +1,7 @@
 module surface_average_mod
     use constants, only: dp, pi, machine_eps
     implicit none
+    private
 
     type :: surface_average_t
         !! flux surface averaged quantities computed by calc_surface_averages.
@@ -9,6 +10,8 @@ module surface_average_mod
         real(dp) :: lambda_b
         real(dp) :: nabla_s
     end type surface_average_t
+
+    public :: surface_average_t, calc_surface_averages
 
 contains
 

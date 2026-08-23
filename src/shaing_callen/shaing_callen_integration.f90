@@ -4,6 +4,10 @@ module shaing_callen_integration
     use integrate, only: sum_trapez_1d
     use utils, only: linspace
     implicit none
+    private
+
+    public :: get_eta_integration_grid, integrate_over_eta_grid
+    public :: get_phi_integration_grid, integrate_over_phi_grid
 
 contains
 

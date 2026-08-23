@@ -4,6 +4,9 @@ module deviation
     use fieldline_mod, only: flock_of_fieldlines_t
 
     implicit none
+    private
+
+    public :: calc_deviation
 
 contains
 

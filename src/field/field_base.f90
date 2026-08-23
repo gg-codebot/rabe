@@ -1,6 +1,9 @@
 module field_base
     use constants, only: dp
     implicit none
+    private
+
+    public :: field_t
 
     type, abstract :: field_t
         !! Abstract base type for magnetic fields in Boozer coordinates.

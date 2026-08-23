@@ -1,8 +1,9 @@
 module error_handling
     implicit none
+    private
 
     public :: failed_sanity_check, set_unsafe_mode
-    public :: did_fail_any_sanity_check
+    public :: did_fail_any_sanity_check, reset_failed_check_counter
 
     logical, private :: unsafe_mode = .false.
     integer, private :: failed_check_counter = 0

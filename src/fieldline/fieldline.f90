@@ -2,6 +2,9 @@ module fieldline_mod
     use constants, only: dp, pi
 
     implicit none
+    private
+
+    public :: fieldline_t, flock_of_fieldlines_t
 
     type :: flock_of_fieldlines_t
         !! Collection of field lines on a flux surface and surface properties.

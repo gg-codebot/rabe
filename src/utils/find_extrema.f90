@@ -1,6 +1,7 @@
 module find_extrema
     use constants, only: dp
     implicit none
+    private
 
     abstract interface
         subroutine func1d(x, value)
@@ -11,6 +12,8 @@ module find_extrema
     end interface
 
     procedure(func1d), private, pointer, save :: func_ptr => null()
+
+    public :: find_local_minima, find_local_maxima, find_global_extrema
 
 contains
 
