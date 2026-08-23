@@ -1,6 +1,10 @@
 module fourier
     use constants, only: dp, pi
     implicit none
+    private
+
+    public :: real_ft
+    public :: check_is_equidistant, check_has_correct_endpoints
 
 contains
 

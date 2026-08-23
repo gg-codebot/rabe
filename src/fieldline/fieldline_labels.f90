@@ -2,6 +2,7 @@ module fieldline_labels
     use constants, only: dp, pi
 
     implicit none
+    private
 
     type :: modes_t
         real(dp), dimension(:), allocatable :: cos_coeffs, sin_coeffs
@@ -13,6 +14,10 @@ module fieldline_labels
         type(modes_t) :: delta_eta
         type(modes_t) :: delta_aspect_ratio
     end type fieldline_modes_t
+
+    public :: modes_t, fieldline_modes_t
+    public :: fourier_transform_over_label, allocate_modes
+    public :: get_labels, calc_iota_p
 
 contains
 

@@ -2,6 +2,9 @@ module diophantine
     use constants, only: dp
 
     implicit none
+    private
+
+    public :: gcd, lcm, rational_approx
 
 contains
 

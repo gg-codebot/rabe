@@ -3,6 +3,7 @@ module integrate
     use, intrinsic :: ieee_arithmetic, only: ieee_is_nan
 
     implicit none
+    private
 
     integer, parameter :: quadkind = 8
 
@@ -15,6 +16,8 @@ module integrate
     end interface
 
     procedure(integrand_i), private, pointer, save :: integrand => null()
+
+    public :: integrand_i, integrate_1d, sum_trapez_1d
 
 contains
 

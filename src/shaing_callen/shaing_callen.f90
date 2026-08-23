@@ -5,6 +5,12 @@ module shaing_callen_mod
     use shaing_callen_integration, only: get_eta_integration_grid
     use shaing_callen_integration, only: integrate_over_eta_grid
     implicit none
+    private
+
+    public :: calc_lambda_LC, calc_trapped_fraction
+    public :: calc_avg_B_squared_over_avg_lambda, get_non_omnigenous_remainder
+    public :: calc_avg_normalized_B_squared_dphimax_dxi0
+    public :: calc_avg_normalized_lambda_dphimax_dxi0, calc_periodic_dydx
 
 contains
 

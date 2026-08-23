@@ -4,6 +4,11 @@ module coefficients
     use, intrinsic :: ieee_arithmetic, only: ieee_is_nan
 
     implicit none
+    private
+
+    public :: calc_finite_boundary_layer_correction
+    public :: calc_gradient_scaling_factor_r_eff
+    public :: calc_offset_coefficients, calc_nu_star_crit
 
 contains
 

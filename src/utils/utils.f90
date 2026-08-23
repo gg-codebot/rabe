@@ -2,12 +2,15 @@ module utils
     use constants, only: dp
 
     implicit none
+    private
 
     interface not_same
         module procedure not_same_scalar
         module procedure not_same_array
         module procedure not_same_matrix
     end interface
+
+    public :: linspace, not_same
 
 contains
     subroutine linspace(a, b, n, x, include_endpoint)

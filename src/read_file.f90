@@ -4,13 +4,16 @@ module read_file
     use, intrinsic :: ieee_arithmetic, only: ieee_is_nan
 
     implicit none
+    private
+
+    public :: read_namelist
 
     character(len=100), public, protected :: field_file
     character(len=20), public, protected :: field_type
     real(dp), public, protected :: M_pol
     real(dp), public, protected :: N_tor
     real(dp), dimension(:), allocatable, public, protected :: s_tor
-    real(dp), public, protected :: ds_dr ![1/cm]
+    real(dp) :: ds_dr ![1/cm]
     real(dp), public, protected :: sign_sqrtg
     integer, public, protected :: max_n_fieldlines
     logical, public, protected :: should_calc_shaing_callen
