@@ -13,7 +13,6 @@ module read_file
     real(dp), public, protected :: M_pol
     real(dp), public, protected :: N_tor
     real(dp), dimension(:), allocatable, public, protected :: s_tor
-    real(dp) :: ds_dr ![1/cm]
     real(dp), public, protected :: sign_sqrtg
     integer, public, protected :: max_n_fieldlines
     logical, public, protected :: should_calc_shaing_callen
