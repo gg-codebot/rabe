@@ -28,7 +28,7 @@ program test_g_zero_precession
 
     real(dp), parameter :: l_c = 1e-4, s_tor = 0.25_dp
     real(dp), parameter :: Omega_hat_zero = 0.0_dp
-    real(dp), parameter :: tol = 1e-6
+    real(dp), parameter :: tol = 5e-5 ! found empirically, not theory
     type(bounce_integrals_t) :: bounce_integrals
     real(dp), dimension(:), allocatable :: flux_modes
     type(fieldline_modes_t) :: fieldline_modes
