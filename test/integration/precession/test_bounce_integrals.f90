@@ -75,7 +75,7 @@ program test_precession_analytic
 
     ! tau =  bounce_time * v / (B_varphi + iota*B_vartheta) i.e. [1/T]
     tau = bounce_integrals%avg_bounce_time_weighted/(2.0_dp*bounce_integrals%t)
-    call field%get_covariant_components(B_varphi, B_vartheta)
+    call field%get_covariant_components(B_vartheta, B_varphi)
     tau = tau/(B_varphi + iota*B_vartheta)
     do idx = 1, size(tau)
         if (bounce_integrals%t(idx) < 1e-14) then
