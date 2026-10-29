@@ -36,7 +36,7 @@ program test_precession_analytic
     real(dp), dimension(:), allocatable :: tau, analytic_tau
     real(dp), dimension(:), allocatable :: deeply_trapped_tau
     logical, dimension(:), allocatable :: is_valid
-    real(dp), parameter :: retol = abs(eps_0)
+    real(dp), parameter :: retol = 1e-7 ! purely from measurement, not theory
     real(dp) :: B_min, B_varphi, B_vartheta
 
     logical :: test_failed
@@ -130,7 +130,7 @@ contains
         real(dp), dimension(size(eta)) :: k_squared
 
         integer :: idx
-        real(dp) :: elliptic
+        real(dp) :: elliptic, alpha_squared
 
         if (any(eta < 0.0_dp)) then
             print *, "Error: eta must be non-negative!"
@@ -155,9 +155,13 @@ contains
         end if
 
         do idx = 1, size(eta)
-            elliptic = calc_elliptic(k_squared(idx))
+            ! along the orbit 1/B = 1/(B_min*(1 - alpha^2*sin^2(x)))
+            ! with sin(chi/2) = k*sin(x)
+            alpha_squared = -2.0_dp*abs(B_0*eps_0)*k_squared(idx)/B_min
+            elliptic = calc_elliptic(k_squared(idx), alpha_squared)
             ! tau = bounce_time*v/(B_varphi + iota*B_vartheta)
-            tau(idx) = 8.0_dp*elliptic/sqrt(2.0_dp*abs(B_0*eps_0)*eta(idx))/(B_0*N_tor)
+            tau(idx) = 8.0_dp*elliptic/sqrt(2.0_dp*abs(B_0*eps_0)*eta(idx)) &
+                       /(B_min*N_tor)
         end do
 
     end function calc_tau
