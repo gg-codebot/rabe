@@ -48,16 +48,10 @@ program test_precession_analytic
     real(dp) :: shift
     logical, dimension(:), allocatable :: is_barely_trapped
     logical, dimension(:), allocatable :: is_deeply_trapped
-    ! Achievable tolerances scale with the eta_tol window (fractional pitch
-    ! distance from each limit), from the neglected terms of the exact
-    ! pendulum result tau ~ (2/pi)*K(k), k^2 = (eta_t - eta)/(eta_t - eta_c):
-    !   deeply trapped (keeps 1 + k^2/4):  err ~ (9/64)*eta_tol^2,
-    !     floored at ~2e-4 by treating the metric weight 1/B as 1/B_min
-    !   barely trapped (leading log only): err ~ eta_tol/2
-    !     (eta_tol/4 from the dropped (k'^2/4)*(ln(4/k')-1) term,
-    !      doubled by the single-point shift fit)
-    ! => for eta_tol = 1e-2: deep ~2e-4, barely ~5e-3 (separate tolerances TODO)
-    real(dp), parameter :: retol = -1e-8_dp, eta_tol = 1e-2_dp
+    ! eta_tol: fraction of the trapped eta range at each end in which the
+    ! deeply and barely trapped limits are compared (only valid near the ends)
+    ! further in (larger eta_tol) approximations break down -> need bigger retol
+    real(dp), parameter :: retol = 2e-3_dp, eta_tol = 1e-2_dp
     real(dp) :: eta_c, eta_t
 
     logical :: test_failed
@@ -253,7 +247,9 @@ contains
         d2B_dphi2 = abs(B_0*eps_0*N_tor**2.0_dp)
         B_min = B_0*(1.0_dp - abs(eps_0))
         k_squared = (1.0_dp - B_min*eta)/(2.0_dp*eta*abs(B_0*eps_0))
-        tau = 4.0_dp*pi*sqrt(0.5_dp/(d2B_dphi2*eta))*(1.0_dp + k_squared/4.0_dp)
+        ! deeply trapped particles see B ~ B_min
+        tau = 4.0_dp*pi*sqrt(0.5_dp/(d2B_dphi2*eta))*(1.0_dp + k_squared/4.0_dp) &
+              /B_min
 
     end function calc_deeply_trapped_tau
 
@@ -267,7 +263,9 @@ contains
 
         d2B_dphi2 = abs(B_0*eps_0*N_tor**2.0_dp)
         eta_c = 1.0_dp/(B_0*(1.0_dp + abs(eps_0)))
-        tau = -4.0_dp*sqrt(0.5_dp/(d2B_dphi2*eta))*log((eta - eta_c)/eta_c)
+        ! barely trapped particles see B ~ B_max = 1/eta_c
+        tau = -4.0_dp*sqrt(0.5_dp/(d2B_dphi2*eta))*log((eta - eta_c)/eta_c) &
+              *eta_c
 
     end function calc_barely_trapped_tau
 
