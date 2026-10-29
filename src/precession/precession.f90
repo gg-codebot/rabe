@@ -8,8 +8,6 @@ module precession
     use grid_mod, only: fieldline_for_precession_t
     use grid_mod, only: set_integration_grids
     use grid_mod, only: compute_bounce_integrals
-    use grid_mod, only: set_splines
-    use interpolate, only: SplineData1D, construct_splines_1d, evaluate_splines_1d_many
 
     implicit none
 
@@ -236,49 +234,6 @@ contains
         end if
     end function get_biggest_minimum
 
-    subroutine integrate_radial_drift(grid, fieldline, integral)
-        use odeint_allroutines_sub, only: odeint_allroutines
-        use grid_instance, only: initialize_grid_instance
-        type(integration_grid_t), intent(in) :: grid
-        type(fieldline_t), intent(in) :: fieldline
-        real(dp), intent(out) :: integral
-
-        integer, parameter :: ndim = 1
-        real(dp) :: t_start, t_end
-        real(dp), parameter :: relerr = 1e-8_dp
-        real(dp), dimension(ndim) :: y
-
-        t_start = grid%t(1)
-        t_end = grid%t(size(grid%t))
-
-        call initialize_grid_instance(grid)
-        y(1) = 0.0_dp
-        call odeint_allroutines(y, ndim, t_start, t_end, relerr, rhs)
-
-        integral = y(1)
-    end subroutine integrate_radial_drift
-
-    subroutine rhs(t, y, dydt)
-        use grid_instance, only: get_radial_drift
-        real(dp), intent(in) :: t
-        real(dp), dimension(:), intent(in) :: y
-        real(dp), dimension(:), intent(out) :: dydt
-
-        real(dp) :: radial_drift
-        call get_radial_drift(t, dydt(1))
-
-    end subroutine rhs
-
-    function get_fieldline_at_global_maximum(fieldlines) result(max_fieldline)
-        class(fieldline_t), dimension(:), intent(in) :: fieldlines
-        type(fieldline_t) :: max_fieldline
-
-        integer :: max_index
-
-        max_index = maxloc(fieldlines%B_max(1), dim=1)
-        max_fieldline = fieldlines(max_index)
-    end function get_fieldline_at_global_maximum
-
     subroutine find_magnetic_well_bottom(field, fieldline, phi_bottom, B_bottom)
         use find_extrema, only: find_local_minima
         class(field_t), intent(in) :: field
@@ -341,52 +296,5 @@ contains
         end subroutine B_along_fieldline
 
     end subroutine find_magnetic_well_bottom
-
-    function find_turning_points(field, fieldline, eta, reltol_in) result(phi_turning)
-        use find_extrema, only: find_global_minimum
-        class(field_t), intent(in) :: field
-        type(fieldline_for_precession_t), intent(in) :: fieldline
-        real(dp), intent(in) :: eta
-        real(dp), intent(in), optional :: reltol_in
-        real(dp), dimension(2) :: phi_turning, extremum_locations
-        real(dp) :: interval(2)
-
-        real(dp) :: reltol
-
-        if (present(reltol_in)) then
-            reltol = reltol_in
-        else
-            reltol = 1e-4_dp
-        end if
-
-        ! turning points are shifted slightly away from the extrema to avoid
-        ! numerical issues with the integrand
-        interval(1) = fieldline%phi_max(1)
-        interval(2) = fieldline%phi_min
-        extremum_locations = find_global_minimum(lambda_squared_along_fieldline, interval, reltol)
-        phi_turning(1) = extremum_locations(1) + (interval(2) - interval(1))*reltol
-
-        interval(1) = fieldline%phi_min
-        interval(2) = fieldline%phi_max(2)
-        extremum_locations = find_global_minimum(lambda_squared_along_fieldline, interval, reltol)
-        phi_turning(2) = extremum_locations(1) - (interval(2) - interval(1))*reltol
-
-    contains
-
-        subroutine lambda_squared_along_fieldline(phi, lambda_squared)
-            real(dp), dimension(:), intent(in) :: phi
-            real(dp), dimension(:), intent(out) :: lambda_squared
-
-            real(dp), dimension(size(phi)) :: theta, B
-            integer :: idx
-
-            theta = fieldline%get_theta(phi)
-            do idx = 1, size(phi)
-                call field%compute_B_mod(theta(idx), phi(idx), B(idx))
-            end do
-            lambda_squared = abs(1.0_dp - B*eta)
-        end subroutine lambda_squared_along_fieldline
-
-    end function find_turning_points
 
 end module precession

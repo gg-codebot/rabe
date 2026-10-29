@@ -8,12 +8,12 @@ program plot_bounce_time_averages
     use make_fieldline, only: make_flock_from_labels
     use grid_mod, only: integration_grid_t
     use grid_mod, only: fieldline_for_precession_t
-    use precession, only: get_fieldline_at_global_maximum
+    use precession_reference, only: get_fieldline_at_global_maximum
     use precession, only: find_magnetic_well_bottom
     use grid_mod, only: set_integration_grids
     use grid_mod, only: compute_bounce_integrals
     use grid_mod, only: set_splines
-    use grid_mod, only: evaluate_grid_splines
+    use precession_reference, only: evaluate_grid_splines
     use field_instance, only: initialize_field_instance
     use utils, only: linspace
     use myplot_module, only: myplot

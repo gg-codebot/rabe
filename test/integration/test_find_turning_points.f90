@@ -3,7 +3,7 @@ program test_find_turning_points
     use utils, only: linspace, not_same
     use mock_field, only: mock_field_t
     use grid_mod, only: fieldline_for_precession_t
-    use precession, only: find_turning_points
+    use precession_reference, only: find_turning_points
     use myplot_module, only: myplot
 
     implicit none

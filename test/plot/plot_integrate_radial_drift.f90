@@ -8,9 +8,9 @@ program plot_integrate_radial_drift
     use grid_mod, only: set_integration_grids
     use grid_mod, only: compute_bounce_integrals
     use grid_mod, only: set_splines
-    use precession, only: get_fieldline_at_global_maximum
+    use precession_reference, only: get_fieldline_at_global_maximum
     use precession, only: find_magnetic_well_bottom
-    use precession, only: integrate_radial_drift
+    use precession_reference, only: integrate_radial_drift
     use field_instance, only: initialize_field_instance
     use utils, only: linspace
 

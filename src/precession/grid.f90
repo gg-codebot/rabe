@@ -2,7 +2,7 @@ module grid_mod
     use constants, only: dp, pi
     use field_base, only: field_3D_t
     use fieldline_mod, only: fieldline_t
-    use interpolate, only: SplineData1D, construct_splines_1d, evaluate_splines_1d_many
+    use interpolate, only: SplineData1D, construct_splines_1d
     use, intrinsic :: ieee_arithmetic, only: ieee_is_nan
     implicit none
 
@@ -304,22 +304,4 @@ contains
                                   grid%poloidal_drift_weighted_spline)
     end subroutine set_splines
 
-    subroutine evaluate_grid_splines(grid, t_eval, I_j_eval, bounce_coef_eval, &
-                                     radial_drift_eval, poloidal_drift_eval)
-        type(integration_grid_t), intent(in) :: grid
-        real(dp), intent(in) :: t_eval(:)
-        real(dp), intent(out) :: I_j_eval(:)
-        real(dp), intent(out) :: bounce_coef_eval(:)
-        real(dp), intent(out), optional :: radial_drift_eval(:)
-        real(dp), intent(out), optional :: poloidal_drift_eval(:)
-
-        call evaluate_splines_1d_many(grid%I_j_spline, t_eval, I_j_eval)
-        call evaluate_splines_1d_many(grid%bounce_time_weighted_spline, t_eval, bounce_coef_eval)
-        if (present(radial_drift_eval)) then
-            call evaluate_splines_1d_many(grid%radial_drift_weighted_spline, t_eval, radial_drift_eval)
-        end if
-        if (present(poloidal_drift_eval)) then
-            call evaluate_splines_1d_many(grid%poloidal_drift_weighted_spline, t_eval, poloidal_drift_eval)
-        end if
-    end subroutine evaluate_grid_splines
 end module grid_mod
