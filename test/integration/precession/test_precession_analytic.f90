@@ -92,7 +92,8 @@ program test_precession_analytic
     ! Bounce integrals computed once
     call setup_bounce_integrals(field, flock, s_tor, bounce_integrals)
 
-    call linspace(1.0_dp, real(n_case, kind=dp)/3.0_dp, n_case, Omega_hat)
+    Omega_max = get_max_valid_l_c(bounce_integrals, 1.0_dp)/l_c
+    call linspace(1.0_dp, log(Omega_max)/log(2.0_dp), n_case, Omega_hat)
     Omega_hat = 2.0_dp**Omega_hat
     J_1 = calc_J_1(eps_0, eps_1, B_0, N_tor)
 
@@ -106,12 +107,9 @@ program test_precession_analytic
         flux_1_analytic(case) = calc_flux_1_analytic(A_1(case), J_1, eps_0, B_0)
     end do
 
-    Omega_max = get_max_valid_l_c(bounce_integrals, 1.0_dp)/l_c
-    print *, "Omega_max = ", Omega_max
     do case = 1, n_case
         if (A_1(case) < A_min) cycle
-        if (Omega_hat(case) > Omega_max) cycle
-        flux_tol = 1.0_dp/log(A_1(case))
+        flux_tol = 0.5_dp/log(A_1(case))
         if (not_same(flux_1(case), flux_1_analytic(case), &
                      reltol_in=flux_tol, abstol_in=0.0_dp)) then
             print *, "-------------------------------------------------------------"
@@ -222,12 +220,12 @@ contains
                           xscale="log", yscale="log", linestyle="o", markersize=4)
         call plt%add_plot(Omega_hat, flux_analytic, label="analytic", &
                           xscale="log", yscale="log", linestyle="-", linewidth=2)
-        call plt_ratio%initialize(xlabel="$\hat\Omega$", &
-                                  ylabel="numeric / analytic", &
+        call plt_ratio%initialize(xlabel="$\ln\hat\Omega$", &
+                                  ylabel="1 - numeric / analytic", &
                                   legend=.true., &
-                                  title="flux mode 1 ratio")
-        call plt_ratio%add_plot(Omega_hat, flux/flux_analytic, label="ratio", &
-                                xscale="log", linestyle="o-", linewidth=2)
+                                  title="flux mode 1 deviation")
+        call plt_ratio%add_plot(log(Omega_hat), 1.0_dp - flux/flux_analytic, &
+                                label="deviation", linestyle="o-", linewidth=2)
     end subroutine plot_flux
 
     function calc_A_m(Omega_hat, l_c, m, eps_0, B_0, N_tor)

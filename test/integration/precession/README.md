@@ -3,9 +3,10 @@
 ## Flux mode vs. analytic asymptote (`test_precession_analytic`)
 
 `test_precession_analytic` checks the numerical flux mode against the large-$A$
-asymptote for $A_1 > 200$, with tolerance $1/\ln A_1$ (the order of the next
-correction). The check stops at $\hat\Omega_\mathrm{max}$, beyond which the
-$\eta$ grid no longer resolves the boundary layer at $\eta_c$ (see below). The measured ratio is $0.95 \dots 0.96$ and approaches $1$ as
+asymptote for $A_1 > 200$, with tolerance $0.5/\ln A_1$ (the next correction is
+$\mathcal{O}(1/\ln A)$). $\hat\Omega$ only runs up to $\hat\Omega_\mathrm{max}$,
+beyond which the $\eta$ grid no longer resolves the boundary layer at $\eta_c$
+(see below). The measured ratio is $0.95 \dots 0.96$ and approaches $1$ as
 $\mathcal{O}(1/\ln A)$.
 
 ### Analytic formula
