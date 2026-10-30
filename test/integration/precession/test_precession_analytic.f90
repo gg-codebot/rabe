@@ -225,7 +225,7 @@ contains
         eta_b = abs(1.0_dp/((1.0_dp + abs(eps_0))*B_0))
         I_B = calc_I_B(eps_0, B_0, N_tor)
         d2B_dphi2 = abs(B_0*eps_0*N_tor**2.0_dp)
-        calc_A_m = sqrt(pi*m*l_c*Omega_hat*eta_b**2.0_dp/I_B)* &
+        calc_A_m = sqrt(2.0_dp*m*l_c*Omega_hat*eta_b**2.0_dp/I_B)* &
                    (2.0_dp*eta_b*d2B_dphi2)**(-0.25_dp)
         if (ieee_is_nan(calc_A_m)) then
             print *, "error: A_m is NaN."
