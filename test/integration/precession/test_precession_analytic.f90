@@ -62,8 +62,6 @@ program test_precession_analytic
     logical :: test_failed
 
     logical :: should_plot = .false.
-    ! save flux mode plots (numeric vs analytic over Omega_hat) as png
-    logical :: should_save_plot = .false.
     type(myplot) :: plt, plt2, plt3
 
     test_failed = .false.
@@ -179,18 +177,11 @@ program test_precession_analytic
         test_failed = .true.
     end if
 
-    if (should_plot .or. should_save_plot) then
-        call plot_flux(plt, plt2, Omega_hat, flux_1, flux_1_analytic)
-        if (should_save_plot) then
-            call plt%save("precession_flux_mode_1.png")
-            call plt2%save("precession_flux_mode_1_ratio.png")
-        else
-            call plt%show()
-            call plt2%show()
-        end if
-    end if
-
     if (should_plot) then
+        call plot_flux(plt, plt2, Omega_hat, flux_1, flux_1_analytic)
+        call plt%show()
+        call plt2%show()
+
         call plt3%initialize(xlabel="$\sqrt{\eta - \eta_c}$", &
                              ylabel="bounce time", &
                              legend=.true., &

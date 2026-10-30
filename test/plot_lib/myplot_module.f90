@@ -12,7 +12,6 @@ module myplot_module
         procedure :: add_colored_line
         procedure :: add_contour
         procedure :: show
-        procedure :: save
     end type myplot
 
 contains
@@ -204,12 +203,5 @@ contains
 
         call self%plt%showfig()
     end subroutine show
-
-    subroutine save(self, filename)
-        class(myplot), intent(inout) :: self
-        character(len=*), intent(in) :: filename
-
-        call self%plt%savefig(filename)
-    end subroutine save
 
 end module myplot_module
