@@ -220,12 +220,13 @@ contains
                           xscale="log", yscale="log", linestyle="o", markersize=4)
         call plt%add_plot(Omega_hat, flux_analytic, label="analytic", &
                           xscale="log", yscale="log", linestyle="-", linewidth=2)
-        call plt_ratio%initialize(xlabel="$\ln\hat\Omega$", &
+        call plt_ratio%initialize(xlabel="$\hat\Omega$", &
                                   ylabel="1 - numeric / analytic", &
                                   legend=.true., &
                                   title="flux mode 1 deviation")
-        call plt_ratio%add_plot(log(Omega_hat), 1.0_dp - flux/flux_analytic, &
-                                label="deviation", linestyle="o-", linewidth=2)
+        call plt_ratio%add_plot(Omega_hat, 1.0_dp - flux/flux_analytic, &
+                                label="deviation", xscale="log", linestyle="o-", &
+                                linewidth=2)
     end subroutine plot_flux
 
     function calc_A_m(Omega_hat, l_c, m, eps_0, B_0, N_tor)
