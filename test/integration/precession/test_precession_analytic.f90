@@ -165,6 +165,18 @@ program test_precession_analytic
         test_failed = .true.
     end if
 
+    ! I_j is not available at eta_c itself; at the next grid point the offset
+    ! is O(x ln x) with x = eta - eta_c, well below retol
+    idx = n_eta - 1
+    if (not_same(bounce_integrals%avg_I_j(idx), calc_I_B(eps_0, B_0, N_tor), &
+                 reltol_in=retol, abstol_in=0.0_dp)) then
+        print *, "-------------------------------------------------------------"
+        print *, "test_precession_analytic failed: I_B"
+        print *, "found: ", bounce_integrals%avg_I_j(idx)
+        print *, "expected: ", calc_I_B(eps_0, B_0, N_tor)
+        test_failed = .true.
+    end if
+
     if (should_plot) then
         call plt%initialize(xlabel="Omega_hat", &
                             ylabel="-Flux mode 1", &
@@ -211,8 +223,7 @@ contains
         real(dp) :: eta_b, d2B_dphi2, I_B
 
         eta_b = abs(1.0_dp/((1.0_dp + abs(eps_0))*B_0))
-        I_B = 4.0_dp*sqrt(2.0_dp*abs(eps_0)/(1.0_dp + abs(eps_0)))/N_tor/B_0**2.0_dp
-        I_B = I_B*(1.0_dp + 2.0_dp/3.0_dp*abs(eps_0))
+        I_B = calc_I_B(eps_0, B_0, N_tor)
         d2B_dphi2 = abs(B_0*eps_0*N_tor**2.0_dp)
         calc_A_m = sqrt(pi*m*l_c*Omega_hat*eta_b**2.0_dp/I_B)* &
                    (2.0_dp*eta_b*d2B_dphi2)**(-0.25_dp)
@@ -229,6 +240,15 @@ contains
             error stop
         end if
     end function calc_A_m
+
+    !> field line average of I_j at eta_c (independent of iota to O(eps_1^2))
+    function calc_I_B(eps_0, B_0, N_tor) result(I_B)
+        real(dp), intent(in) :: eps_0, B_0, N_tor
+        real(dp) :: I_B
+
+        I_B = 4.0_dp*sqrt(2.0_dp*abs(eps_0)/(1.0_dp + abs(eps_0)))/N_tor/B_0**2.0_dp
+        I_B = I_B*(1.0_dp + 2.0_dp/3.0_dp*abs(eps_0))
+    end function calc_I_B
 
     !> m=1 mode at eta_c, J_1 = 2/3 d_eta I_V,1 (cf. test_radial_drift),
     !! valid for iota = 0; same sign as the radial drift mode
@@ -247,7 +267,7 @@ contains
     function calc_flux_1_analytic(A_1, J_1, eps_0, B_0) result(flux_1)
         real(dp), intent(in) :: A_1, J_1, eps_0, B_0
         real(dp) :: flux_1
-        real(dp) :: eta_b, I_B
+        real(dp) :: eta_b
 
         eta_b = abs(1.0_dp/((1.0_dp + abs(eps_0))*B_0))
         flux_1 = sqrt(2.0_dp)*eta_b*J_1/(A_1*sqrt(abs(log(A_1))))
