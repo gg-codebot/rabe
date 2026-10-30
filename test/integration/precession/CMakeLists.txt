@@ -24,7 +24,7 @@ set_tests_properties(TestRadialDrift PROPERTIES LABELS "current")
 add_executable(test_zero_precession.x test_zero_precession.f90)
 target_link_libraries(test_zero_precession.x rabe_lib helpers_lib)
 add_test(TestZeroPrecession test_zero_precession.x)
-set_tests_properties(TestZeroPrecession PROPERTIES LABELS "quick")
+set_tests_properties(TestZeroPrecession PROPERTIES LABELS "slow")
 
 add_executable(test_g_zero_precession.x test_g_zero_precession.f90)
 target_link_libraries(test_g_zero_precession.x rabe_lib helpers_lib)
