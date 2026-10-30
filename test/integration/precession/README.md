@@ -68,9 +68,10 @@ What has been verified:
 - An independent Python solve of the same equation from the dumped bounce data
   reproduces the Fortran flux to $\le 3\cdot 10^{-4}$ relative.
 - The inputs match the analytic ingredients:
-  - $I_j(\eta_c) = I_B$ (0.63381 vs 0.63378).
+  - $I_j(\eta_c) = I_B$ (0.63381 vs 0.63378, for $N = 1$, $B_0 = 1$).
   - $\tau_b$ follows the barely trapped log up to a constant shift.
-  - $\Delta s_1(\eta_c) = -2 J_1$: $-0.02633$ vs $-2\cdot 0.01304$.
+  - $\Delta s_1(\eta_c) = -2 J_1$: $-0.02633$ vs $-2\cdot 0.01304$
+    (for $N = 1$, $B_0 = 1$).
 
 ### Asymptote of the code's equation
 
@@ -86,15 +87,18 @@ $Q = |\kappa| a/(\eta_b I_B) = A^2/\eta_b^2$, so that
 ```
 
 The measured ratios ($\varepsilon_0 = -0.0125$, $\varepsilon_1 = -0.0005$,
-$N = 1$, $\iota = 0$) are:
+$N = n_\mathrm{fp} = 2$, $B_0 = 1.7$, $l_c = 5.432$, $\iota = 0$) are:
 
 | $A_1$            | $\Gamma_1/\Gamma_1^\mathrm{an}$ |
 |------------------|---------------------------------|
-| $2.1\cdot10^{2}$ | $0.951$                         |
-| $1.0\cdot10^{3}$ | $0.948$                         |
-| $5.6\cdot10^{3}$ | $0.955$                         |
-| $3.0\cdot10^{4}$ | $0.960$                         |
-| $1.7\cdot10^{5}$ | $0.964$                         |
+| $2.2\cdot10^{2}$ | $0.950$                         |
+| $1.9\cdot10^{3}$ | $0.950$                         |
+| $1.8\cdot10^{4}$ | $0.958$                         |
+| $1.8\cdot10^{5}$ | $0.964$                         |
+| $5.4\cdot10^{5}$ | $0.979$                         |
+
+The ratios with $N = 1$, $B_0 = 1$, $l_c = 1$ agree with these to within $10^{-3}$
+at equal $A_1$.
 
 ### Resolved along the way
 

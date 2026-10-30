@@ -14,8 +14,8 @@ program test_precession_analytic
 
     implicit none
 
-    real(dp), parameter :: M_pol = 0.0_dp, N_tor = 1.0_dp
-    real(dp), parameter :: B_0 = 1.0_dp, eps_0 = -0.0125_dp, &
+    real(dp), parameter :: M_pol = 0.0_dp, N_tor = 2.0_dp
+    real(dp), parameter :: B_0 = 1.7_dp, eps_0 = -0.0125_dp, &
                            eps_1 = -0.0005_dp
     type(anti_sigma_field_t) :: field_2D
     real(dp), parameter :: B_pert = 0.0000_dp, M_pol_pert = 1.0_dp, &
@@ -31,7 +31,7 @@ program test_precession_analytic
     real(dp) :: iota
     type(flock_of_fieldlines_t) :: flock
 
-    real(dp), parameter :: l_c = 1.0_dp, s_tor = 0.25_dp
+    real(dp), parameter :: l_c = 5.432_dp, s_tor = 0.25_dp
     integer, parameter :: n_case = 100
     integer :: case
     real(dp), dimension(n_case) :: Omega_hat
