@@ -3,7 +3,7 @@ module field_base
     implicit none
     private
 
-    public :: field_t
+    public :: field_t, field_3D_t
 
     type, abstract :: field_t
         !! Abstract base type for magnetic fields in Boozer coordinates.
