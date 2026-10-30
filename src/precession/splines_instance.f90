@@ -40,11 +40,15 @@ contains
 
         real(dp), parameter :: relerr = 1.0e-8_dp
         integer, parameter :: ndim = 6
+        ! the system is linear and the solution grows exponentially with
+        ! Omega_hat -> integrate in segments and renormalize to avoid overflow;
+        ! the flux mode is a ratio of components, so it is scale invariant
+        integer, parameter :: n_segments = 1000
         real(dp) :: y(ndim), y_startup(ndim)
         real(dp), parameter :: rel_start_up = 1.0e-4_dp
         complex(dp) :: scaler
-        real(dp) :: eps_t
-        real(dp) :: I_j, eta
+        real(dp) :: eps_t, t_from, t_to
+        integer :: segment
         if (.not. splines_initialized) then
           print *, "Error: get_flux_mode called before splines instance is initialized."
             error stop
@@ -53,7 +57,14 @@ contains
         eps_t = rel_start_up*(t_end - t_start)
         call get_startup(y_startup, t_start, eps_t)
         y = y_startup
-        call odeint_allroutines(y, ndim, t_start + eps_t, t_end, relerr, rhs)
+        do segment = 1, n_segments
+            t_from = t_start + eps_t + real(segment - 1, dp)/n_segments &
+                     *(t_end - t_start - eps_t)
+            t_to = t_start + eps_t + real(segment, dp)/n_segments &
+                   *(t_end - t_start - eps_t)
+            call odeint_allroutines(y, ndim, t_from, t_to, relerr, rhs)
+            y = y/maxval(abs(y(1:4)))
+        end do
 
         scaler = -i/complex(y(3), -y(1))
         flux_mode = real(i*scaler*complex(y(6), -y(5)))
