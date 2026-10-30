@@ -72,6 +72,8 @@ program test_precession_analytic
                                                       N_tor_pert, &
                                                       B_pert)
     call field%mock_field_3d_init(perturbed_field_2D)
+    ! analytic J_1 assumes theta = const along a well
+    field%iota = 0.0_dp
     call field%get_iota(s_tor, iota)
     call linspace(0.0_dp, 2.0_dp*pi, n_fieldlines + 1, temp)
     xi_0 = temp(1:n_fieldlines)
@@ -228,15 +230,14 @@ contains
         end if
     end function calc_A_m
 
+    !> m=1 mode at eta_c, J_1 = 2/3 d_eta I_V,1 (cf. test_radial_drift),
+    !! valid for iota = 0; same sign as the radial drift mode
     function calc_J_1(eps_0, eps_1, B_0, N_tor)
         real(dp), intent(in) :: eps_0, eps_1, B_0, N_tor
         real(dp) :: calc_J_1
-        real(dp) :: eta_b, I_B
 
-        I_B = 4.0_dp*sqrt(2.0_dp*abs(eps_0)/(1.0_dp + abs(eps_0)))/N_tor/B_0**2.0_dp
-        I_B = I_B*(1.0_dp + 2.0_dp/3.0_dp*abs(eps_0))
-        calc_J_1 = -0.25_dp*eps_1/eps_0*(1.0_dp + 16.0_dp/3.0_dp*abs(eps_0))
-        calc_J_1 = calc_J_1*I_B*B_0
+        calc_J_1 = -2.0_dp*sqrt(2.0_dp*abs(eps_0)/(1.0_dp + abs(eps_0)))/N_tor/B_0* &
+                   eps_1/eps_0*(1.0_dp + 3.0_dp*abs(eps_0))
         if (ieee_is_nan(calc_J_1)) then
             print *, "error: calc_J_1 is NaN."
             error stop

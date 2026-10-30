@@ -46,7 +46,7 @@ program test_radial_drift
 
     logical :: test_failed
 
-    logical :: should_plot = .true.
+    logical :: should_plot = .false.
     type(myplot) :: plt
     integer :: n_plot_points = 100
     real(dp), dimension(:), allocatable :: xi_0_plot
