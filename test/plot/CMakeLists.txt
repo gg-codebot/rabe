@@ -53,3 +53,28 @@ add_executable(plot_fourier_field_timing.x plot_fourier_field_timing.f90)
 target_link_libraries(plot_fourier_field_timing.x myplot_lib rabe_lib helpers_lib)
 add_test(PlotFourierFieldTiming plot_fourier_field_timing.x)
 set_tests_properties(PlotFourierFieldTiming PROPERTIES LABELS "plot")
+
+add_executable(plot_fourier_field_accuracy.x plot_fourier_field_accuracy.f90)
+target_link_libraries(plot_fourier_field_accuracy.x myplot_lib rabe_lib helpers_lib)
+add_test(PlotFourierFieldAccuracy plot_fourier_field_accuracy.x)
+set_tests_properties(PlotFourierFieldAccuracy PROPERTIES LABELS "plot")
+
+add_executable(plot_bounce_time_averages.x plot_bounce_time_averages.f90)
+target_link_libraries(plot_bounce_time_averages.x myplot_lib
+                                                     rabe_lib
+                                                     helpers_lib)
+add_test(PlotBounceTimeAverages plot_bounce_time_averages.x)
+set_tests_properties(PlotBounceTimeAverages PROPERTIES LABELS "plot")
+
+add_executable(plot_bounce_orbits.x plot_bounce_orbits.f90)
+target_link_libraries(plot_bounce_orbits.x myplot_lib
+                                                 rabe_lib
+                                                 helpers_lib)
+add_test(PlotBounceOrbits plot_bounce_orbits.x)
+set_tests_properties(PlotBounceOrbits PROPERTIES LABELS "plot")
+
+add_executable(plot_integrate_radial_drift.x plot_integrate_radial_drift.f90)
+target_link_libraries(plot_integrate_radial_drift.x rabe_lib
+                                                   helpers_lib)
+add_test(PlotIntegrateRadialDrift plot_integrate_radial_drift.x)
+set_tests_properties(PlotIntegrateRadialDrift PROPERTIES LABELS "plot")

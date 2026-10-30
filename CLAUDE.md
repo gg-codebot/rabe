@@ -53,6 +53,9 @@ rabe_lib (main static library)
 │   shaing_callen.f90, shaing_callen_integration.f90, shaing_callen_wrappers.f90
 ├── netcdf_lib (src/netcdf/)
 │   netcdf.f90 - NetCDF output via type netcdf_t (backed by fortio)
+├── precession_lib (src/precession/)
+│   grid.f90 - Integration grid type and bounce/spline routines
+│   precession.f90 - Magnetic well and turning-point helpers
 ├── error_handling_lib (src/error_handling/)
 │   error_handling.f90 - Sanity-check helpers: failed_sanity_check(),
 │                        reset_failed_check_counter(), did_fail_any_sanity_check(),

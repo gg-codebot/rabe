@@ -16,6 +16,19 @@ program test_netcdf
     real(dp), parameter :: test_factor_a_array(n_dim) = [1.23_dp, 4.56_dp, 7.89_dp]
     real(dp), parameter :: test_factor_b_array(n_dim) = [98.7_dp, 6.54_dp, 32.1_dp]
     integer, parameter :: test_int_array(n_dim) = [1, 0, -102]
+    character(len=*), parameter :: dim_name2 = "theta"
+    integer, parameter :: n_dim2 = 2
+    real(dp), parameter :: test_2d(n_dim, n_dim2) = reshape( &
+                           [1.1_dp, 2.2_dp, 3.3_dp, 4.4_dp, 5.5_dp, 6.6_dp], &
+                           [n_dim, n_dim2])
+    character(len=*), parameter :: dim_name3 = "phi"
+    integer, parameter :: n_dim3 = 4
+    real(dp), parameter :: test_3d(n_dim, n_dim2, n_dim3) = reshape( &
+                           [1._dp, 2._dp, 3._dp, 4._dp, 5._dp, 6._dp, &
+                            7._dp, 8._dp, 9._dp, 10._dp, 11._dp, 12._dp, &
+                            13._dp, 14._dp, 15._dp, 16._dp, 17._dp, 18._dp, &
+                            19._dp, 20._dp, 21._dp, 22._dp, 23._dp, 24._dp], &
+                           [n_dim, n_dim2, n_dim3])
     character(len=*), parameter :: title = "RABE Bootstrap Current Analysis Results"
     character(len=*), parameter :: long_name_a = "1/sqrt(nu_star) factor"
     character(len=*), parameter :: long_name_b = "1/nu_star factor"
@@ -28,6 +41,8 @@ program test_netcdf
     character(len=100) :: read_long_name_flags
 
     integer, dimension(n_dim) :: read_int_array
+    real(dp), dimension(n_dim, n_dim2) :: read_2d
+    real(dp), dimension(n_dim, n_dim2, n_dim3) :: read_3d
 
     logical :: file_exists
     integer :: unit, iostat
@@ -206,6 +221,63 @@ program test_netcdf
         print *, "-------------------------------------------------------------"
         print *, "test_netcdf failed: file does not exist after reading"
         error stop
+    end if
+
+    ! --- 2D array round-trip test ---
+    call nc_out%create(test_file)
+    call nc_out%def_dim(dim_name, n_dim)
+    call nc_out%def_dim(dim_name2, n_dim2)
+    call nc_out%add_real_2d("matrix", dim_name, dim_name2)
+    call nc_out%write_real_2d("matrix", test_2d)
+    call nc_out%close()
+
+    call nc_in%open(test_file)
+    call nc_in%read_real_2d("matrix", read_2d)
+    call nc_in%close()
+
+    if (any(abs(test_2d - read_2d) > reltol*abs(test_2d))) then
+        print *, "-------------------------------------------------------------"
+        print *, "test_netcdf failed: 2D array mismatch"
+        print *, "found: ", read_2d
+        print *, "expected: ", test_2d
+        error stop
+    end if
+
+    inquire (file=test_file, exist=file_exists)
+    if (file_exists) then
+        open (newunit=unit, file=test_file, iostat=iostat)
+        if (iostat == 0) then
+            close (unit, status="delete")
+        end if
+    end if
+
+    ! --- 3D array round-trip test ---
+    call nc_out%create(test_file)
+    call nc_out%def_dim(dim_name, n_dim)
+    call nc_out%def_dim(dim_name2, n_dim2)
+    call nc_out%def_dim(dim_name3, n_dim3)
+    call nc_out%add_real_3d("tensor", dim_name, dim_name2, dim_name3)
+    call nc_out%write_real_3d("tensor", test_3d)
+    call nc_out%close()
+
+    call nc_in%open(test_file)
+    call nc_in%read_real_3d("tensor", read_3d)
+    call nc_in%close()
+
+    if (any(abs(test_3d - read_3d) > reltol*abs(test_3d))) then
+        print *, "-------------------------------------------------------------"
+        print *, "test_netcdf failed: 3D array mismatch"
+        print *, "found: ", read_3d
+        print *, "expected: ", test_3d
+        error stop
+    end if
+
+    inquire (file=test_file, exist=file_exists)
+    if (file_exists) then
+        open (newunit=unit, file=test_file, iostat=iostat)
+        if (iostat == 0) then
+            close (unit, status="delete")
+        end if
     end if
 
 end program test_netcdf
