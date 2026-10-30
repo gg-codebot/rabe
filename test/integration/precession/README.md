@@ -3,7 +3,8 @@
 ## Open issue: flux mode vs. analytic asymptote (`test_precession_analytic`)
 
 The flux check in `test_precession_analytic` currently **fails**: the numerical
-flux mode is consistently about $-0.84$ times the implemented analytic estimate.
+flux mode is consistently about $-1.22$ times the implemented analytic estimate.
+The asymptotic limit is $-\sqrt{\pi/2} \approx -1.25$.
 
 ### Implemented analytic formula
 
@@ -14,20 +15,29 @@ B = B_0\left(1 + \varepsilon_0\cos\chi + \varepsilon_1\cos\vartheta\,(1 - \sigma
 \qquad \chi = M\vartheta - N\varphi,
 ```
 
-with $\eta_b = 1/\big(B_0(1+|\varepsilon_0|)\big)$ and $B'' = |B_0\varepsilon_0| N^2$:
+with $\iota = 0$, so that $\vartheta$ is constant along a well. It uses
+$\eta_b = 1/\big(B_0(1+|\varepsilon_0|)\big)$ and $B'' = |B_0\varepsilon_0| N^2$:
 
 ```math
 \begin{aligned}
 I_B &= \frac{4}{N B_0^2}\sqrt{\frac{2|\varepsilon_0|}{1+|\varepsilon_0|}}
        \left(1 + \tfrac{2}{3}|\varepsilon_0|\right), \\
-J_1 &= -\frac{1}{4}\frac{\varepsilon_1}{\varepsilon_0}
-       \left(1 + \tfrac{16}{3}|\varepsilon_0|\right) I_B B_0, \\
+J_1 &= -\frac{2}{N B_0}\sqrt{\frac{2|\varepsilon_0|}{1+|\varepsilon_0|}}\,
+       \frac{\varepsilon_1}{\varepsilon_0}\left(1 + 3|\varepsilon_0|\right), \\
 A_m &= \sqrt{\frac{\pi\, m\, l_c\, \hat\Omega\, \eta_b^2}{I_B}}\;
        \left(2\eta_b B''\right)^{-1/4}, \\
 \Gamma_1^\mathrm{impl} &= \frac{\sqrt{2}\,\eta_b J_1}{A_1\sqrt{\ln A_1}}
        \qquad (A_1 \gg 1).
 \end{aligned}
 ```
+
+Here $I_B = \langle I_j(\eta_c)\rangle_{\xi_0}$ is the field line average of $I_j$
+at the barely trapped boundary. It is independent of $\iota$ to
+$\mathcal{O}(\varepsilon_1^2)$. $J_1 = \tfrac{2}{3}\,\partial_\eta I_{\mathcal{V},1}$
+is the $m=1$ mode at $\eta_c$. The barely trapped
+$\partial_\eta I_{\mathcal{V},1}$ for $\iota \approx 0$ is verified in
+`test_radial_drift`. Unlike $I_B$, $J_1$ depends on $\iota$: at $\iota = 1$ the
+drift mode is about $2.9\times$ smaller.
 
 ### What the code solves
 
@@ -52,11 +62,12 @@ What has been verified:
 - An independent Python solve of the same equation from the dumped bounce data
   reproduces the Fortran flux to $\le 3\cdot 10^{-4}$ relative, for
   $\hat\Omega = 2 \dots 1.4\cdot 10^{9}$.
-- The inputs match the analytic ingredients: $I_j(\eta_c) = I_B$ (0.6339 vs
-  0.6338), and $\tau_b$ follows the barely trapped log up to a constant shift.
-  The drift is $\Delta r_1(\eta_c) = \tfrac{4}{3} J_1$, where
-  $\tfrac{4}{3} = (B_\varphi + \iota B_\vartheta)/(0.75\,\psi_\mathrm{edge})$
-  is the conversion factor of `test_g_zero_precession`.
+- The inputs match the analytic ingredients:
+  - $I_j(\eta_c) = I_B$ (0.63381 vs 0.63378).
+  - $\tau_b$ follows the barely trapped log up to a constant shift.
+  - $\Delta r_1(\eta_c) = 2 J_1$: $-0.02633$ vs $2\cdot(-0.01304)$, consistent with
+    $\Delta r = \partial_\eta I_\mathcal{V}/0.75$ for $B_\varphi + \iota B_\vartheta = 1$
+    and $\psi_\mathrm{edge} = 1$.
 
 ### Asymptote of the code's equation
 
@@ -70,40 +81,44 @@ $a = 4\eta_b(2\eta_b B'')^{-1/2}$. This gives a boundary layer
 \qquad Q = \frac{2A^2}{\pi\eta_b^2},
 ```
 
-so that $\mathrm{Re}\int u/u(\eta_c)\,dx = 1/\sqrt{2QL}$ and
+so that $\mathrm{Re}\int u/u(\eta_c)\,dx = 1/\sqrt{2QL}$ and, with $\Delta r_1 = 2J_1$,
 
 ```math
-\Gamma_1 \to -\Delta r_1(\eta_c)\,\frac{\eta_b\sqrt{\pi}}{2A_1\sqrt{\ln A_1}},
+\Gamma_1 \to -\Delta r_1(\eta_c)\,\frac{\eta_b\sqrt{\pi}}{2A_1\sqrt{\ln A_1}}
+= -\frac{\sqrt{\pi}\,\eta_b J_1}{A_1\sqrt{\ln A_1}},
 \qquad
-\frac{\Gamma_1}{\Gamma_1^\mathrm{impl}} \to
--\sqrt{\frac{\pi}{8}}\,\frac{\Delta r_1}{J_1}
-= -\sqrt{\frac{\pi}{8}}\cdot\frac{4}{3} \approx -0.836 .
+\frac{\Gamma_1}{\Gamma_1^\mathrm{impl}} \to -\sqrt{\frac{\pi}{2}} \approx -1.253 .
 ```
 
 An idealized solve (constant $I_B$, pure log $\tau_b$, constant drift) confirms
 this limit. The approach is slow, $\mathcal{O}(1/\ln A)$. The measured ratios
-($\varepsilon_0 = -0.0125$, $\varepsilon_1 = -0.0005$, $N = 1$) are:
+($\varepsilon_0 = -0.0125$, $\varepsilon_1 = -0.0005$, $N = 1$, $\iota = 0$) are:
 
 | $A_1$            | $\Gamma_1/\Gamma_1^\mathrm{impl}$ |
 |------------------|-----------------------------------|
-| $2.1\cdot10^{2}$ | $-0.687$                          |
-| $1.0\cdot10^{3}$ | $-0.784$                          |
-| $5.6\cdot10^{3}$ | $-0.800$                          |
-| $3.0\cdot10^{4}$ | $-0.804$                          |
-| $5.8\cdot10^{5}$ | $-0.816$                          |
+| $2.1\cdot10^{2}$ | $-1.223$                          |
+| $1.8\cdot10^{3}$ | $-1.208$                          |
+| $1.7\cdot10^{4}$ | $-1.215$                          |
+| $1.7\cdot10^{5}$ | $-1.219$                          |
+| $5.8\cdot10^{5}$ | $-1.233$                          |
 
-### Suspected origin of the factor $-\sqrt{\pi/8}\cdot 4/3$
+### Remaining discrepancy: $-\sqrt{\pi/2}$
 
 1. **Sign:** the code uses $\Gamma = -\int_{\eta_c}^{\eta_t}\dots$, which is fixed
-   by `test_g_zero_precession`. The formula appears to assume $+\int$, or a
-   $J_1$ with the opposite sign.
-2. **Factor $3/4$:** $J_1$ seems to be in $I_\mathcal{V}$ units, without the
-   conversion factor $(B_\varphi + \iota B_\vartheta)/(0.75\,\psi_\mathrm{edge})$
-   that the code's radial drift carries. The code has $\Delta r_1 = \tfrac{4}{3}J_1$.
-3. **Factor $\sqrt{8/\pi}$:** this is most likely in the derivation of the
-   boundary-layer integral or in the $\pi$ inside $A_m$. The exponential layer
-   gives $\sqrt{\pi}/2$, where the formula has $\sqrt{2}$. Because the factor
-   contains $\pi$, it cannot come from a simple prefactor in the code
-   ($\tfrac12$ in $\kappa$, $n_\mathrm{fp}$, half-bounce $I_j$, $0.75$).
+   by `test_g_zero_precession`. The formula appears to assume $+\int$.
+2. **Factor $\sqrt{\pi/2}$:** the boundary-layer integral of the code's equation
+   gives $\sqrt{\pi}\,\eta_b J_1$, where the implemented formula has
+   $\sqrt{2}\,\eta_b J_1$. The suspects are the derivation of that integral and
+   the $\pi$ inside $A_m$.
 
-Fixing (1) and (2) alone would leave a ratio of $\sqrt{\pi/8} \approx 0.627$.
+### Resolved along the way
+
+- The previous $J_1 = -\tfrac14\frac{\varepsilon_1}{\varepsilon_0}(1+\tfrac{16}{3}|\varepsilon_0|)\,I_B B_0$
+  was half of the verified $\iota = 0$ estimate. The test also ran at $\iota = 1$,
+  where $J_1$ does not apply.
+- `compute_bounce_integrals` estimated the deeply trapped bounce time with
+  $h^\vartheta$ ($= \iota h^\varphi$) instead of $h^\varphi$. This gave an
+  infinite time step at $\iota = 0$, and a step $\sim 100\times$ too large at
+  $\iota = 0.01$.
+- The flux ODE overflowed to NaN for $A \gtrsim 1.5\cdot 10^4$. It now
+  integrates in renormalized segments.
