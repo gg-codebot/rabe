@@ -57,6 +57,9 @@ call plt%add_colored_line(x, y, color, cmap, clabel, linewidth)
 
 ! Show the figure
 call plt%show()
+
+! Or save it to a file instead (format from the extension, e.g. ".png")
+call plt%save("my_figure.png")
 ```
 
 ## Minimal contour example

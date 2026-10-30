@@ -62,6 +62,8 @@ program test_precession_analytic
     logical :: test_failed
 
     logical :: should_plot = .false.
+    ! save flux mode plots (numeric vs analytic over Omega_hat) as png
+    logical :: should_save_plot = .false.
     type(myplot) :: plt, plt2, plt3
 
     test_failed = .false.
@@ -177,24 +179,18 @@ program test_precession_analytic
         test_failed = .true.
     end if
 
-    if (should_plot) then
-        call plt%initialize(xlabel="Omega_hat", &
-                            ylabel="-Flux mode 1", &
-                            legend=.true., &
-                            title="Flux mode 1 vs Omega_hat")
-        call plt%add_plot(Omega_hat, flux_1, label="-numerical", &
-                          xscale="log", yscale="log", linestyle="o-", linewidth=2)
-        call plt%add_plot(Omega_hat, -flux_1_analytic, label="analytic", &
-                          xscale="log", yscale="log", linestyle="--", linewidth=2)
-        call plt%show()
-        call plt2%initialize(xlabel="Omega_hat", &
-                             ylabel="-ratio", &
-                             legend=.true., &
-                             title="ratio")
-        call plt2%add_plot(Omega_hat, -flux_1_analytic/flux_1, label="-ratio", &
-                           xscale="log", linestyle="-", linewidth=2)
-        call plt2%show()
+    if (should_plot .or. should_save_plot) then
+        call plot_flux(plt, plt2, Omega_hat, flux_1, flux_1_analytic)
+        if (should_save_plot) then
+            call plt%save("precession_flux_mode_1.png")
+            call plt2%save("precession_flux_mode_1_ratio.png")
+        else
+            call plt%show()
+            call plt2%show()
+        end if
+    end if
 
+    if (should_plot) then
         call plt3%initialize(xlabel="$\sqrt{\eta - \eta_c}$", &
                              ylabel="bounce time", &
                              legend=.true., &
@@ -216,6 +212,26 @@ program test_precession_analytic
     if (test_failed) error stop
 
 contains
+
+    subroutine plot_flux(plt, plt_ratio, Omega_hat, flux, flux_analytic)
+        type(myplot), intent(inout) :: plt, plt_ratio
+        real(dp), dimension(:), intent(in) :: Omega_hat, flux, flux_analytic
+
+        call plt%initialize(xlabel="$\hat\Omega$", &
+                            ylabel="flux mode 1", &
+                            legend=.true., &
+                            title="flux mode 1 vs $\hat\Omega$")
+        call plt%add_plot(Omega_hat, flux, label="numeric", &
+                          xscale="log", yscale="log", linestyle="o", markersize=4)
+        call plt%add_plot(Omega_hat, flux_analytic, label="analytic", &
+                          xscale="log", yscale="log", linestyle="-", linewidth=2)
+        call plt_ratio%initialize(xlabel="$\hat\Omega$", &
+                                  ylabel="numeric / analytic", &
+                                  legend=.true., &
+                                  title="flux mode 1 ratio")
+        call plt_ratio%add_plot(Omega_hat, flux/flux_analytic, label="ratio", &
+                                xscale="log", linestyle="o-", linewidth=2)
+    end subroutine plot_flux
 
     function calc_A_m(Omega_hat, l_c, m, eps_0, B_0, N_tor)
         real(dp), intent(in) :: Omega_hat, l_c, m, eps_0, B_0, N_tor
