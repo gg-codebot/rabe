@@ -257,7 +257,7 @@ contains
         real(dp) :: calc_J_1
 
         calc_J_1 = 2.0_dp*sqrt(2.0_dp*abs(eps_0)/(1.0_dp + abs(eps_0)))/N_tor/B_0* &
-                   abs(eps_1/eps_0)*(1.0_dp + 3.0_dp*abs(eps_0))
+                   eps_1/eps_0*(1.0_dp + 3.0_dp*abs(eps_0))
         if (ieee_is_nan(calc_J_1)) then
             print *, "error: calc_J_1 is NaN."
             error stop

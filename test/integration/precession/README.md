@@ -25,7 +25,7 @@ $l_c = \pi R/(2\nu^*)$, where the $\pi$ is part of $l_c$:
 I_B &= \frac{4}{N B_0^2}\sqrt{\frac{2|\varepsilon_0|}{1+|\varepsilon_0|}}
        \left(1 + \tfrac{2}{3}|\varepsilon_0|\right), \\
 J_1 &= \frac{2}{N B_0}\sqrt{\frac{2|\varepsilon_0|}{1+|\varepsilon_0|}}\,
-       \left|\frac{\varepsilon_1}{\varepsilon_0}\right|\left(1 + 3|\varepsilon_0|\right), \\
+       \frac{\varepsilon_1}{\varepsilon_0}\left(1 + 3|\varepsilon_0|\right), \\
 A_m &= \sqrt{\frac{2\, m\, l_c\, \hat\Omega\, \eta_b^2}{I_B}}\;
        \left(2\eta_b B''\right)^{-1/4}, \\
 \Gamma_1^\mathrm{an} &= \frac{\sqrt{2}\,\eta_b J_1}{A_1\sqrt{\ln A_1}}
