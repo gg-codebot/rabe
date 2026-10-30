@@ -4,7 +4,8 @@
 
 `test_precession_analytic` checks the numerical flux mode against the large-$A$
 asymptote for $A_1 > 200$, with tolerance $1/\ln A_1$ (the order of the next
-correction). The measured ratio is $0.95 \dots 0.96$ and approaches $1$ as
+correction). The check stops at $\hat\Omega_\mathrm{max}$, beyond which the
+$\eta$ grid no longer resolves the boundary layer at $\eta_c$ (see below). The measured ratio is $0.95 \dots 0.96$ and approaches $1$ as
 $\mathcal{O}(1/\ln A)$.
 
 ### Analytic formula
@@ -99,6 +100,31 @@ $N = n_\mathrm{fp} = 2$, $B_0 = 1.7$, $l_c = 5.432$, $\iota = 0$) are:
 
 The ratios with $N = 1$, $B_0 = 1$, $l_c = 1$ agree with these to within $10^{-3}$
 at equal $A_1$.
+
+### Resolution limit: `get_max_valid_l_c`
+
+For large $l_c\hat\Omega$ the solution is confined to a layer at $\eta_c$ of width
+
+```math
+\delta^2 = \frac{\eta_c I_B}{|\kappa|\,\tau_b},
+\qquad |\kappa| = \frac{l_c\, n_\mathrm{fp}\, \hat\Omega}{2|M\iota - N|}
+\quad (m = 1).
+```
+
+The grid points next to $\eta_c$ sit at $\eta - \eta_c = k^2 x_1$. Requiring at
+least two points in the layer ($\delta \ge 4x_1$) gives the longest valid
+
+```math
+l_{c,\max} = \frac{2\,\eta_c I_B\, |M\iota - N|}
+                   {n_\mathrm{fp}\, \hat\Omega\, \tau_b\, (4 x_1)^2},
+```
+
+with $I_B$ and $\tau_b$ taken at the grid point next to $\eta_c$. The log
+dependence of $\tau_b$ on $\delta$ is neglected. `get_max_valid_l_c` in
+`precession.f90` returns this value. The test calls it with $\hat\Omega = 1$
+and gets $\hat\Omega_\max = l_{c,\max}/l_c \approx 1.1\cdot10^{8}$
+($A_1 \approx 10^5$). Above that, the measured ratio drifts away from the
+$\mathcal{O}(1/\ln A)$ trend (last row of the table).
 
 ### Resolved along the way
 

@@ -9,6 +9,7 @@ program test_precession_analytic
     use precession, only: bounce_integrals_t
     use precession, only: setup_bounce_integrals
     use precession, only: compute_flux_modes
+    use precession, only: get_max_valid_l_c
     use utils, only: linspace, not_same
     use myplot_module, only: myplot
 
@@ -58,6 +59,8 @@ program test_precession_analytic
     ! are O(1/ln(A_m)), which sets the tolerance
     real(dp), parameter :: A_min = 200.0_dp
     real(dp) :: flux_tol
+    ! above Omega_max the boundary layer at eta_c is not resolved by the grid
+    real(dp) :: Omega_max
 
     logical :: test_failed
 
@@ -103,8 +106,11 @@ program test_precession_analytic
         flux_1_analytic(case) = calc_flux_1_analytic(A_1(case), J_1, eps_0, B_0)
     end do
 
+    Omega_max = get_max_valid_l_c(bounce_integrals, 1.0_dp)/l_c
+    print *, "Omega_max = ", Omega_max
     do case = 1, n_case
         if (A_1(case) < A_min) cycle
+        if (Omega_hat(case) > Omega_max) cycle
         flux_tol = 1.0_dp/log(A_1(case))
         if (not_same(flux_1(case), flux_1_analytic(case), &
                      reltol_in=flux_tol, abstol_in=0.0_dp)) then

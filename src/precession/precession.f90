@@ -185,6 +185,40 @@ contains
 
     end subroutine compute_flux_modes
 
+    !> Longest l_c for which the flux modes are resolved by the eta grid (m=1).
+    !! For large l_c*Omega_hat the solution is confined to a layer at eta_c of
+    !! width delta^2 = eta_c I_B/(|kappa| tau_b) with
+    !! kappa = l_c nfp Omega_hat/(2 (M iota - N)); the layer has to contain
+    !! at least min_points_in_layer grid points (eta - eta_c = k^2 x_1).
+    !! The weak log dependence of tau_b on delta is neglected.
+    function get_max_valid_l_c(bounce_integrals, Omega_hat) result(l_c_max)
+        type(bounce_integrals_t), intent(in) :: bounce_integrals
+        real(dp), intent(in) :: Omega_hat
+        real(dp) :: l_c_max
+
+        real(dp), parameter :: min_points_in_layer = 2.0_dp
+        integer :: n
+        real(dp) :: eta_c, x_1, I_B, tau_b, delta_min
+
+        ! grid runs from deeply (t(1)) to barely trapped (t(n) = 0, eta_c)
+        n = size(bounce_integrals%t)
+        eta_c = bounce_integrals%eta(n)
+        x_1 = bounce_integrals%eta(n - 1) - eta_c
+        I_B = bounce_integrals%avg_I_j(n - 1)
+        tau_b = bounce_integrals%avg_bounce_time_weighted(n - 1) &
+                /(2.0_dp*bounce_integrals%t(n - 1))
+        delta_min = min_points_in_layer**2*x_1
+
+        l_c_max = 2.0_dp*eta_c*I_B &
+                  *abs(bounce_integrals%M_pol*bounce_integrals%iota &
+                       - bounce_integrals%N_tor) &
+                  /(bounce_integrals%nfp*abs(Omega_hat)*tau_b*delta_min**2)
+        if (ieee_is_nan(l_c_max) .or. l_c_max <= 0.0_dp) then
+            print *, "eta_c, x_1, I_B, tau_b: ", eta_c, x_1, I_B, tau_b
+            error stop "Error: get_max_valid_l_c is not positive."
+        end if
+    end function get_max_valid_l_c
+
     function get_smallest_maximum(fieldlines) result(smallest_maximum)
         class(fieldline_t), dimension(:), intent(in) :: fieldlines
         real(dp) :: smallest_maximum
