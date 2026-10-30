@@ -16,7 +16,7 @@ program test_trace_till_bounce
     type(boozer_field_t) :: bfield
 
     integer, parameter :: ndim_simple = 5
-    integer, parameter :: ndim = 7
+    integer, parameter :: ndim = 8
     real(dp), dimension(ndim) :: z_start, z_end
     real(dp) :: dtaumin_in
     integer, parameter :: n_bounces = 3
@@ -35,7 +35,7 @@ program test_trace_till_bounce
     call initialize_field_instance(bfield)
     dtaumin_in = 2.0_dp*pi*bfield%R*1e2/128.0_dp
     call params_init(nfperiods=bfield%nfp, dtaumin_in=dtaumin_in)
-    z_start = [0.5_dp, 6.2319269065015011_dp, 0.34860621153343652_dp, 1.0_dp, -0.1_dp, 0.0_dp, 0.0_dp]
+    z_start = [0.5_dp, 6.2319269065015011_dp, 0.34860621153343652_dp, 1.0_dp, -0.1_dp, 0.0_dp, 0.0_dp, 0.0_dp]
 
     z_bounce_ref(1, :) = [4.0419130794376634e-01, 6.0365708273104213e+00, &
                           5.0430593251401215e+00, 1.0000000000000002e+00, &

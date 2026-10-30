@@ -159,6 +159,9 @@ contains
         !
         vz(6) = alambd**2/bmod !dI/dtau
         vz(7) = 1.0_dp ! dtau/dtau
+        ! radial excursion integrated from zero, avoids cancellation in
+        ! z_end(1) - z_start(1) when the drift is tiny compared to s
+        vz(8) = vz(1)
     end subroutine velo_can
     !
     !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -174,7 +177,7 @@ contains
         real(dp), intent(in) :: z_axis(:)
         real(dp), intent(out) :: vz_axis(:)
         real(dp) :: derlogsqs
-        integer, parameter :: ndim = 7
+        integer, parameter :: ndim = 8
         real(dp), dimension(ndim) :: z, vz
         !
         !  z(1)=z_axis(1)**2+z_axis(2)**2
@@ -200,7 +203,7 @@ contains
         !
         implicit none
         !
-        integer, parameter :: ndim = 7, nstepmax = 1000000
+        integer, parameter :: ndim = 8, nstepmax = 1000000
         real(dp), parameter :: snear_axis = 0.01d0
         !
         logical :: near_axis

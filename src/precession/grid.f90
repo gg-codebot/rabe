@@ -150,7 +150,7 @@ contains
 
         real(dp) :: theta_min, phi_min
 
-        integer, parameter :: n_dim = 7
+        integer, parameter :: n_dim = 8
         real(dp), parameter :: cm2m = 1e-2_dp, gauss2tesla = 1e-4_dp
         real(dp), parameter :: lamor_radius = 1e-8_dp !m*Tesla
         real(dp) :: well_depth
@@ -192,6 +192,11 @@ contains
         z_template(5) = 0.0_dp
         z_template(6) = 0.0_dp
         z_template(7) = 0.0_dp
+        ! radial excursion z(8) is offset by the Larmor radius, which acts as
+        ! absolute floor of the odeint error scale (z(8) starts with possibly
+        ! vanishing velocity). TODO: use scale_floor of odeint_allroutines
+        ! instead once the libneo pin includes it (libneo c92b336)
+        z_template(8) = lamor_radius
 
         do idx = 1, grid%n
             t_weight = 2.0_dp*grid%t(idx)
@@ -225,6 +230,7 @@ contains
             !> i.e. one full bounce period
             z_start = z_end
             z_start(6:7) = 0.0_dp
+            z_start(8) = lamor_radius
             if (present(orbit_history)) then
                 call trace_orbit_till_bounce(z_start, z_end, orbit_history(:, :, idx))
             else
@@ -235,7 +241,7 @@ contains
             grid%normalized_bounce_time(idx) = bounce_time_times_v_thermal
             grid%bounce_time_weighted(idx) = t_weight*grid%normalized_bounce_time(idx)
             grid%I_j(idx) = I_j
-            grid%normalized_radial_drift(idx) = (z_end(1) - z_start(1))/lamor_radius
+            grid%normalized_radial_drift(idx) = (z_end(8) - lamor_radius)/lamor_radius
             grid%radial_drift_weighted(idx) = t_weight*grid%normalized_radial_drift(idx)
             grid%poloidal_drift(idx) = (z_end(2) - z_start(2))/lamor_radius
             grid%poloidal_drift_weighted(idx) = t_weight*grid%poloidal_drift(idx)

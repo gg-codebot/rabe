@@ -13,7 +13,7 @@ contains
         use field_instance, only: magfie
         use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
 
-        integer, parameter :: ndim = 7
+        integer, parameter :: ndim = 8
         real(dp), dimension(ndim), intent(in) :: z_start
         real(dp), dimension(ndim), intent(out) :: z_end
         real(dp), dimension(:, :), intent(inout), optional :: orbit_buffer
