@@ -53,6 +53,11 @@ program test_precession_analytic
     ! further in (larger eta_tol) approximations break down -> need bigger retol
     real(dp), parameter :: retol = 2e-3_dp, eta_tol = 1e-2_dp
     real(dp) :: eta_c, eta_t
+    ! the asymptotic flux is valid for A_m >> 1, i.e. once the boundary layer
+    ! at eta_c is thin compared to the trapped region; next order corrections
+    ! are O(1/ln(A_m)), which sets the tolerance
+    real(dp), parameter :: A_min = 200.0_dp
+    real(dp) :: flux_tol
 
     logical :: test_failed
 
@@ -94,6 +99,21 @@ program test_precession_analytic
         flux_1(case) = flux_modes(2)
         A_1(case) = calc_A_m(Omega_hat(case), l_c, 1.0_dp, eps_0, B_0, N_tor)
         flux_1_analytic(case) = calc_flux_1_analytic(A_1(case), J_1, eps_0, B_0)
+    end do
+
+    do case = 1, n_case
+        if (A_1(case) < A_min) cycle
+        flux_tol = 1.0_dp/log(A_1(case))
+        if (not_same(flux_1(case), flux_1_analytic(case), &
+                     reltol_in=flux_tol, abstol_in=0.0_dp)) then
+            print *, "-------------------------------------------------------------"
+            print *, "test_precession_analytic failed: flux mode 1"
+            print *, "Omega_hat = ", Omega_hat(case), "A_1 = ", A_1(case)
+            print *, "found: ", flux_1(case)
+            print *, "expected: ", flux_1_analytic(case)
+            print *, "ratio: ", flux_1(case)/flux_1_analytic(case)
+            test_failed = .true.
+        end if
     end do
 
     n_eta = size(bounce_integrals%eta)
