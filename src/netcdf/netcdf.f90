@@ -184,6 +184,7 @@ contains
 
     subroutine netcdf_add_real_2d(this, var_name, dim_name1, &
                                   dim_name2)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         character(len=*), intent(in) :: dim_name1, dim_name2
@@ -219,6 +220,7 @@ contains
 
     subroutine netcdf_add_real_3d(this, var_name, dim_name1, &
                                   dim_name2, dim_name3)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         character(len=*), intent(in) :: dim_name1, dim_name2, dim_name3
@@ -371,6 +373,7 @@ contains
     end subroutine netcdf_write_real_1d
 
     subroutine netcdf_write_real_2d(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         real(dp), dimension(:, :), intent(in) :: value
@@ -393,6 +396,7 @@ contains
     end subroutine netcdf_write_real_2d
 
     subroutine netcdf_write_real_3d(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         real(dp), dimension(:, :, :), intent(in) :: value
@@ -510,6 +514,7 @@ contains
     end subroutine netcdf_read_real_1d
 
     subroutine netcdf_read_real_2d(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         real(dp), dimension(:, :), intent(out) :: value
@@ -529,6 +534,7 @@ contains
     end subroutine netcdf_read_real_2d
 
     subroutine netcdf_read_real_3d(this, var_name, value)
+        use netcdf
         class(netcdf_t), intent(inout) :: this
         character(len=*), intent(in) :: var_name
         real(dp), dimension(:, :, :), intent(out) :: value

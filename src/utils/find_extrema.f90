@@ -13,7 +13,8 @@ module find_extrema
 
     procedure(func1d), private, pointer, save :: func_ptr => null()
 
-    public :: find_local_minima, find_local_maxima, find_global_extrema
+    public :: find_local_minima, find_local_maxima, find_global_extrema, &
+        find_global_minimum
 
 contains
 
