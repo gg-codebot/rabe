@@ -1,10 +1,11 @@
 # Precession tests
 
-## Open issue: sign of the flux mode (`test_precession_analytic`)
+## Flux mode vs. analytic asymptote (`test_precession_analytic`)
 
-The flux check in `test_precession_analytic` currently **fails only by sign**:
-the numerical flux mode is $-0.95 \dots -0.96$ times the analytic estimate,
-approaching $-1$ as $\mathcal{O}(1/\ln A)$.
+`test_precession_analytic` checks the numerical flux mode against the large-$A$
+asymptote for $A_1 > 200$, with tolerance $1/\ln A_1$ (the order of the next
+correction). The measured ratio is $0.95 \dots 0.96$ and approaches $1$ as
+$\mathcal{O}(1/\ln A)$.
 
 ### Analytic formula
 
@@ -23,8 +24,8 @@ $l_c = \pi R/(2\nu^*)$, where the $\pi$ is part of $l_c$:
 \begin{aligned}
 I_B &= \frac{4}{N B_0^2}\sqrt{\frac{2|\varepsilon_0|}{1+|\varepsilon_0|}}
        \left(1 + \tfrac{2}{3}|\varepsilon_0|\right), \\
-J_1 &= -\frac{2}{N B_0}\sqrt{\frac{2|\varepsilon_0|}{1+|\varepsilon_0|}}\,
-       \frac{\varepsilon_1}{\varepsilon_0}\left(1 + 3|\varepsilon_0|\right), \\
+J_1 &= \frac{2}{N B_0}\sqrt{\frac{2|\varepsilon_0|}{1+|\varepsilon_0|}}\,
+       \left|\frac{\varepsilon_1}{\varepsilon_0}\right|\left(1 + 3|\varepsilon_0|\right), \\
 A_m &= \sqrt{\frac{2\, m\, l_c\, \hat\Omega\, \eta_b^2}{I_B}}\;
        \left(2\eta_b B''\right)^{-1/4}, \\
 \Gamma_1^\mathrm{an} &= \frac{\sqrt{2}\,\eta_b J_1}{A_1\sqrt{\ln A_1}}
@@ -35,7 +36,7 @@ A_m &= \sqrt{\frac{2\, m\, l_c\, \hat\Omega\, \eta_b^2}{I_B}}\;
 Here $I_B = \langle I_j(\eta_c)\rangle_{\xi_0}$ is the field line average of $I_j$
 at the barely trapped boundary. It is independent of $\iota$ to
 $\mathcal{O}(\varepsilon_1^2)$ and is checked against the code.
-$J_1 = \tfrac{2}{3}\,\partial_\eta I_{\mathcal{V},1}$ is the $m=1$ mode at $\eta_c$.
+$J_1 = -\tfrac{2}{3}\,\partial_\eta I_{\mathcal{V},1}$ is the $m=1$ mode at $\eta_c$.
 The barely trapped $\partial_\eta I_{\mathcal{V},1}$ for $\iota \approx 0$ is
 verified in `test_radial_drift`. Unlike $I_B$, $J_1$ depends on $\iota$: at
 $\iota = 1$ the drift mode is about $2.9\times$ smaller.
@@ -51,8 +52,12 @@ With $\kappa = \dfrac{m\, l_c\, n_\mathrm{fp}\, \hat\Omega}{2(M\iota - N)}$,
 ```
 
 ```math
-\Gamma_m = -\int_{\eta_c}^{\eta_t} \Delta r_m\, \frac{u}{u(\eta_c)}\, d\eta .
+\Gamma_m = -\int_{\eta_c}^{\eta_t} \Delta s_m\, \frac{u}{u(\eta_c)}\, d\eta ,
 ```
+
+where $\Delta s_m$ is the $m$-th mode (over field line labels) of the change in
+$s$ over one bounce, normalized by the Larmor radius (`radial_drift` in the
+code).
 
 The minus sign comes from integrating from deeply trapped
 ($t = \sqrt{\eta_t - \eta_c}$) to barely trapped ($t = 0$). It is the convention
@@ -65,7 +70,7 @@ What has been verified:
 - The inputs match the analytic ingredients:
   - $I_j(\eta_c) = I_B$ (0.63381 vs 0.63378).
   - $\tau_b$ follows the barely trapped log up to a constant shift.
-  - $\Delta r_1(\eta_c) = 2 J_1$: $-0.02633$ vs $2\cdot(-0.01304)$.
+  - $\Delta s_1(\eta_c) = -2 J_1$: $-0.02633$ vs $-2\cdot 0.01304$.
 
 ### Asymptote of the code's equation
 
@@ -76,8 +81,8 @@ $u/u(\eta_c) \approx e^{-\sqrt{iQL}\,x}$ with $L \approx \ln A$ and
 $Q = |\kappa| a/(\eta_b I_B) = A^2/\eta_b^2$, so that
 
 ```math
-\Gamma_1 \to -\Delta r_1(\eta_c)\,\frac{\eta_b}{\sqrt{2}\,A_1\sqrt{\ln A_1}}
-= -\frac{\sqrt{2}\,\eta_b J_1}{A_1\sqrt{\ln A_1}} = -\Gamma_1^\mathrm{an}.
+\Gamma_1 \to -\Delta s_1(\eta_c)\,\frac{\eta_b}{\sqrt{2}\,A_1\sqrt{\ln A_1}}
+= \frac{\sqrt{2}\,\eta_b J_1}{A_1\sqrt{\ln A_1}} = \Gamma_1^\mathrm{an}.
 ```
 
 The measured ratios ($\varepsilon_0 = -0.0125$, $\varepsilon_1 = -0.0005$,
@@ -85,19 +90,15 @@ $N = 1$, $\iota = 0$) are:
 
 | $A_1$            | $\Gamma_1/\Gamma_1^\mathrm{an}$ |
 |------------------|---------------------------------|
-| $2.1\cdot10^{2}$ | $-0.951$                        |
-| $1.0\cdot10^{3}$ | $-0.948$                        |
-| $5.6\cdot10^{3}$ | $-0.955$                        |
-| $3.0\cdot10^{4}$ | $-0.960$                        |
-| $1.7\cdot10^{5}$ | $-0.964$                        |
-
-### Remaining discrepancy: sign
-
-The code uses $\Gamma = -\int_{\eta_c}^{\eta_t}\dots$, which is fixed by
-`test_g_zero_precession`. The analytic formula corresponds to $+\int$.
+| $2.1\cdot10^{2}$ | $0.951$                         |
+| $1.0\cdot10^{3}$ | $0.948$                         |
+| $5.6\cdot10^{3}$ | $0.955$                         |
+| $3.0\cdot10^{4}$ | $0.960$                         |
+| $1.7\cdot10^{5}$ | $0.964$                         |
 
 ### Resolved along the way
 
+- $J_1$ had the wrong sign: $J_1 = -\tfrac23\,\partial_\eta I_{\mathcal{V},1} > 0$.
 - $A_m$ lacked the factor 2 and had a spurious $\pi$, which is already
   contained in $l_c$.
 - The previous $J_1 = -\tfrac14\frac{\varepsilon_1}{\varepsilon_0}(1+\tfrac{16}{3}|\varepsilon_0|)\,I_B B_0$

@@ -250,14 +250,14 @@ contains
         I_B = I_B*(1.0_dp + 2.0_dp/3.0_dp*abs(eps_0))
     end function calc_I_B
 
-    !> m=1 mode at eta_c, J_1 = 2/3 d_eta I_V,1 (cf. test_radial_drift),
-    !! valid for iota = 0; same sign as the radial drift mode
+    !> m=1 mode at eta_c, J_1 = -2/3 d_eta I_V,1 (cf. test_radial_drift),
+    !! valid for iota = 0
     function calc_J_1(eps_0, eps_1, B_0, N_tor)
         real(dp), intent(in) :: eps_0, eps_1, B_0, N_tor
         real(dp) :: calc_J_1
 
-        calc_J_1 = -2.0_dp*sqrt(2.0_dp*abs(eps_0)/(1.0_dp + abs(eps_0)))/N_tor/B_0* &
-                   eps_1/eps_0*(1.0_dp + 3.0_dp*abs(eps_0))
+        calc_J_1 = 2.0_dp*sqrt(2.0_dp*abs(eps_0)/(1.0_dp + abs(eps_0)))/N_tor/B_0* &
+                   abs(eps_1/eps_0)*(1.0_dp + 3.0_dp*abs(eps_0))
         if (ieee_is_nan(calc_J_1)) then
             print *, "error: calc_J_1 is NaN."
             error stop
