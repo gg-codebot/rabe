@@ -194,25 +194,6 @@ contains
         extrema(2) = x(idx)
     end function find_global_extrema
 
-    function find_global_maximum(func, interval, reltol) result(max_loc)
-        procedure(func1d) :: func
-        real(dp), intent(in) :: interval(2)
-        real(dp), intent(in), optional :: reltol
-        real(dp) :: max_loc
-
-        max_loc = find_global_minimum(negative_func, interval, reltol)
-
-    contains
-        subroutine negative_func(x, value)
-            use constants, only: dp
-            real(dp), dimension(:), intent(in) :: x
-            real(dp), dimension(:), intent(out) :: value
-            call func(x, value)
-            value = -value
-        end subroutine negative_func
-
-    end function find_global_maximum
-
     function find_global_minimum(func, interval, reltol) result(min_loc)
         use utils, only: linspace
 

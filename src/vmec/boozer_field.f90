@@ -2,9 +2,6 @@ module boozer_field
 
     use constants, only: dp
     use field_base, only: field_3D_t
-    use boozer_sub, only: get_boozer_coordinates, splint_boozer_coord
-    use boozer_chartmap, only: load_boozer_from_chartmap
-    use boozmn_reader, only: load_boozer_from_boozmn
 
     implicit none
     private
