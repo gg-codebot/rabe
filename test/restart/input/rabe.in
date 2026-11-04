@@ -1,0 +1,13 @@
+&rabe_config
+    field_file = "wout_LandremanPaul2021_QH_reactorScale_lowres_reference.nc",
+    M_pol = -1.0d0,
+    N_tor = 4.0d0,
+    s_tor = 0.5,
+    sign_sqrtg = -1.0d0,
+    max_n_fieldlines = 2,
+    should_calc_shaing_callen = .false.,
+/
+&precession_config
+    Omega_hat = 0.0d0, 1.0d-3,
+    nu_star = 1.0d-3,
+/

@@ -92,3 +92,14 @@ add_executable(test_fft.x test_fft.f90)
 target_link_libraries(test_fft.x rabe_lib helpers_lib)
 add_test(TestFFT test_fft.x)
 set_tests_properties(TestFFT PROPERTIES LABELS "quick")
+
+add_executable(test_bounce_restart.x test_bounce_restart.f90)
+target_link_libraries(test_bounce_restart.x rabe_lib)
+add_test(TestBounceRestart test_bounce_restart.x)
+set_tests_properties(TestBounceRestart PROPERTIES LABELS "quick")
+
+add_executable(test_bounce_restart_mismatch.x test_bounce_restart_mismatch.f90)
+target_link_libraries(test_bounce_restart_mismatch.x rabe_lib)
+add_test(TestBounceRestartMismatch test_bounce_restart_mismatch.x)
+set_tests_properties(TestBounceRestartMismatch PROPERTIES LABELS "quick"
+    PASS_REGULAR_EXPRESSION "does not match the current input")
