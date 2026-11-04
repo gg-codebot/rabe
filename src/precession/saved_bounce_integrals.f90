@@ -1,5 +1,6 @@
-module bounce_restart
-    ! Restart file for the per-fieldline bounce integrals of electric_rabe.
+module saved_bounce_integrals
+    ! Saved per-fieldline bounce integrals of electric_rabe, used to resume an
+    ! interrupted run and to skip the bounce integrals in later runs.
     !
     ! Plain text: a header of "# key = value" lines describing the inputs the
     ! integrals depend on, followed by one fixed-width line per grid point:
@@ -13,10 +14,10 @@ module bounce_restart
     implicit none
     private
 
-    public :: restart_header_t
-    public :: write_restart_header
-    public :: append_restart_fieldline
-    public :: read_restart_file
+    public :: bounce_integrals_header_t
+    public :: write_bounce_integrals_header
+    public :: append_bounce_integrals
+    public :: read_bounce_integrals
 
     integer, parameter :: format_version = 1
     character(len=*), parameter :: line_format = '(I6, 6(1X, ES25.17E3))'
@@ -26,7 +27,7 @@ module bounce_restart
     integer, parameter :: n_header_lines = 13
     integer, parameter :: git_hash_line = 3
 
-    type :: restart_header_t
+    type :: bounce_integrals_header_t
         character(len=:), allocatable :: git_hash
         character(len=:), allocatable :: field_file
         real(dp) :: s_tor
@@ -37,7 +38,7 @@ module bounce_restart
         integer :: n_fieldlines
         real(dp) :: eta_c
         real(dp) :: eta_t
-    end type restart_header_t
+    end type bounce_integrals_header_t
 
     interface
         function c_rename(old_name, new_name) bind(C, name="rename") result(ierr)
@@ -50,9 +51,9 @@ module bounce_restart
 
 contains
 
-    subroutine write_restart_header(filename, header)
+    subroutine write_bounce_integrals_header(filename, header)
         character(len=*), intent(in) :: filename
-        type(restart_header_t), intent(in) :: header
+        type(bounce_integrals_header_t), intent(in) :: header
 
         character(len=max_line_length), dimension(n_header_lines) :: lines
         integer :: file_unit, i
@@ -63,9 +64,9 @@ contains
             write (file_unit, '(A)') trim(lines(i))
         end do
         close (file_unit)
-    end subroutine write_restart_header
+    end subroutine write_bounce_integrals_header
 
-    subroutine append_restart_fieldline(filename, fieldline_id, grid)
+    subroutine append_bounce_integrals(filename, fieldline_id, grid)
         character(len=*), intent(in) :: filename
         integer, intent(in) :: fieldline_id
         type(integration_grid_t), intent(in) :: grid
@@ -84,14 +85,14 @@ contains
                 grid%poloidal_drift_weighted(i_grid)
         end do
         close (file_unit)
-    end subroutine append_restart_fieldline
+    end subroutine append_bounce_integrals
 
-    subroutine read_restart_file(filename, header, fieldlines, is_complete)
+    subroutine read_bounce_integrals(filename, header, fieldlines, is_complete)
         ! Loads all complete fieldlines from filename into fieldlines(:)%grid and
         ! rewrites the file with only those, so new fieldlines can be appended.
         ! Stops if the header does not match the current inputs.
         character(len=*), intent(in) :: filename
-        type(restart_header_t), intent(in) :: header
+        type(bounce_integrals_header_t), intent(in) :: header
         type(fieldline_for_precession_t), dimension(:), intent(inout) :: fieldlines
         logical, dimension(:), intent(out) :: is_complete
 
@@ -111,16 +112,16 @@ contains
                 close (file_unit)
                 print *, "Warning: incomplete header in ", filename, &
                     ", starting from scratch"
-                call rewrite_restart_file(filename, header, fieldlines, is_complete)
+                call rewrite_bounce_integrals(filename, header, fieldlines, is_complete)
                 return
             end if
             if (i == git_hash_line) then
-                print *, "Warning: restart file written by a different version"
+                print *, "Warning: ", filename, " written by a different version"
                 print *, "  file:    ", trim(line)
                 print *, "  current: ", trim(expected(i))
                 cycle
             end if
-            print *, "Error: restart file ", filename, &
+            print *, "Error: ", filename, &
                 " does not match the current input"
             print *, "  file:    ", trim(line)
             print *, "  current: ", trim(expected(i))
@@ -150,7 +151,7 @@ contains
             associate (grid => fieldlines(current_id)%grid)
                 if (values(1) /= grid%t(n_lines) .or. &
                     values(2) /= grid%eta(n_lines)) then
-                    print *, "Error: integration grid in restart file ", filename, &
+                    print *, "Error: integration grid in ", filename, &
                         " differs from the current one at fieldline ", current_id
                     error stop
                 end if
@@ -163,8 +164,8 @@ contains
         call mark_if_complete(current_id, n_lines, fieldlines, is_complete)
         close (file_unit)
 
-        call rewrite_restart_file(filename, header, fieldlines, is_complete)
-    end subroutine read_restart_file
+        call rewrite_bounce_integrals(filename, header, fieldlines, is_complete)
+    end subroutine read_bounce_integrals
 
     function is_cut_off(file_unit, line, expected) result(cut_off)
         ! true if line is the beginning of expected and the last line of the file
@@ -191,12 +192,12 @@ contains
         is_complete(fieldline_id) = (n_lines == fieldlines(fieldline_id)%grid%n)
     end subroutine mark_if_complete
 
-    subroutine rewrite_restart_file(filename, header, fieldlines, is_complete)
+    subroutine rewrite_bounce_integrals(filename, header, fieldlines, is_complete)
         ! Writes the complete fieldlines to a temporary file first and renames it,
         ! so a crash during the rewrite leaves the original file intact.
         use, intrinsic :: iso_c_binding, only: c_null_char
         character(len=*), intent(in) :: filename
-        type(restart_header_t), intent(in) :: header
+        type(bounce_integrals_header_t), intent(in) :: header
         type(fieldline_for_precession_t), dimension(:), intent(in) :: fieldlines
         logical, dimension(:), intent(in) :: is_complete
 
@@ -204,10 +205,10 @@ contains
         integer :: idx, file_unit
 
         tmp_filename = filename//".tmp"
-        call write_restart_header(tmp_filename, header)
+        call write_bounce_integrals_header(tmp_filename, header)
         do idx = 1, size(fieldlines)
             if (is_complete(idx)) then
-                call append_restart_fieldline(tmp_filename, idx, fieldlines(idx)%grid)
+                call append_bounce_integrals(tmp_filename, idx, fieldlines(idx)%grid)
             end if
         end do
 
@@ -220,13 +221,13 @@ contains
                 error stop
             end if
         end if
-    end subroutine rewrite_restart_file
+    end subroutine rewrite_bounce_integrals
 
     function header_lines(header) result(lines)
-        type(restart_header_t), intent(in) :: header
+        type(bounce_integrals_header_t), intent(in) :: header
         character(len=max_line_length), dimension(n_header_lines) :: lines
 
-        lines(1) = "# electric_rabe restart file"
+        lines(1) = "# electric_rabe saved bounce integrals"
         lines(2) = "# format_version = "//int_to_str(format_version)
         lines(git_hash_line) = "# git_hash = "//header%git_hash
         lines(4) = "# field_file = "//trim(header%field_file)
@@ -260,4 +261,4 @@ contains
         str = trim(adjustl(buffer))
     end function real_to_str
 
-end module bounce_restart
+end module saved_bounce_integrals

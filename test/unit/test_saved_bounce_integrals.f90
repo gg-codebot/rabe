@@ -1,18 +1,19 @@
-program test_bounce_restart
+program test_saved_bounce_integrals
     use constants, only: dp
     use grid_mod, only: integration_grid_t, fieldline_for_precession_t
     use grid_mod, only: set_integration_grids
-    use bounce_restart, only: restart_header_t, write_restart_header
-    use bounce_restart, only: append_restart_fieldline, read_restart_file
+    use saved_bounce_integrals, only: bounce_integrals_header_t
+    use saved_bounce_integrals, only: write_bounce_integrals_header
+    use saved_bounce_integrals, only: append_bounce_integrals, read_bounce_integrals
 
     implicit none
 
-    character(len=*), parameter :: test_file = "test_bounce_restart.dat"
+    character(len=*), parameter :: test_file = "test_saved_bounce_integrals.dat"
     integer, parameter :: n_fieldlines = 5
     integer, parameter :: n_grid = 7
     integer, parameter :: line_length = 163 ! 162 characters + newline
 
-    type(restart_header_t) :: header
+    type(bounce_integrals_header_t) :: header
     type(integration_grid_t) :: grid
     type(fieldline_for_precession_t), dimension(n_fieldlines) :: expected
     type(fieldline_for_precession_t), dimension(n_fieldlines) :: fieldlines
@@ -92,18 +93,18 @@ contains
 
     function make_header(git_hash) result(header)
         character(len=*), intent(in) :: git_hash
-        type(restart_header_t) :: header
+        type(bounce_integrals_header_t) :: header
 
-        header = restart_header_t(git_hash=git_hash, &
-                                  field_file="wout_test.nc", &
-                                  s_tor=0.25_dp, &
-                                  M_pol=-1.0_dp, &
-                                  N_tor=4.0_dp, &
-                                  n_grid=n_grid, &
-                                  max_n_fieldlines=n_fieldlines, &
-                                  n_fieldlines=n_fieldlines, &
-                                  eta_c=0.1_dp, &
-                                  eta_t=0.3_dp)
+        header = bounce_integrals_header_t(git_hash=git_hash, &
+                                           field_file="wout_test.nc", &
+                                           s_tor=0.25_dp, &
+                                           M_pol=-1.0_dp, &
+                                           N_tor=4.0_dp, &
+                                           n_grid=n_grid, &
+                                           max_n_fieldlines=n_fieldlines, &
+                                           n_fieldlines=n_fieldlines, &
+                                           eta_c=0.1_dp, &
+                                           eta_t=0.3_dp)
     end function make_header
 
     subroutine fill_with_test_values(fieldlines)
@@ -128,31 +129,31 @@ contains
 
     subroutine write_fieldlines(filename, header, fieldlines, ids)
         character(len=*), intent(in) :: filename
-        type(restart_header_t), intent(in) :: header
+        type(bounce_integrals_header_t), intent(in) :: header
         type(fieldline_for_precession_t), dimension(:), intent(in) :: fieldlines
         integer, dimension(:), intent(in) :: ids
         integer :: i
 
-        call write_restart_header(filename, header)
+        call write_bounce_integrals_header(filename, header)
         do i = 1, size(ids)
-            call append_restart_fieldline(filename, ids(i), fieldlines(ids(i))%grid)
+            call append_bounce_integrals(filename, ids(i), fieldlines(ids(i))%grid)
         end do
     end subroutine write_fieldlines
 
     subroutine read_into_fresh(filename, header, fieldlines, is_complete)
         character(len=*), intent(in) :: filename
-        type(restart_header_t), intent(in) :: header
+        type(bounce_integrals_header_t), intent(in) :: header
         type(fieldline_for_precession_t), dimension(:), intent(inout) :: fieldlines
         logical, dimension(:), intent(out) :: is_complete
 
         fieldlines%grid = grid
-        call read_restart_file(filename, header, fieldlines, is_complete)
+        call read_bounce_integrals(filename, header, fieldlines, is_complete)
     end subroutine read_into_fresh
 
     subroutine check_resume(label, filename, header, expected)
         ! appending the missing fieldlines after a read must give a complete file
         character(len=*), intent(in) :: label, filename
-        type(restart_header_t), intent(in) :: header
+        type(bounce_integrals_header_t), intent(in) :: header
         type(fieldline_for_precession_t), dimension(:), intent(in) :: expected
 
         type(fieldline_for_precession_t), dimension(size(expected)) :: fieldlines
@@ -162,7 +163,7 @@ contains
         call read_into_fresh(filename, header, fieldlines, is_complete)
         do idx = 1, size(expected)
             if (.not. is_complete(idx)) then
-                call append_restart_fieldline(filename, idx, expected(idx)%grid)
+                call append_bounce_integrals(filename, idx, expected(idx)%grid)
             end if
         end do
         call read_into_fresh(filename, header, fieldlines, is_complete)
@@ -177,7 +178,7 @@ contains
 
         if (any(is_complete .neqv. expected_complete)) then
             print *, "-------------------------------------------------------------"
-            print *, "test_bounce_restart failed: ", label
+            print *, "test_saved_bounce_integrals failed: ", label
             print *, "complete fieldlines found:    ", is_complete
             print *, "complete fieldlines expected: ", expected_complete
             test_failed = .true.
@@ -201,7 +202,7 @@ contains
                     .or. any(found%poloidal_drift_weighted &
                              /= wanted%poloidal_drift_weighted)) then
                     print *, "---------------------------------------------------------"
-                    print *, "test_bounce_restart failed: ", label
+                    print *, "test_saved_bounce_integrals failed: ", label
                     print *, "values of fieldline ", idx, " not bit-exact"
                     test_failed = .true.
                 end if
@@ -237,4 +238,4 @@ contains
         close (file_unit, status='delete')
     end subroutine delete_file
 
-end program test_bounce_restart
+end program test_saved_bounce_integrals

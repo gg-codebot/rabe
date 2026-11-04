@@ -8,7 +8,7 @@ import sys
 from pathlib import Path
 
 run_dir = Path(sys.argv[1])
-restart = run_dir / "electric_rabe.restart.dat"
+restart = run_dir / "saved_bounce_integrals.dat"
 
 lines = restart.read_text().splitlines(keepends=True)
 last_id = lines[-1].split()[0]

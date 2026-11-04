@@ -1,8 +1,8 @@
 # restart
 
-End-to-end test of the `electric_rabe` restart file `electric_rabe.restart.dat`
-(test `RestartResume`, label `slow`). `run_restart_test.sh` runs in
-`build/test/restart/`:
+End-to-end test of resuming `electric_rabe` from its saved bounce integrals
+`saved_bounce_integrals.dat` (test `RestartResume`, label `slow`).
+`run_restart_test.sh` runs in `build/test/restart/`:
 
 1. run `electric_rabe` from scratch in `full/`
 2. copy `full/` to `resumed/`
