@@ -41,6 +41,7 @@ contains
         end if
 
         ! Default values
+        nan_value = ieee_value(nan_value, ieee_quiet_nan)
         if (allocated(Omega_hat)) deallocate (Omega_hat)
         allocate (Omega_hat(n_Omega_hat_max))
         Omega_hat = nan_value
