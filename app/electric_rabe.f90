@@ -10,6 +10,8 @@ program electric_rabe
     use grid_mod, only: integration_grid_t
     use grid_mod, only: set_integration_grids, fieldline_for_precession_t
     use grid_mod, only: compute_bounce_integrals
+    use bounce_restart, only: restart_header_t, write_restart_header
+    use bounce_restart, only: append_restart_fieldline, read_restart_file
     use field_instance, only: initialize_field_instance
     use splines_instance, only: initialize_splines
     use splines_instance, only: initialize_prefactor
@@ -33,8 +35,7 @@ program electric_rabe
                          s_tor, &
                          sign_sqrtg, &
                          max_n_fieldlines, &
-                         should_calc_shaing_callen, &
-                         n_eta
+                         should_calc_shaing_callen
     use read_precession, only: read_precession_namelist
     use read_precession, only: Omega_hat, &
                                nu_star
@@ -43,6 +44,8 @@ program electric_rabe
 
     character(len=*), parameter :: input_file = "rabe.in"
     character(len=*), parameter :: output_file = "electric_rabe.nc"
+    character(len=*), parameter :: restart_file = "electric_rabe.restart.dat"
+    integer, parameter :: n_grid = 200
 
     type(boozer_field_t) :: field
 
@@ -86,12 +89,10 @@ program electric_rabe
     type(modes_t) :: g_off_modes
 
     integer :: n_modes
-    integer :: idx, i_grid
-    integer :: file_unit
-    character(len=*), parameter :: save_dir = "saved_bounce_integrals/"
-    character(len=256) :: filename
+    integer :: idx
     logical :: file_exists
-    character(len=256) :: header_line
+    type(restart_header_t) :: restart_header
+    logical, dimension(:), allocatable :: is_complete
     integer :: n_Omega_hat
     integer :: idx_Omega
     integer :: n_nu
@@ -146,7 +147,7 @@ program electric_rabe
         eta_c = 1.0_dp/get_smallest_maximum(fieldlines_precession)
         call set_fieldline_minima(field, fieldlines_precession)
         eta_t = 1.0_dp/get_biggest_minimum(fieldlines_precession)
-        call set_integration_grids(eta_t, eta_c, grid)
+        call set_integration_grids(eta_t, eta_c, grid, n_grid)
         fieldlines_precession%grid = grid
 
         call initialize_field_instance(field)
@@ -159,46 +160,36 @@ program electric_rabe
         I_j = 0.0_dp
         magnetic_drift_weighted = 0.0_dp
 
-        do idx = 1, n_fieldlines
-            write (filename, '(A,A,I0,A)') save_dir, 'bounce_fieldline_', idx, '.dat'
-            inquire (file=trim(filename), exist=file_exists)
+        restart_header = restart_header_t(git_hash=git_hash, &
+                                          field_file=trim(field_file), &
+                                          s_tor=s_tor(this), &
+                                          M_pol=M_pol, &
+                                          N_tor=N_tor, &
+                                          n_grid=grid%n, &
+                                          max_n_fieldlines=max_n_fieldlines, &
+                                          n_fieldlines=n_fieldlines, &
+                                          eta_c=eta_c, &
+                                          eta_t=eta_t)
+        allocate (is_complete(n_fieldlines))
+        inquire (file=restart_file, exist=file_exists)
+        if (file_exists) then
+            call read_restart_file(restart_file, restart_header, &
+                                   fieldlines_precession, is_complete)
+            print *, "Read ", count(is_complete), " of ", n_fieldlines, &
+                " fieldlines from ", restart_file
+        else
+            call write_restart_header(restart_file, restart_header)
+            is_complete = .false.
+        end if
 
-            if (file_exists) then
-                print *, "Reading bounce integrals from ", trim(filename)
-                open (newunit=file_unit, file=trim(filename), &
-                      status='old', action='read')
-                read (file_unit, '(A)') header_line
-                do i_grid = 1, fieldlines_precession(idx)%grid%n
-                    read (file_unit, *) &
-                        fieldlines_precession(idx)%grid%t(i_grid), &
-                        fieldlines_precession(idx)%grid%eta(i_grid), &
-                        fieldlines_precession(idx)%grid%bounce_time_weighted(i_grid), &
-                        fieldlines_precession(idx)%grid%I_j(i_grid), &
-                        fieldlines_precession(idx)%grid%radial_drift_weighted(i_grid), &
-                        fieldlines_precession(idx)%grid%poloidal_drift_weighted(i_grid)
-                end do
-                close (file_unit)
-            else
+        do idx = 1, n_fieldlines
+            if (.not. is_complete(idx)) then
                 call compute_bounce_integrals(field, &
                                               fieldlines_precession(idx), &
                                               s_tor(this), &
                                               fieldlines_precession(idx)%grid)
-                open (newunit=file_unit, file=trim(filename), &
-                      status='replace')
-                write (file_unit, '(A)') &
-                    '# t  eta  bounce_time_weighted' &
-                    //'  I_j  radial_drift_weighted' &
-                    //'  poloidal_drift_weighted'
-                do i_grid = 1, fieldlines_precession(idx)%grid%n
-                    write (file_unit, '(6ES20.12)') &
-                        fieldlines_precession(idx)%grid%t(i_grid), &
-                        fieldlines_precession(idx)%grid%eta(i_grid), &
-                        fieldlines_precession(idx)%grid%bounce_time_weighted(i_grid), &
-                        fieldlines_precession(idx)%grid%I_j(i_grid), &
-                        fieldlines_precession(idx)%grid%radial_drift_weighted(i_grid), &
-                        fieldlines_precession(idx)%grid%poloidal_drift_weighted(i_grid)
-                end do
-                close (file_unit)
+                call append_restart_fieldline(restart_file, idx, &
+                                              fieldlines_precession(idx)%grid)
             end if
 
    radial_drift_weighted(idx, :) = fieldlines_precession(idx)%grid%radial_drift_weighted
@@ -270,6 +261,7 @@ program electric_rabe
         deallocate (magnetic_drift_weighted)
         deallocate (radial_drift_cos)
         deallocate (radial_drift_sin)
+        deallocate (is_complete)
 
 ! --------------------------------------------------------------------------
 
