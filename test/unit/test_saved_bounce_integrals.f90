@@ -11,6 +11,14 @@ program test_saved_bounce_integrals
     character(len=*), parameter :: test_file = "test_saved_bounce_integrals.dat"
     integer, parameter :: n_fieldlines = 5
     integer, parameter :: n_grid = 7
+    real(dp), parameter :: eta_c = 0.1_dp
+    real(dp), parameter :: eta_t = 0.3_dp
+    real(dp), parameter :: s_tor = 0.25_dp
+    real(dp), parameter :: M_pol = -1.0_dp
+    real(dp), parameter :: N_tor = 4.0_dp
+    character(len=*), parameter :: field_file = "wout_test.nc"
+    character(len=*), parameter :: git_hash = "abc1234"
+    character(len=*), parameter :: other_git_hash = "def5678"
     integer, parameter :: line_length = 163 ! 162 characters + newline
 
     type(bounce_integrals_header_t) :: header
@@ -22,10 +30,10 @@ program test_saved_bounce_integrals
 
     test_failed = .false.
 
-    call set_integration_grids(0.3_dp, 0.1_dp, grid, n_grid)
+    call set_integration_grids(eta_t, eta_c, grid, n_grid)
     expected%grid = grid
     call fill_with_test_values(expected)
-    header = make_header("abc1234")
+    header = make_header(git_hash)
 
     ! round trip of all fieldlines must be bit-exact
     call write_fieldlines(test_file, header, expected, [1, 2, 3, 4, 5])
@@ -41,7 +49,8 @@ program test_saved_bounce_integrals
     call check_values("second read", fieldlines, expected, is_complete)
 
     ! a different git hash only warns
-    call read_into_fresh(test_file, make_header("def5678"), fieldlines, is_complete)
+    call read_into_fresh(test_file, make_header(other_git_hash), fieldlines, &
+                         is_complete)
     call check_complete("other git hash", is_complete, [.true., .true., .true., &
                                                          .true., .true.])
 
@@ -83,20 +92,20 @@ program test_saved_bounce_integrals
 
 contains
 
-    function make_header(git_hash) result(header)
-        character(len=*), intent(in) :: git_hash
+    function make_header(hash) result(header)
+        character(len=*), intent(in) :: hash
         type(bounce_integrals_header_t) :: header
 
-        header = bounce_integrals_header_t(git_hash=git_hash, &
-                                           field_file="wout_test.nc", &
-                                           s_tor=0.25_dp, &
-                                           M_pol=-1.0_dp, &
-                                           N_tor=4.0_dp, &
+        header = bounce_integrals_header_t(git_hash=hash, &
+                                           field_file=field_file, &
+                                           s_tor=s_tor, &
+                                           M_pol=M_pol, &
+                                           N_tor=N_tor, &
                                            n_grid=n_grid, &
                                            max_n_fieldlines=n_fieldlines, &
                                            n_fieldlines=n_fieldlines, &
-                                           eta_c=0.1_dp, &
-                                           eta_t=0.3_dp)
+                                           eta_c=eta_c, &
+                                           eta_t=eta_t)
     end function make_header
 
     subroutine fill_with_test_values(fieldlines)
