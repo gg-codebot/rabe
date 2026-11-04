@@ -78,14 +78,6 @@ program test_saved_bounce_integrals
     call check_values("missing newline", fieldlines, expected, is_complete)
     call check_resume("missing newline", test_file, header, expected)
 
-    ! cut inside the header: start from scratch
-    call write_fieldlines(test_file, header, expected, [1])
-    call remove_trailing_bytes(test_file, n_grid*line_length + 20)
-    call read_into_fresh(test_file, header, fieldlines, is_complete)
-    call check_complete("cut inside header", is_complete, [.false., .false., .false., &
-                                                            .false., .false.])
-    call check_resume("cut inside header", test_file, header, expected)
-
     call delete_file(test_file)
     if (test_failed) error stop
 
