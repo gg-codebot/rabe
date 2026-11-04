@@ -34,8 +34,7 @@ program electric_rabe
                          N_tor, &
                          s_tor, &
                          sign_sqrtg, &
-                         max_n_fieldlines, &
-                         should_calc_shaing_callen
+                         max_n_fieldlines
     use read_precession, only: read_precession_namelist
     use read_precession, only: Omega_hat, &
                                nu_star
@@ -45,7 +44,7 @@ program electric_rabe
     character(len=*), parameter :: input_file = "rabe.in"
     character(len=*), parameter :: output_file = "electric_rabe.nc"
     character(len=*), parameter :: restart_file = "electric_rabe.restart.dat"
-    integer, parameter :: n_grid = 200
+    integer, parameter :: n_eta = 200
 
     type(boozer_field_t) :: field
 
@@ -147,7 +146,7 @@ program electric_rabe
         eta_c = 1.0_dp/get_smallest_maximum(fieldlines_precession)
         call set_fieldline_minima(field, fieldlines_precession)
         eta_t = 1.0_dp/get_biggest_minimum(fieldlines_precession)
-        call set_integration_grids(eta_t, eta_c, grid, n_grid)
+        call set_integration_grids(eta_t, eta_c, grid, n_eta)
         fieldlines_precession%grid = grid
 
         call initialize_field_instance(field)
