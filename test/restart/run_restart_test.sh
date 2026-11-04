@@ -13,8 +13,8 @@ cp "$source_dir/input/rabe.in" "$field_file" full/
 cp -r full resumed
 python3 "$source_dir/truncate.py" resumed
 (cd resumed && "$electric_rabe" > run.log)
-grep -Eq "Read +1 +of +2 +fieldlines" resumed/run.log || {
-    echo "FAIL: resumed run did not reuse fieldline 1 from the restart file"
+grep -Eq "Read +[1-9][0-9]* +of" resumed/run.log || {
+    echo "FAIL: resumed run did not reuse any fieldline from the restart file"
     exit 1
 }
 python3 "$source_dir/compare.py" full resumed

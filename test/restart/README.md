@@ -8,8 +8,8 @@ End-to-end test of the `electric_rabe` restart file `electric_rabe.restart.dat`
 2. copy `full/` to `resumed/`
 3. `truncate.py` cuts the restart file in `resumed/` in the middle of the last
    fieldline, as if the run had been killed, and removes the output
-4. run `electric_rabe` again in `resumed/`; it must report that it read one of
-   the two fieldlines from the restart file
+4. run `electric_rabe` again in `resumed/`; it must report that it read at
+   least one fieldline from the restart file
 5. `compare.py` requires `electric_rabe.nc` and the restart file of both runs to
    be byte-identical
 
