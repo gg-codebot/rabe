@@ -5,21 +5,16 @@ program electric_rabe
     use fieldline_mod, only: fieldline_t, flock_of_fieldlines_t
     use make_fieldline, only: make_flock_of_fieldlines
 
-    use precession, only: get_smallest_maximum, get_biggest_minimum
-    use precession, only: set_fieldline_minima
-    use grid_mod, only: integration_grid_t
-    use grid_mod, only: set_integration_grids, fieldline_for_precession_t
+    use precession, only: bounce_integrals_t
+    use precession, only: make_fieldlines_for_precession
+    use precession, only: assemble_bounce_integrals
+    use precession, only: compute_flux_modes
+    use grid_mod, only: fieldline_for_precession_t
     use grid_mod, only: compute_bounce_integrals
     use saved_bounce_integrals, only: bounce_integrals_header_t
     use saved_bounce_integrals, only: write_bounce_integrals_header
     use saved_bounce_integrals, only: append_bounce_integrals, read_bounce_integrals
     use field_instance, only: initialize_field_instance
-    use splines_instance, only: initialize_splines
-    use splines_instance, only: initialize_prefactor
-    use splines_instance, only: initialize_startup
-    use splines_instance, only: initialize_radial_drift_spline
-    use splines_instance, only: get_flux_mode
-    use fourier, only: real_ft
     use fieldline_labels, only: modes_t
 
     use surface_average_mod, only: surface_average_t, calc_surface_averages
@@ -71,21 +66,10 @@ program electric_rabe
 
     type(fieldline_modes_t) :: modes
     type(fieldline_for_precession_t), dimension(:), allocatable :: fieldlines_precession
-    real(dp) :: phi_bottom, B_bottom, lowest_B_max, eta_t, eta_c
-    type(integration_grid_t) :: grid
-
-    real(dp), dimension(:, :), allocatable :: radial_drift_weighted
-    real(dp), dimension(:, :), allocatable :: radial_drift_cos
-    real(dp), dimension(:, :), allocatable :: radial_drift_sin
-    real(dp), dimension(:), allocatable :: bounce_time_weighted
-    real(dp), dimension(:), allocatable :: I_j
-    real(dp), dimension(:), allocatable :: poloidal_drift_weighted
-    real(dp), dimension(:), allocatable :: electric_drift_weighted
-    real(dp), dimension(:), allocatable :: magnetic_drift_weighted
-    logical, parameter :: ignore_magnetic_drift = .true.
+    real(dp) :: phi_bottom, B_bottom, lowest_B_max
+    type(bounce_integrals_t) :: bounce_integrals
 
     real(dp), dimension(:), allocatable :: flux_mode
-    real(dp) :: mode_factor
     type(modes_t) :: g_off_modes
 
     integer :: n_modes
@@ -139,26 +123,8 @@ program electric_rabe
         R = field%R
 
 ! --------------------------------------------------------------------------
-        allocate (fieldlines_precession(n_fieldlines))
-        fieldlines_precession%fieldline_t = fieldlines
-        fieldlines_precession%M_pol = M_pol
-        fieldlines_precession%N_tor = N_tor
-        fieldlines_precession%nfp = nfp
-        eta_c = 1.0_dp/get_smallest_maximum(fieldlines_precession)
-        call set_fieldline_minima(field, fieldlines_precession)
-        eta_t = 1.0_dp/get_biggest_minimum(fieldlines_precession)
-        call set_integration_grids(eta_t, eta_c, grid, n_eta)
-        fieldlines_precession%grid = grid
-
+        call make_fieldlines_for_precession(field, flock, fieldlines_precession, n_eta)
         call initialize_field_instance(field)
-        allocate (radial_drift_weighted(n_fieldlines, grid%n))
-        allocate (bounce_time_weighted(grid%n))
-        allocate (I_j(grid%n))
-        allocate (magnetic_drift_weighted(grid%n))
-        allocate (electric_drift_weighted(grid%n))
-        bounce_time_weighted = 0.0_dp
-        I_j = 0.0_dp
-        magnetic_drift_weighted = 0.0_dp
 
         bounce_integrals_header = &
             bounce_integrals_header_t(git_hash=git_hash, &
@@ -166,11 +132,11 @@ program electric_rabe
                                       s_tor=s_tor(this), &
                                       M_pol=M_pol, &
                                       N_tor=N_tor, &
-                                      n_grid=grid%n, &
+                                      n_grid=n_eta, &
                                       max_n_fieldlines=max_n_fieldlines, &
                                       n_fieldlines=n_fieldlines, &
-                                      eta_c=eta_c, &
-                                      eta_t=eta_t)
+                                      eta_c=fieldlines_precession(1)%grid%eta(n_eta), &
+                                      eta_t=fieldlines_precession(1)%grid%eta(1))
         allocate (is_complete(n_fieldlines))
         inquire (file=bounce_integrals_file, exist=file_exists)
         if (file_exists) then
@@ -194,56 +160,18 @@ program electric_rabe
                 call append_bounce_integrals(bounce_integrals_file, idx, &
                                              fieldlines_precession(idx)%grid)
             end if
-
-   radial_drift_weighted(idx, :) = fieldlines_precession(idx)%grid%radial_drift_weighted
-            bounce_time_weighted = bounce_time_weighted + &
-                                   fieldlines_precession(idx)%grid%bounce_time_weighted
-            I_j = I_j + fieldlines_precession(idx)%grid%I_j
-            magnetic_drift_weighted = magnetic_drift_weighted + &
-                                 fieldlines_precession(idx)%grid%poloidal_drift_weighted
         end do
-        if (ignore_magnetic_drift) then
-            magnetic_drift_weighted = 0.0_dp
-        else
-            magnetic_drift_weighted = magnetic_drift_weighted/n_fieldlines
-        end if
-        bounce_time_weighted = bounce_time_weighted/n_fieldlines
-        I_j = I_j/n_fieldlines
-        allocate (poloidal_drift_weighted(grid%n))
+        call assemble_bounce_integrals(fieldlines_precession, bounce_integrals)
+        n_modes = bounce_integrals%n_modes
 
-        n_modes = n_fieldlines/2 + 1
-        allocate (radial_drift_cos(n_modes, grid%n))
-        allocate (radial_drift_sin(n_modes, grid%n))
-        do idx = 1, grid%n
-            call real_ft(fieldlines_precession%xi_0, &
-                         radial_drift_weighted(:, idx), &
-                         radial_drift_cos(:, idx), &
-                         radial_drift_sin(:, idx))
-        end do
-
-        allocate (flux_mode(n_modes))
         allocate (lambda_off_modes(n_modes, n_nu, n_Omega_hat))
 
         do idx_Omega = 1, n_Omega_hat
             print *, "idx_Omega: ", idx_Omega, " / ", n_Omega_hat
-            electric_drift_weighted = Omega_hat(idx_Omega)*bounce_time_weighted
-            poloidal_drift_weighted = magnetic_drift_weighted + electric_drift_weighted
-
-            call initialize_splines(grid%t, &
-                                    grid%eta, &
-                                    I_j, &
-                                    poloidal_drift_weighted)
-
             do id_nu = 1, n_nu
                 l_c = pi*R/(2.0_dp*nu_star(id_nu))
-                flux_mode(1) = 0.0_dp
-                do idx = 2, n_modes
-                    mode_factor = 0.5_dp*real(idx - 1, dp)*l_c*nfp/(M_pol*iota - N_tor)
-                    call initialize_prefactor(mode_factor)
-                    call initialize_startup(grid%t, grid%eta, I_j, mode_factor)
-                   call initialize_radial_drift_spline(grid%t, radial_drift_sin(idx, :))
-                    call get_flux_mode(grid%t(1), grid%t(grid%n), flux_mode(idx))
-                end do
+                call compute_flux_modes(bounce_integrals, l_c, Omega_hat(idx_Omega), &
+                                        flux_mode)
                 call get_g_modes_from_fieldlines(flock, l_c, g_off_modes, &
                                                  covariant_factor)
         lambda_off_modes(:, id_nu, idx_Omega) = pi*g_off_modes%sin_coeffs*flux_mode/average%normalization
@@ -254,16 +182,7 @@ program electric_rabe
         lambda_off = lambda_off*0.75_dp/covariant_factor*sign_sqrtg/average%nabla_s
  lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor*sign_sqrtg/average%nabla_s
 
-        deallocate (flux_mode)
         deallocate (fieldlines_precession)
-        deallocate (radial_drift_weighted)
-        deallocate (bounce_time_weighted)
-        deallocate (I_j)
-        deallocate (poloidal_drift_weighted)
-        deallocate (electric_drift_weighted)
-        deallocate (magnetic_drift_weighted)
-        deallocate (radial_drift_cos)
-        deallocate (radial_drift_sin)
         deallocate (is_complete)
 
 ! --------------------------------------------------------------------------
