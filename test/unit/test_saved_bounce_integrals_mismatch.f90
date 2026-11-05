@@ -1,5 +1,5 @@
 program test_saved_bounce_integrals_mismatch
-    ! Reading saved bounce integrals written for different inputs must stop.
+    ! Reading saved bounce integrals written by another commit must stop.
     ! The test passes if the expected error message is printed.
     use constants, only: dp
     use grid_mod, only: integration_grid_t, fieldline_for_precession_t
@@ -20,8 +20,8 @@ program test_saved_bounce_integrals_mismatch
     real(dp), parameter :: M_pol = -1.0_dp
     real(dp), parameter :: N_tor = 4.0_dp
     character(len=*), parameter :: field_file = "wout_test.nc"
-    real(dp), parameter :: other_s_tor = 0.5_dp
     character(len=*), parameter :: git_hash = "abc1234"
+    character(len=*), parameter :: other_git_hash = "def5678"
 
     type(bounce_integrals_header_t) :: header
     type(integration_grid_t) :: grid
@@ -43,7 +43,7 @@ program test_saved_bounce_integrals_mismatch
                                        eta_t=eta_t)
     call write_bounce_integrals_header(test_file, header)
 
-    header%s_tor = other_s_tor
+    header%git_hash = other_git_hash
     call read_bounce_integrals(test_file, header, fieldlines, is_complete)
 
     print *, "test_saved_bounce_integrals_mismatch failed: mismatch not detected"
