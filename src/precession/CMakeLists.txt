@@ -8,6 +8,7 @@ add_library(precession_lib STATIC
   field_instance.f90
   odeint_allroutines.f
   read_precession.f90
+  saved_bounce_integrals.f90
   )
 
 include(libneo)

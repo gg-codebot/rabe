@@ -56,6 +56,8 @@ rabe_lib (main static library)
 ├── precession_lib (src/precession/)
 │   grid.f90 - Integration grid type and bounce/spline routines
 │   precession.f90 - Magnetic well and turning-point helpers
+│   saved_bounce_integrals.f90 - Per-fieldline bounce integrals of
+│                        electric_rabe saved to file (type bounce_integrals_header_t)
 ├── error_handling_lib (src/error_handling/)
 │   error_handling.f90 - Sanity-check helpers: failed_sanity_check(),
 │                        reset_failed_check_counter(), did_fail_any_sanity_check(),
@@ -91,6 +93,8 @@ No system NetCDF library is required.
 - `test/integration/vmec/` - VMEC field comparison tests
 - `test/plot/` - Visualization tests; see `test/plot/README.md` for API and patterns
 - `test/golden/` - Golden record regression test (label: `golden`)
+- `test/restart/` - End-to-end test of resuming `electric_rabe` from its saved bounce
+  integrals (label: `slow`)
 - `test/helpers/` - Shared test utilities (analytical fields, mock fields, readers, plot helpers)
 - `test/internal/` - Private tests with legacy NEO-2 comparisons (git submodule, not in public repo)
 
@@ -106,6 +110,14 @@ No system NetCDF library is required.
 - **Input**: Namelist file `rabe.in` (namelist `rabe_config`)
 - **Field data**: VMEC `.nc` files
 - **Output**: `rabe.nc` (NetCDF)
+- **`electric_rabe`**: reads `rabe.in` (namelists `rabe_config` and
+  `precession_config`, single surface only), writes `electric_rabe.nc` and the
+  bounce integrals to `saved_bounce_integrals.dat`. That file is plain text: a
+  `# key = value` header with the inputs the bounce integrals depend on, then one
+  fixed-width line per fieldline and grid point. Each fieldline is appended as soon
+  as it is computed; on start, an existing file is checked against the input
+  (mismatch stops the run), complete fieldlines are reused and only missing ones
+  are computed. The file is kept after the run as a cache.
 
 ## Code Style
 
