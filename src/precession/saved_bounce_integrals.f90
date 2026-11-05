@@ -4,7 +4,7 @@ module saved_bounce_integrals
     ! fixed-width line per fieldline and grid point. Fieldlines are appended as
     ! soon as they are computed. On reading, a fieldline counts only if all of
     ! its lines are present at full width, so a file cut off by a killed run is
-    ! safe to resume from.
+    ! safe to resume from. Only a clean build of the same commit reuses a file.
     use constants, only: dp
     use grid_mod, only: integration_grid_t, fieldline_for_precession_t
     implicit none
@@ -74,7 +74,8 @@ contains
     subroutine read_bounce_integrals(filename, header, fieldlines, is_complete)
         ! Loads all complete fieldlines into fieldlines(:)%grid and writes the
         ! file back with only those, so new fieldlines append to a clean end.
-        ! Stops if the header does not match the current input.
+        ! Stops if the header does not match the current input and git hash,
+        ! or if the file was written by a dirty build.
         character(len=*), intent(in) :: filename
         type(bounce_integrals_header_t), intent(in) :: header
         type(fieldline_for_precession_t), dimension(:), intent(inout) :: fieldlines
@@ -90,11 +91,11 @@ contains
         do i = 1, n_header_lines
             read (file_unit, '(A)', iostat=ios) line
             if (ios /= 0) line = ""
-            if (line == expected(i)) cycle
-            if (i == git_hash_line) then
-                print *, "Warning: ", filename, " written by another version"
-                cycle
+            if (i == git_hash_line .and. index(line, "-dirty") > 0) then
+                print *, "Error: ", filename, " was written by a dirty build"
+                error stop
             end if
+            if (line == expected(i)) cycle
             print *, "Error: ", filename, " does not match the current input"
             print *, "  file:    ", trim(line)
             print *, "  current: ", trim(expected(i))
