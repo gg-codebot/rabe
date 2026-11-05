@@ -7,10 +7,12 @@ module read_precession
 
     real(dp), dimension(:), allocatable, public, protected :: Omega_hat
     real(dp), dimension(:), allocatable, public, protected :: nu_star
+    integer, public, protected :: n_eta ! eta grid points of the bounce integrals
 
     namelist /precession_config/ &
         Omega_hat, &
-        nu_star
+        nu_star, &
+        n_eta
 
 contains
 
@@ -48,6 +50,7 @@ contains
         if (allocated(nu_star)) deallocate (nu_star)
         allocate (nu_star(n_nu_star_max))
         nu_star = nan_value
+        n_eta = 200
 
         read (unit, nml=precession_config, iostat=ios)
         if (ios /= 0) then

@@ -8,6 +8,17 @@ execute_process(
 
 if(NOT GIT_HASH)
     set(GIT_HASH "unknown")
+else()
+    execute_process(
+        COMMAND git status --porcelain --untracked-files=no
+        WORKING_DIRECTORY ${SOURCE_DIR}
+        OUTPUT_VARIABLE GIT_CHANGES
+        OUTPUT_STRIP_TRAILING_WHITESPACE
+        ERROR_QUIET
+    )
+    if(GIT_CHANGES)
+        set(GIT_HASH "${GIT_HASH}-dirty")
+    endif()
 endif()
 
 configure_file(

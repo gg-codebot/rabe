@@ -7,3 +7,5 @@ bounce integrals and reproduces an uninterrupted run exactly.
 
 Field: `wout_LandremanPaul2021_QH_reactorScale_lowres_reference.nc` from
 `test/integration/vmec/input`.
+
+Fails in a dirty build, which does not reuse saved bounce integrals.

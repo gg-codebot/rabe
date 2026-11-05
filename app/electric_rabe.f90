@@ -33,14 +33,14 @@ program electric_rabe
                          max_n_fieldlines
     use read_precession, only: read_precession_namelist
     use read_precession, only: Omega_hat, &
-                               nu_star
+                               nu_star, &
+                               n_eta
 
     implicit none
 
     character(len=*), parameter :: input_file = "rabe.in"
     character(len=*), parameter :: output_file = "electric_rabe.nc"
     character(len=*), parameter :: bounce_integrals_file = "saved_bounce_integrals.dat"
-    integer, parameter :: n_eta = 200
 
     type(boozer_field_t) :: field
 

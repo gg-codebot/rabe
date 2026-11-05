@@ -23,3 +23,5 @@ if(Python3_FOUND)
 else()
     message(STATUS "Python3 not found - golden record comparison test disabled")
 endif()
+
+add_subdirectory(electric)
