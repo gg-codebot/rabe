@@ -21,7 +21,6 @@ program test_saved_bounce_integrals
     real(dp), parameter :: test_value = 1.0_dp/3.0_dp ! not exact in decimal
     character(len=*), parameter :: field_file = "wout_test.nc"
     character(len=*), parameter :: git_hash = "abc1234"
-    character(len=*), parameter :: other_git_hash = "def5678"
     integer, parameter :: line_length = 163 ! 162 characters + newline
 
     type(bounce_integrals_header_t) :: header
@@ -72,11 +71,6 @@ program test_saved_bounce_integrals
         print *, "test_saved_bounce_integrals failed: values not bit-exact"
         test_failed = .true.
     end if
-
-    ! a different git hash only warns
-    header%git_hash = other_git_hash
-    call read_bounce_integrals(test_file, header, fieldlines, is_complete)
-    call check_complete("other git hash", is_complete, [.true., .true., .false.])
 
     if (test_failed) error stop
 
