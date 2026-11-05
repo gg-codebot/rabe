@@ -4,7 +4,7 @@
     N_tor = 4.0d0,
     s_tor = 0.5,
     sign_sqrtg = -1.0d0,
-    max_n_fieldlines = 2,
+    max_n_fieldlines = 4,
     should_calc_shaing_callen = .false.,
 /
 &precession_config
