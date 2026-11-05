@@ -27,7 +27,6 @@ contains
 
     subroutine setup_bounce_integrals(field, flock, s_tor, bounce_integrals, n_eta, fieldlines_out)
         use field_instance, only: initialize_field_instance
-        use fourier, only: real_ft
         class(field_3D_t), intent(in) :: field
         type(flock_of_fieldlines_t), intent(in) :: flock
         real(dp), intent(in) :: s_tor
@@ -36,47 +35,57 @@ contains
         type(fieldline_for_precession_t), dimension(:), allocatable, intent(out), optional :: fieldlines_out
 
         type(fieldline_for_precession_t), dimension(:), allocatable :: fieldlines
+        integer :: idx
+
+        call make_fieldlines_for_precession(field, flock, fieldlines, n_eta)
+        call initialize_field_instance(field)
+        do idx = 1, size(fieldlines)
+            call compute_bounce_integrals(field, &
+                                          fieldlines(idx), &
+                                          s_tor, &
+                                          fieldlines(idx)%grid)
+        end do
+        call assemble_bounce_integrals(fieldlines, bounce_integrals)
+
+        if (present(fieldlines_out)) call move_alloc(fieldlines, fieldlines_out)
+
+    end subroutine setup_bounce_integrals
+
+    subroutine make_fieldlines_for_precession(field, flock, fieldlines, n_eta)
+        class(field_3D_t), intent(in) :: field
+        type(flock_of_fieldlines_t), intent(in) :: flock
+        type(fieldline_for_precession_t), dimension(:), allocatable, intent(out) :: fieldlines
+        integer, intent(in), optional :: n_eta
+
         real(dp) :: eta_t, eta_c
         type(integration_grid_t) :: grid
 
-        real(dp), dimension(:, :), allocatable :: radial_drift_weighted
-        real(dp), dimension(:, :), allocatable :: radial_drift_cos
-
-        integer :: n_fieldlines
-        integer :: idx
-
-        n_fieldlines = size(flock%fieldlines)
-        allocate (fieldlines(n_fieldlines))
-        fieldlines%fieldline_t = flock%fieldlines
-
-        bounce_integrals%M_pol = flock%M_pol
-        bounce_integrals%N_tor = flock%N_tor
-        bounce_integrals%nfp = flock%nfp
-        bounce_integrals%iota = flock%iota
-        fieldlines%M_pol = bounce_integrals%M_pol
-        fieldlines%N_tor = bounce_integrals%N_tor
-        fieldlines%nfp = bounce_integrals%nfp
-        if (ieee_is_nan(bounce_integrals%M_pol)) then
-            print *, "M_pol: ", bounce_integrals%M_pol
+        if (ieee_is_nan(flock%M_pol)) then
+            print *, "M_pol: ", flock%M_pol
             error stop "Error: M_pol is NaN."
         end if
-        if (ieee_is_nan(bounce_integrals%N_tor)) then
-            print *, "N_tor: ", bounce_integrals%N_tor
+        if (ieee_is_nan(flock%N_tor)) then
+            print *, "N_tor: ", flock%N_tor
             error stop "Error: N_tor is NaN."
         end if
-        if (ieee_is_nan(bounce_integrals%nfp)) then
-            print *, "nfp: ", bounce_integrals%nfp
+        if (ieee_is_nan(flock%nfp)) then
+            print *, "nfp: ", flock%nfp
             error stop "Error: nfp is NaN."
         end if
-        if (ieee_is_nan(bounce_integrals%iota)) then
-            print *, "iota: ", bounce_integrals%iota
+        if (ieee_is_nan(flock%iota)) then
+            print *, "iota: ", flock%iota
             error stop "Error: iota is NaN."
         end if
-        if (abs(bounce_integrals%M_pol*bounce_integrals%iota - bounce_integrals%N_tor) &
-            < machine_eps) then
+        if (abs(flock%M_pol*flock%iota - flock%N_tor) < machine_eps) then
             print *, "Error-Resonant: M_pol*iota - N_tor must not be zero."
             error stop
         end if
+
+        allocate (fieldlines(size(flock%fieldlines)))
+        fieldlines%fieldline_t = flock%fieldlines
+        fieldlines%M_pol = flock%M_pol
+        fieldlines%N_tor = flock%N_tor
+        fieldlines%nfp = flock%nfp
 
         eta_c = 1.0_dp/get_smallest_maximum(fieldlines)
         call set_fieldline_minima(field, fieldlines)
@@ -84,19 +93,35 @@ contains
         call set_integration_grids(eta_t, eta_c, grid, n_eta=n_eta)
         fieldlines%grid = grid
 
-        call initialize_field_instance(field)
-        allocate (radial_drift_weighted(n_fieldlines, grid%n))
-        allocate (bounce_integrals%avg_bounce_time_weighted(grid%n))
-        allocate (bounce_integrals%avg_I_j(grid%n))
-        allocate (bounce_integrals%avg_magnetic_drift_weighted(grid%n))
+    end subroutine make_fieldlines_for_precession
+
+    subroutine assemble_bounce_integrals(fieldlines, bounce_integrals)
+        use fourier, only: real_ft
+        type(fieldline_for_precession_t), dimension(:), intent(in) :: fieldlines
+        type(bounce_integrals_t), intent(out) :: bounce_integrals
+
+        real(dp), dimension(:, :), allocatable :: radial_drift_weighted
+        real(dp), dimension(:, :), allocatable :: radial_drift_cos
+        integer :: n_fieldlines, n_grid, idx
+
+        n_fieldlines = size(fieldlines)
+        n_grid = fieldlines(1)%grid%n
+
+        bounce_integrals%M_pol = fieldlines(1)%M_pol
+        bounce_integrals%N_tor = fieldlines(1)%N_tor
+        bounce_integrals%nfp = fieldlines(1)%nfp
+        bounce_integrals%iota = fieldlines(1)%iota
+        bounce_integrals%t = fieldlines(1)%grid%t
+        bounce_integrals%eta = fieldlines(1)%grid%eta
+
+        allocate (radial_drift_weighted(n_fieldlines, n_grid))
+        allocate (bounce_integrals%avg_bounce_time_weighted(n_grid))
+        allocate (bounce_integrals%avg_I_j(n_grid))
+        allocate (bounce_integrals%avg_magnetic_drift_weighted(n_grid))
         bounce_integrals%avg_bounce_time_weighted = 0.0_dp
         bounce_integrals%avg_I_j = 0.0_dp
         bounce_integrals%avg_magnetic_drift_weighted = 0.0_dp
         do idx = 1, n_fieldlines
-            call compute_bounce_integrals(field, &
-                                          fieldlines(idx), &
-                                          s_tor, &
-                                          fieldlines(idx)%grid)
             radial_drift_weighted(idx, :) = fieldlines(idx)%grid%radial_drift_weighted
             bounce_integrals%avg_bounce_time_weighted = &
                 bounce_integrals%avg_bounce_time_weighted + &
@@ -118,27 +143,16 @@ contains
         bounce_integrals%avg_I_j = bounce_integrals%avg_I_j/n_fieldlines
 
         bounce_integrals%n_modes = n_fieldlines/2 + 1
-        allocate (radial_drift_cos(bounce_integrals%n_modes, grid%n))
-        allocate (bounce_integrals%radial_drift_sin(bounce_integrals%n_modes, grid%n))
-        do idx = 1, grid%n
+        allocate (radial_drift_cos(bounce_integrals%n_modes, n_grid))
+        allocate (bounce_integrals%radial_drift_sin(bounce_integrals%n_modes, n_grid))
+        do idx = 1, n_grid
             call real_ft(fieldlines%xi_0, &
                          radial_drift_weighted(:, idx), &
                          radial_drift_cos(:, idx), &
                          bounce_integrals%radial_drift_sin(:, idx))
         end do
 
-        bounce_integrals%t = grid%t
-        bounce_integrals%eta = grid%eta
-
-        if (present(fieldlines_out)) then
-            allocate (fieldlines_out(n_fieldlines))
-            fieldlines_out = fieldlines
-        end if
-        deallocate (fieldlines)
-        deallocate (radial_drift_weighted)
-        deallocate (radial_drift_cos)
-
-    end subroutine setup_bounce_integrals
+    end subroutine assemble_bounce_integrals
 
     subroutine compute_flux_modes(bounce_integrals, l_c, Omega_hat, flux_modes)
         use splines_instance, only: initialize_splines
