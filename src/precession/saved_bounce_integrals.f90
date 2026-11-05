@@ -75,7 +75,7 @@ contains
         ! Loads all complete fieldlines into fieldlines(:)%grid and writes the
         ! file back with only those, so new fieldlines append to a clean end.
         ! Stops if the header does not match the current input and git hash,
-        ! or if the build is dirty.
+        ! or if the file was written by a dirty build.
         character(len=*), intent(in) :: filename
         type(bounce_integrals_header_t), intent(in) :: header
         type(fieldline_for_precession_t), dimension(:), intent(inout) :: fieldlines
@@ -86,16 +86,15 @@ contains
         real(dp), dimension(6) :: values
         integer :: file_unit, ios, i, id, line_id, n_lines
 
-        if (index(header%git_hash, "-dirty") > 0) then
-            print *, "Error: dirty build cannot reuse ", filename
-            error stop
-        end if
-
         expected = header_lines(header)
         open (newunit=file_unit, file=filename, status='old', action='read')
         do i = 1, n_header_lines
             read (file_unit, '(A)', iostat=ios) line
             if (ios /= 0) line = ""
+            if (i == git_hash_line .and. index(line, "-dirty") > 0) then
+                print *, "Error: ", filename, " was written by a dirty build"
+                error stop
+            end if
             if (line == expected(i)) cycle
             print *, "Error: ", filename, " does not match the current input"
             print *, "  file:    ", trim(line)
