@@ -226,7 +226,7 @@ program electric_rabe
 
         do idx_Omega = 1, n_Omega_hat
             print *, "idx_Omega: ", idx_Omega, " / ", n_Omega_hat
-            electric_drift_weighted = -Omega_hat(idx_Omega)*bounce_time_weighted
+            electric_drift_weighted = Omega_hat(idx_Omega)*bounce_time_weighted
             poloidal_drift_weighted = magnetic_drift_weighted + electric_drift_weighted
 
             call initialize_splines(grid%t, &
