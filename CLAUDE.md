@@ -92,7 +92,7 @@ No system NetCDF library is required.
 - `test/integration/` - Integration tests (label: `quick` or `slow`)
 - `test/integration/vmec/` - VMEC field comparison tests
 - `test/plot/` - Visualization tests; see `test/plot/README.md` for API and patterns
-- `test/golden/` - Golden record regression test (label: `golden`)
+- `test/golden/` - Golden record regression tests of `rabe.x` and `electric_rabe` (label: `golden`)
 - `test/restart/` - End-to-end test of resuming `electric_rabe` from its saved bounce
   integrals (label: `slow`)
 - `test/helpers/` - Shared test utilities (analytical fields, mock fields, readers, plot helpers)
