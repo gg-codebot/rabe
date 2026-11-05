@@ -1,6 +1,6 @@
 module precession
     use, intrinsic :: ieee_arithmetic, only: ieee_is_nan
-    use constants, only: dp, pi, machine_eps
+    use constants, only: dp, machine_eps
     use field_base, only: field_t
     use field_base, only: field_3D_t
     use fieldline_mod, only: fieldline_t, flock_of_fieldlines_t

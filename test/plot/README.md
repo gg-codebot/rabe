@@ -22,6 +22,10 @@ Available input files:
 - **VMEC `.nc` files**: `wout_LandremanPaul2021_QH_reactorScale_lowres_reference.nc`, `wout_LandremanPaul2021_QA_reactorScale_lowres_reference.nc`
 - **VMEC-derived `.bc` files**: `landreman_paul_qh.bc`, `landreman_paul_qa.bc`
 
+`PlotBounceTimeAverages`, `PlotBounceOrbits` and `PlotIntegrateRadialDrift` need
+`wout_squid_20230921_v1_shifted.nc`, which is not in the repository. Without it
+they are skipped.
+
 ## myplot API (`use myplot_module, only: myplot`)
 
 ```fortran

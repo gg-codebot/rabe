@@ -1,5 +1,4 @@
 module bounce
-    use omp_lib
     use constants, only: dp, pi
     use params, only: ntimstep, nplagr, nder, npl_half, dtaumin, relerr, ntau
 
@@ -10,7 +9,6 @@ contains
     subroutine trace_orbit_till_bounce(z_start, z_end, orbit_buffer)
         use plag_coeff_sub, only: plag_coeff
         use orbit, only: orbit_timestep_axis
-        use field_instance, only: magfie
         use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
 
         integer, parameter :: ndim = 8
@@ -18,37 +16,26 @@ contains
         real(dp), dimension(ndim), intent(out) :: z_end
         real(dp), dimension(:, :), intent(inout), optional :: orbit_buffer
 
-        integer :: ierr, ierr_coll
+        integer :: ierr
         real(dp), dimension(ndim) :: z
-        real(dp) :: bmod, sqrtg
-        real(dp), dimension(3) :: bder, hcovar, hctrvr, hcurl
         integer :: it, ktau
         integer(8) :: kt
-        logical :: passing
 
-        integer :: ifp_tip, ifp_per
         integer, dimension(:), allocatable :: ipoi
         real(dp), dimension(:), allocatable :: xp
         real(dp), dimension(:, :), allocatable :: coef, orb_sten
         real(dp), parameter :: zerolam = 0.0_dp
-        real(dp) :: phiper, alam_prev, par_inv
-        integer :: iper, itip, kper
-
-        integer, parameter :: nfp_dim = 3
-        integer :: nfp_cot, ideal, ijpar, ierr_cot, iangvar
-        real(dp), dimension(nfp_dim) :: fpr_in
+        real(dp) :: alam_prev
+        integer :: itip
         logical :: did_bounce
 
         did_bounce = .false.
         z_end = 0d0
-        !
-        iangvar = 2
 
         z = z_start
 
         if (present(orbit_buffer)) orbit_buffer = ieee_value(1.0_dp, ieee_quiet_nan)
 
-        call magfie(z(1:3), bmod, sqrtg, bder, hcovar, hctrvr, hcurl)
         !$omp critical
         if (.not. allocated(ipoi)) then
             allocate (ipoi(nplagr))
@@ -60,11 +47,6 @@ contains
         do it = 1, nplagr
             ipoi(it) = it
         end do
-
-        ifp_tip = 0               !<= initialize footprint counter on tips
-        ifp_per = 0               !<= initialize footprint counter on periods
-
-        phiper = 0.0d0
 
         kt = 0
 

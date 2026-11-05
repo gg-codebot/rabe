@@ -41,7 +41,6 @@ contains
         type(integration_grid_t), intent(out) :: grid
         integer, intent(in), optional :: n_eta
 
-        real(dp) :: eta_mid
         real(dp) :: t_start, t_end
         integer :: n
         real(dp), dimension(:), allocatable :: t
@@ -133,7 +132,6 @@ contains
     end subroutine set_integration_grids
 
     subroutine compute_bounce_integrals(field, fieldline, s_tor, grid, orbit_history)
-        use field_instance, only: initialize_field_instance
         use params, only: params_init, ntau, ntimstep
         use bounce, only: trace_orbit_till_bounce
         use fieldline_integrands, only: calc_lambda_squared
@@ -145,8 +143,7 @@ contains
         type(integration_grid_t), intent(inout) :: grid
      real(dp), dimension(:, :, :), allocatable, intent(inout), optional :: orbit_history
 
-        integer, parameter :: n_coef = 2
-        integer :: idx, n_grid
+        integer :: idx
 
         real(dp) :: theta_min, phi_min
 
@@ -175,8 +172,7 @@ contains
         deep_trapped_bounce_time = 4.0_dp*pi/abs(h_ctrvr(3))/sqrt(well_depth) &
                                   /abs(fieldline%M_pol*fieldline%iota - fieldline%N_tor)
         time_step = deep_trapped_bounce_time/50.0_dp
-        call params_init(fieldline%nfp, &
-                         time_step, &
+        call params_init(time_step, &
                          rlarm_in=lamor_radius)
         max_trace_steps = ntau*(ntimstep - 1)
         if (present(orbit_history)) then
@@ -245,14 +241,6 @@ contains
             grid%radial_drift_weighted(idx) = t_weight*grid%normalized_radial_drift(idx)
             grid%poloidal_drift(idx) = (z_end(2) - z_start(2))/lamor_radius
             grid%poloidal_drift_weighted(idx) = t_weight*grid%poloidal_drift(idx)
-
-            ! write (out_unit, '(I0,1X,8(ES22.14E3,1X))') &
-            !     idx, grid%t(idx), eta, &
-            !     bounce_time_times_v_thermal, I_j, &
-            !     (z_end(1) - z_start(1))/lamor_scan(i_lamor), &
-            !     t_weight*((z_end(1) - z_start(1))/lamor_scan(i_lamor)), &
-            !     (z_end(2) - z_start(2))/lamor_scan(i_lamor), &
-            !     t_weight*((z_end(2) - z_start(2))/lamor_scan(i_lamor))
 
             print *, "idx:", idx, "out of", grid%n
         end do

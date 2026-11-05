@@ -20,9 +20,7 @@ contains
         !   Output parameters:
         !             formal:    derphi  -   array of derivatives
         !
-        integer :: ierr
         real(dp), dimension(3) :: x, derphi
-        real(dp) :: r, phi, z, psi, phi_el, phi_el_pr, phi_el_prpr
         !
         derphi = 0.d0
         !
@@ -73,8 +71,7 @@ contains
         real(dp) p, alambd, p2, ovmu, gamma2, gamma, ppar, vpa, coala
         real(dp) rmumag, rovsqg, rosqgb, rovbm
         real(dp) a_phi, a_b, a_c, hstar
-        real(dp) s_hc, hpstar, phidot, blodot, bra
-        real(dp) pardeb
+        real(dp) s_hc, hpstar, phidot, bra
         !
         dimension x(3), bder(3), hcovar(3), hctrvr(3), hcurl(3)
         dimension derphi(3)
@@ -140,20 +137,16 @@ contains
         ! velocities in the coordinate space
         !
         ! phidot - derivative of the dmls el. potential over dmls time
-        ! blodot - derivative of the logarith of the mag. field module over dmls time
         phidot = 0.d0
-        blodot = 0.d0
         do i = 1, 3
             bra = vpa*hstar(i) + a_phi(i) + a_b(i)*rmumag/gamma
             vz(i) = bra/hpstar
             phidot = phidot + vz(i)*derphi(i)
-            blodot = blodot + vz(i)*bder(i)
         end do
         !
         ! velocities in the phase space
         !
         vz(4) = -0.5d0*gamma*phidot/p
-        !      vz(5)=coala/(alambd+dsign(1.d-32,alambd))*(vz(4)/p-0.5d0*blodot)
         vz(5) = -(0.5d0*coala/hpstar)*(sum(hstar*derphi)/p &
                                      + p*sum(hstar*bder)/gamma + alambd*sum(a_phi*bder))
         !
@@ -180,7 +173,6 @@ contains
         integer, parameter :: ndim = 8
         real(dp), dimension(ndim) :: z, vz
         !
-        !  z(1)=z_axis(1)**2+z_axis(2)**2
         z(1) = sqrt(z_axis(1)**2 + z_axis(2)**2)
         z(1) = max(z(1), 1.d-8)
         z(2) = atan2(z_axis(2), z_axis(1))
@@ -188,7 +180,6 @@ contains
         !
         call velo_can(tau, z, vz)
         !
-        !  derlogsqs=0.5d0*vz(1)/sqrt(z(1))
         derlogsqs = vz(1)/z(1)
         vz_axis(1) = derlogsqs*z_axis(1) - vz(2)*z_axis(2)
         vz_axis(2) = derlogsqs*z_axis(2) + vz(2)*z_axis(1)
@@ -207,7 +198,7 @@ contains
         real(dp), parameter :: snear_axis = 0.01d0
         !
         logical :: near_axis
-        integer :: ierr, j
+        integer :: ierr
         real(dp) :: dtau, dtaumin, phi, tau1, tau2, z1, z2
         real(dp) :: relerr
         !
