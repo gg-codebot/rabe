@@ -117,8 +117,9 @@ No system NetCDF library is required.
   fixed-width line per fieldline and grid point. Each fieldline is appended as soon
   as it is computed; on start, an existing file is checked against the input
   (mismatch stops the run), complete fieldlines are reused and only missing ones
-  are computed. Only a clean build of the same commit reuses the file. The file
-  is kept after the run as a cache.
+  are computed. Only a clean build of the same commit reuses the file.
+  The file is kept after the run as a cache. `n_eta` in
+  `precession_config` sets the eta grid points of the bounce integrals (default 200).
 
 ## Code Style
 
