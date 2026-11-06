@@ -2,6 +2,26 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## General
+
+- do not change the rules in this section, in `Contributing`, `Documentation`
+- rules in the above mentioned sections take precedent
+- if you wanna add rules yourself, that can be changed, make a new section
+- those new rules are always superseeded if applicable by the rules in the above sections
+- if you think a rule is worth to be updated or to be added to those sections, suggest it in the description of an pr.
+- this repo is inteded to be read and used by humans: less is more - if one writes e.g. a test, it should be impactful and docs should be short and to the point
+
+# Contributing
+
+- Work on feature branches, test your work regularly, commit in small chunks.
+- Open a merge request for review and tag the maintainer — do not commit directly to `main`.
+- maintainer tag: @GeorgGrassler
+
+# Documentation
+
+- be minimalistic in documentation, let layout and code speak for themself
+- do not write information that can be outdated fast like specific file or variable names that are physically far removed from their mention e.g. in app about module implementation details
+
 ## Project Overview
 
 RABE (Redl's Analytical Bootstrap Estimation) is a scientific computing project for analytical bootstrap current estimation in stellarators, implemented in modern Fortran with Python utilities for analysis and visualization.
