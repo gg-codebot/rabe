@@ -9,7 +9,7 @@ set_tests_properties(TestTraceTillBounce PROPERTIES LABELS "quick")
 add_executable(test_precession_analytic.x test_precession_analytic.f90)
 target_link_libraries(test_precession_analytic.x rabe_lib helpers_lib myplot_lib)
 add_test(TestPrecessionAnalytic test_precession_analytic.x)
-set_tests_properties(TestPrecessionAnalytic PROPERTIES LABELS "current")
+set_tests_properties(TestPrecessionAnalytic PROPERTIES LABELS "slow")
 
 add_executable(test_bounce_integrals.x test_bounce_integrals.f90)
 target_link_libraries(test_bounce_integrals.x rabe_lib helpers_lib myplot_lib)
