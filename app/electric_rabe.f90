@@ -266,6 +266,7 @@ contains
         real(dp) :: prefactor_A
 
         integer :: max_mode
+
         call fourier_transform_over_label(flock, modes)
         call calc_surface_averages(flock, averages)
 

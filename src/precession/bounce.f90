@@ -36,14 +36,10 @@ contains
 
         if (present(orbit_buffer)) orbit_buffer = ieee_value(1.0_dp, ieee_quiet_nan)
 
-        !$omp critical
-        if (.not. allocated(ipoi)) then
-            allocate (ipoi(nplagr))
-            allocate (coef(0:nder, nplagr))
-            allocate (orb_sten(ndim, nplagr))
-            allocate (xp(nplagr))
-        end if
-        !$omp end critical
+        allocate (ipoi(nplagr))
+        allocate (coef(0:nder, nplagr))
+        allocate (orb_sten(ndim, nplagr))
+        allocate (xp(nplagr))
         do it = 1, nplagr
             ipoi(it) = it
         end do
@@ -98,9 +94,7 @@ contains
             ! End tip detection and interpolation
         end do TIMELOOP
 
-        !$omp critical
         z_end = z
-        !$omp end critical
         if (.not. did_bounce) then
             print *, "Warning: trace_orbit_till_bounce reached end of time loop without detecting bounce."
         end if
