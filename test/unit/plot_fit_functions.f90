@@ -23,6 +23,6 @@ program plot_fit_functions
                       S_B(angle)/pi, &
                       label="$S_B$", &
                       linestyle="b--")
-    call plt%show()
+    call plt%save("fit_functions")
 
 end program plot_fit_functions

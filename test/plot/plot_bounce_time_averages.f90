@@ -145,7 +145,7 @@ program plot_bounce_time_averages
     call plt%add_plot(eta/eta_c - 1.0_dp, bounce_time_deep, &
                       label="$\tau_b$ (deep-trapped estimate)", &
                       linestyle="k--")
-    call plt%show()
+    call plt%save("bounce_time")
 
     call plt%initialize(xlabel="$\eta/\eta_c - 1$", &
                         ylabel="$I_j$", &
@@ -163,7 +163,7 @@ program plot_bounce_time_averages
                       label="$I_j$ (spline)", &
                       linestyle="b--")
 
-    call plt%show()
+    call plt%save("I_j")
 
     call plt%initialize(xlabel="$t$", &
                         ylabel="$C_{\mathrm{bounce}}$", &
@@ -178,7 +178,7 @@ program plot_bounce_time_averages
                       label="$C_{\mathrm{bounce}}$ (spline)", &
                       linestyle="b--")
 
-    call plt%show()
+    call plt%save("bounce_coefficient")
 
     call plt%initialize(xlabel="$t$", &
                         ylabel="$D_{r}$", &
@@ -191,7 +191,7 @@ program plot_bounce_time_averages
                       label="$D_{r}$ (numerical)", &
                       linestyle="r-")
 
-    call plt%show()
+    call plt%save("radial_drift")
 
     call plt%initialize(xlabel="$t$", &
                         ylabel="$D_{r}$", &
@@ -203,7 +203,7 @@ program plot_bounce_time_averages
                       label="$D_{\vartheta}$ (numerical)", &
                       linestyle="r-")
 
-    call plt%show()
+    call plt%save("poloidal_drift")
 
     call plt%initialize(xlabel="$t$", &
                         ylabel="$D_{r,\mathrm{w}}$", &
@@ -218,7 +218,7 @@ program plot_bounce_time_averages
                       label="$D_{r,\mathrm{w}}$ (spline)", &
                       linestyle="b--")
 
-    call plt%show()
+    call plt%save("radial_drift_weighted")
 
     call plt%initialize(xlabel="$t$", &
                         ylabel="$D_{\vartheta,\mathrm{w}}$", &
@@ -233,6 +233,6 @@ program plot_bounce_time_averages
                       label="$D_{\vartheta,\mathrm{w}}$ (spline)", &
                       linestyle="b--")
 
-    call plt%show()
+    call plt%save("poloidal_drift_weighted")
 
 end program plot_bounce_time_averages

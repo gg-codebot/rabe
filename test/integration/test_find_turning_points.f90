@@ -70,7 +70,7 @@ program test_find_turning_points
             call field%compute_B_mod(theta(idx), phi(idx), B(idx))
         end do
         call plt%add_plot(phi, B, label="B(phi)", linestyle="-")
-        call plt%show()
+        call plt%save("B_along_fieldline")
     end if
 
     if (test_failed) error stop

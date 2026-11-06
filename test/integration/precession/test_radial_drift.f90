@@ -223,7 +223,7 @@ program test_radial_drift
         call plt%add_plot(xi_0, &
                           int_dIV_deta, &
         label="$\int d \xi_0 \partial_\eta I_\mathcal{V}$", linestyle="-o", linewidth=2)
-        call plt%show()
+        call plt%save("sum_of_modes")
     end if
 
     if (test_failed) error stop

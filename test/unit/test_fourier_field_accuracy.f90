@@ -138,7 +138,7 @@ program plot_fourier_field_accuracy
         call plt%add_plot(n_grids_dp, ref_line_dB, &
                           label="n^-5 (dB/dx)", &
                           linestyle=":")
-        call plt%show()
+        call plt%save("accuracy")
     end if
 
     if (test_failed) error stop "test failed: fourier field accuracy"

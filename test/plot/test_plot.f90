@@ -14,6 +14,6 @@ program test_plot
 
     call plt%initialize()
     call plt%add_plot(x, f, label="sin(x)", linestyle="--")
-    call plt%show()
+    call plt%save("sin")
 
 end program test_plot

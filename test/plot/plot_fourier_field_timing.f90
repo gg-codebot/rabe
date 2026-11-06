@@ -126,6 +126,6 @@ program plot_fourier_field_timing
     call plt%add_plot(eval_counts_dp, t_spline, &
                       label="fourier_field_t spline (50x50)", &
                       linestyle="-^")
-    call plt%show()
+    call plt%save("timing")
 
 end program plot_fourier_field_timing

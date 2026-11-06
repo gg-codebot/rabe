@@ -38,7 +38,7 @@ contains
                           fieldlines%B_max(2), &
                           label="right $B_{max}$", &
                           linestyle="--o")
-        call plt%show()
+        call plt%save("maxima_over_label")
     end subroutine plot_maxima_over_label
 
     subroutine plot_field_along_chi_line(field, chi, M_pol, N_tor)
@@ -69,7 +69,7 @@ contains
                             legend=.true.)
         write (label, "(A17,ES10.3E2)") "$B$ along $\chi=$", chi
         call plt%add_plot(theta/pi, B, label=label, linestyle="b-")
-        call plt%show()
+        call plt%save("field_along_chi")
 
         deallocate (theta, phi, B)
     end subroutine plot_field_along_chi_line
@@ -108,7 +108,7 @@ contains
                           label="sin $I_\mathcal{V}$", &
                           linestyle="-ko")
 
-        call plt%show()
+        call plt%save("spectra")
 
     end subroutine plot_spectra
 
@@ -148,7 +148,7 @@ contains
                           label="spectrum of deviation due to $\Delta \eta$", &
                           linestyle="-o")
 
-        call plt%show()
+        call plt%save("deviation_spectrum")
 
         deallocate (deviation_B)
     end subroutine plot_deviation_spectrum
@@ -191,7 +191,7 @@ contains
                           label="original", &
                           linestyle="ko")
 
-        call plt%show()
+        call plt%save("delta_eta_modes")
 
         deallocate (xi_mid, delta_eta)
     end subroutine plot_delta_eta_modes
@@ -273,7 +273,7 @@ contains
                              levels=20, &
                              colorbar=.true., &
                              filled=.true.)
-        call plt%show()
+        call plt%save("fieldlines_over_field")
 
     end subroutine plot_fieldlines_over_field
 
@@ -372,7 +372,7 @@ contains
                           label="", &
                           linestyle="k-", &
                           linewidth=linewidth)
-        call plt%show()
+        call plt%save("fieldlines_over_field_chi_xi")
 
     end subroutine plot_fieldlines_over_field_chi_xi
 
@@ -435,7 +435,7 @@ contains
                           linestyle="r--", &
                           linewidth=1)
 
-        call plt%show()
+        call plt%save("phi_max_over_xi_0")
 
     end subroutine plot_phi_max_over_xi_0
 
@@ -501,7 +501,7 @@ contains
                              colorbar=.true., &
                              filled=.true., &
                              cmap=cmap)
-        call plt%show()
+        call plt%save("fieldline_over_local_drift")
 
     end subroutine plot_fieldline_over_local_drift
 
@@ -579,7 +579,7 @@ contains
         write (label, "(A,F6.2,A)") "$B$ [T]"
         call plt%add_plot(phi, B, label=label, linestyle="k-", linewidth=3)
 
-        call plt%show()
+        call plt%save("local_drift_over_fieldline")
 
         deallocate (phi, theta, drift, B, eta_level)
 
@@ -610,7 +610,7 @@ contains
                               linestyle="--")
         end if
 
-        call plt%show()
+        call plt%save("delta_eta")
     end subroutine plot_delta_eta
 
     subroutine plot_delta_A(fieldlines, delta_A_1_analytic)
@@ -634,7 +634,7 @@ contains
                               label="$\Delta A$ approx analytic", &
                               linestyle="-")
         end if
-        call plt%show()
+        call plt%save("delta_A")
     end subroutine plot_delta_A
 
     subroutine plot_I(fieldlines, I_0_analytic, I_1_analytic, eps_0, eps_1)
@@ -679,7 +679,7 @@ contains
                           I_0_analytic*sqrt(1.0_dp - eps_ratio*cos(theta_0)), &
                           label="$I_{analytic}$", &
                           linestyle="g--")
-        call plt%show()
+        call plt%save("I")
 
         call plt%initialize(xlabel="$\vartheta_{mid}$", &
                             ylabel="$I_{normalized}$ [1]", &
@@ -693,7 +693,7 @@ contains
                           sqrt(1.0_dp - eps_ratio*cos(theta_0)) - 1.0_dp, &
                           label="$I_{analytic}$", &
                           linestyle="g--")
-        call plt%show()
+        call plt%save("I_normalized")
     end subroutine plot_I
 
     subroutine plot_I_factor(fieldlines, eps_0, eps_1)
@@ -728,7 +728,7 @@ contains
                           + 1.0_dp, &
                           label=label, &
                           linestyle="g-")
-        call plt%show()
+        call plt%save("I_factor")
     end subroutine plot_I_factor
 
     subroutine plot_deviation(off_factor_A, off_factor_B, &
@@ -824,7 +824,7 @@ contains
                           yscale="log", &
                           xlim=nu_star_lim)
 
-        call plt%show()
+        call plt%save("deviation")
     end subroutine plot_deviation
 
     subroutine plot_asymptotic_model(off_factor_A, off_factor_B, &
@@ -886,7 +886,7 @@ contains
                           linestyle="k-", &
                           xscale="log", &
                           yscale="linear")
-        call plt%show()
+        call plt%save("asymptotic_model")
     end subroutine plot_asymptotic_model
 
     subroutine plot_B_along_fieldline(field, &
@@ -927,7 +927,7 @@ contains
                           linestyle="ko-", &
                           markersize=1)
 
-        call plt%show()
+        call plt%save("B_along_fieldline")
 
         deallocate (phi, B)
 
@@ -966,7 +966,7 @@ contains
                                   linestyle="-o")
         end do
 
-        call plt_cos%show()
+        call plt_cos%save("cos_modes")
 
         call plt_sin%initialize(xlabel="mode", &
                                 ylabel="sin amplitude", &
@@ -979,7 +979,7 @@ contains
                                   linestyle="-o")
         end do
 
-        call plt_sin%show()
+        call plt_sin%save("sin_modes")
 
     end subroutine compare_modes
 

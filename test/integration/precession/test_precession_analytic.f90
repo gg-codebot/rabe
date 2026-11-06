@@ -183,8 +183,8 @@ program test_precession_analytic
 
     if (should_plot) then
         call plot_flux(plt, plt2, Omega_hat, flux_1, flux_1_analytic)
-        call plt%show()
-        call plt2%show()
+        call plt%save("flux_mode")
+        call plt2%save("flux_mode_ratio")
 
         call plt3%initialize(xlabel="$\sqrt{\eta - \eta_c}$", &
                              ylabel="bounce time", &
@@ -199,7 +199,7 @@ program test_precession_analytic
         call plt3%add_plot(bounce_integrals%t, &
                            barely_trapped_tau, &
                            label="barely trapped", linestyle="-", linewidth=2)
-        call plt3%show()
+        call plt3%save("bounce_time")
     end if
 
     deallocate (bounce_time)

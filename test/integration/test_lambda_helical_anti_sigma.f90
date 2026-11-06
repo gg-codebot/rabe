@@ -104,7 +104,7 @@ contains
                           lambda_integral, &
                           label="numeric", &
                           linestyle="b--")
-        call plt%show()
+        call plt%save("lambda_integral")
     end subroutine plot_lambda
 
 end program test_lambda_helical_anti_sigma

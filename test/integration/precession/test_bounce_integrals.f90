@@ -112,7 +112,7 @@ program test_precession_analytic
         call plt%add_plot(bounce_integrals%t, &
                           deeply_trapped_tau, &
                           label="deeply trapped approx", linestyle="--", linewidth=2)
-        call plt%show()
+        call plt%save("bounce_time")
     end if
 
     deallocate (tau)

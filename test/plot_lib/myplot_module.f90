@@ -4,6 +4,11 @@ module myplot_module
 
     implicit none
 
+    ! set by CMake, on its own line to stay within the line length limit
+    character(len=*), parameter :: graphs_dir = &
+GRAPHS_DIR
+    integer, save :: n_saved = 0
+
     type :: myplot
         type(pyplot) :: plt
     contains
@@ -11,7 +16,7 @@ module myplot_module
         procedure :: add_plot
         procedure :: add_colored_line
         procedure :: add_contour
-        procedure :: show
+        procedure :: save
     end type myplot
 
 contains
@@ -41,7 +46,9 @@ contains
             figsize_internal = [10, 8]
         end if
 
+        ! use_oo_api: no GUI backend (it crashes without a window session)
         call self%plt%initialize(grid=.true., &
+                                 use_oo_api=.true., &
                                  xlabel=xlabel, &
                                  ylabel=ylabel, &
                                  legend=legend, &
@@ -198,10 +205,27 @@ contains
         end if
     end subroutine add_contour
 
-    subroutine show(self)
+    !> Saves the figure as <graphs_dir>/<program>_<nn>_<content>.png, numbered in
+    !> the order of the save calls of this program, and next to it the .py
+    !> script that recreates it (contains the plotted data).
+    subroutine save(self, content)
         class(myplot), intent(inout) :: self
+        character(len=*), intent(in) :: content
 
-        call self%plt%showfig()
-    end subroutine show
+        character(len=4096) :: program_path
+        character(len=2) :: number
+        character(len=:), allocatable :: name
+        integer :: first, last
+
+        call get_command_argument(0, program_path)
+        first = index(program_path, "/", back=.true.) + 1
+        last = index(program_path, ".", back=.true.) - 1
+        if (last < first) last = len_trim(program_path)
+
+        n_saved = n_saved + 1
+        write (number, '(I2.2)') n_saved
+        name = graphs_dir//"/"//program_path(first:last)//"_"//number//"_"//content
+        call self%plt%savefig(name//".png", pyfile=name//".py")
+    end subroutine save
 
 end module myplot_module

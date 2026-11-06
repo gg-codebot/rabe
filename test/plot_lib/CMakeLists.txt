@@ -1,6 +1,8 @@
 add_library(myplot_lib STATIC
   myplot_module.f90
   )
+target_compile_definitions(myplot_lib PRIVATE
+    GRAPHS_DIR="${PROJECT_SOURCE_DIR}/test/graphs")
 
 add_subdirectory(pyplot-fortran)
 include_directories(${CMAKE_CURRENT_BINARY_DIR}/pyplot-fortran)
