@@ -1,7 +1,7 @@
 module boozer_field
 
     use constants, only: dp
-    use field_base, only: field_t
+    use field_base, only: field_3D_t
 
     implicit none
     private
@@ -19,7 +19,8 @@ module boozer_field
     !! evaluation. Only one Boozer field can be active at a time (singleton —
     !! the splines live in module-global state). Calling a loader a second
     !! time aborts.
-    type, extends(field_t) :: boozer_field_t
+    !<
+    type, extends(field_3D_t) :: boozer_field_t
         logical :: initialized = .false.
         logical :: fixed_to_surface = .false.
         real(dp) :: fixed_stor
@@ -50,7 +51,8 @@ contains
     subroutine init_from_vmec(self, vmec_file, &
                               radial_spline_order, &
                               angular_spline_order, &
-                              grid_refinement)
+                              grid_refinement, &
+                              use_B_r_covariant)
         use boozer_coordinates_mod, only: use_B_r
         use boozer_sub, only: get_boozer_coordinates
         class(boozer_field_t), intent(inout) :: self
@@ -59,9 +61,14 @@ contains
         integer, intent(in), optional :: radial_spline_order
         integer, intent(in), optional :: angular_spline_order
         integer, intent(in), optional :: grid_refinement
+        logical, intent(in), optional :: use_B_r_covariant
 
         call assert_no_active_field("init_from_vmec")
-        use_B_r = .true.
+        if (present(use_B_r_covariant)) then
+            use_B_r = use_B_r_covariant
+        else
+            use_B_r = .true.
+        end if
         call get_boozer_coordinates(vmec_file, &
                                     radial_spline_order, &
                                     angular_spline_order, &

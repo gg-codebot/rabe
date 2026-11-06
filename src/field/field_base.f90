@@ -3,7 +3,7 @@ module field_base
     implicit none
     private
 
-    public :: field_t
+    public :: field_t, field_3D_t
 
     type, abstract :: field_t
         !! Abstract base type for magnetic fields in Boozer coordinates.
@@ -69,6 +69,22 @@ module field_base
             class(field_t), intent(in) :: self
             real(dp), intent(out) :: B_theta_covariant, B_phi_covariant
         end subroutine
+    end interface
+
+    type, abstract, extends(field_t) :: field_3D_t
+    contains
+        procedure(evaluate), deferred :: evaluate
+    end type field_3D_t
+
+    interface
+        subroutine evaluate(self, x, bmod, sqrtg, bder, &
+                            hcovar, hctrvr, hcurl)
+            import :: field_3D_t, dp
+            class(field_3D_t), intent(in) :: self
+            real(dp), intent(in) :: x(3)
+            real(dp), intent(out) :: bmod, sqrtg
+            real(dp), intent(out) :: bder(3), hcovar(3), hctrvr(3), hcurl(3)
+        end subroutine evaluate
     end interface
 
 end module field_base

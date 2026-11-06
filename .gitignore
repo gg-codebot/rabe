@@ -16,3 +16,4 @@ external/
 *.tar.gz
 *.png
 FLANG_MACOS.md
+.fortls

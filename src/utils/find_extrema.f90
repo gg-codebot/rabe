@@ -13,7 +13,8 @@ module find_extrema
 
     procedure(func1d), private, pointer, save :: func_ptr => null()
 
-    public :: find_local_minima, find_local_maxima, find_global_extrema
+    public :: find_local_minima, find_local_maxima, find_global_extrema, &
+        find_global_minimum
 
 contains
 
@@ -193,5 +194,28 @@ contains
         idx = minloc(value, dim=1)
         extrema(2) = x(idx)
     end function find_global_extrema
+
+    function find_global_minimum(func, interval, reltol) result(min_loc)
+        use utils, only: linspace
+
+        procedure(func1d) :: func
+        real(dp), intent(in) :: interval(2)
+        real(dp), intent(in), optional :: reltol
+        real(dp) :: min_loc
+
+        integer :: n_steps
+        real(dp), dimension(:), allocatable :: x, value
+
+        if (present(reltol)) then
+            n_steps = int(1.0_dp/reltol) + 2
+        else
+            n_steps = 1000
+        end if
+
+        allocate (x(n_steps), value(n_steps))
+        call linspace(interval(1), interval(2), n_steps, x)
+        call func(x, value)
+        min_loc = x(minloc(value, dim=1))
+    end function find_global_minimum
 
 end module find_extrema

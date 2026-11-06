@@ -17,6 +17,7 @@ add_subdirectory(field)
 add_subdirectory(fieldline)
 add_subdirectory(offset)
 add_subdirectory(shaing_callen)
+add_subdirectory(precession)
 
 add_library(rabe_lib INTERFACE)
 target_link_libraries(rabe_lib INTERFACE
@@ -29,6 +30,7 @@ target_link_libraries(rabe_lib INTERFACE
     fieldline_lib
     shaing_callen_lib
     offset_lib
+    precession_lib
     netcdf_lib
     vmec_lib
 )

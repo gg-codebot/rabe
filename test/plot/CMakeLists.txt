@@ -53,3 +53,10 @@ add_executable(plot_fourier_field_timing.x plot_fourier_field_timing.f90)
 target_link_libraries(plot_fourier_field_timing.x myplot_lib rabe_lib helpers_lib)
 add_test(PlotFourierFieldTiming plot_fourier_field_timing.x)
 set_tests_properties(PlotFourierFieldTiming PROPERTIES LABELS "plot")
+
+add_executable(plot_bounce_time_averages.x plot_bounce_time_averages.f90)
+target_link_libraries(plot_bounce_time_averages.x myplot_lib
+                                                     rabe_lib
+                                                     helpers_lib)
+add_test(PlotBounceTimeAverages plot_bounce_time_averages.x)
+set_tests_properties(PlotBounceTimeAverages PROPERTIES LABELS "plot" SKIP_RETURN_CODE 77)

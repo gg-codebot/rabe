@@ -48,8 +48,9 @@ golden: build
 golden_run: build
 	ctest --test-dir build/test --output-on-failure -V -R GoldenRecordRun
 
-golden_update: build/test/golden/rabe.nc
-	cp $< test/golden/expected/.
+golden_update: build/test/golden/rabe.nc build/test/golden/electric/electric_rabe.nc
+	cp build/test/golden/rabe.nc test/golden/expected/.
+	cp build/test/golden/electric/electric_rabe.nc test/golden/electric/expected/.
 
 clean:
 	rm -rf build

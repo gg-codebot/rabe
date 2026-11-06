@@ -2,6 +2,26 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## General
+
+- do not change the rules in this section, in `Contributing`, `Documentation`
+- rules in the above mentioned sections take precedent
+- if you wanna add rules yourself, that can be changed, make a new section
+- those new rules are always superseeded if applicable by the rules in the above sections
+- if you think a rule is worth to be updated or to be added to those sections, suggest it in the description of an pr.
+- this repo is inteded to be read and used by humans: less is more - if one writes e.g. a test, it should be impactful and docs should be short and to the point
+
+# Contributing
+
+- Work on feature branches, test your work regularly, commit in small chunks.
+- Open a merge request for review and tag the maintainer — do not commit directly to `main`.
+- maintainer tag: @GeorgGrassler
+
+# Documentation
+
+- be minimalistic in documentation, let layout and code speak for themself
+- do not write information that can be outdated fast like specific file or variable names that are physically far removed from their mention e.g. in app about module implementation details
+
 ## Project Overview
 
 RABE (Redl's Analytical Bootstrap Estimation) is a scientific computing project for analytical bootstrap current estimation in stellarators, implemented in modern Fortran with Python utilities for analysis and visualization.
@@ -53,6 +73,11 @@ rabe_lib (main static library)
 │   shaing_callen.f90, shaing_callen_integration.f90, shaing_callen_wrappers.f90
 ├── netcdf_lib (src/netcdf/)
 │   netcdf.f90 - NetCDF output via type netcdf_t (backed by fortio)
+├── precession_lib (src/precession/)
+│   grid.f90 - Integration grid type and bounce/spline routines
+│   precession.f90 - Magnetic well and turning-point helpers
+│   saved_bounce_integrals.f90 - Per-fieldline bounce integrals of
+│                        electric_rabe saved to file (type bounce_integrals_header_t)
 ├── error_handling_lib (src/error_handling/)
 │   error_handling.f90 - Sanity-check helpers: failed_sanity_check(),
 │                        reset_failed_check_counter(), did_fail_any_sanity_check(),
@@ -87,7 +112,9 @@ No system NetCDF library is required.
 - `test/integration/` - Integration tests (label: `quick` or `slow`)
 - `test/integration/vmec/` - VMEC field comparison tests
 - `test/plot/` - Visualization tests; see `test/plot/README.md` for API and patterns
-- `test/golden/` - Golden record regression test (label: `golden`)
+- `test/golden/` - Golden record regression tests of `rabe.x` and `electric_rabe` (label: `golden`)
+- `test/restart/` - End-to-end test of resuming `electric_rabe` from its saved bounce
+  integrals (label: `slow`)
 - `test/helpers/` - Shared test utilities (analytical fields, mock fields, readers, plot helpers)
 - `test/internal/` - Private tests with legacy NEO-2 comparisons (git submodule, not in public repo)
 
@@ -103,6 +130,16 @@ No system NetCDF library is required.
 - **Input**: Namelist file `rabe.in` (namelist `rabe_config`)
 - **Field data**: VMEC `.nc` files
 - **Output**: `rabe.nc` (NetCDF)
+- **`electric_rabe`**: reads `rabe.in` (namelists `rabe_config` and
+  `precession_config`, single surface only), writes `electric_rabe.nc` and the
+  bounce integrals to `saved_bounce_integrals.dat`. That file is plain text: a
+  `# key = value` header with the inputs the bounce integrals depend on, then one
+  fixed-width line per fieldline and grid point. Each fieldline is appended as soon
+  as it is computed; on start, an existing file is checked against the input
+  (mismatch stops the run), complete fieldlines are reused and only missing ones
+  are computed. Only a clean build of the same commit reuses the file.
+  The file is kept after the run as a cache. `n_eta` in
+  `precession_config` sets the eta grid points of the bounce integrals (default 200).
 
 ## Code Style
 

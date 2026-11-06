@@ -18,6 +18,11 @@ target_link_libraries(test_find_global_maximum.x helpers_lib utils_lib fieldline
 add_test(TestGlobalMaximum test_find_global_maximum.x)
 set_tests_properties(TestGlobalMaximum PROPERTIES LABELS "quick")
 
+add_executable(test_find_turning_points.x test_find_turning_points.f90)
+target_link_libraries(test_find_turning_points.x rabe_lib helpers_lib)
+add_test(TestFindTurningPoints test_find_turning_points.x)
+set_tests_properties(TestFindTurningPoints PROPERTIES LABELS "quick")
+
 add_executable(test_anti_sigma_analytic.x test_anti_sigma_analytic.f90)
 target_link_libraries(test_anti_sigma_analytic.x helpers_lib utils_lib fieldline_lib)
 add_test(TestAntiSigmaAnalytic test_anti_sigma_analytic.x)
@@ -45,6 +50,7 @@ target_link_libraries(test_lambda_helical_anti_sigma.x helpers_lib
 add_test(TestLambdaHelicalAntiSigma test_lambda_helical_anti_sigma.x)
 set_tests_properties(TestLambdaHelicalAntiSigma PROPERTIES LABELS "quick")
 
+
 add_executable(test_set_fieldline_labels.x test_set_fieldline_labels.f90)
 target_link_libraries(test_set_fieldline_labels.x offset_lib helpers_lib utils_lib fieldline_lib)
 add_test(TestSetFieldlineLabels test_set_fieldline_labels.x)
@@ -62,3 +68,4 @@ add_test(TestShaingCallenQS test_shaing_callen_against_quasi_symmetric.x)
 set_tests_properties(TestShaingCallenQS PROPERTIES LABELS "quick")
 
 add_subdirectory(vmec)
+add_subdirectory(precession)
