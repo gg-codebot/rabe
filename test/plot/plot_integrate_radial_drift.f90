@@ -36,6 +36,13 @@ program plot_integrate_radial_drift
     type(boozer_field_t) :: field
 
     character(len=*), parameter :: nc_file = "input/wout_squid_20230921_v1_shifted.nc"
+    logical :: field_file_exists
+
+    inquire (file=nc_file, exist=field_file_exists)
+    if (.not. field_file_exists) then
+        print *, "SKIP: ", nc_file, " not found"
+        stop 77
+    end if
 
     call field%init_from_vmec(nc_file, grid_refinement=5)
     call field%fix_to_surface(s_tor)

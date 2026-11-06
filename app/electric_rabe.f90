@@ -1,8 +1,7 @@
 program electric_rabe
     use constants, only: dp, pi
-    use utils, only: linspace
     use boozer_field, only: boozer_field_t
-    use fieldline_mod, only: fieldline_t, flock_of_fieldlines_t
+    use fieldline_mod, only: flock_of_fieldlines_t
     use make_fieldline, only: make_flock_of_fieldlines
 
     use precession, only: bounce_integrals_t
@@ -19,7 +18,6 @@ program electric_rabe
 
     use surface_average_mod, only: surface_average_t, calc_surface_averages
     use coefficients, only: calc_nu_star_crit
-    use coefficients, only: calc_finite_boundary_layer_correction
     use netcdf_mod, only: netcdf_t
     use fieldline_labels, only: fieldline_modes_t, fourier_transform_over_label
     use git_version, only: git_hash
@@ -49,24 +47,18 @@ program electric_rabe
 
     real(dp) :: R ![m]
     type(surface_average_t) :: average
-    real(dp) :: dr_dAtheta ![rad/Tm/]
     real(dp) :: iota
     real(dp) :: B_theta_covariant, B_phi_covariant
     real(dp) :: nfp
 
     integer :: n_fieldlines
     type(flock_of_fieldlines_t) :: flock
-    type(fieldline_t), dimension(:), allocatable :: fieldlines
-    logical :: too_strong_violation
 
     real(dp) :: covariant_factor
     real(dp), dimension(:), allocatable :: nu_star_crit
     integer, dimension(:), allocatable :: err_flag
-    real(dp) :: helical_factor
 
-    type(fieldline_modes_t) :: modes
     type(fieldline_for_precession_t), dimension(:), allocatable :: fieldlines_precession
-    real(dp) :: phi_bottom, B_bottom, lowest_B_max
     type(bounce_integrals_t) :: bounce_integrals
 
     real(dp), dimension(:), allocatable :: flux_mode
@@ -115,11 +107,9 @@ program electric_rabe
                                       err_flag(this))
         iota = flock%iota
         n_fieldlines = size(flock%fieldlines)
-        fieldlines = flock%fieldlines
 
         covariant_factor = (B_phi_covariant + B_theta_covariant*iota)
         call calc_surface_averages(flock, average)
-        dr_dAtheta = sign_sqrtg/(average%nabla_s*field%psi_tor_edge)
         R = field%R
 
 ! --------------------------------------------------------------------------
@@ -190,8 +180,6 @@ program electric_rabe
         nu_star_crit(this) = calc_nu_star_crit(flock, R)
 
         print *, "s_tor: ", s_tor(this)
-
-        if (allocated(fieldlines)) deallocate (fieldlines)
 
     end do
 
@@ -278,9 +266,6 @@ contains
         real(dp) :: prefactor_A
 
         integer :: max_mode
-        real(dp), dimension(:), allocatable :: theta_mid, g_off
-
-        character(len=1024) :: label
 
         call fourier_transform_over_label(flock, modes)
         call calc_surface_averages(flock, averages)
