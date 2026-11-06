@@ -1,0 +1,904 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>field_base.f90 &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>field_base.f90
+      <small>Source File</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.6% of total for source files.">73 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/field_base.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+            <li class="breadcrumb-item active" aria-current="page">field_base.f90</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#mods-0"
+         aria-expanded="false" aria-controls="mods-0">
+         <h4 class="card-header bg-primary text-white">Modules</h4>
+      </a>
+      <div id="mods-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/field_base.html">field_base</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../sourcefile/field_base.f90.html#src">field_base.f90</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    <div class="col-md-9" id='text'>
+      
+      <br>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">This file depends on</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: sourcefile~~field_base.f90~~EfferentGraph Pages: 1 -->
+<svg id="sourcefilefield_basef90EfferentGraph" width="215pt" height="32pt"
+ viewBox="0.00 0.00 215.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~field_base.f90~~EfferentGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>sourcefile~~field_base.f90~~EfferentGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 211,-28 211,4 -4,4"/>
+<!-- sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~EfferentGraph_node1" class="node">
+<title>sourcefile~field_base.f90</title>
+<polygon fill="none" stroke="black" points="207,-24 120,-24 120,0 207,0 207,-24"/>
+<text text-anchor="middle" x="163.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">field_base.f90</text>
+</g>
+<!-- sourcefile~constants.f90 -->
+<g id="sourcefile~~field_base.f90~~EfferentGraph_node2" class="node">
+<title>sourcefile~constants.f90</title>
+<g id="a_sourcefile~~field_base.f90~~EfferentGraph_node2"><a xlink:href="../sourcefile/constants.f90.html" xlink:title="constants.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="84,-24 0,-24 0,0 84,0 84,-24"/>
+<text text-anchor="middle" x="42" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~field_base.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~field_base.f90~~EfferentGraph_edge1" class="edge">
+<title>sourcefile~field_base.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M119.7,-12C111.51,-12 102.85,-12 94.43,-12"/>
+<polygon fill="#000000" stroke="#000000" points="94.31,-8.5 84.31,-12 94.31,-15.5 94.31,-8.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#EfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="EfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="202pt" height="32pt"
+ viewBox="0.00 0.00 201.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 197.5,-28 197.5,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="193.5,-24 88.5,-24 88.5,0 193.5,0 193.5,-24"/>
+<text text-anchor="middle" x="141" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Files dependent on this one</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: sourcefile~~field_base.f90~~AfferentGraph Pages: 1 -->
+<svg id="sourcefilefield_basef90AfferentGraph" width="641pt" height="231pt"
+ viewBox="0.00 0.00 641.00 231.24" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~field_base.f90~~AfferentGraph" class="graph" transform="scale(0.59 0.59) rotate(0) translate(4 386.69)">
+<title>sourcefile~~field_base.f90~~AfferentGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-386.69 1079,-386.69 1079,4 -4,4"/>
+<!-- sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node1" class="node">
+<title>sourcefile~field_base.f90</title>
+<polygon fill="none" stroke="black" points="87,-198.32 0,-198.32 0,-174.32 87,-174.32 87,-198.32"/>
+<text text-anchor="middle" x="43.5" y="-183.92" font-family="Helvetica,sans-Serif" font-size="10.50">field_base.f90</text>
+</g>
+<!-- sourcefile~boozer_field.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node2" class="node">
+<title>sourcefile~boozer_field.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/boozer_field.f90.html" xlink:title="boozer_field.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="739,-379.32 641,-379.32 641,-355.32 739,-355.32 739,-379.32"/>
+<text text-anchor="middle" x="690" y="-364.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">boozer_field.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~boozer_field.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge1" class="edge">
+<title>sourcefile~boozer_field.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M640.87,-365.64C614.2,-365.13 580.48,-365.18 550.5,-367.32"/>
+</g>
+<!-- sourcefile~coefficients.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node3" class="node">
+<title>sourcefile~coefficients.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/coefficients.f90.html" xlink:title="coefficients.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="737,-337.32 643,-337.32 643,-313.32 737,-313.32 737,-337.32"/>
+<text text-anchor="middle" x="690" y="-322.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">coefficients.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~coefficients.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge2" class="edge">
+<title>sourcefile~coefficients.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M662.1,-337.4C634.68,-348.77 590.6,-364.46 550.5,-367.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M548.5,-367.32C473.36,-372.69 453.85,-357.78 379,-366.32"/>
+</g>
+<!-- sourcefile~deviation.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node4" class="node">
+<title>sourcefile~deviation.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node4"><a xlink:href="../sourcefile/deviation.f90.html" xlink:title="deviation.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="590.5,-339.32 508.5,-339.32 508.5,-315.32 590.5,-315.32 590.5,-339.32"/>
+<text text-anchor="middle" x="549.5" y="-324.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">deviation.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~coefficients.f90&#45;&gt;sourcefile~deviation.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge19" class="edge">
+<title>sourcefile~coefficients.f90&#45;&gt;sourcefile~deviation.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M642.88,-325.99C629.46,-326.18 614.73,-326.39 601.06,-326.59"/>
+<polygon fill="#000000" stroke="#000000" points="600.79,-323.09 590.84,-326.74 600.89,-330.09 600.79,-323.09"/>
+</g>
+<!-- sourcefile~deviation.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge3" class="edge">
+<title>sourcefile~deviation.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M508.19,-339.3C474.12,-348.76 423.85,-361.2 379,-366.32"/>
+</g>
+<!-- sourcefile~field_along_fieldline.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node5" class="node">
+<title>sourcefile~field_along_fieldline.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node5"><a xlink:href="../sourcefile/field_along_fieldline.f90.html" xlink:title="field_along_fieldline.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="262,-219.32 123,-219.32 123,-195.32 262,-195.32 262,-219.32"/>
+<text text-anchor="middle" x="192.5" y="-204.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_along_fieldline.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~field_along_fieldline.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge4" class="edge">
+<title>sourcefile~field_along_fieldline.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M122.73,-197.5C114.13,-196.27 105.44,-195.03 97.13,-193.84"/>
+<polygon fill="#000000" stroke="#000000" points="97.62,-190.37 87.22,-192.42 96.63,-197.3 97.62,-190.37"/>
+</g>
+<!-- sourcefile~field_checks.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node6" class="node">
+<title>sourcefile~field_checks.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node6"><a xlink:href="../sourcefile/field_checks.f90.html" xlink:title="field_checks.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="427,-177.32 329,-177.32 329,-153.32 427,-153.32 427,-177.32"/>
+<text text-anchor="middle" x="378" y="-162.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_checks.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~field_checks.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge5" class="edge">
+<title>sourcefile~field_checks.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M337.28,-153.26C292.01,-140.13 220.78,-121.46 193.5,-125.32"/>
+</g>
+<!-- sourcefile~field_checks.f90&#45;&gt;sourcefile~field_along_fieldline.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge20" class="edge">
+<title>sourcefile~field_checks.f90&#45;&gt;sourcefile~field_along_fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M328.79,-176.36C306.58,-181.44 279.95,-187.54 256.2,-192.97"/>
+<polygon fill="#000000" stroke="#000000" points="255.19,-189.61 246.23,-195.25 256.75,-196.43 255.19,-189.61"/>
+</g>
+<!-- sourcefile~field_instance.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node7" class="node">
+<title>sourcefile~field_instance.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node7"><a xlink:href="../sourcefile/field_instance.f90.html" xlink:title="field_instance.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="245.5,-57.32 139.5,-57.32 139.5,-33.32 245.5,-33.32 245.5,-57.32"/>
+<text text-anchor="middle" x="192.5" y="-42.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_instance.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~field_instance.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge6" class="edge">
+<title>sourcefile~field_instance.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M178.97,-57.34C153.49,-81.78 95.48,-137.43 64.64,-167"/>
+<polygon fill="#000000" stroke="#000000" points="62.21,-164.48 57.42,-173.93 67.06,-169.53 62.21,-164.48"/>
+</g>
+<!-- sourcefile~fieldline_integrals.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node8" class="node">
+<title>sourcefile~fieldline_integrals.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node8"><a xlink:href="../sourcefile/fieldline_integrals.f90.html" xlink:title="fieldline_integrals.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="441.5,-257.32 314.5,-257.32 314.5,-233.32 441.5,-233.32 441.5,-257.32"/>
+<text text-anchor="middle" x="378" y="-242.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_integrals.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge7" class="edge">
+<title>sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M314.41,-248.4C262.22,-249.25 186.41,-246.49 123,-228.32 104.42,-223 85.26,-212.85 70.52,-203.87"/>
+<polygon fill="#000000" stroke="#000000" points="72.29,-200.84 61.96,-198.48 68.56,-206.77 72.29,-200.84"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node9" class="node">
+<title>sourcefile~fieldline_integrands.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node9"><a xlink:href="../sourcefile/fieldline_integrands.f90.html" xlink:title="fieldline_integrands.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="261.5,-299.32 123.5,-299.32 123.5,-275.32 261.5,-275.32 261.5,-299.32"/>
+<text text-anchor="middle" x="192.5" y="-284.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_integrands.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge27" class="edge">
+<title>sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~fieldline_integrands.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M324.42,-257.36C303.11,-262.23 278.33,-267.9 256.1,-272.99"/>
+<polygon fill="#000000" stroke="#000000" points="255.06,-269.64 246.09,-275.28 256.62,-276.46 255.06,-269.64"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge8" class="edge">
+<title>sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M151.45,-275.19C141.77,-271.44 131.71,-266.82 123,-261.32 98.89,-246.11 75.86,-222.7 61.06,-206.08"/>
+<polygon fill="#000000" stroke="#000000" points="63.69,-203.77 54.49,-198.53 58.42,-208.37 63.69,-203.77"/>
+</g>
+<!-- sourcefile~fourier_field.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node10" class="node">
+<title>sourcefile~fourier_field.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node10"><a xlink:href="../sourcefile/fourier_field.f90.html" xlink:title="fourier_field.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="241,-177.32 144,-177.32 144,-153.32 241,-153.32 241,-177.32"/>
+<text text-anchor="middle" x="192.5" y="-162.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fourier_field.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~fourier_field.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge9" class="edge">
+<title>sourcefile~fourier_field.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M143.77,-172.14C128.92,-174.26 112.47,-176.61 97.29,-178.78"/>
+<polygon fill="#000000" stroke="#000000" points="96.43,-175.37 87.03,-180.25 97.42,-182.3 96.43,-175.37"/>
+</g>
+<!-- sourcefile~grid.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node11" class="node">
+<title>sourcefile~grid.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node11"><a xlink:href="../sourcefile/grid.f90.html" xlink:title="grid.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="717,-137.32 663,-137.32 663,-113.32 717,-113.32 717,-137.32"/>
+<text text-anchor="middle" x="690" y="-122.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">grid.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge10" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M662.84,-126.34C609.44,-128.21 484.04,-131.43 379,-125.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M377,-125.32C295.61,-120.12 274.25,-113.89 193.5,-125.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M191.5,-125.32C160.22,-129.75 152.33,-132.58 123,-144.32 105.93,-151.16 87.78,-160.71 73.23,-168.97"/>
+<polygon fill="#000000" stroke="#000000" points="71.14,-166.14 64.24,-174.18 74.65,-172.2 71.14,-166.14"/>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge28" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~fieldline_integrands.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M675.74,-137.41C635.04,-173.29 506.84,-277.2 379,-285.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M377,-285.32C342.65,-288.49 304.53,-289.34 271.97,-289.26"/>
+<polygon fill="#000000" stroke="#000000" points="271.63,-285.76 261.61,-289.2 271.59,-292.75 271.63,-285.76"/>
+</g>
+<!-- sourcefile~bounce.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node21" class="node">
+<title>sourcefile~bounce.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node21"><a xlink:href="../sourcefile/bounce.f90.html" xlink:title="bounce.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="586,-97.32 513,-97.32 513,-73.32 586,-73.32 586,-97.32"/>
+<text text-anchor="middle" x="549.5" y="-82.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bounce.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~bounce.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge44" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~bounce.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M662.95,-117.8C644.13,-112.36 618.21,-104.88 596.01,-98.46"/>
+<polygon fill="#000000" stroke="#000000" points="596.68,-95.02 586.1,-95.6 594.74,-101.74 596.68,-95.02"/>
+</g>
+<!-- sourcefile~make_fieldline.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node12" class="node">
+<title>sourcefile~make_fieldline.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node12"><a xlink:href="../sourcefile/make_fieldline.f90.html" xlink:title="make_fieldline.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="605,-177.32 494,-177.32 494,-153.32 605,-153.32 605,-177.32"/>
+<text text-anchor="middle" x="549.5" y="-162.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_fieldline.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge11" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M513.32,-153.24C479.4,-142.5 426.39,-128.07 379,-125.32"/>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_along_fieldline.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge21" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_along_fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M502.72,-177.34C488.48,-180.7 472.66,-184.05 458,-186.32 396.01,-195.92 325.13,-201.25 272.36,-204.13"/>
+<polygon fill="#000000" stroke="#000000" points="271.85,-200.66 262.05,-204.68 272.22,-207.65 271.85,-200.66"/>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_checks.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge22" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_checks.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M493.94,-165.32C475.81,-165.32 455.56,-165.32 437.17,-165.32"/>
+<polygon fill="#000000" stroke="#000000" points="437.17,-161.82 427.17,-165.32 437.17,-168.82 437.17,-161.82"/>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~fieldline_integrals.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge26" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~fieldline_integrals.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M530.77,-177.5C512.97,-189.34 484.47,-207.25 458,-219.32 449.51,-223.19 440.27,-226.77 431.21,-229.95"/>
+<polygon fill="#000000" stroke="#000000" points="429.83,-226.72 421.48,-233.24 432.07,-233.35 429.83,-226.72"/>
+</g>
+<!-- sourcefile~precession.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node13" class="node">
+<title>sourcefile~precession.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node13"><a xlink:href="../sourcefile/precession.f90.html" xlink:title="precession.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="900.5,-95.32 810.5,-95.32 810.5,-71.32 900.5,-71.32 900.5,-95.32"/>
+<text text-anchor="middle" x="855.5" y="-80.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">precession.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~precession.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge12" class="edge">
+<title>sourcefile~precession.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M810.3,-79.02C726.35,-71.01 537.98,-53.87 379,-45.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M377,-45.32C264.17,-35.29 218.98,35.83 123,-24.32 73.56,-55.3 54.48,-127.25 47.77,-163.94"/>
+<polygon fill="#000000" stroke="#000000" points="44.27,-163.67 46.07,-174.11 51.18,-164.82 44.27,-163.67"/>
+</g>
+<!-- sourcefile~precession.f90&#45;&gt;sourcefile~field_instance.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge25" class="edge">
+<title>sourcefile~precession.f90&#45;&gt;sourcefile~field_instance.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M377,-45.32C336.75,-43.16 291.47,-43.13 255.96,-43.66"/>
+<polygon fill="#000000" stroke="#000000" points="255.68,-40.16 245.74,-43.83 255.8,-47.16 255.68,-40.16"/>
+</g>
+<!-- sourcefile~precession.f90&#45;&gt;sourcefile~grid.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge32" class="edge">
+<title>sourcefile~precession.f90&#45;&gt;sourcefile~grid.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M810.25,-94.69C784.27,-101.36 751.83,-109.69 727.35,-115.98"/>
+<polygon fill="#000000" stroke="#000000" points="726.2,-112.66 717.39,-118.54 727.94,-119.44 726.2,-112.66"/>
+</g>
+<!-- sourcefile~shaing_callen.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node14" class="node">
+<title>sourcefile~shaing_callen.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node14"><a xlink:href="../sourcefile/shaing_callen.f90.html" xlink:title="shaing_callen.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="602.5,-297.32 496.5,-297.32 496.5,-273.32 602.5,-273.32 602.5,-297.32"/>
+<text text-anchor="middle" x="549.5" y="-282.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shaing_callen.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~shaing_callen.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge13" class="edge">
+<title>sourcefile~shaing_callen.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M510.39,-297.33C504.67,-299.89 499.01,-302.87 494,-306.32 474.3,-319.88 478.48,-333.96 458,-346.32 426.99,-365.03 414.99,-362.21 379,-366.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M377,-366.32C295.97,-375.57 269.1,-396.92 193.5,-366.32"/>
+</g>
+<!-- sourcefile~shaing_callen.f90&#45;&gt;sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge29" class="edge">
+<title>sourcefile~shaing_callen.f90&#45;&gt;sourcefile~fieldline_integrands.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M496.14,-283.61C462.62,-282.94 418.21,-282.83 379,-285.32"/>
+</g>
+<!-- sourcefile~shaing_callen_wrappers.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node15" class="node">
+<title>sourcefile~shaing_callen_wrappers.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node15"><a xlink:href="../sourcefile/shaing_callen_wrappers.f90.html" xlink:title="shaing_callen_wrappers.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="458,-337.32 298,-337.32 298,-313.32 458,-313.32 458,-337.32"/>
+<text text-anchor="middle" x="378" y="-322.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shaing_callen_wrappers.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~shaing_callen.f90&#45;&gt;sourcefile~shaing_callen_wrappers.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge39" class="edge">
+<title>sourcefile~shaing_callen.f90&#45;&gt;sourcefile~shaing_callen_wrappers.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M497.64,-297.32C479.54,-301.59 458.97,-306.45 440.1,-310.9"/>
+<polygon fill="#000000" stroke="#000000" points="439.04,-307.56 430.11,-313.26 440.65,-314.37 439.04,-307.56"/>
+</g>
+<!-- sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge14" class="edge">
+<title>sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M344.16,-337.32C299.06,-353.01 220.51,-377.25 193.5,-366.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M191.5,-366.32C119.1,-337.01 72.13,-249.09 53.54,-207.97"/>
+<polygon fill="#000000" stroke="#000000" points="56.65,-206.34 49.43,-198.59 50.24,-209.15 56.65,-206.34"/>
+</g>
+<!-- sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge30" class="edge">
+<title>sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~fieldline_integrands.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M318.94,-313.3C300.69,-309.52 280.38,-305.31 261.51,-301.41"/>
+<polygon fill="#000000" stroke="#000000" points="262,-297.93 251.5,-299.33 260.58,-304.79 262,-297.93"/>
+</g>
+<!-- sourcefile~electric_rabe.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node16" class="node">
+<title>sourcefile~electric_rabe.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node16"><a xlink:href="../sourcefile/electric_rabe.f90.html" xlink:title="electric_rabe.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="1075,-137.32 972,-137.32 972,-113.32 1075,-113.32 1075,-137.32"/>
+<text text-anchor="middle" x="1023.5" y="-122.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~boozer_field.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge15" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~boozer_field.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M854.5,-356.32C822,-371.66 781.76,-374.54 749.33,-373.52"/>
+<polygon fill="#000000" stroke="#000000" points="749.25,-370.01 739.1,-373.06 748.93,-377 749.25,-370.01"/>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~coefficients.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge17" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~coefficients.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1020.63,-137.61C1014.73,-172.21 993.41,-271.47 936,-326.32 908.69,-352.41 890.65,-340.21 856.5,-356.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M854.5,-356.32C834.16,-365.92 778.11,-352.38 737.29,-340.3"/>
+<polygon fill="#000000" stroke="#000000" points="738.11,-336.89 727.53,-337.35 736.09,-343.59 738.11,-336.89"/>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~field_instance.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge23" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~field_instance.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M1009.51,-113.18C993.48,-98.86 964.77,-75.35 936,-62.32 834.34,-16.29 802.6,-7.32 691,-7.32 691,-7.32 691,-7.32 548.5,-7.32 445.41,-7.32 326.43,-23.36 255.72,-34.6"/>
+<polygon fill="#000000" stroke="#000000" points="254.96,-31.18 245.64,-36.22 256.07,-38.09 254.96,-31.18"/>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~grid.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge31" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~grid.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M984.07,-137.35C950.72,-147.12 900.96,-160.1 856.5,-165.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M854.5,-165.32C809.39,-170.62 758.79,-154.74 725.99,-141.44"/>
+<polygon fill="#000000" stroke="#000000" points="726.99,-138.07 716.41,-137.43 724.28,-144.52 726.99,-138.07"/>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~make_fieldline.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge34" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~make_fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M854.5,-165.32C772.49,-174.95 677.18,-172.81 615.46,-169.69"/>
+<polygon fill="#000000" stroke="#000000" points="615.26,-166.17 605.09,-169.14 614.89,-173.16 615.26,-166.17"/>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~precession.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge37" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~precession.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M974.93,-113.29C954.84,-108.2 931.34,-102.26 910.6,-97.01"/>
+<polygon fill="#000000" stroke="#000000" points="911.21,-93.55 900.66,-94.49 909.5,-100.34 911.21,-93.55"/>
+</g>
+<!-- sourcefile~read_file.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node19" class="node">
+<title>sourcefile~read_file.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node19"><a xlink:href="../sourcefile/read_file.f90.html" xlink:title="read_file.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="729.5,-217.32 650.5,-217.32 650.5,-193.32 729.5,-193.32 729.5,-217.32"/>
+<text text-anchor="middle" x="690" y="-202.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_file.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~read_file.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge41" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~read_file.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M854.5,-165.32C814.78,-169.98 770.81,-181.09 738.48,-190.42"/>
+<polygon fill="#000000" stroke="#000000" points="737.45,-187.08 728.84,-193.25 739.42,-193.79 737.45,-187.08"/>
+</g>
+<!-- sourcefile~saved_bounce_integrals.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node20" class="node">
+<title>sourcefile~saved_bounce_integrals.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node20"><a xlink:href="../sourcefile/saved_bounce_integrals.f90.html" xlink:title="saved_bounce_integrals.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="936,-137.32 775,-137.32 775,-113.32 936,-113.32 936,-137.32"/>
+<text text-anchor="middle" x="855.5" y="-122.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">saved_bounce_integrals.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~saved_bounce_integrals.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge43" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~saved_bounce_integrals.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M971.79,-125.32C963.71,-125.32 955.13,-125.32 946.46,-125.32"/>
+<polygon fill="#000000" stroke="#000000" points="946.26,-121.82 936.26,-125.32 946.26,-128.82 946.26,-121.82"/>
+</g>
+<!-- sourcefile~main.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node17" class="node">
+<title>sourcefile~main.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node17"><a xlink:href="../sourcefile/main.f90.html" xlink:title="main.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="885.5,-317.32 825.5,-317.32 825.5,-293.32 885.5,-293.32 885.5,-317.32"/>
+<text text-anchor="middle" x="855.5" y="-302.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">main.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~main.f90&#45;&gt;sourcefile~boozer_field.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge16" class="edge">
+<title>sourcefile~main.f90&#45;&gt;sourcefile~boozer_field.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M825.27,-316.41C799.36,-326.23 761.24,-340.69 732.23,-351.69"/>
+<polygon fill="#000000" stroke="#000000" points="730.88,-348.46 722.77,-355.27 733.36,-355 730.88,-348.46"/>
+</g>
+<!-- sourcefile~main.f90&#45;&gt;sourcefile~coefficients.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge18" class="edge">
+<title>sourcefile~main.f90&#45;&gt;sourcefile~coefficients.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M825.27,-308.9C803.7,-311.54 773.67,-315.21 747.48,-318.41"/>
+<polygon fill="#000000" stroke="#000000" points="746.78,-314.97 737.28,-319.66 747.63,-321.92 746.78,-314.97"/>
+</g>
+<!-- sourcefile~main.f90&#45;&gt;sourcefile~make_fieldline.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge35" class="edge">
+<title>sourcefile~main.f90&#45;&gt;sourcefile~make_fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M825.38,-304.22C792.32,-302.4 736.99,-297.65 691,-285.32"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M689,-285.32C633.06,-270.32 586.65,-215.98 564.5,-185.83"/>
+<polygon fill="#000000" stroke="#000000" points="567.32,-183.77 558.66,-177.67 561.63,-187.84 567.32,-183.77"/>
+</g>
+<!-- sourcefile~main.f90&#45;&gt;sourcefile~shaing_callen.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge38" class="edge">
+<title>sourcefile~main.f90&#45;&gt;sourcefile~shaing_callen.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M689,-285.32C664.61,-278.78 636.93,-277.61 612.76,-278.5"/>
+<polygon fill="#000000" stroke="#000000" points="612.45,-275.01 602.64,-278.99 612.8,-282 612.45,-275.01"/>
+</g>
+<!-- sourcefile~main.f90&#45;&gt;sourcefile~read_file.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge42" class="edge">
+<title>sourcefile~main.f90&#45;&gt;sourcefile~read_file.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M834.78,-293.26C806.05,-275.69 752.54,-242.96 719.52,-222.77"/>
+<polygon fill="#000000" stroke="#000000" points="721.15,-219.66 710.79,-217.43 717.5,-225.63 721.15,-219.66"/>
+</g>
+<!-- sourcefile~orbit.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_node18" class="node">
+<title>sourcefile~orbit.f90</title>
+<g id="a_sourcefile~~field_base.f90~~AfferentGraph_node18"><a xlink:href="../sourcefile/orbit.f90.html" xlink:title="orbit.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="407,-97.32 349,-97.32 349,-73.32 407,-73.32 407,-97.32"/>
+<text text-anchor="middle" x="378" y="-82.92" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">orbit.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~orbit.f90&#45;&gt;sourcefile~field_instance.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge24" class="edge">
+<title>sourcefile~orbit.f90&#45;&gt;sourcefile~field_instance.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M348.73,-79.16C324.06,-73.78 287.37,-65.78 255.85,-58.91"/>
+<polygon fill="#000000" stroke="#000000" points="256.34,-55.44 245.82,-56.73 254.85,-62.28 256.34,-55.44"/>
+</g>
+<!-- sourcefile~read_file.f90&#45;&gt;sourcefile~make_fieldline.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge36" class="edge">
+<title>sourcefile~read_file.f90&#45;&gt;sourcefile~make_fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M650.42,-194.18C635.44,-189.85 618.06,-184.83 602.04,-180.21"/>
+<polygon fill="#000000" stroke="#000000" points="602.85,-176.8 592.27,-177.38 600.91,-183.52 602.85,-176.8"/>
+</g>
+<!-- sourcefile~saved_bounce_integrals.f90&#45;&gt;sourcefile~grid.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge33" class="edge">
+<title>sourcefile~saved_bounce_integrals.f90&#45;&gt;sourcefile~grid.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M774.67,-125.32C758.13,-125.32 741.49,-125.32 727.45,-125.32"/>
+<polygon fill="#000000" stroke="#000000" points="727.27,-121.82 717.27,-125.32 727.27,-128.82 727.27,-121.82"/>
+</g>
+<!-- sourcefile~bounce.f90&#45;&gt;sourcefile~orbit.f90 -->
+<g id="sourcefile~~field_base.f90~~AfferentGraph_edge40" class="edge">
+<title>sourcefile~bounce.f90&#45;&gt;sourcefile~orbit.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M512.97,-85.32C484.95,-85.32 445.96,-85.32 417.27,-85.32"/>
+<polygon fill="#000000" stroke="#000000" points="417.2,-81.82 407.2,-85.32 417.2,-88.82 417.2,-81.82"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var pansourcefilefield_basef90AfferentGraph = svgPanZoom('#sourcefilefield_basef90AfferentGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="202pt" height="32pt"
+ viewBox="0.00 0.00 201.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 197.5,-28 197.5,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="193.5,-24 88.5,-24 88.5,0 193.5,0 193.5,-24"/>
+<text text-anchor="middle" x="141" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+<br>
+      <section>
+        <h2><span class="anchor" id="src"></span>Source Code</h2>
+        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="k">module </span><span class="n">field_base</span>
+<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="w">    </span><span class="k">use </span><span class="n">constants</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-3" name="ln-3" href="#ln-3"></a><span class="w">    </span><span class="k">implicit none</span>
+<a id="ln-4" name="ln-4" href="#ln-4"></a><span class="k">    private</span>
+<a id="ln-5" name="ln-5" href="#ln-5"></a>
+<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="k">    public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_t</span><span class="p">,</span><span class="w"> </span><span class="n">field_3D_t</span>
+<a id="ln-7" name="ln-7" href="#ln-7"></a>
+<a id="ln-8" name="ln-8" href="#ln-8"></a><span class="w">    </span><span class="k">type</span><span class="p">,</span><span class="w"> </span><span class="k">abstract</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_t</span>
+<a id="ln-9" name="ln-9" href="#ln-9"></a><span class="w">        </span><span class="c">!! Abstract base type for magnetic fields in Boozer coordinates.</span>
+<a id="ln-10" name="ln-10" href="#ln-10"></a><span class="w">        </span><span class="c">!!</span>
+<a id="ln-11" name="ln-11" href="#ln-11"></a><span class="w">        </span><span class="c">!! Concrete implementations supply B_mod, sqrt(g), gradients, and covariant components.</span>
+<a id="ln-12" name="ln-12" href="#ln-12"></a><span class="w">    </span><span class="k">contains</span>
+<a id="ln-13" name="ln-13" href="#ln-13"></a><span class="k">        procedure</span><span class="p">(</span><span class="n">compute_B_sqrtg_dB_dx</span><span class="p">),</span><span class="w"> </span><span class="k">deferred</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">compute_B_sqrtg_dB_dx</span>
+<a id="ln-14" name="ln-14" href="#ln-14"></a><span class="w">        </span><span class="k">procedure</span><span class="p">(</span><span class="n">compute_B_and_dB_dx</span><span class="p">),</span><span class="w"> </span><span class="k">deferred</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">compute_B_and_dB_dx</span>
+<a id="ln-15" name="ln-15" href="#ln-15"></a><span class="w">        </span><span class="k">procedure</span><span class="p">(</span><span class="n">compute_B_mod</span><span class="p">),</span><span class="w"> </span><span class="k">deferred</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">compute_B_mod</span>
+<a id="ln-16" name="ln-16" href="#ln-16"></a><span class="w">        </span><span class="k">procedure</span><span class="p">(</span><span class="n">compute_nabla_s</span><span class="p">),</span><span class="w"> </span><span class="k">deferred</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">compute_nabla_s</span>
+<a id="ln-17" name="ln-17" href="#ln-17"></a><span class="w">        </span><span class="k">procedure</span><span class="p">(</span><span class="n">rel_accuracy_B</span><span class="p">),</span><span class="w"> </span><span class="k">deferred</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">rel_accuracy_B</span>
+<a id="ln-18" name="ln-18" href="#ln-18"></a><span class="w">        </span><span class="k">procedure</span><span class="p">(</span><span class="n">get_covariant_components</span><span class="p">),</span><span class="w"> </span><span class="k">deferred</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">get_covariant_components</span>
+<a id="ln-19" name="ln-19" href="#ln-19"></a><span class="w">    </span><span class="k">end type </span><span class="n">field_t</span>
+<a id="ln-20" name="ln-20" href="#ln-20"></a>
+<a id="ln-21" name="ln-21" href="#ln-21"></a><span class="w">    </span><span class="k">interface</span>
+<a id="ln-22" name="ln-22" href="#ln-22"></a><span class="k">        subroutine </span><span class="n">compute_B_sqrtg_dB_dx</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span><span class="p">,</span><span class="w"> </span><span class="n">B_mod</span><span class="p">,</span><span class="w"> </span><span class="n">sqrtg</span><span class="p">,</span><span class="w"> </span><span class="n">dB_dx</span><span class="p">)</span>
+<a id="ln-23" name="ln-23" href="#ln-23"></a><span class="w">            </span><span class="k">import</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_t</span><span class="p">,</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-24" name="ln-24" href="#ln-24"></a><span class="w">            </span><span class="k">class</span><span class="p">(</span><span class="n">field_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span>
+<a id="ln-25" name="ln-25" href="#ln-25"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span>
+<a id="ln-26" name="ln-26" href="#ln-26"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">B_mod</span><span class="p">,</span><span class="w"> </span><span class="n">sqrtg</span><span class="p">,</span><span class="w"> </span><span class="n">dB_dx</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="ln-27" name="ln-27" href="#ln-27"></a><span class="w">        </span><span class="k">end subroutine</span>
+<a id="ln-28" name="ln-28" href="#ln-28"></a><span class="k">    end interface</span>
+<a id="ln-29" name="ln-29" href="#ln-29"></a>
+<a id="ln-30" name="ln-30" href="#ln-30"></a><span class="k">    interface</span>
+<a id="ln-31" name="ln-31" href="#ln-31"></a><span class="k">        subroutine </span><span class="n">compute_B_and_dB_dx</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span><span class="p">,</span><span class="w"> </span><span class="n">B_mod</span><span class="p">,</span><span class="w"> </span><span class="n">dB_dx</span><span class="p">)</span>
+<a id="ln-32" name="ln-32" href="#ln-32"></a><span class="w">            </span><span class="k">import</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_t</span><span class="p">,</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-33" name="ln-33" href="#ln-33"></a><span class="w">            </span><span class="k">class</span><span class="p">(</span><span class="n">field_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span>
+<a id="ln-34" name="ln-34" href="#ln-34"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span>
+<a id="ln-35" name="ln-35" href="#ln-35"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">B_mod</span><span class="p">,</span><span class="w"> </span><span class="n">dB_dx</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="ln-36" name="ln-36" href="#ln-36"></a><span class="w">        </span><span class="k">end subroutine</span>
+<a id="ln-37" name="ln-37" href="#ln-37"></a><span class="k">    end interface</span>
+<a id="ln-38" name="ln-38" href="#ln-38"></a>
+<a id="ln-39" name="ln-39" href="#ln-39"></a><span class="k">    interface</span>
+<a id="ln-40" name="ln-40" href="#ln-40"></a><span class="k">        subroutine </span><span class="n">compute_B_mod</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span><span class="p">,</span><span class="w"> </span><span class="n">B_mod</span><span class="p">)</span>
+<a id="ln-41" name="ln-41" href="#ln-41"></a><span class="w">            </span><span class="k">import</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_t</span><span class="p">,</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-42" name="ln-42" href="#ln-42"></a><span class="w">            </span><span class="k">class</span><span class="p">(</span><span class="n">field_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span>
+<a id="ln-43" name="ln-43" href="#ln-43"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span>
+<a id="ln-44" name="ln-44" href="#ln-44"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">B_mod</span>
+<a id="ln-45" name="ln-45" href="#ln-45"></a><span class="w">        </span><span class="k">end subroutine</span>
+<a id="ln-46" name="ln-46" href="#ln-46"></a><span class="k">    end interface</span>
+<a id="ln-47" name="ln-47" href="#ln-47"></a>
+<a id="ln-48" name="ln-48" href="#ln-48"></a><span class="k">    interface</span>
+<a id="ln-49" name="ln-49" href="#ln-49"></a><span class="k">        subroutine </span><span class="n">compute_nabla_s</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span><span class="p">,</span><span class="w"> </span><span class="n">nabla_s</span><span class="p">)</span>
+<a id="ln-50" name="ln-50" href="#ln-50"></a><span class="w">            </span><span class="k">import</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_t</span><span class="p">,</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-51" name="ln-51" href="#ln-51"></a><span class="w">            </span><span class="k">class</span><span class="p">(</span><span class="n">field_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span>
+<a id="ln-52" name="ln-52" href="#ln-52"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="n">phi</span>
+<a id="ln-53" name="ln-53" href="#ln-53"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nabla_s</span>
+<a id="ln-54" name="ln-54" href="#ln-54"></a><span class="w">        </span><span class="k">end subroutine</span>
+<a id="ln-55" name="ln-55" href="#ln-55"></a><span class="k">    end interface</span>
+<a id="ln-56" name="ln-56" href="#ln-56"></a>
+<a id="ln-57" name="ln-57" href="#ln-57"></a><span class="k">    interface</span>
+<a id="ln-58" name="ln-58" href="#ln-58"></a><span class="w">        </span><span class="c">!&gt; Relative accuracy of B_mod evaluations for this field representation.</span>
+<a id="ln-59" name="ln-59" href="#ln-59"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="k">function </span><span class="n">rel_accuracy_B</span><span class="p">(</span><span class="n">self</span><span class="p">)</span>
+<a id="ln-60" name="ln-60" href="#ln-60"></a><span class="w">            </span><span class="k">import</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_t</span><span class="p">,</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-61" name="ln-61" href="#ln-61"></a><span class="w">            </span><span class="k">class</span><span class="p">(</span><span class="n">field_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span>
+<a id="ln-62" name="ln-62" href="#ln-62"></a><span class="w">        </span><span class="k">end function</span>
+<a id="ln-63" name="ln-63" href="#ln-63"></a><span class="k">    end interface</span>
+<a id="ln-64" name="ln-64" href="#ln-64"></a>
+<a id="ln-65" name="ln-65" href="#ln-65"></a><span class="k">    interface</span>
+<a id="ln-66" name="ln-66" href="#ln-66"></a><span class="w">        </span><span class="c">!&gt; Covariant components of B (flux-surface constants in Boozer coordinates).</span>
+<a id="ln-67" name="ln-67" href="#ln-67"></a><span class="w">        </span><span class="k">subroutine </span><span class="n">get_covariant_components</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">B_theta_covariant</span><span class="p">,</span><span class="w"> </span><span class="n">B_phi_covariant</span><span class="p">)</span>
+<a id="ln-68" name="ln-68" href="#ln-68"></a><span class="w">            </span><span class="k">import</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_t</span><span class="p">,</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-69" name="ln-69" href="#ln-69"></a><span class="w">            </span><span class="k">class</span><span class="p">(</span><span class="n">field_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span>
+<a id="ln-70" name="ln-70" href="#ln-70"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">B_theta_covariant</span><span class="p">,</span><span class="w"> </span><span class="n">B_phi_covariant</span>
+<a id="ln-71" name="ln-71" href="#ln-71"></a><span class="w">        </span><span class="k">end subroutine</span>
+<a id="ln-72" name="ln-72" href="#ln-72"></a><span class="k">    end interface</span>
+<a id="ln-73" name="ln-73" href="#ln-73"></a>
+<a id="ln-74" name="ln-74" href="#ln-74"></a><span class="k">    type</span><span class="p">,</span><span class="w"> </span><span class="k">abstract</span><span class="p">,</span><span class="w"> </span><span class="k">extends</span><span class="p">(</span><span class="n">field_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_3D_t</span>
+<a id="ln-75" name="ln-75" href="#ln-75"></a><span class="w">    </span><span class="k">contains</span>
+<a id="ln-76" name="ln-76" href="#ln-76"></a><span class="k">        procedure</span><span class="p">(</span><span class="n">evaluate</span><span class="p">),</span><span class="w"> </span><span class="k">deferred</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">evaluate</span>
+<a id="ln-77" name="ln-77" href="#ln-77"></a><span class="w">    </span><span class="k">end type </span><span class="n">field_3D_t</span>
+<a id="ln-78" name="ln-78" href="#ln-78"></a>
+<a id="ln-79" name="ln-79" href="#ln-79"></a><span class="w">    </span><span class="k">interface</span>
+<a id="ln-80" name="ln-80" href="#ln-80"></a><span class="k">        subroutine </span><span class="n">evaluate</span><span class="p">(</span><span class="n">self</span><span class="p">,</span><span class="w"> </span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">bmod</span><span class="p">,</span><span class="w"> </span><span class="n">sqrtg</span><span class="p">,</span><span class="w"> </span><span class="n">bder</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-81" name="ln-81" href="#ln-81"></a><span class="w">                            </span><span class="n">hcovar</span><span class="p">,</span><span class="w"> </span><span class="n">hctrvr</span><span class="p">,</span><span class="w"> </span><span class="n">hcurl</span><span class="p">)</span>
+<a id="ln-82" name="ln-82" href="#ln-82"></a><span class="w">            </span><span class="k">import</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_3D_t</span><span class="p">,</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-83" name="ln-83" href="#ln-83"></a><span class="w">            </span><span class="k">class</span><span class="p">(</span><span class="n">field_3D_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">self</span>
+<a id="ln-84" name="ln-84" href="#ln-84"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">x</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="ln-85" name="ln-85" href="#ln-85"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bmod</span><span class="p">,</span><span class="w"> </span><span class="n">sqrtg</span>
+<a id="ln-86" name="ln-86" href="#ln-86"></a><span class="w">            </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bder</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">hcovar</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">hctrvr</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span><span class="w"> </span><span class="n">hcurl</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="ln-87" name="ln-87" href="#ln-87"></a><span class="w">        </span><span class="k">end subroutine </span><span class="n">evaluate</span>
+<a id="ln-88" name="ln-88" href="#ln-88"></a><span class="w">    </span><span class="k">end interface</span>
+<a id="ln-89" name="ln-89" href="#ln-89"></a>
+<a id="ln-90" name="ln-90" href="#ln-90"></a><span class="k">end module </span><span class="n">field_base</span>
+</pre></div>
+
+      </section>
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

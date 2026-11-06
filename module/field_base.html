@@ -1,0 +1,1021 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>field_base &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>field_base
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.7% of total for modules and submodules.">73 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/field_base.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/field_base.f90.html'>field_base.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">field_base</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#types-0"
+         aria-expanded="false" aria-controls="types-0">
+         <h4 class="card-header bg-primary text-white">Derived Types</h4>
+      </a>
+      <div id="types-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/field_base.html#type-field_t">field_t</a>
+            <a class="list-group-item" href="../module/field_base.html#type-field_3d_t">field_3D_t</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='constants.html'>constants</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: module~~field_base~~UsesGraph Pages: 1 -->
+<svg id="modulefield_baseUsesGraph" width="175pt" height="32pt"
+ viewBox="0.00 0.00 175.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~field_base~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>module~~field_base~~UsesGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 171,-28 171,4 -4,4"/>
+<!-- module~field_base -->
+<g id="module~~field_base~~UsesGraph_node1" class="node">
+<title>module~field_base</title>
+<polygon fill="none" stroke="black" points="167,-24 100,-24 100,0 167,0 167,-24"/>
+<text text-anchor="middle" x="133.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">field_base</text>
+</g>
+<!-- module~constants -->
+<g id="module~~field_base~~UsesGraph_node2" class="node">
+<title>module~constants</title>
+<g id="a_module~~field_base~~UsesGraph_node2"><a xlink:href="../module/constants.html" xlink:title="constants">
+<polygon fill="#337ab7" stroke="#337ab7" points="64,-24 0,-24 0,0 64,0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants</text>
+</a>
+</g>
+</g>
+<!-- module~field_base&#45;&gt;module~constants -->
+<g id="module~~field_base~~UsesGraph_edge1" class="edge">
+<title>module~field_base&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M99.92,-12C91.78,-12 82.94,-12 74.44,-12"/>
+<polygon fill="#000000" stroke="#000000" points="74.3,-8.5 64.3,-12 74.3,-15.5 74.3,-8.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="518pt" height="32pt"
+ viewBox="0.00 0.00 517.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 513.5,-28 513.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="386,-24 328,-24 328,0 386,0 386,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="509.5,-24 404.5,-24 404.5,0 509.5,0 509.5,-24"/>
+<text text-anchor="middle" x="457" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: module~~field_base~~UsedByGraph Pages: 1 -->
+<svg id="modulefield_baseUsedByGraph" width="641pt" height="580pt"
+ viewBox="0.00 0.00 641.00 579.84" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~field_base~~UsedByGraph" class="graph" transform="scale(0.82 0.82) rotate(0) translate(4 707)">
+<title>module~~field_base~~UsedByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-707 782,-707 782,4 -4,4"/>
+<!-- module~field_base -->
+<g id="module~~field_base~~UsedByGraph_node1" class="node">
+<title>module~field_base</title>
+<polygon fill="none" stroke="black" points="67,-336 0,-336 0,-312 67,-312 67,-336"/>
+<text text-anchor="middle" x="33.5" y="-321.6" font-family="Helvetica,sans-Serif" font-size="10.50">field_base</text>
+</g>
+<!-- module~boozer_field -->
+<g id="module~~field_base~~UsedByGraph_node2" class="node">
+<title>module~boozer_field</title>
+<g id="a_module~~field_base~~UsedByGraph_node2"><a xlink:href="../module/boozer_field.html" xlink:title="boozer_field">
+<polygon fill="#337ab7" stroke="#337ab7" points="249,-520 171,-520 171,-496 249,-496 249,-520"/>
+<text text-anchor="middle" x="210" y="-505.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">boozer_field</text>
+</a>
+</g>
+</g>
+<!-- module~boozer_field&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge1" class="edge">
+<title>module~boozer_field&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M170.98,-508.95C148.94,-507.59 121.9,-502.42 103,-487 59,-451.11 42.82,-381.98 37.23,-346.39"/>
+<polygon fill="#000000" stroke="#000000" points="40.64,-345.5 35.77,-336.09 33.71,-346.49 40.64,-345.5"/>
+</g>
+<!-- module~deviation -->
+<g id="module~~field_base~~UsedByGraph_node3" class="node">
+<title>module~deviation</title>
+<g id="a_module~~field_base~~UsedByGraph_node3"><a xlink:href="../module/deviation.html" xlink:title="deviation">
+<polygon fill="#337ab7" stroke="#337ab7" points="241,-356 179,-356 179,-332 241,-332 241,-356"/>
+<text text-anchor="middle" x="210" y="-341.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">deviation</text>
+</a>
+</g>
+</g>
+<!-- module~deviation&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge2" class="edge">
+<title>module~deviation&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M178.6,-340.52C150.62,-337.31 108.81,-332.52 77.42,-328.92"/>
+<polygon fill="#000000" stroke="#000000" points="77.55,-325.41 67.21,-327.75 76.75,-332.37 77.55,-325.41"/>
+</g>
+<!-- module~field_along_fieldline -->
+<g id="module~~field_base~~UsedByGraph_node4" class="node">
+<title>module~field_along_fieldline</title>
+<g id="a_module~~field_base~~UsedByGraph_node4"><a xlink:href="../module/field_along_fieldline.html" xlink:title="field_along_fieldline">
+<polygon fill="#337ab7" stroke="#337ab7" points="269.5,-276 150.5,-276 150.5,-252 269.5,-252 269.5,-276"/>
+<text text-anchor="middle" x="210" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- module~field_along_fieldline&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge3" class="edge">
+<title>module~field_along_fieldline&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M150.27,-275.97C134.7,-279.8 118.04,-284.5 103,-290 90.11,-294.71 76.46,-301.16 64.77,-307.18"/>
+<polygon fill="#000000" stroke="#000000" points="63.08,-304.11 55.86,-311.87 66.34,-310.31 63.08,-304.11"/>
+</g>
+<!-- module~field_checks -->
+<g id="module~~field_base~~UsedByGraph_node5" class="node">
+<title>module~field_checks</title>
+<g id="a_module~~field_base~~UsedByGraph_node5"><a xlink:href="../module/field_checks.html" xlink:title="field_checks">
+<polygon fill="#337ab7" stroke="#337ab7" points="249,-234 171,-234 171,-210 249,-210 249,-234"/>
+<text text-anchor="middle" x="210" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_checks</text>
+</a>
+</g>
+</g>
+<!-- module~field_checks&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge4" class="edge">
+<title>module~field_checks&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M170.77,-223.44C149.57,-225.69 123.45,-230.96 103,-243 78.29,-257.55 58.3,-284.36 46.43,-303.14"/>
+<polygon fill="#000000" stroke="#000000" points="43.32,-301.51 41.12,-311.87 49.31,-305.14 43.32,-301.51"/>
+</g>
+<!-- module~field_instance -->
+<g id="module~~field_base~~UsedByGraph_node6" class="node">
+<title>module~field_instance</title>
+<g id="a_module~~field_base~~UsedByGraph_node6"><a xlink:href="../module/field_instance.html" xlink:title="field_instance">
+<polygon fill="#337ab7" stroke="#337ab7" points="521,-682 435,-682 435,-658 521,-658 521,-682"/>
+<text text-anchor="middle" x="478" y="-667.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_instance</text>
+</a>
+</g>
+</g>
+<!-- module~field_instance&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge5" class="edge">
+<title>module~field_instance&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M434.72,-676.73C357.95,-686.37 195.09,-694.5 103,-609 64.12,-572.9 43.13,-406.52 36.68,-346.05"/>
+<polygon fill="#000000" stroke="#000000" points="40.16,-345.63 35.65,-336.04 33.2,-346.35 40.16,-345.63"/>
+</g>
+<!-- module~fieldline_integrals -->
+<g id="module~~field_base~~UsedByGraph_node7" class="node">
+<title>module~fieldline_integrals</title>
+<g id="a_module~~field_base~~UsedByGraph_node7"><a xlink:href="../module/fieldline_integrals.html" xlink:title="fieldline_integrals">
+<polygon fill="#337ab7" stroke="#337ab7" points="263.5,-192 156.5,-192 156.5,-168 263.5,-168 263.5,-192"/>
+<text text-anchor="middle" x="210" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_integrals</text>
+</a>
+</g>
+</g>
+<!-- module~fieldline_integrals&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge6" class="edge">
+<title>module~fieldline_integrals&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M156.33,-181.51C138.05,-184.23 118.32,-189.85 103,-201 68.48,-226.12 49.17,-274.23 40.39,-302.26"/>
+<polygon fill="#000000" stroke="#000000" points="37.01,-301.34 37.53,-311.93 43.73,-303.33 37.01,-301.34"/>
+</g>
+<!-- module~fieldline_integrands -->
+<g id="module~~field_base~~UsedByGraph_node8" class="node">
+<title>module~fieldline_integrands</title>
+<g id="a_module~~field_base~~UsedByGraph_node8"><a xlink:href="../module/fieldline_integrands.html" xlink:title="fieldline_integrands">
+<polygon fill="#337ab7" stroke="#337ab7" points="269,-150 151,-150 151,-126 269,-126 269,-150"/>
+<text text-anchor="middle" x="210" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_integrands</text>
+</a>
+</g>
+</g>
+<!-- module~fieldline_integrands&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge7" class="edge">
+<title>module~fieldline_integrands&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M150.94,-139.3C133.98,-142.21 116.42,-148 103,-159 58.43,-195.52 42.47,-265.93 37.07,-301.81"/>
+<polygon fill="#000000" stroke="#000000" points="33.6,-301.38 35.72,-311.76 40.54,-302.33 33.6,-301.38"/>
+</g>
+<!-- module~fourier_field -->
+<g id="module~~field_base~~UsedByGraph_node9" class="node">
+<title>module~fourier_field</title>
+<g id="a_module~~field_base~~UsedByGraph_node9"><a xlink:href="../module/fourier_field.html" xlink:title="fourier_field">
+<polygon fill="#337ab7" stroke="#337ab7" points="248.5,-66 171.5,-66 171.5,-42 248.5,-42 248.5,-66"/>
+<text text-anchor="middle" x="210" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fourier_field</text>
+</a>
+</g>
+</g>
+<!-- module~fourier_field&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge8" class="edge">
+<title>module~fourier_field&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M171.25,-52.14C148.75,-53.08 121.14,-58.14 103,-75 69.36,-106.27 45.69,-246.98 37.58,-301.92"/>
+<polygon fill="#000000" stroke="#000000" points="34.09,-301.6 36.13,-311.99 41.02,-302.6 34.09,-301.6"/>
+</g>
+<!-- module~grid_mod -->
+<g id="module~~field_base~~UsedByGraph_node10" class="node">
+<title>module~grid_mod</title>
+<g id="a_module~~field_base~~UsedByGraph_node10"><a xlink:href="../module/grid_mod.html" xlink:title="grid_mod">
+<polygon fill="#337ab7" stroke="#337ab7" points="241.5,-600 178.5,-600 178.5,-576 241.5,-576 241.5,-600"/>
+<text text-anchor="middle" x="210" y="-585.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">grid_mod</text>
+</a>
+</g>
+</g>
+<!-- module~grid_mod&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge9" class="edge">
+<title>module~grid_mod&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M178.15,-588.34C154.62,-586.93 122.95,-581.17 103,-562 41.73,-503.11 34.24,-393.28 34,-346.28"/>
+<polygon fill="#000000" stroke="#000000" points="37.5,-346.26 34.06,-336.24 30.5,-346.22 37.5,-346.26"/>
+</g>
+<!-- module~make_fieldline -->
+<g id="module~~field_base~~UsedByGraph_node11" class="node">
+<title>module~make_fieldline</title>
+<g id="a_module~~field_base~~UsedByGraph_node11"><a xlink:href="../module/make_fieldline.html" xlink:title="make_fieldline">
+<polygon fill="#337ab7" stroke="#337ab7" points="255.5,-436 164.5,-436 164.5,-412 255.5,-412 255.5,-436"/>
+<text text-anchor="middle" x="210" y="-421.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_fieldline</text>
+</a>
+</g>
+</g>
+<!-- module~make_fieldline&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge10" class="edge">
+<title>module~make_fieldline&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M164.26,-418.95C144.47,-415.26 121.53,-408.91 103,-398 80.34,-384.66 60.7,-361.5 48.32,-344.64"/>
+<polygon fill="#000000" stroke="#000000" points="50.86,-342.16 42.22,-336.02 45.14,-346.2 50.86,-342.16"/>
+</g>
+<!-- module~precession -->
+<g id="module~~field_base~~UsedByGraph_node12" class="node">
+<title>module~precession</title>
+<g id="a_module~~field_base~~UsedByGraph_node12"><a xlink:href="../module/precession.html" xlink:title="precession">
+<polygon fill="#337ab7" stroke="#337ab7" points="513,-560 443,-560 443,-536 513,-536 513,-560"/>
+<text text-anchor="middle" x="478" y="-545.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">precession</text>
+</a>
+</g>
+</g>
+<!-- module~precession&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge11" class="edge">
+<title>module~precession&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M442.91,-550.98C360.94,-557.42 155.68,-569.01 103,-529 44.86,-484.84 35.53,-389.39 34.4,-346.12"/>
+<polygon fill="#000000" stroke="#000000" points="37.9,-346.03 34.26,-336.08 30.9,-346.12 37.9,-346.03"/>
+</g>
+<!-- module~precession&#45;&gt;module~grid_mod -->
+<g id="module~~field_base~~UsedByGraph_edge30" class="edge">
+<title>module~precession&#45;&gt;module~grid_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M442.77,-553.15C393.83,-560.51 304.03,-574.01 251.74,-581.87"/>
+<polygon fill="#000000" stroke="#000000" points="251.17,-578.42 241.8,-583.37 252.21,-585.34 251.17,-578.42"/>
+</g>
+<!-- module~shaing_callen_mod -->
+<g id="module~~field_base~~UsedByGraph_node13" class="node">
+<title>module~shaing_callen_mod</title>
+<g id="a_module~~field_base~~UsedByGraph_node13"><a xlink:href="../module/shaing_callen_mod.html" xlink:title="shaing_callen_mod">
+<polygon fill="#337ab7" stroke="#337ab7" points="267.5,-478 152.5,-478 152.5,-454 267.5,-454 267.5,-478"/>
+<text text-anchor="middle" x="210" y="-463.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shaing_callen_mod</text>
+</a>
+</g>
+</g>
+<!-- module~shaing_callen_mod&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge12" class="edge">
+<title>module~shaing_callen_mod&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M152.28,-463.77C135.19,-460.84 117.22,-455.27 103,-445 69.14,-420.54 49.76,-373.87 40.75,-346.18"/>
+<polygon fill="#000000" stroke="#000000" points="43.99,-344.79 37.7,-336.26 37.29,-346.85 43.99,-344.79"/>
+</g>
+<!-- module~shaing_callen_wrappers -->
+<g id="module~~field_base~~UsedByGraph_node14" class="node">
+<title>module~shaing_callen_wrappers</title>
+<g id="a_module~~field_base~~UsedByGraph_node14"><a xlink:href="../module/shaing_callen_wrappers.html" xlink:title="shaing_callen_wrappers">
+<polygon fill="#337ab7" stroke="#337ab7" points="280,-108 140,-108 140,-84 280,-84 280,-108"/>
+<text text-anchor="middle" x="210" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shaing_callen_wrappers</text>
+</a>
+</g>
+</g>
+<!-- module~shaing_callen_wrappers&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge13" class="edge">
+<title>module~shaing_callen_wrappers&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M139.95,-98.88C126.47,-102.26 113.34,-107.87 103,-117 48.04,-165.53 37.03,-259.12 34.93,-301.81"/>
+<polygon fill="#000000" stroke="#000000" points="31.43,-301.84 34.56,-311.96 38.42,-302.1 31.43,-301.84"/>
+</g>
+<!-- proc~calc_finite_boundary_layer_correction -->
+<g id="module~~field_base~~UsedByGraph_node15" class="node">
+<title>proc~calc_finite_boundary_layer_correction</title>
+<g id="a_module~~field_base~~UsedByGraph_node15"><a xlink:href="../proc/calc_finite_boundary_layer_correction.html" xlink:title="calc_finite_boundary_layer_correction">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="317,-24 103,-24 103,0 317,0 317,-24"/>
+<text text-anchor="middle" x="210" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">calc_finite_boundary_layer_correction</text>
+</a>
+</g>
+</g>
+<!-- proc~calc_finite_boundary_layer_correction&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge14" class="edge">
+<title>proc~calc_finite_boundary_layer_correction&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M114.56,-24.19C110.4,-26.7 106.51,-29.61 103,-33 64.06,-70.58 43.11,-240.01 36.68,-301.56"/>
+<polygon fill="#000000" stroke="#000000" points="33.17,-301.44 35.64,-311.74 40.14,-302.15 33.17,-301.44"/>
+</g>
+<!-- proc~calc_offset_coefficients -->
+<g id="module~~field_base~~UsedByGraph_node16" class="node">
+<title>proc~calc_offset_coefficients</title>
+<g id="a_module~~field_base~~UsedByGraph_node16"><a xlink:href="../proc/calc_offset_coefficients.html" xlink:title="calc_offset_coefficients">
+<polygon fill="#d9534f" stroke="#d9534f" points="546,-378 410,-378 410,-354 546,-354 546,-378"/>
+<text text-anchor="middle" x="478" y="-363.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">calc_offset_coefficients</text>
+</a>
+</g>
+</g>
+<!-- proc~calc_offset_coefficients&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge15" class="edge">
+<title>proc~calc_offset_coefficients&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M409.68,-376.37C333.66,-385.68 207.01,-393.9 103,-365 86.51,-360.42 69.99,-350.71 57.3,-341.9"/>
+<polygon fill="#000000" stroke="#000000" points="59.33,-339.05 49.18,-336.01 55.22,-344.71 59.33,-339.05"/>
+</g>
+<!-- proc~calc_offset_coefficients&#45;&gt;module~deviation -->
+<g id="module~~field_base~~UsedByGraph_edge19" class="edge">
+<title>proc~calc_offset_coefficients&#45;&gt;module~deviation</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M409.88,-360.45C359.93,-356.32 293.41,-350.82 251.39,-347.34"/>
+<polygon fill="#000000" stroke="#000000" points="251.51,-343.84 241.25,-346.5 250.93,-350.81 251.51,-343.84"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum -->
+<g id="module~~field_base~~UsedByGraph_node17" class="node">
+<title>proc~suspect_omnigenous_origin_not_minimum</title>
+<g id="a_module~~field_base~~UsedByGraph_node17"><a xlink:href="../proc/suspect_omnigenous_origin_not_minimum.html" xlink:title="suspect_omnigenous_origin_not_minimum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="597.5,-318 358.5,-318 358.5,-294 597.5,-294 597.5,-318"/>
+<text text-anchor="middle" x="478" y="-303.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">suspect_omnigenous_origin_not_minimum</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~field_base -->
+<g id="module~~field_base~~UsedByGraph_edge16" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M358.42,-310.82C265.54,-314.6 141.64,-319.64 77.33,-322.26"/>
+<polygon fill="#000000" stroke="#000000" points="77,-318.77 67.15,-322.67 77.29,-325.76 77,-318.77"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~field_along_fieldline -->
+<g id="module~~field_base~~UsedByGraph_edge21" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~field_along_fieldline</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M400.78,-293.96C362.75,-287.96 317.09,-280.75 280.1,-274.91"/>
+<polygon fill="#000000" stroke="#000000" points="280.33,-271.4 269.9,-273.3 279.24,-278.32 280.33,-271.4"/>
+</g>
+<!-- module~saved_bounce_integrals -->
+<g id="module~~field_base~~UsedByGraph_node18" class="node">
+<title>module~saved_bounce_integrals</title>
+<g id="a_module~~field_base~~UsedByGraph_node18"><a xlink:href="../module/saved_bounce_integrals.html" xlink:title="saved_bounce_integrals">
+<polygon fill="#337ab7" stroke="#337ab7" points="548.5,-640 407.5,-640 407.5,-616 548.5,-616 548.5,-640"/>
+<text text-anchor="middle" x="478" y="-625.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">saved_bounce_integrals</text>
+</a>
+</g>
+</g>
+<!-- module~saved_bounce_integrals&#45;&gt;module~grid_mod -->
+<g id="module~~field_base~~UsedByGraph_edge31" class="edge">
+<title>module~saved_bounce_integrals&#45;&gt;module~grid_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M407.46,-617.54C357.93,-610.1 293.07,-600.34 251.71,-594.12"/>
+<polygon fill="#000000" stroke="#000000" points="252.13,-590.65 241.72,-592.62 251.09,-597.57 252.13,-590.65"/>
+</g>
+<!-- proc~calc_avg_b_squared_over_avg_lambda -->
+<g id="module~~field_base~~UsedByGraph_node19" class="node">
+<title>proc~calc_avg_b_squared_over_avg_lambda</title>
+<g id="a_module~~field_base~~UsedByGraph_node19"><a xlink:href="../proc/calc_avg_b_squared_over_avg_lambda.html" xlink:title="calc_avg_B_squared_over_avg_lambda">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="588,-66 368,-66 368,-42 588,-42 588,-66"/>
+<text text-anchor="middle" x="478" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">calc_avg_B_squared_over_avg_lambda</text>
+</a>
+</g>
+</g>
+<!-- proc~calc_avg_b_squared_over_avg_lambda&#45;&gt;module~shaing_callen_wrappers -->
+<g id="module~~field_base~~UsedByGraph_edge37" class="edge">
+<title>proc~calc_avg_b_squared_over_avg_lambda&#45;&gt;module~shaing_callen_wrappers</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M400.78,-66.04C366.26,-71.48 325.47,-77.93 290.57,-83.44"/>
+<polygon fill="#000000" stroke="#000000" points="289.75,-80.02 280.41,-85.04 290.84,-86.94 289.75,-80.02"/>
+</g>
+<!-- proc~calc_avg_normalized_lambda_dphimax_dxi0 -->
+<g id="module~~field_base~~UsedByGraph_node20" class="node">
+<title>proc~calc_avg_normalized_lambda_dphimax_dxi0</title>
+<g id="a_module~~field_base~~UsedByGraph_node20"><a xlink:href="../proc/calc_avg_normalized_lambda_dphimax_dxi0.html" xlink:title="calc_avg_normalized_lambda_dphimax_dxi0">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="603,-108 353,-108 353,-84 603,-84 603,-108"/>
+<text text-anchor="middle" x="478" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">calc_avg_normalized_lambda_dphimax_dxi0</text>
+</a>
+</g>
+</g>
+<!-- proc~calc_avg_normalized_lambda_dphimax_dxi0&#45;&gt;module~fieldline_integrands -->
+<g id="module~~field_base~~UsedByGraph_edge27" class="edge">
+<title>proc~calc_avg_normalized_lambda_dphimax_dxi0&#45;&gt;module~fieldline_integrands</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M400.78,-108.04C362.47,-114.08 316.42,-121.35 279.28,-127.22"/>
+<polygon fill="#000000" stroke="#000000" points="278.38,-123.82 269.05,-128.83 279.48,-130.73 278.38,-123.82"/>
+</g>
+<!-- proc~calc_avg_normalized_lambda_dphimax_dxi0&#45;&gt;module~shaing_callen_wrappers -->
+<g id="module~~field_base~~UsedByGraph_edge38" class="edge">
+<title>proc~calc_avg_normalized_lambda_dphimax_dxi0&#45;&gt;module~shaing_callen_wrappers</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M352.96,-96C331.62,-96 309.97,-96 290.23,-96"/>
+<polygon fill="#000000" stroke="#000000" points="290.09,-92.5 280.09,-96 290.09,-99.5 290.09,-92.5"/>
+</g>
+<!-- proc~compute_bounce_integrals -->
+<g id="module~~field_base~~UsedByGraph_node21" class="node">
+<title>proc~compute_bounce_integrals</title>
+<g id="a_module~~field_base~~UsedByGraph_node21"><a xlink:href="../proc/compute_bounce_integrals.html" xlink:title="compute_bounce_integrals">
+<polygon fill="#d9534f" stroke="#d9534f" points="556.5,-150 399.5,-150 399.5,-126 556.5,-126 556.5,-150"/>
+<text text-anchor="middle" x="478" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute_bounce_integrals</text>
+</a>
+</g>
+</g>
+<!-- proc~compute_bounce_integrals&#45;&gt;module~fieldline_integrands -->
+<g id="module~~field_base~~UsedByGraph_edge28" class="edge">
+<title>proc~compute_bounce_integrals&#45;&gt;module~fieldline_integrands</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M399.35,-138C361.36,-138 316.04,-138 279.38,-138"/>
+<polygon fill="#000000" stroke="#000000" points="279.28,-134.5 269.28,-138 279.28,-141.5 279.28,-134.5"/>
+</g>
+<!-- proc~find_maxima_along_fieldline -->
+<g id="module~~field_base~~UsedByGraph_node22" class="node">
+<title>proc~find_maxima_along_fieldline</title>
+<g id="a_module~~field_base~~UsedByGraph_node22"><a xlink:href="../proc/find_maxima_along_fieldline.html" xlink:title="find_maxima_along_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="560.5,-276 395.5,-276 395.5,-252 560.5,-252 560.5,-276"/>
+<text text-anchor="middle" x="478" y="-261.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_maxima_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~find_maxima_along_fieldline&#45;&gt;module~field_along_fieldline -->
+<g id="module~~field_base~~UsedByGraph_edge20" class="edge">
+<title>proc~find_maxima_along_fieldline&#45;&gt;module~field_along_fieldline</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M395.38,-264C358.41,-264 315.18,-264 279.87,-264"/>
+<polygon fill="#000000" stroke="#000000" points="279.66,-260.5 269.66,-264 279.66,-267.5 279.66,-260.5"/>
+</g>
+<!-- proc~make_flock_from_labels -->
+<g id="module~~field_base~~UsedByGraph_node23" class="node">
+<title>proc~make_flock_from_labels</title>
+<g id="a_module~~field_base~~UsedByGraph_node23"><a xlink:href="../proc/make_flock_from_labels.html" xlink:title="make_flock_from_labels">
+<polygon fill="#d9534f" stroke="#d9534f" points="548,-234 408,-234 408,-210 548,-210 548,-234"/>
+<text text-anchor="middle" x="478" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_from_labels</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;module~field_checks -->
+<g id="module~~field_base~~UsedByGraph_edge22" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;module~field_checks</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M407.81,-222C361.12,-222 300.68,-222 259.17,-222"/>
+<polygon fill="#000000" stroke="#000000" points="259.04,-218.5 249.04,-222 259.04,-225.5 259.04,-218.5"/>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;module~fieldline_integrals -->
+<g id="module~~field_base~~UsedByGraph_edge26" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;module~fieldline_integrals</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M407.81,-211.07C366.37,-204.53 314.1,-196.28 273.85,-189.92"/>
+<polygon fill="#000000" stroke="#000000" points="274.31,-186.45 263.89,-188.35 273.22,-193.37 274.31,-186.45"/>
+</g>
+<!-- proc~setup_bounce_integrals -->
+<g id="module~~field_base~~UsedByGraph_node24" class="node">
+<title>proc~setup_bounce_integrals</title>
+<g id="a_module~~field_base~~UsedByGraph_node24"><a xlink:href="../proc/setup_bounce_integrals.html" xlink:title="setup_bounce_integrals">
+<polygon fill="#d9534f" stroke="#d9534f" points="778,-661 639,-661 639,-637 778,-637 778,-661"/>
+<text text-anchor="middle" x="708.5" y="-646.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">setup_bounce_integrals</text>
+</a>
+</g>
+</g>
+<!-- proc~setup_bounce_integrals&#45;&gt;module~field_instance -->
+<g id="module~~field_base~~UsedByGraph_edge23" class="edge">
+<title>proc~setup_bounce_integrals&#45;&gt;module~field_instance</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M638.94,-655.3C604.42,-658.47 563.24,-662.26 531.31,-665.19"/>
+<polygon fill="#000000" stroke="#000000" points="530.93,-661.71 521.29,-666.11 531.57,-668.68 530.93,-661.71"/>
+</g>
+<!-- proc~velo_can -->
+<g id="module~~field_base~~UsedByGraph_node25" class="node">
+<title>proc~velo_can</title>
+<g id="a_module~~field_base~~UsedByGraph_node25"><a xlink:href="../proc/velo_can.html" xlink:title="velo_can">
+<polygon fill="#d9534f" stroke="#d9534f" points="738.5,-703 678.5,-703 678.5,-679 738.5,-679 738.5,-703"/>
+<text text-anchor="middle" x="708.5" y="-688.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">velo_can</text>
+</a>
+</g>
+</g>
+<!-- proc~velo_can&#45;&gt;module~field_instance -->
+<g id="module~~field_base~~UsedByGraph_edge24" class="edge">
+<title>proc~velo_can&#45;&gt;module~field_instance</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M678.1,-688.3C641,-684.89 576.58,-678.97 531.07,-674.79"/>
+<polygon fill="#000000" stroke="#000000" points="531.37,-671.3 521.09,-673.87 530.73,-678.27 531.37,-671.3"/>
+</g>
+<!-- proc~wrapper_lambda_over_b_squared~2 -->
+<g id="module~~field_base~~UsedByGraph_node26" class="node">
+<title>proc~wrapper_lambda_over_b_squared~2</title>
+<g id="a_module~~field_base~~UsedByGraph_node26"><a xlink:href="../proc/wrapper_lambda_over_b_squared~2.html" xlink:title="wrapper_lambda_over_B_squared">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="574.5,-192 381.5,-192 381.5,-168 574.5,-168 574.5,-192"/>
+<text text-anchor="middle" x="478" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">wrapper_lambda_over_B_squared</text>
+</a>
+</g>
+</g>
+<!-- proc~wrapper_lambda_over_b_squared~2&#45;&gt;module~fieldline_integrands -->
+<g id="module~~field_base~~UsedByGraph_edge29" class="edge">
+<title>proc~wrapper_lambda_over_b_squared~2&#45;&gt;module~fieldline_integrands</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M400.78,-167.96C362.47,-161.92 316.42,-154.65 279.28,-148.78"/>
+<polygon fill="#000000" stroke="#000000" points="279.48,-145.27 269.05,-147.17 278.38,-152.18 279.48,-145.27"/>
+</g>
+<!-- program~electric_rabe -->
+<g id="module~~field_base~~UsedByGraph_node27" class="node">
+<title>program~electric_rabe</title>
+<g id="a_module~~field_base~~UsedByGraph_node27"><a xlink:href="../program/electric_rabe.html" xlink:title="electric_rabe">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="749.5,-580 667.5,-580 667.5,-556 749.5,-556 749.5,-580"/>
+<text text-anchor="middle" x="708.5" y="-565.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe</text>
+</a>
+</g>
+</g>
+<!-- program~electric_rabe&#45;&gt;module~boozer_field -->
+<g id="module~~field_base~~UsedByGraph_edge17" class="edge">
+<title>program~electric_rabe&#45;&gt;module~boozer_field</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M683.29,-555.88C662.55,-546.15 631.58,-533.13 603,-527 481.31,-500.91 333.71,-502.38 259.12,-505.36"/>
+<polygon fill="#000000" stroke="#000000" points="258.94,-501.87 249.09,-505.79 259.23,-508.86 258.94,-501.87"/>
+</g>
+<!-- program~electric_rabe&#45;&gt;module~field_instance -->
+<g id="module~~field_base~~UsedByGraph_edge25" class="edge">
+<title>program~electric_rabe&#45;&gt;module~field_instance</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M693.48,-580.27C669.85,-600.71 622.76,-640.33 603,-649 580.63,-658.82 554.14,-664.06 531.39,-666.86"/>
+<polygon fill="#000000" stroke="#000000" points="530.79,-663.41 521.23,-667.98 531.55,-670.36 530.79,-663.41"/>
+</g>
+<!-- program~electric_rabe&#45;&gt;module~grid_mod -->
+<g id="module~~field_base~~UsedByGraph_edge32" class="edge">
+<title>program~electric_rabe&#45;&gt;module~grid_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M667.29,-569.62C574.37,-573.36 345.57,-582.58 251.94,-586.35"/>
+<polygon fill="#000000" stroke="#000000" points="251.59,-582.86 241.73,-586.76 251.87,-589.86 251.59,-582.86"/>
+</g>
+<!-- program~electric_rabe&#45;&gt;module~make_fieldline -->
+<g id="module~~field_base~~UsedByGraph_edge33" class="edge">
+<title>program~electric_rabe&#45;&gt;module~make_fieldline</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M701.49,-555.71C688.04,-529.74 652.71,-469.63 603,-445 493.42,-390.7 344.86,-402.21 265.8,-413.94"/>
+<polygon fill="#000000" stroke="#000000" points="264.93,-410.54 255.58,-415.52 266,-417.45 264.93,-410.54"/>
+</g>
+<!-- program~electric_rabe&#45;&gt;module~precession -->
+<g id="module~~field_base~~UsedByGraph_edge35" class="edge">
+<title>program~electric_rabe&#45;&gt;module~precession</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M667.44,-564.49C627.08,-560.96 564.97,-555.53 523.21,-551.87"/>
+<polygon fill="#000000" stroke="#000000" points="523.32,-548.37 513.05,-550.98 522.71,-555.34 523.32,-548.37"/>
+</g>
+<!-- program~electric_rabe&#45;&gt;module~saved_bounce_integrals -->
+<g id="module~~field_base~~UsedByGraph_edge39" class="edge">
+<title>program~electric_rabe&#45;&gt;module~saved_bounce_integrals</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M673.42,-580.12C653.13,-587.07 626.78,-595.66 603,-602 586.98,-606.27 569.65,-610.28 553.17,-613.81"/>
+<polygon fill="#000000" stroke="#000000" points="552.09,-610.46 543.03,-615.95 553.54,-617.31 552.09,-610.46"/>
+</g>
+<!-- program~main -->
+<g id="module~~field_base~~UsedByGraph_node28" class="node">
+<title>program~main</title>
+<g id="a_module~~field_base~~UsedByGraph_node28"><a xlink:href="../program/main.html" xlink:title="main">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="505,-478 451,-478 451,-454 505,-454 505,-478"/>
+<text text-anchor="middle" x="478" y="-463.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">main</text>
+</a>
+</g>
+</g>
+<!-- program~main&#45;&gt;module~boozer_field -->
+<g id="module~~field_base~~UsedByGraph_edge18" class="edge">
+<title>program~main&#45;&gt;module~boozer_field</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M450.52,-470.18C405.99,-477.21 315.46,-491.51 259.35,-500.37"/>
+<polygon fill="#000000" stroke="#000000" points="258.62,-496.94 249.29,-501.95 259.71,-503.85 258.62,-496.94"/>
+</g>
+<!-- program~main&#45;&gt;module~make_fieldline -->
+<g id="module~~field_base~~UsedByGraph_edge34" class="edge">
+<title>program~main&#45;&gt;module~make_fieldline</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M450.52,-461.82C407.72,-455.06 322.44,-441.6 266.05,-432.69"/>
+<polygon fill="#000000" stroke="#000000" points="266.29,-429.19 255.87,-431.08 265.2,-436.1 266.29,-429.19"/>
+</g>
+<!-- program~main&#45;&gt;module~shaing_callen_mod -->
+<g id="module~~field_base~~UsedByGraph_edge36" class="edge">
+<title>program~main&#45;&gt;module~shaing_callen_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M450.52,-466C410.63,-466 333.82,-466 277.91,-466"/>
+<polygon fill="#000000" stroke="#000000" points="277.73,-462.5 267.73,-466 277.73,-469.5 277.73,-462.5"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panmodulefield_baseUsedByGraph = svgPanZoom('#modulefield_baseUsedByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="518pt" height="32pt"
+ viewBox="0.00 0.00 517.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 513.5,-28 513.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="386,-24 328,-24 328,0 386,0 386,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="509.5,-24 404.5,-24 404.5,0 509.5,0 509.5,-24"/>
+<text text-anchor="middle" x="457" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+
+
+
+
+        <section>
+          <h2>Derived Types</h2>
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-field_t"></span>
+      <h3>
+        type, public, abstract&nbsp;::&nbsp;
+        <a href='../type/field_t.html'>field_t</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      <p>Abstract base type for magnetic fields in Boozer coordinates.</p><a href="../type/field_t.html" class="pull-right"><emph>Read more&hellip;</emph></a>
+
+
+
+
+        <h4>Type-Bound Procedures</h4>
+        <table class="table table-striped varlist">
+          <tbody>
+              <tr>
+                <td>  procedure(compute_B_sqrtg_dB_dx), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-compute_b_sqrtg_db_dx~2'>compute_B_sqrtg_dB_dx</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(compute_B_and_dB_dx), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-compute_b_and_db_dx~2'>compute_B_and_dB_dx</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(compute_B_mod), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-compute_b_mod~2'>compute_B_mod</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(compute_nabla_s), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-compute_nabla_s~2'>compute_nabla_s</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(rel_accuracy_B), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-rel_accuracy_b~3'>rel_accuracy_B</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(get_covariant_components), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-get_covariant_components~2'>get_covariant_components</a></strong></td>
+                  <td></td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-field_3d_t"></span>
+      <h3>
+        type, public, abstract, extends(<a href='../type/field_t.html'>field_t</a>)&nbsp;::&nbsp;
+        <a href='../type/field_3d_t.html'>field_3D_t</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      
+
+
+
+
+        <h4>Type-Bound Procedures</h4>
+        <table class="table table-striped varlist">
+          <tbody>
+              <tr>
+                <td>  procedure(compute_B_sqrtg_dB_dx), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-compute_b_sqrtg_db_dx~2'>compute_B_sqrtg_dB_dx</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(compute_B_and_dB_dx), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-compute_b_and_db_dx~2'>compute_B_and_dB_dx</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(compute_B_mod), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-compute_b_mod~2'>compute_B_mod</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(compute_nabla_s), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-compute_nabla_s~2'>compute_nabla_s</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(rel_accuracy_B), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-rel_accuracy_b~3'>rel_accuracy_B</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(get_covariant_components), public, deferred ::
+  <strong><a href='../type/field_t.html#boundprocedure-get_covariant_components~2'>get_covariant_components</a></strong></td>
+                  <td></td>
+              </tr>
+              <tr>
+                <td>  procedure(evaluate), public, deferred ::
+  <strong><a href='../type/field_3d_t.html#boundprocedure-evaluate'>evaluate</a></strong></td>
+                  <td></td>
+              </tr>
+          </tbody>
+        </table>
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

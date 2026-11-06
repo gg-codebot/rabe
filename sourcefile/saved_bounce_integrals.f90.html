@@ -1,0 +1,750 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>saved_bounce_integrals.f90 &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>saved_bounce_integrals.f90
+      <small>Source File</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 2.5% of total for source files.">117 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/saved_bounce_integrals.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+            <li class="breadcrumb-item active" aria-current="page">saved_bounce_integrals.f90</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#mods-0"
+         aria-expanded="false" aria-controls="mods-0">
+         <h4 class="card-header bg-primary text-white">Modules</h4>
+      </a>
+      <div id="mods-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/saved_bounce_integrals.html">saved_bounce_integrals</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../sourcefile/saved_bounce_integrals.f90.html#src">saved_bounce_integrals.f90</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    <div class="col-md-9" id='text'>
+      
+      <br>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">This file depends on</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: sourcefile~~saved_bounce_integrals.f90~~EfferentGraph Pages: 1 -->
+<svg id="sourcefilesaved_bounce_integralsf90EfferentGraph" width="641pt" height="243pt"
+ viewBox="0.00 0.00 641.00 242.64" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph" class="graph" transform="scale(0.71 0.71) rotate(0) translate(4 335.54)">
+<title>sourcefile~~saved_bounce_integrals.f90~~EfferentGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-335.54 893,-335.54 893,4 -4,4"/>
+<!-- sourcefile~saved_bounce_integrals.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node1" class="node">
+<title>sourcefile~saved_bounce_integrals.f90</title>
+<polygon fill="none" stroke="black" points="889,-282 728,-282 728,-258 889,-258 889,-282"/>
+<text text-anchor="middle" x="808.5" y="-267.6" font-family="Helvetica,sans-Serif" font-size="10.50">saved_bounce_integrals.f90</text>
+</g>
+<!-- sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node2" class="node">
+<title>sourcefile~constants.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node2"><a xlink:href="../sourcefile/constants.f90.html" xlink:title="constants.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="84,-222 0,-222 0,-198 84,-198 84,-222"/>
+<text text-anchor="middle" x="42" y="-207.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~saved_bounce_integrals.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge1" class="edge">
+<title>sourcefile~saved_bounce_integrals.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M756.8,-282.02C667.46,-301.89 476.01,-338.58 313,-330"/>
+</g>
+<!-- sourcefile~grid.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node3" class="node">
+<title>sourcefile~grid.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node3"><a xlink:href="../sourcefile/grid.f90.html" xlink:title="grid.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="692,-242 638,-242 638,-218 692,-218 692,-242"/>
+<text text-anchor="middle" x="665" y="-227.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">grid.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~saved_bounce_integrals.f90&#45;&gt;sourcefile~grid.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge2" class="edge">
+<title>sourcefile~saved_bounce_integrals.f90&#45;&gt;sourcefile~grid.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M765.05,-258C745.03,-252.34 721.41,-245.66 702.25,-240.25"/>
+<polygon fill="#000000" stroke="#000000" points="702.97,-236.82 692.4,-237.46 701.07,-243.55 702.97,-236.82"/>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge4" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M637.97,-235.54C618.35,-239.67 590.77,-245.36 566.5,-250"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M564.5,-250C454.71,-270.97 424.53,-257.48 313,-250"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M311,-250C243.86,-243.14 231.43,-201.27 164.5,-210"/>
+</g>
+<!-- sourcefile~bounce.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node4" class="node">
+<title>sourcefile~bounce.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node4"><a xlink:href="../sourcefile/bounce.f90.html" xlink:title="bounce.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="602,-222 529,-222 529,-198 602,-198 602,-222"/>
+<text text-anchor="middle" x="565.5" y="-207.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">bounce.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~bounce.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge3" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~bounce.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M637.87,-224.64C629.92,-223.01 620.94,-221.17 612.1,-219.35"/>
+<polygon fill="#000000" stroke="#000000" points="612.73,-215.91 602.23,-217.33 611.33,-222.77 612.73,-215.91"/>
+</g>
+<!-- sourcefile~field_base.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node5" class="node">
+<title>sourcefile~field_base.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node5"><a xlink:href="../sourcefile/field_base.f90.html" xlink:title="field_base.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="207,-84 120,-84 120,-60 207,-60 207,-84"/>
+<text text-anchor="middle" x="163.5" y="-69.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_base.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge5" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M454,-52C413.33,-33.11 289.26,-50.16 217.43,-62.3"/>
+<polygon fill="#000000" stroke="#000000" points="216.49,-58.91 207.22,-64.05 217.67,-65.81 216.49,-58.91"/>
+</g>
+<!-- sourcefile~fieldline.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node6" class="node">
+<title>sourcefile~fieldline.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node6"><a xlink:href="../sourcefile/fieldline.f90.html" xlink:title="fieldline.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="493,-302 417,-302 417,-278 493,-278 493,-302"/>
+<text text-anchor="middle" x="455" y="-287.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~fieldline.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge6" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M564.5,-250C539.13,-254.84 511.87,-264.92 491.01,-273.75"/>
+<polygon fill="#000000" stroke="#000000" points="489.4,-270.63 481.62,-277.82 492.19,-277.05 489.4,-270.63"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node7" class="node">
+<title>sourcefile~fieldline_integrands.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node7"><a xlink:href="../sourcefile/fieldline_integrands.f90.html" xlink:title="fieldline_integrands.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381,-24 243,-24 243,0 381,0 381,-24"/>
+<text text-anchor="middle" x="312" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_integrands.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge7" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~fieldline_integrands.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M651.25,-217.87C633.35,-201.28 599.3,-171.27 566.5,-151"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M564.5,-151C508.97,-116.68 515.21,-79.5 456,-52"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M454,-52C431.08,-41.36 404.72,-32.95 381.05,-26.65"/>
+<polygon fill="#000000" stroke="#000000" points="381.64,-23.19 371.08,-24.08 379.89,-29.97 381.64,-23.19"/>
+</g>
+<!-- sourcefile~params.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node8" class="node">
+<title>sourcefile~params.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node8"><a xlink:href="../sourcefile/params.f90.html" xlink:title="params.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="348.5,-184 275.5,-184 275.5,-160 348.5,-160 348.5,-184"/>
+<text text-anchor="middle" x="312" y="-169.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">params.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~params.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge8" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~params.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M564.5,-151C531.07,-130.68 421.92,-148.93 358.94,-161.82"/>
+<polygon fill="#000000" stroke="#000000" points="357.95,-158.45 348.87,-163.92 359.38,-165.3 357.95,-158.45"/>
+</g>
+<!-- sourcefile~utils.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node9" class="node">
+<title>sourcefile~utils.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node9"><a xlink:href="../sourcefile/utils.f90.html" xlink:title="utils.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="191,-262 136,-262 136,-238 191,-238 191,-262"/>
+<text text-anchor="middle" x="163.5" y="-247.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">utils.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~grid.f90&#45;&gt;sourcefile~utils.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge9" class="edge">
+<title>sourcefile~grid.f90&#45;&gt;sourcefile~utils.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M311,-250C273.71,-247.5 230.96,-247.87 201.3,-248.64"/>
+<polygon fill="#000000" stroke="#000000" points="200.9,-245.15 191,-248.94 201.1,-252.15 200.9,-245.15"/>
+</g>
+<!-- sourcefile~bounce.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge10" class="edge">
+<title>sourcefile~bounce.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M454,-212C325.57,-204.23 292.17,-194.01 164.5,-210"/>
+</g>
+<!-- sourcefile~bounce.f90&#45;&gt;sourcefile~params.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge12" class="edge">
+<title>sourcefile~bounce.f90&#45;&gt;sourcefile~params.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M528.8,-212.07C507.62,-212.95 480.26,-213.47 456,-212"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M454,-212C418.1,-209.83 378.86,-197.86 350.92,-187.58"/>
+<polygon fill="#000000" stroke="#000000" points="352.12,-184.29 341.53,-184.03 349.64,-190.84 352.12,-184.29"/>
+</g>
+<!-- sourcefile~orbit.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node10" class="node">
+<title>sourcefile~orbit.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node10"><a xlink:href="../sourcefile/orbit.f90.html" xlink:title="orbit.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="484,-123 426,-123 426,-99 484,-99 484,-123"/>
+<text text-anchor="middle" x="455" y="-108.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">orbit.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~bounce.f90&#45;&gt;sourcefile~orbit.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge11" class="edge">
+<title>sourcefile~bounce.f90&#45;&gt;sourcefile~orbit.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M551.2,-197.86C532.65,-180.94 498.84,-150.09 476.91,-130.08"/>
+<polygon fill="#000000" stroke="#000000" points="479.16,-127.39 469.41,-123.24 474.44,-132.56 479.16,-127.39"/>
+</g>
+<!-- sourcefile~field_base.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge13" class="edge">
+<title>sourcefile~field_base.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M151.9,-84.25C131.2,-108.14 85.28,-161.17 60.19,-190.15"/>
+<polygon fill="#000000" stroke="#000000" points="57.31,-188.13 53.41,-197.98 62.6,-192.71 57.31,-188.13"/>
+</g>
+<!-- sourcefile~fieldline.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge14" class="edge">
+<title>sourcefile~fieldline.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M424.93,-302.08C396.86,-312.81 352.85,-327.23 313,-330"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M311,-330C222.37,-336.17 198.61,-312.4 120,-271 98.74,-259.8 77.55,-242.45 62.8,-229.11"/>
+<polygon fill="#000000" stroke="#000000" points="65.03,-226.4 55.31,-222.18 60.27,-231.54 65.03,-226.4"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge15" class="edge">
+<title>sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M242.99,-11.42C203.45,-14.37 154.74,-24 120,-51 75.42,-85.64 55.14,-152.67 47.26,-187.61"/>
+<polygon fill="#000000" stroke="#000000" points="43.76,-187.23 45.13,-197.74 50.61,-188.67 43.76,-187.23"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge16" class="edge">
+<title>sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M278.72,-24.01C267.38,-28.32 254.59,-33.28 243,-38 229.17,-43.64 214.08,-50.09 200.87,-55.86"/>
+<polygon fill="#000000" stroke="#000000" points="199.38,-52.69 191.62,-59.91 202.19,-59.1 199.38,-52.69"/>
+</g>
+<!-- sourcefile~params.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge17" class="edge">
+<title>sourcefile~params.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M275.38,-183.96C246.01,-193.16 203.08,-205.09 164.5,-210"/>
+</g>
+<!-- sourcefile~utils.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge18" class="edge">
+<title>sourcefile~utils.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M135.98,-241.12C122.09,-236.47 104.68,-230.64 88.69,-225.29"/>
+<polygon fill="#000000" stroke="#000000" points="89.56,-221.89 78.97,-222.04 87.34,-228.53 89.56,-221.89"/>
+</g>
+<!-- sourcefile~orbit.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge19" class="edge">
+<title>sourcefile~orbit.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M425.83,-112.29C384.21,-115.08 304.56,-123.81 243,-151 203.08,-168.63 207.8,-204.49 164.5,-210"/>
+</g>
+<!-- sourcefile~orbit.f90&#45;&gt;sourcefile~params.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge21" class="edge">
+<title>sourcefile~orbit.f90&#45;&gt;sourcefile~params.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M430.23,-123.01C416.06,-130.01 397.66,-138.84 381,-146 372.82,-149.52 363.99,-153.07 355.48,-156.37"/>
+<polygon fill="#000000" stroke="#000000" points="354.16,-153.13 346.08,-159.97 356.67,-159.67 354.16,-153.13"/>
+</g>
+<!-- sourcefile~field_instance.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node11" class="node">
+<title>sourcefile~field_instance.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_node11"><a xlink:href="../sourcefile/field_instance.f90.html" xlink:title="field_instance.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="365,-104 259,-104 259,-80 365,-80 365,-104"/>
+<text text-anchor="middle" x="312" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_instance.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~orbit.f90&#45;&gt;sourcefile~field_instance.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge20" class="edge">
+<title>sourcefile~orbit.f90&#45;&gt;sourcefile~field_instance.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M425.81,-107.2C411.29,-105.25 392.99,-102.78 375.37,-100.4"/>
+<polygon fill="#000000" stroke="#000000" points="375.49,-96.89 365.11,-99.02 374.55,-103.83 375.49,-96.89"/>
+</g>
+<!-- sourcefile~field_instance.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge22" class="edge">
+<title>sourcefile~field_instance.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M269.42,-104.12C260.27,-107.8 250.95,-112.39 243,-118 199.09,-149 217.82,-203.22 164.5,-210"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M162.5,-210C140.21,-212.83 115.4,-213.27 94.19,-212.83"/>
+<polygon fill="#000000" stroke="#000000" points="94.18,-209.33 84.09,-212.55 93.99,-216.33 94.18,-209.33"/>
+</g>
+<!-- sourcefile~field_instance.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~EfferentGraph_edge23" class="edge">
+<title>sourcefile~field_instance.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M258.94,-84.89C245.44,-83.05 230.89,-81.06 217.34,-79.21"/>
+<polygon fill="#000000" stroke="#000000" points="217.6,-75.72 207.22,-77.83 216.66,-82.65 217.6,-75.72"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var pansourcefilesaved_bounce_integralsf90EfferentGraph = svgPanZoom('#sourcefilesaved_bounce_integralsf90EfferentGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#EfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="EfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="202pt" height="32pt"
+ viewBox="0.00 0.00 201.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 197.5,-28 197.5,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="193.5,-24 88.5,-24 88.5,0 193.5,0 193.5,-24"/>
+<text text-anchor="middle" x="141" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Files dependent on this one</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: sourcefile~~saved_bounce_integrals.f90~~AfferentGraph Pages: 1 -->
+<svg id="sourcefilesaved_bounce_integralsf90AfferentGraph" width="308pt" height="32pt"
+ viewBox="0.00 0.00 308.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~saved_bounce_integrals.f90~~AfferentGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>sourcefile~~saved_bounce_integrals.f90~~AfferentGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 304,-28 304,4 -4,4"/>
+<!-- sourcefile~saved_bounce_integrals.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~AfferentGraph_node1" class="node">
+<title>sourcefile~saved_bounce_integrals.f90</title>
+<polygon fill="none" stroke="black" points="161,-24 0,-24 0,0 161,0 161,-24"/>
+<text text-anchor="middle" x="80.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">saved_bounce_integrals.f90</text>
+</g>
+<!-- sourcefile~electric_rabe.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~AfferentGraph_node2" class="node">
+<title>sourcefile~electric_rabe.f90</title>
+<g id="a_sourcefile~~saved_bounce_integrals.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/electric_rabe.f90.html" xlink:title="electric_rabe.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="300,-24 197,-24 197,0 300,0 300,-24"/>
+<text text-anchor="middle" x="248.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~saved_bounce_integrals.f90 -->
+<g id="sourcefile~~saved_bounce_integrals.f90~~AfferentGraph_edge1" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~saved_bounce_integrals.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M196.79,-12C188.71,-12 180.13,-12 171.46,-12"/>
+<polygon fill="#000000" stroke="#000000" points="171.26,-8.5 161.26,-12 171.26,-15.5 171.26,-8.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="202pt" height="32pt"
+ viewBox="0.00 0.00 201.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 197.5,-28 197.5,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="193.5,-24 88.5,-24 88.5,0 193.5,0 193.5,-24"/>
+<text text-anchor="middle" x="141" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+<br>
+      <section>
+        <h2><span class="anchor" id="src"></span>Source Code</h2>
+        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="k">module </span><span class="n">saved_bounce_integrals</span>
+<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="w">    </span><span class="c">! Per-fieldline bounce integrals of electric_rabe saved as plain text:</span>
+<a id="ln-3" name="ln-3" href="#ln-3"></a><span class="w">    </span><span class="c">! "# key = value" header lines with the inputs they depend on, then one</span>
+<a id="ln-4" name="ln-4" href="#ln-4"></a><span class="w">    </span><span class="c">! fixed-width line per fieldline and grid point. Fieldlines are appended as</span>
+<a id="ln-5" name="ln-5" href="#ln-5"></a><span class="w">    </span><span class="c">! soon as they are computed. On reading, a fieldline counts only if all of</span>
+<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="w">    </span><span class="c">! its lines are present at full width, so a file cut off by a killed run is</span>
+<a id="ln-7" name="ln-7" href="#ln-7"></a><span class="w">    </span><span class="c">! safe to resume from. Only a clean build of the same commit reuses a file.</span>
+<a id="ln-8" name="ln-8" href="#ln-8"></a><span class="w">    </span><span class="k">use </span><span class="n">constants</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-9" name="ln-9" href="#ln-9"></a><span class="w">    </span><span class="k">use </span><span class="n">grid_mod</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">integration_grid_t</span><span class="p">,</span><span class="w"> </span><span class="n">fieldline_for_precession_t</span>
+<a id="ln-10" name="ln-10" href="#ln-10"></a><span class="w">    </span><span class="k">implicit none</span>
+<a id="ln-11" name="ln-11" href="#ln-11"></a><span class="k">    private</span>
+<a id="ln-12" name="ln-12" href="#ln-12"></a>
+<a id="ln-13" name="ln-13" href="#ln-13"></a><span class="k">    public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bounce_integrals_header_t</span>
+<a id="ln-14" name="ln-14" href="#ln-14"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">write_bounce_integrals_header</span>
+<a id="ln-15" name="ln-15" href="#ln-15"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">append_bounce_integrals</span>
+<a id="ln-16" name="ln-16" href="#ln-16"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">read_bounce_integrals</span>
+<a id="ln-17" name="ln-17" href="#ln-17"></a>
+<a id="ln-18" name="ln-18" href="#ln-18"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">line_format</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'(I6, 6(1X, ES25.17E3))'</span>
+<a id="ln-19" name="ln-19" href="#ln-19"></a><span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">line_width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">6</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">6</span><span class="o">*</span><span class="mi">26</span>
+<a id="ln-20" name="ln-20" href="#ln-20"></a><span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_header_lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">12</span>
+<a id="ln-21" name="ln-21" href="#ln-21"></a><span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">git_hash_line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">2</span>
+<a id="ln-22" name="ln-22" href="#ln-22"></a>
+<a id="ln-23" name="ln-23" href="#ln-23"></a><span class="w">    </span><span class="k">type</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">bounce_integrals_header_t</span>
+<a id="ln-24" name="ln-24" href="#ln-24"></a><span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">git_hash</span>
+<a id="ln-25" name="ln-25" href="#ln-25"></a><span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="p">:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_file</span>
+<a id="ln-26" name="ln-26" href="#ln-26"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s_tor</span>
+<a id="ln-27" name="ln-27" href="#ln-27"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_pol</span>
+<a id="ln-28" name="ln-28" href="#ln-28"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">N_tor</span>
+<a id="ln-29" name="ln-29" href="#ln-29"></a><span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_grid</span>
+<a id="ln-30" name="ln-30" href="#ln-30"></a><span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">max_n_fieldlines</span>
+<a id="ln-31" name="ln-31" href="#ln-31"></a><span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_fieldlines</span>
+<a id="ln-32" name="ln-32" href="#ln-32"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">eta_c</span>
+<a id="ln-33" name="ln-33" href="#ln-33"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">eta_t</span>
+<a id="ln-34" name="ln-34" href="#ln-34"></a><span class="w">    </span><span class="k">end type </span><span class="n">bounce_integrals_header_t</span>
+<a id="ln-35" name="ln-35" href="#ln-35"></a>
+<a id="ln-36" name="ln-36" href="#ln-36"></a><span class="k">contains</span>
+<a id="ln-37" name="ln-37" href="#ln-37"></a>
+<a id="ln-38" name="ln-38" href="#ln-38"></a><span class="k">    subroutine </span><span class="n">write_bounce_integrals_header</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">)</span>
+<a id="ln-39" name="ln-39" href="#ln-39"></a><span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">filename</span>
+<a id="ln-40" name="ln-40" href="#ln-40"></a><span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">bounce_integrals_header_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">header</span>
+<a id="ln-41" name="ln-41" href="#ln-41"></a>
+<a id="ln-42" name="ln-42" href="#ln-42"></a><span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="n">n_header_lines</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lines</span>
+<a id="ln-43" name="ln-43" href="#ln-43"></a><span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="n">i</span>
+<a id="ln-44" name="ln-44" href="#ln-44"></a>
+<a id="ln-45" name="ln-45" href="#ln-45"></a><span class="w">        </span><span class="n">lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">header_lines</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+<a id="ln-46" name="ln-46" href="#ln-46"></a><span class="w">        </span><span class="k">open</span><span class="w"> </span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="k">file</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="o">=</span><span class="s1">'replace'</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="o">=</span><span class="s1">'write'</span><span class="p">)</span>
+<a id="ln-47" name="ln-47" href="#ln-47"></a><span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n_header_lines</span>
+<a id="ln-48" name="ln-48" href="#ln-48"></a><span class="w">            </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="s1">'(A)'</span><span class="p">)</span><span class="w"> </span><span class="nb">trim</span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<a id="ln-49" name="ln-49" href="#ln-49"></a><span class="w">        </span><span class="k">end do</span>
+<a id="ln-50" name="ln-50" href="#ln-50"></a><span class="k">        close</span><span class="w"> </span><span class="p">(</span><span class="n">file_unit</span><span class="p">)</span>
+<a id="ln-51" name="ln-51" href="#ln-51"></a><span class="w">    </span><span class="k">end subroutine </span><span class="n">write_bounce_integrals_header</span>
+<a id="ln-52" name="ln-52" href="#ln-52"></a>
+<a id="ln-53" name="ln-53" href="#ln-53"></a><span class="w">    </span><span class="k">subroutine </span><span class="n">append_bounce_integrals</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">fieldline_id</span><span class="p">,</span><span class="w"> </span><span class="n">grid</span><span class="p">)</span>
+<a id="ln-54" name="ln-54" href="#ln-54"></a><span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">filename</span>
+<a id="ln-55" name="ln-55" href="#ln-55"></a><span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">fieldline_id</span>
+<a id="ln-56" name="ln-56" href="#ln-56"></a><span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">integration_grid_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">grid</span>
+<a id="ln-57" name="ln-57" href="#ln-57"></a>
+<a id="ln-58" name="ln-58" href="#ln-58"></a><span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="n">i_grid</span>
+<a id="ln-59" name="ln-59" href="#ln-59"></a>
+<a id="ln-60" name="ln-60" href="#ln-60"></a><span class="w">        </span><span class="k">open</span><span class="w"> </span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="k">file</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="o">=</span><span class="s1">'old'</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-61" name="ln-61" href="#ln-61"></a><span class="w">              </span><span class="n">position</span><span class="o">=</span><span class="s1">'append'</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="o">=</span><span class="s1">'write'</span><span class="p">)</span>
+<a id="ln-62" name="ln-62" href="#ln-62"></a><span class="w">        </span><span class="k">do </span><span class="n">i_grid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">grid</span><span class="p">%</span><span class="n">n</span>
+<a id="ln-63" name="ln-63" href="#ln-63"></a><span class="w">            </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="n">line_format</span><span class="p">)</span><span class="w"> </span><span class="n">fieldline_id</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-64" name="ln-64" href="#ln-64"></a><span class="w">                </span><span class="n">grid</span><span class="p">%</span><span class="n">t</span><span class="p">(</span><span class="n">i_grid</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-65" name="ln-65" href="#ln-65"></a><span class="w">                </span><span class="n">grid</span><span class="p">%</span><span class="n">eta</span><span class="p">(</span><span class="n">i_grid</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-66" name="ln-66" href="#ln-66"></a><span class="w">                </span><span class="n">grid</span><span class="p">%</span><span class="n">bounce_time_weighted</span><span class="p">(</span><span class="n">i_grid</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-67" name="ln-67" href="#ln-67"></a><span class="w">                </span><span class="n">grid</span><span class="p">%</span><span class="n">I_j</span><span class="p">(</span><span class="n">i_grid</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-68" name="ln-68" href="#ln-68"></a><span class="w">                </span><span class="n">grid</span><span class="p">%</span><span class="n">radial_drift_weighted</span><span class="p">(</span><span class="n">i_grid</span><span class="p">),</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-69" name="ln-69" href="#ln-69"></a><span class="w">                </span><span class="n">grid</span><span class="p">%</span><span class="n">poloidal_drift_weighted</span><span class="p">(</span><span class="n">i_grid</span><span class="p">)</span>
+<a id="ln-70" name="ln-70" href="#ln-70"></a><span class="w">        </span><span class="k">end do</span>
+<a id="ln-71" name="ln-71" href="#ln-71"></a><span class="k">        close</span><span class="w"> </span><span class="p">(</span><span class="n">file_unit</span><span class="p">)</span>
+<a id="ln-72" name="ln-72" href="#ln-72"></a><span class="w">    </span><span class="k">end subroutine </span><span class="n">append_bounce_integrals</span>
+<a id="ln-73" name="ln-73" href="#ln-73"></a>
+<a id="ln-74" name="ln-74" href="#ln-74"></a><span class="w">    </span><span class="k">subroutine </span><span class="n">read_bounce_integrals</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">,</span><span class="w"> </span><span class="n">fieldlines</span><span class="p">,</span><span class="w"> </span><span class="n">is_complete</span><span class="p">)</span>
+<a id="ln-75" name="ln-75" href="#ln-75"></a><span class="w">        </span><span class="c">! Loads all complete fieldlines into fieldlines(:)%grid and writes the</span>
+<a id="ln-76" name="ln-76" href="#ln-76"></a><span class="w">        </span><span class="c">! file back with only those, so new fieldlines append to a clean end.</span>
+<a id="ln-77" name="ln-77" href="#ln-77"></a><span class="w">        </span><span class="c">! Stops if the header does not match the current input and git hash,</span>
+<a id="ln-78" name="ln-78" href="#ln-78"></a><span class="w">        </span><span class="c">! or if the file was written by a dirty build.</span>
+<a id="ln-79" name="ln-79" href="#ln-79"></a><span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">filename</span>
+<a id="ln-80" name="ln-80" href="#ln-80"></a><span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">bounce_integrals_header_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">header</span>
+<a id="ln-81" name="ln-81" href="#ln-81"></a><span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">fieldline_for_precession_t</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">inout</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">fieldlines</span>
+<a id="ln-82" name="ln-82" href="#ln-82"></a><span class="w">        </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">out</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">is_complete</span>
+<a id="ln-83" name="ln-83" href="#ln-83"></a>
+<a id="ln-84" name="ln-84" href="#ln-84"></a><span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="n">n_header_lines</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">expected</span>
+<a id="ln-85" name="ln-85" href="#ln-85"></a><span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1024</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">line</span>
+<a id="ln-86" name="ln-86" href="#ln-86"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">values</span>
+<a id="ln-87" name="ln-87" href="#ln-87"></a><span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="n">ios</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">line_id</span><span class="p">,</span><span class="w"> </span><span class="n">n_lines</span>
+<a id="ln-88" name="ln-88" href="#ln-88"></a>
+<a id="ln-89" name="ln-89" href="#ln-89"></a><span class="w">        </span><span class="n">expected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">header_lines</span><span class="p">(</span><span class="n">header</span><span class="p">)</span>
+<a id="ln-90" name="ln-90" href="#ln-90"></a><span class="w">        </span><span class="k">open</span><span class="w"> </span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="k">file</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="o">=</span><span class="s1">'old'</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="o">=</span><span class="s1">'read'</span><span class="p">)</span>
+<a id="ln-91" name="ln-91" href="#ln-91"></a><span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">n_header_lines</span>
+<a id="ln-92" name="ln-92" href="#ln-92"></a><span class="w">            </span><span class="k">read</span><span class="w"> </span><span class="p">(</span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="s1">'(A)'</span><span class="p">,</span><span class="w"> </span><span class="n">iostat</span><span class="o">=</span><span class="n">ios</span><span class="p">)</span><span class="w"> </span><span class="n">line</span>
+<a id="ln-93" name="ln-93" href="#ln-93"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ios</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">line</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">""</span>
+<a id="ln-94" name="ln-94" href="#ln-94"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">git_hash_line</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="nb">index</span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="s2">"-dirty"</span><span class="p">)</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-95" name="ln-95" href="#ln-95"></a><span class="k">                print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"Error: "</span><span class="p">,</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="s2">" was written by a dirty build"</span>
+<a id="ln-96" name="ln-96" href="#ln-96"></a><span class="w">                </span><span class="k">error stop</span>
+<a id="ln-97" name="ln-97" href="#ln-97"></a><span class="k">            end if</span>
+<a id="ln-98" name="ln-98" href="#ln-98"></a><span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">line</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">expected</span><span class="p">(</span><span class="n">i</span><span class="p">))</span><span class="w"> </span><span class="k">cycle</span>
+<a id="ln-99" name="ln-99" href="#ln-99"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"Error: "</span><span class="p">,</span><span class="w"> </span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="s2">" does not match the current input"</span>
+<a id="ln-100" name="ln-100" href="#ln-100"></a><span class="w">            </span><span class="k">print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"  file:    "</span><span class="p">,</span><span class="w"> </span><span class="nb">trim</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+<a id="ln-101" name="ln-101" href="#ln-101"></a><span class="w">            </span><span class="k">print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"  current: "</span><span class="p">,</span><span class="w"> </span><span class="nb">trim</span><span class="p">(</span><span class="n">expected</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<a id="ln-102" name="ln-102" href="#ln-102"></a><span class="w">            </span><span class="k">error stop</span>
+<a id="ln-103" name="ln-103" href="#ln-103"></a><span class="k">        end do</span>
+<a id="ln-104" name="ln-104" href="#ln-104"></a>
+<a id="ln-105" name="ln-105" href="#ln-105"></a><span class="k">        </span><span class="n">is_complete</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-106" name="ln-106" href="#ln-106"></a><span class="w">        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<a id="ln-107" name="ln-107" href="#ln-107"></a><span class="w">        </span><span class="n">n_lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<a id="ln-108" name="ln-108" href="#ln-108"></a><span class="w">        </span><span class="k">do</span>
+<a id="ln-109" name="ln-109" href="#ln-109"></a><span class="k">            read</span><span class="w"> </span><span class="p">(</span><span class="n">file_unit</span><span class="p">,</span><span class="w"> </span><span class="s1">'(A)'</span><span class="p">,</span><span class="w"> </span><span class="n">iostat</span><span class="o">=</span><span class="n">ios</span><span class="p">)</span><span class="w"> </span><span class="n">line</span>
+<a id="ln-110" name="ln-110" href="#ln-110"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ios</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="nb">len_trim</span><span class="p">(</span><span class="n">line</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">line_width</span><span class="p">)</span><span class="w"> </span><span class="k">exit</span>
+<a id="ln-111" name="ln-111" href="#ln-111"></a><span class="k">            read</span><span class="w"> </span><span class="p">(</span><span class="n">line</span><span class="p">,</span><span class="w"> </span><span class="n">line_format</span><span class="p">)</span><span class="w"> </span><span class="n">line_id</span><span class="p">,</span><span class="w"> </span><span class="n">values</span>
+<a id="ln-112" name="ln-112" href="#ln-112"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">line_id</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-113" name="ln-113" href="#ln-113"></a><span class="k">                if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">is_complete</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_lines</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">fieldlines</span><span class="p">(</span><span class="n">id</span><span class="p">)%</span><span class="n">grid</span><span class="p">%</span><span class="n">n</span>
+<a id="ln-114" name="ln-114" href="#ln-114"></a><span class="w">                </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">line_id</span>
+<a id="ln-115" name="ln-115" href="#ln-115"></a><span class="w">                </span><span class="n">n_lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<a id="ln-116" name="ln-116" href="#ln-116"></a><span class="w">            </span><span class="k">end if</span>
+<a id="ln-117" name="ln-117" href="#ln-117"></a><span class="k">            </span><span class="n">n_lines</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_lines</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span>
+<a id="ln-118" name="ln-118" href="#ln-118"></a><span class="w">            </span><span class="n">fieldlines</span><span class="p">(</span><span class="n">id</span><span class="p">)%</span><span class="n">grid</span><span class="p">%</span><span class="n">bounce_time_weighted</span><span class="p">(</span><span class="n">n_lines</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<a id="ln-119" name="ln-119" href="#ln-119"></a><span class="w">            </span><span class="n">fieldlines</span><span class="p">(</span><span class="n">id</span><span class="p">)%</span><span class="n">grid</span><span class="p">%</span><span class="n">I_j</span><span class="p">(</span><span class="n">n_lines</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<a id="ln-120" name="ln-120" href="#ln-120"></a><span class="w">            </span><span class="n">fieldlines</span><span class="p">(</span><span class="n">id</span><span class="p">)%</span><span class="n">grid</span><span class="p">%</span><span class="n">radial_drift_weighted</span><span class="p">(</span><span class="n">n_lines</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+<a id="ln-121" name="ln-121" href="#ln-121"></a><span class="w">            </span><span class="n">fieldlines</span><span class="p">(</span><span class="n">id</span><span class="p">)%</span><span class="n">grid</span><span class="p">%</span><span class="n">poloidal_drift_weighted</span><span class="p">(</span><span class="n">n_lines</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">values</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+<a id="ln-122" name="ln-122" href="#ln-122"></a><span class="w">        </span><span class="k">end do</span>
+<a id="ln-123" name="ln-123" href="#ln-123"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="n">is_complete</span><span class="p">(</span><span class="n">id</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_lines</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">fieldlines</span><span class="p">(</span><span class="n">id</span><span class="p">)%</span><span class="n">grid</span><span class="p">%</span><span class="n">n</span>
+<a id="ln-124" name="ln-124" href="#ln-124"></a><span class="w">        </span><span class="k">close</span><span class="w"> </span><span class="p">(</span><span class="n">file_unit</span><span class="p">)</span>
+<a id="ln-125" name="ln-125" href="#ln-125"></a>
+<a id="ln-126" name="ln-126" href="#ln-126"></a><span class="w">        </span><span class="k">call </span><span class="n">write_bounce_integrals_header</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">)</span>
+<a id="ln-127" name="ln-127" href="#ln-127"></a><span class="w">        </span><span class="k">do </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">(</span><span class="n">fieldlines</span><span class="p">)</span>
+<a id="ln-128" name="ln-128" href="#ln-128"></a><span class="w">            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">is_complete</span><span class="p">(</span><span class="n">id</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-129" name="ln-129" href="#ln-129"></a><span class="k">                call </span><span class="n">append_bounce_integrals</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">fieldlines</span><span class="p">(</span><span class="n">id</span><span class="p">)%</span><span class="n">grid</span><span class="p">)</span>
+<a id="ln-130" name="ln-130" href="#ln-130"></a><span class="w">            </span><span class="k">end if</span>
+<a id="ln-131" name="ln-131" href="#ln-131"></a><span class="k">        end do</span>
+<a id="ln-132" name="ln-132" href="#ln-132"></a><span class="k">    end subroutine </span><span class="n">read_bounce_integrals</span>
+<a id="ln-133" name="ln-133" href="#ln-133"></a>
+<a id="ln-134" name="ln-134" href="#ln-134"></a><span class="w">    </span><span class="k">function </span><span class="n">header_lines</span><span class="p">(</span><span class="n">header</span><span class="p">)</span><span class="w"> </span><span class="k">result</span><span class="p">(</span><span class="n">lines</span><span class="p">)</span>
+<a id="ln-135" name="ln-135" href="#ln-135"></a><span class="w">        </span><span class="k">type</span><span class="p">(</span><span class="n">bounce_integrals_header_t</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">header</span>
+<a id="ln-136" name="ln-136" href="#ln-136"></a><span class="w">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">1024</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(</span><span class="n">n_header_lines</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">lines</span>
+<a id="ln-137" name="ln-137" href="#ln-137"></a>
+<a id="ln-138" name="ln-138" href="#ln-138"></a><span class="w">        </span><span class="n">lines</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"# electric_rabe saved bounce integrals"</span>
+<a id="ln-139" name="ln-139" href="#ln-139"></a><span class="w">        </span><span class="n">lines</span><span class="p">(</span><span class="n">git_hash_line</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"# git_hash = "</span><span class="o">//</span><span class="n">header</span><span class="p">%</span><span class="n">git_hash</span>
+<a id="ln-140" name="ln-140" href="#ln-140"></a><span class="w">        </span><span class="n">lines</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"# field_file = "</span><span class="o">//</span><span class="n">header</span><span class="p">%</span><span class="n">field_file</span>
+<a id="ln-141" name="ln-141" href="#ln-141"></a><span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span><span class="w"> </span><span class="s1">'(A, ES26.17E3)'</span><span class="p">)</span><span class="w"> </span><span class="s2">"# s_tor ="</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">%</span><span class="n">s_tor</span>
+<a id="ln-142" name="ln-142" href="#ln-142"></a><span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span><span class="w"> </span><span class="s1">'(A, I0)'</span><span class="p">)</span><span class="w"> </span><span class="s2">"# n_grid = "</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">%</span><span class="n">n_grid</span>
+<a id="ln-143" name="ln-143" href="#ln-143"></a><span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span><span class="w"> </span><span class="s1">'(A, I0)'</span><span class="p">)</span><span class="w"> </span><span class="s2">"# max_n_fieldlines = "</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">%</span><span class="n">max_n_fieldlines</span>
+<a id="ln-144" name="ln-144" href="#ln-144"></a><span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="mi">7</span><span class="p">),</span><span class="w"> </span><span class="s1">'(A, ES26.17E3)'</span><span class="p">)</span><span class="w"> </span><span class="s2">"# M_pol ="</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">%</span><span class="n">M_pol</span>
+<a id="ln-145" name="ln-145" href="#ln-145"></a><span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="mi">8</span><span class="p">),</span><span class="w"> </span><span class="s1">'(A, ES26.17E3)'</span><span class="p">)</span><span class="w"> </span><span class="s2">"# N_tor ="</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">%</span><span class="n">N_tor</span>
+<a id="ln-146" name="ln-146" href="#ln-146"></a><span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="mi">9</span><span class="p">),</span><span class="w"> </span><span class="s1">'(A, I0)'</span><span class="p">)</span><span class="w"> </span><span class="s2">"# n_fieldlines = "</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">%</span><span class="n">n_fieldlines</span>
+<a id="ln-147" name="ln-147" href="#ln-147"></a><span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span><span class="w"> </span><span class="s1">'(A, ES26.17E3)'</span><span class="p">)</span><span class="w"> </span><span class="s2">"# eta_c ="</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">%</span><span class="n">eta_c</span>
+<a id="ln-148" name="ln-148" href="#ln-148"></a><span class="w">        </span><span class="k">write</span><span class="w"> </span><span class="p">(</span><span class="n">lines</span><span class="p">(</span><span class="mi">11</span><span class="p">),</span><span class="w"> </span><span class="s1">'(A, ES26.17E3)'</span><span class="p">)</span><span class="w"> </span><span class="s2">"# eta_t ="</span><span class="p">,</span><span class="w"> </span><span class="n">header</span><span class="p">%</span><span class="n">eta_t</span>
+<a id="ln-149" name="ln-149" href="#ln-149"></a><span class="w">        </span><span class="n">lines</span><span class="p">(</span><span class="mi">12</span><span class="p">)</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"# columns: fieldline  t  eta  bounce_time_weighted  I_j"</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-150" name="ln-150" href="#ln-150"></a><span class="w">                    </span><span class="o">//</span><span class="s2">"  radial_drift_weighted  poloidal_drift_weighted"</span>
+<a id="ln-151" name="ln-151" href="#ln-151"></a><span class="w">    </span><span class="k">end function </span><span class="n">header_lines</span>
+<a id="ln-152" name="ln-152" href="#ln-152"></a>
+<a id="ln-153" name="ln-153" href="#ln-153"></a><span class="k">end module </span><span class="n">saved_bounce_integrals</span>
+</pre></div>
+
+      </section>
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

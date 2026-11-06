@@ -1,0 +1,1493 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>precession &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>precession
+      <small>Module</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 6.0% of total for modules and submodules.">258 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/precession.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/precession.f90.html'>precession.f90</a></li>
+            <li class="breadcrumb-item active" aria-current="page">precession</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/precession.html#variable-ignore_magnetic_drift">ignore_magnetic_drift</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#types-0"
+         aria-expanded="false" aria-controls="types-0">
+         <h4 class="card-header bg-primary text-white">Derived Types</h4>
+      </a>
+      <div id="types-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/precession.html#type-bounce_integrals_t">bounce_integrals_t</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#funcs-0"
+         aria-expanded="false" aria-controls="funcs-0">
+         <h4 class="card-header bg-primary text-white">Functions</h4>
+      </a>
+      <div id="funcs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/precession.html#proc-get_max_valid_l_c">get_max_valid_l_c</a>
+            <a class="list-group-item" href="../module/precession.html#proc-get_smallest_maximum">get_smallest_maximum</a>
+            <a class="list-group-item" href="../module/precession.html#proc-get_biggest_minimum">get_biggest_minimum</a>
+        </div>
+      </div>
+    </div>
+
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#subs-0"
+         aria-expanded="false" aria-controls="subs-0">
+         <h4 class="card-header bg-primary text-white">Subroutines</h4>
+      </a>
+      <div id="subs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/precession.html#proc-setup_bounce_integrals">setup_bounce_integrals</a>
+            <a class="list-group-item" href="../module/precession.html#proc-make_fieldlines_for_precession">make_fieldlines_for_precession</a>
+            <a class="list-group-item" href="../module/precession.html#proc-assemble_bounce_integrals">assemble_bounce_integrals</a>
+            <a class="list-group-item" href="../module/precession.html#proc-compute_flux_modes">compute_flux_modes</a>
+            <a class="list-group-item" href="../module/precession.html#proc-set_fieldline_minima">set_fieldline_minima</a>
+            <a class="list-group-item" href="../module/precession.html#proc-find_magnetic_well_bottom">find_magnetic_well_bottom</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      
+<br>          <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='fieldline_mod.html'>fieldline_mod</a></li>
+                  <li class="list-inline-item"><a href='grid_mod.html'>grid_mod</a></li>
+                  <li class="list-inline-item"><a href='field_base.html'>field_base</a></li>
+                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/ieee_arithmetic'>ieee_arithmetic</a></li>
+                  <li class="list-inline-item"><a href='constants.html'>constants</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: module~~precession~~UsesGraph Pages: 1 -->
+<svg id="moduleprecessionUsesGraph" width="409pt" height="236pt"
+ viewBox="0.00 0.00 409.00 236.01" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~precession~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 232.01)">
+<title>module~~precession~~UsesGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-232.01 405,-232.01 405,4 -4,4"/>
+<!-- module~precession -->
+<g id="module~~precession~~UsesGraph_node1" class="node">
+<title>module~precession</title>
+<polygon fill="none" stroke="black" points="401,-144.01 331,-144.01 331,-120.01 401,-120.01 401,-144.01"/>
+<text text-anchor="middle" x="366" y="-129.61" font-family="Helvetica,sans-Serif" font-size="10.50">precession</text>
+</g>
+<!-- ieee_arithmetic -->
+<g id="module~~precession~~UsesGraph_node2" class="node">
+<title>ieee_arithmetic</title>
+<g id="a_module~~precession~~UsesGraph_node2"><a xlink:href="http://fortranwiki.org/fortran/show/ieee_arithmetic" xlink:title="ieee_arithmetic">
+<polygon fill="#337ab7" stroke="#337ab7" points="196,-228.01 100,-228.01 100,-204.01 196,-204.01 196,-228.01"/>
+<text text-anchor="middle" x="148" y="-213.61" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ieee_arithmetic</text>
+</a>
+</g>
+</g>
+<!-- module~precession&#45;&gt;ieee_arithmetic -->
+<g id="module~~precession~~UsesGraph_edge1" class="edge">
+<title>module~precession&#45;&gt;ieee_arithmetic</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M262.5,-195.01C244.36,-200.14 224.22,-204.34 206.01,-207.59"/>
+<polygon fill="#000000" stroke="#000000" points="205.37,-204.15 196.11,-209.3 206.56,-211.05 205.37,-204.15"/>
+</g>
+<!-- module~constants -->
+<g id="module~~precession~~UsesGraph_node3" class="node">
+<title>module~constants</title>
+<g id="a_module~~precession~~UsesGraph_node3"><a xlink:href="../module/constants.html" xlink:title="constants">
+<polygon fill="#337ab7" stroke="#337ab7" points="64,-84.01 0,-84.01 0,-60.01 64,-60.01 64,-84.01"/>
+<text text-anchor="middle" x="32" y="-69.61" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants</text>
+</a>
+</g>
+</g>
+<!-- module~precession&#45;&gt;module~constants -->
+<g id="module~~precession~~UsesGraph_edge2" class="edge">
+<title>module~precession&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M360.02,-119.95C348.21,-93.32 315.62,-30.46 264.5,-12.01"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M262.5,-12.01C194.1,12.66 168.73,-7.26 100,-31.01 84.55,-36.35 68.87,-45.69 56.57,-54.1"/>
+<polygon fill="#000000" stroke="#000000" points="54.4,-51.35 48.26,-59.99 58.45,-57.06 54.4,-51.35"/>
+</g>
+<!-- module~field_base -->
+<g id="module~~precession~~UsesGraph_node4" class="node">
+<title>module~field_base</title>
+<g id="a_module~~precession~~UsesGraph_node4"><a xlink:href="../module/field_base.html" xlink:title="field_base">
+<polygon fill="#337ab7" stroke="#337ab7" points="181.5,-186.01 114.5,-186.01 114.5,-162.01 181.5,-162.01 181.5,-186.01"/>
+<text text-anchor="middle" x="148" y="-171.61" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_base</text>
+</a>
+</g>
+</g>
+<!-- module~precession&#45;&gt;module~field_base -->
+<g id="module~~precession~~UsesGraph_edge3" class="edge">
+<title>module~precession&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M351.28,-144.26C333.02,-159.66 298.98,-185.26 264.5,-195.01"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M262.5,-195.01C237.3,-202.14 208.26,-196.52 185.86,-189.31"/>
+<polygon fill="#000000" stroke="#000000" points="186.98,-185.99 176.39,-186.04 184.7,-192.61 186.98,-185.99"/>
+</g>
+<!-- module~fieldline_mod -->
+<g id="module~~precession~~UsesGraph_node5" class="node">
+<title>module~fieldline_mod</title>
+<g id="a_module~~precession~~UsesGraph_node5"><a xlink:href="../module/fieldline_mod.html" xlink:title="fieldline_mod">
+<polygon fill="#337ab7" stroke="#337ab7" points="190.5,-64.01 105.5,-64.01 105.5,-40.01 190.5,-40.01 190.5,-64.01"/>
+<text text-anchor="middle" x="148" y="-49.61" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_mod</text>
+</a>
+</g>
+</g>
+<!-- module~precession&#45;&gt;module~fieldline_mod -->
+<g id="module~~precession~~UsesGraph_edge4" class="edge">
+<title>module~precession&#45;&gt;module~fieldline_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M262.5,-12.01C247.31,-6.53 209.11,-22.24 181.2,-35.56"/>
+<polygon fill="#000000" stroke="#000000" points="179.64,-32.43 172.18,-39.95 182.7,-38.72 179.64,-32.43"/>
+</g>
+<!-- module~grid_mod -->
+<g id="module~~precession~~UsesGraph_node6" class="node">
+<title>module~grid_mod</title>
+<g id="a_module~~precession~~UsesGraph_node6"><a xlink:href="../module/grid_mod.html" xlink:title="grid_mod">
+<polygon fill="#337ab7" stroke="#337ab7" points="295,-144.01 232,-144.01 232,-120.01 295,-120.01 295,-144.01"/>
+<text text-anchor="middle" x="263.5" y="-129.61" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">grid_mod</text>
+</a>
+</g>
+</g>
+<!-- module~precession&#45;&gt;module~grid_mod -->
+<g id="module~~precession~~UsesGraph_edge5" class="edge">
+<title>module~precession&#45;&gt;module~grid_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M330.98,-132.01C322.72,-132.01 313.8,-132.01 305.27,-132.01"/>
+<polygon fill="#000000" stroke="#000000" points="305.11,-128.51 295.11,-132.01 305.11,-135.51 305.11,-128.51"/>
+</g>
+<!-- module~field_base&#45;&gt;module~constants -->
+<g id="module~~precession~~UsesGraph_edge6" class="edge">
+<title>module~field_base&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M114.53,-161.89C109.44,-159.33 104.41,-156.37 100,-153.01 77.85,-136.18 58.33,-110.67 46.15,-92.79"/>
+<polygon fill="#000000" stroke="#000000" points="48.92,-90.63 40.48,-84.22 43.08,-94.49 48.92,-90.63"/>
+</g>
+<!-- module~fieldline_mod&#45;&gt;module~constants -->
+<g id="module~~precession~~UsesGraph_edge7" class="edge">
+<title>module~fieldline_mod&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M105.2,-59.35C95,-61.14 84.1,-63.05 73.94,-64.83"/>
+<polygon fill="#000000" stroke="#000000" points="73.33,-61.38 64.08,-66.56 74.54,-68.28 73.33,-61.38"/>
+</g>
+<!-- module~grid_mod&#45;&gt;ieee_arithmetic -->
+<g id="module~~precession~~UsesGraph_edge8" class="edge">
+<title>module~grid_mod&#45;&gt;ieee_arithmetic</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M251.98,-144.21C239.65,-157.94 218.08,-180.25 196,-195.01 193.85,-196.45 191.6,-197.82 189.27,-199.14"/>
+<polygon fill="#000000" stroke="#000000" points="187.39,-196.18 180.14,-203.9 190.62,-202.39 187.39,-196.18"/>
+</g>
+<!-- module~grid_mod&#45;&gt;module~constants -->
+<g id="module~~precession~~UsesGraph_edge10" class="edge">
+<title>module~grid_mod&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M231.85,-121.83C220.62,-118.24 207.78,-114.28 196,-111.01 154.71,-99.57 106.98,-88.38 73.89,-80.95"/>
+<polygon fill="#000000" stroke="#000000" points="74.64,-77.53 64.11,-78.77 73.11,-84.36 74.64,-77.53"/>
+</g>
+<!-- module~grid_mod&#45;&gt;module~field_base -->
+<g id="module~~precession~~UsesGraph_edge11" class="edge">
+<title>module~grid_mod&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M231.79,-143.38C219.32,-147.99 204.71,-153.4 191.26,-158.37"/>
+<polygon fill="#000000" stroke="#000000" points="189.89,-155.15 181.73,-161.9 192.32,-161.71 189.89,-155.15"/>
+</g>
+<!-- module~grid_mod&#45;&gt;module~fieldline_mod -->
+<g id="module~~precession~~UsesGraph_edge12" class="edge">
+<title>module~grid_mod&#45;&gt;module~fieldline_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M248.79,-119.67C235.72,-108.2 215.23,-90.99 196,-78.01 191.57,-75.02 186.77,-72.07 181.99,-69.29"/>
+<polygon fill="#000000" stroke="#000000" points="183.35,-66.03 172.91,-64.18 179.91,-72.13 183.35,-66.03"/>
+</g>
+<!-- interpolate -->
+<g id="module~~precession~~UsesGraph_node7" class="node">
+<title>interpolate</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="183.5,-144.01 112.5,-144.01 112.5,-120.01 183.5,-120.01 183.5,-144.01"/>
+<text text-anchor="middle" x="148" y="-129.61" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">interpolate</text>
+</g>
+<!-- module~grid_mod&#45;&gt;interpolate -->
+<g id="module~~precession~~UsesGraph_edge9" class="edge">
+<title>module~grid_mod&#45;&gt;interpolate</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M231.79,-132.01C220.19,-132.01 206.75,-132.01 194.11,-132.01"/>
+<polygon fill="#000000" stroke="#000000" points="193.75,-128.51 183.75,-132.01 193.75,-135.51 193.75,-128.51"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="518pt" height="32pt"
+ viewBox="0.00 0.00 517.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 513.5,-28 513.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="386,-24 328,-24 328,0 386,0 386,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="509.5,-24 404.5,-24 404.5,0 509.5,0 509.5,-24"/>
+<text text-anchor="middle" x="457" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+          <div class="card">
+      <h3 class="card-header card-title bg-light">Used by</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: module~~precession~~UsedByGraph Pages: 1 -->
+<svg id="moduleprecessionUsedByGraph" width="196pt" height="32pt"
+ viewBox="0.00 0.00 196.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="module~~precession~~UsedByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>module~~precession~~UsedByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 192,-28 192,4 -4,4"/>
+<!-- module~precession -->
+<g id="module~~precession~~UsedByGraph_node1" class="node">
+<title>module~precession</title>
+<polygon fill="none" stroke="black" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">precession</text>
+</g>
+<!-- program~electric_rabe -->
+<g id="module~~precession~~UsedByGraph_node2" class="node">
+<title>program~electric_rabe</title>
+<g id="a_module~~precession~~UsedByGraph_node2"><a xlink:href="../program/electric_rabe.html" xlink:title="electric_rabe">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="188,-24 106,-24 106,0 188,0 188,-24"/>
+<text text-anchor="middle" x="147" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe</text>
+</a>
+</g>
+</g>
+<!-- program~electric_rabe&#45;&gt;module~precession -->
+<g id="module~~precession~~UsedByGraph_edge1" class="edge">
+<title>program~electric_rabe&#45;&gt;module~precession</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M105.98,-12C97.59,-12 88.7,-12 80.18,-12"/>
+<polygon fill="#000000" stroke="#000000" points="80.01,-8.5 70.01,-12 80.01,-15.5 80.01,-8.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsedByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsedByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="518pt" height="32pt"
+ viewBox="0.00 0.00 517.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 513.5,-28 513.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="386,-24 328,-24 328,0 386,0 386,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="509.5,-24 404.5,-24 404.5,0 509.5,0 509.5,-24"/>
+<text text-anchor="middle" x="457" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+      <br>
+
+
+        <section>
+          <h2>Variables</h2>
+            <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-ignore_magnetic_drift"></span>
+              logical,
+            </td>
+              <td>public,</td>
+            <td>
+parameter               
+            </td>
+            <td>::</td>
+            <td><strong>ignore_magnetic_drift</strong></td>
+<td> =</td>
+                <td>.true.</td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+        </section>
+        <br>
+
+
+
+
+        <section>
+          <h2>Derived Types</h2>
+              <div class="card">
+    <div class="card-header codesum">
+      <span class="anchor" id="type-bounce_integrals_t"></span>
+      <h3>
+        type, public&nbsp;::&nbsp;
+        <a href='../type/bounce_integrals_t.html'>bounce_integrals_t</a>
+        
+      </h3>
+    </div>
+    <div class="card-body">
+      
+
+        <h4>Components</h4>
+          <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-m_pol~8"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>M_pol</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_tor~6"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>N_tor</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nfp~9"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nfp</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iota~5"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iota</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-t"></span>
+              real(kind=dp),
+            </td>
+              <td>public,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>t</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-eta~4"></span>
+              real(kind=dp),
+            </td>
+              <td>public,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>eta</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-avg_i_j"></span>
+              real(kind=dp),
+            </td>
+              <td>public,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>avg_I_j</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-avg_bounce_time_weighted"></span>
+              real(kind=dp),
+            </td>
+              <td>public,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>avg_bounce_time_weighted</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-avg_magnetic_drift_weighted"></span>
+              real(kind=dp),
+            </td>
+              <td>public,</td>
+            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>avg_magnetic_drift_weighted</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-radial_drift_sin"></span>
+              real(kind=dp),
+            </td>
+              <td>public,</td>
+            <td>
+              dimension(:, :), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>radial_drift_sin</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_modes"></span>
+              integer,
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_modes</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Functions</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-get_max_valid_l_c"></span> <h3>public  function <a href='../proc/get_max_valid_l_c.html'>get_max_valid_l_c</a>(bounce_integrals, Omega_hat) result(l_c_max)  
+</h3></div>
+    <div class="card-body">
+          
+  <p>Longest l_c for which the flux modes are resolved by the eta grid (m=1).
+For large l_c*Omega_hat the solution is confined to a layer at eta_c of
+width delta^2 = eta_c I_B/(|kappa| tau_b) with
+kappa = l_c nfp Omega_hat/(2 (M iota - N)); the layer has to contain
+at least min_points_in_layer grid points (eta - eta_c = k^2 x_1).
+The weak log dependence of tau_b on delta is neglected.</p>
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bounce_integrals~4"></span>
+              type(<a href='../type/bounce_integrals_t.html'>bounce_integrals_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>bounce_integrals</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-omega_hat~3"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Omega_hat</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-get_smallest_maximum"></span> <h3>public  function <a href='../proc/get_smallest_maximum.html'>get_smallest_maximum</a>(fieldlines) result(smallest_maximum)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fieldlines~6"></span>
+              class(<a href='../type/fieldline_t.html'>fieldline_t</a>),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>fieldlines</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-get_biggest_minimum"></span> <h3>public  function <a href='../proc/get_biggest_minimum.html'>get_biggest_minimum</a>(fieldlines) result(biggest_minimum)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fieldlines~8"></span>
+              class(<a href='../type/fieldline_for_precession_t.html'>fieldline_for_precession_t</a>),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>fieldlines</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+        <section>
+          <h2>Subroutines</h2>
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-setup_bounce_integrals"></span> <h3>public  subroutine <a href='../proc/setup_bounce_integrals.html'>setup_bounce_integrals</a>(field, flock, s_tor, bounce_integrals, n_eta, fieldlines_out)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-field~18"></span>
+              class(<a href='../type/field_3d_t.html'>field_3D_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>field</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-flock~9"></span>
+              type(<a href='../type/flock_of_fieldlines_t.html'>flock_of_fieldlines_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>flock</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-s_tor~3"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>s_tor</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bounce_integrals"></span>
+              type(<a href='../type/bounce_integrals_t.html'>bounce_integrals_t</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>bounce_integrals</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_eta~7"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_eta</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fieldlines_out"></span>
+              type(<a href='../type/fieldline_for_precession_t.html'>fieldline_for_precession_t</a>),
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>fieldlines_out</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-make_fieldlines_for_precession"></span> <h3>public  subroutine <a href='../proc/make_fieldlines_for_precession.html'>make_fieldlines_for_precession</a>(field, flock, fieldlines, n_eta)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-field~19"></span>
+              class(<a href='../type/field_3d_t.html'>field_3D_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>field</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-flock~10"></span>
+              type(<a href='../type/flock_of_fieldlines_t.html'>flock_of_fieldlines_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>flock</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fieldlines~4"></span>
+              type(<a href='../type/fieldline_for_precession_t.html'>fieldline_for_precession_t</a>),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>fieldlines</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_eta~8"></span>
+              integer,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n_eta</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-assemble_bounce_integrals"></span> <h3>public  subroutine <a href='../proc/assemble_bounce_integrals.html'>assemble_bounce_integrals</a>(fieldlines, bounce_integrals)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fieldlines~5"></span>
+              type(<a href='../type/fieldline_for_precession_t.html'>fieldline_for_precession_t</a>),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>fieldlines</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bounce_integrals~2"></span>
+              type(<a href='../type/bounce_integrals_t.html'>bounce_integrals_t</a>),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>bounce_integrals</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-compute_flux_modes"></span> <h3>public  subroutine <a href='../proc/compute_flux_modes.html'>compute_flux_modes</a>(bounce_integrals, l_c, Omega_hat, flux_modes)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-bounce_integrals~3"></span>
+              type(<a href='../type/bounce_integrals_t.html'>bounce_integrals_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>bounce_integrals</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-l_c"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>l_c</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-omega_hat~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>Omega_hat</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-flux_modes"></span>
+              real(kind=dp),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>flux_modes</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-set_fieldline_minima"></span> <h3>public  subroutine <a href='../proc/set_fieldline_minima.html'>set_fieldline_minima</a>(field, fieldlines)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-field~20"></span>
+              class(<a href='../type/field_t.html'>field_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>field</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fieldlines~7"></span>
+              class(<a href='../type/fieldline_for_precession_t.html'>fieldline_for_precession_t</a>),
+            </td>
+<td>intent(inout),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>fieldlines</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-find_magnetic_well_bottom"></span> <h3>public  subroutine <a href='../proc/find_magnetic_well_bottom.html'>find_magnetic_well_bottom</a>(field, fieldline, phi_bottom, B_bottom)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-field~21"></span>
+              class(<a href='../type/field_t.html'>field_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>field</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-fieldline~5"></span>
+              class(<a href='../type/fieldline_t.html'>fieldline_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>fieldline</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-phi_bottom"></span>
+              real(kind=dp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>phi_bottom</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b_bottom"></span>
+              real(kind=dp),
+            </td>
+<td>intent(out)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>B_bottom</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+    </div>
+  </div>
+
+        </section>
+        <br>
+
+
+
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

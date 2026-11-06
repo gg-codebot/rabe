@@ -1,0 +1,497 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>shaing_callen_wrappers.f90 &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>shaing_callen_wrappers.f90
+      <small>Source File</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 0.5% of total for source files.">23 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/shaing_callen_wrappers.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+            <li class="breadcrumb-item active" aria-current="page">shaing_callen_wrappers.f90</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#mods-0"
+         aria-expanded="false" aria-controls="mods-0">
+         <h4 class="card-header bg-primary text-white">Modules</h4>
+      </a>
+      <div id="mods-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/shaing_callen_wrappers.html">shaing_callen_wrappers</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../sourcefile/shaing_callen_wrappers.f90.html#src">shaing_callen_wrappers.f90</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    <div class="col-md-9" id='text'>
+      
+      <br>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">This file depends on</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph Pages: 1 -->
+<svg id="sourcefileshaing_callen_wrappersf90EfferentGraph" width="585pt" height="143pt"
+ viewBox="0.00 0.00 585.00 143.26" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 139.26)">
+<title>sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-139.26 581,-139.26 581,4 -4,4"/>
+<!-- sourcefile~shaing_callen_wrappers.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_node1" class="node">
+<title>sourcefile~shaing_callen_wrappers.f90</title>
+<polygon fill="none" stroke="black" points="577,-94 417,-94 417,-70 577,-70 577,-94"/>
+<text text-anchor="middle" x="497" y="-79.6" font-family="Helvetica,sans-Serif" font-size="10.50">shaing_callen_wrappers.f90</text>
+</g>
+<!-- sourcefile~constants.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_node2" class="node">
+<title>sourcefile~constants.f90</title>
+<g id="a_sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_node2"><a xlink:href="../sourcefile/constants.f90.html" xlink:title="constants.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="84,-84 0,-84 0,-60 84,-60 84,-84"/>
+<text text-anchor="middle" x="42" y="-69.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_edge1" class="edge">
+<title>sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M311,-132C225.87,-137.54 201.64,-137.74 120,-113 102.28,-107.63 83.93,-98.04 69.59,-89.49"/>
+<polygon fill="#000000" stroke="#000000" points="71.14,-86.33 60.79,-84.07 67.47,-92.29 71.14,-86.33"/>
+</g>
+<!-- sourcefile~field_base.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_node3" class="node">
+<title>sourcefile~field_base.f90</title>
+<g id="a_sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_node3"><a xlink:href="../sourcefile/field_base.f90.html" xlink:title="field_base.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="207,-104 120,-104 120,-80 207,-80 207,-104"/>
+<text text-anchor="middle" x="163.5" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_base.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_edge2" class="edge">
+<title>sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M466.52,-94.02C430.87,-107.63 368.71,-128.37 313,-132"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M311,-132C271.41,-134.58 227.74,-120.3 198.47,-108.1"/>
+<polygon fill="#000000" stroke="#000000" points="199.69,-104.81 189.12,-104.07 196.92,-111.24 199.69,-104.81"/>
+</g>
+<!-- sourcefile~fieldline.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_node4" class="node">
+<title>sourcefile~fieldline.f90</title>
+<g id="a_sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_node4"><a xlink:href="../sourcefile/fieldline.f90.html" xlink:title="fieldline.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="201.5,-24 125.5,-24 125.5,0 201.5,0 201.5,-24"/>
+<text text-anchor="middle" x="163.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~fieldline.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_edge3" class="edge">
+<title>sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M439.01,-69.97C374.79,-56.41 271.56,-34.61 211.68,-21.96"/>
+<polygon fill="#000000" stroke="#000000" points="212.24,-18.5 201.73,-19.86 210.79,-25.35 212.24,-18.5"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_node5" class="node">
+<title>sourcefile~fieldline_integrands.f90</title>
+<g id="a_sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_node5"><a xlink:href="../sourcefile/fieldline_integrands.f90.html" xlink:title="fieldline_integrands.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="381,-94 243,-94 243,-70 381,-70 381,-94"/>
+<text text-anchor="middle" x="312" y="-79.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_integrands.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_edge4" class="edge">
+<title>sourcefile~shaing_callen_wrappers.f90&#45;&gt;sourcefile~fieldline_integrands.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M416.8,-82C408.35,-82 399.76,-82 391.32,-82"/>
+<polygon fill="#000000" stroke="#000000" points="391.13,-78.5 381.13,-82 391.13,-85.5 391.13,-78.5"/>
+</g>
+<!-- sourcefile~field_base.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_edge5" class="edge">
+<title>sourcefile~field_base.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M119.7,-84.84C111.51,-83.47 102.85,-82.02 94.43,-80.61"/>
+<polygon fill="#000000" stroke="#000000" points="94.75,-77.11 84.31,-78.91 93.59,-84.02 94.75,-77.11"/>
+</g>
+<!-- sourcefile~fieldline.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_edge6" class="edge">
+<title>sourcefile~fieldline.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M138.32,-24.14C120.42,-33.13 95.83,-45.48 76.1,-55.38"/>
+<polygon fill="#000000" stroke="#000000" points="74.51,-52.26 67.15,-59.88 77.65,-58.52 74.51,-52.26"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_edge7" class="edge">
+<title>sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M242.83,-73.75C230.91,-72.61 218.6,-71.61 207,-71 168.39,-68.96 158.67,-70.75 120,-71 111.73,-71.05 102.96,-71.14 94.42,-71.24"/>
+<polygon fill="#000000" stroke="#000000" points="94.11,-67.74 84.16,-71.37 94.2,-74.74 94.11,-67.74"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~EfferentGraph_edge8" class="edge">
+<title>sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M242.9,-86.65C234.39,-87.23 225.78,-87.82 217.55,-88.38"/>
+<polygon fill="#000000" stroke="#000000" points="217.09,-84.9 207.35,-89.08 217.56,-91.89 217.09,-84.9"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#EfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="EfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="202pt" height="32pt"
+ viewBox="0.00 0.00 201.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 197.5,-28 197.5,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="193.5,-24 88.5,-24 88.5,0 193.5,0 193.5,-24"/>
+<text text-anchor="middle" x="141" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Files dependent on this one</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph Pages: 1 -->
+<svg id="sourcefileshaing_callen_wrappersf90AfferentGraph" width="406pt" height="32pt"
+ viewBox="0.00 0.00 406.00 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 402,-28 402,4 -4,4"/>
+<!-- sourcefile~shaing_callen_wrappers.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph_node1" class="node">
+<title>sourcefile~shaing_callen_wrappers.f90</title>
+<polygon fill="none" stroke="black" points="160,-24 0,-24 0,0 160,0 160,-24"/>
+<text text-anchor="middle" x="80" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">shaing_callen_wrappers.f90</text>
+</g>
+<!-- sourcefile~shaing_callen.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph_node2" class="node">
+<title>sourcefile~shaing_callen.f90</title>
+<g id="a_sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/shaing_callen.f90.html" xlink:title="shaing_callen.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="302,-24 196,-24 196,0 302,0 302,-24"/>
+<text text-anchor="middle" x="249" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">shaing_callen.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~shaing_callen.f90&#45;&gt;sourcefile~shaing_callen_wrappers.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph_edge1" class="edge">
+<title>sourcefile~shaing_callen.f90&#45;&gt;sourcefile~shaing_callen_wrappers.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M195.62,-12C187.51,-12 178.94,-12 170.28,-12"/>
+<polygon fill="#000000" stroke="#000000" points="170.11,-8.5 160.11,-12 170.11,-15.5 170.11,-8.5"/>
+</g>
+<!-- sourcefile~main.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph_node3" class="node">
+<title>sourcefile~main.f90</title>
+<g id="a_sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/main.f90.html" xlink:title="main.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="398,-24 338,-24 338,0 398,0 398,-24"/>
+<text text-anchor="middle" x="368" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">main.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~main.f90&#45;&gt;sourcefile~shaing_callen.f90 -->
+<g id="sourcefile~~shaing_callen_wrappers.f90~~AfferentGraph_edge2" class="edge">
+<title>sourcefile~main.f90&#45;&gt;sourcefile~shaing_callen.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M337.78,-12C329.91,-12 321.09,-12 312.15,-12"/>
+<polygon fill="#000000" stroke="#000000" points="312.06,-8.5 302.06,-12 312.06,-15.5 312.06,-8.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="202pt" height="32pt"
+ viewBox="0.00 0.00 201.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 197.5,-28 197.5,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="193.5,-24 88.5,-24 88.5,0 193.5,0 193.5,-24"/>
+<text text-anchor="middle" x="141" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+<br>
+      <section>
+        <h2><span class="anchor" id="src"></span>Source Code</h2>
+        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="k">module </span><span class="n">shaing_callen_wrappers</span>
+<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="w">    </span><span class="k">use </span><span class="n">constants</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-3" name="ln-3" href="#ln-3"></a><span class="w">    </span><span class="k">use </span><span class="n">fieldline_mod</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">fieldline_t</span>
+<a id="ln-4" name="ln-4" href="#ln-4"></a><span class="w">    </span><span class="k">use </span><span class="n">field_base</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">field_t</span>
+<a id="ln-5" name="ln-5" href="#ln-5"></a><span class="w">    </span><span class="k">implicit none</span>
+<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="k">    private</span>
+<a id="ln-7" name="ln-7" href="#ln-7"></a>
+<a id="ln-8" name="ln-8" href="#ln-8"></a><span class="k">    class</span><span class="p">(</span><span class="n">field_t</span><span class="p">),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">this_field</span>
+<a id="ln-9" name="ln-9" href="#ln-9"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">fieldline_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">this_fieldline</span>
+<a id="ln-10" name="ln-10" href="#ln-10"></a><span class="w">    </span><span class="k">type</span><span class="p">(</span><span class="n">fieldline_t</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">null_fieldline</span>
+<a id="ln-11" name="ln-11" href="#ln-11"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">this_eta</span>
+<a id="ln-12" name="ln-12" href="#ln-12"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">null_eta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0_dp</span>
+<a id="ln-13" name="ln-13" href="#ln-13"></a>
+<a id="ln-14" name="ln-14" href="#ln-14"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">this_field</span><span class="p">,</span><span class="w"> </span><span class="n">this_fieldline</span><span class="p">,</span><span class="w"> </span><span class="n">null_fieldline</span><span class="p">,</span><span class="w"> </span><span class="n">this_eta</span><span class="p">,</span><span class="w"> </span><span class="n">null_eta</span>
+<a id="ln-15" name="ln-15" href="#ln-15"></a><span class="w">    </span><span class="k">public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">wrapper_lambda_over_B_squared</span>
+<a id="ln-16" name="ln-16" href="#ln-16"></a>
+<a id="ln-17" name="ln-17" href="#ln-17"></a><span class="k">contains</span>
+<a id="ln-18" name="ln-18" href="#ln-18"></a>
+<a id="ln-19" name="ln-19" href="#ln-19"></a><span class="k">    function </span><span class="n">wrapper_lambda_over_B_squared</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+<a id="ln-20" name="ln-20" href="#ln-20"></a><span class="w">        </span><span class="k">use </span><span class="n">fieldline_integrands</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">lambda_over_B_squared</span>
+<a id="ln-21" name="ln-21" href="#ln-21"></a>
+<a id="ln-22" name="ln-22" href="#ln-22"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">phi</span>
+<a id="ln-23" name="ln-23" href="#ln-23"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">wrapper_lambda_over_B_squared</span>
+<a id="ln-24" name="ln-24" href="#ln-24"></a>
+<a id="ln-25" name="ln-25" href="#ln-25"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">theta</span>
+<a id="ln-26" name="ln-26" href="#ln-26"></a>
+<a id="ln-27" name="ln-27" href="#ln-27"></a><span class="w">        </span><span class="n">theta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">this_fieldline</span><span class="p">%</span><span class="n">get_theta</span><span class="p">(</span><span class="n">phi</span><span class="p">)</span>
+<a id="ln-28" name="ln-28" href="#ln-28"></a><span class="w">        </span><span class="n">wrapper_lambda_over_B_squared</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lambda_over_B_squared</span><span class="p">(</span><span class="n">this_field</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-29" name="ln-29" href="#ln-29"></a><span class="w">                                                              </span><span class="n">theta</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-30" name="ln-30" href="#ln-30"></a><span class="w">                                                              </span><span class="n">phi</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-31" name="ln-31" href="#ln-31"></a><span class="w">                                                              </span><span class="n">this_eta</span><span class="p">)</span>
+<a id="ln-32" name="ln-32" href="#ln-32"></a><span class="w">    </span><span class="k">end function </span><span class="n">wrapper_lambda_over_B_squared</span>
+<a id="ln-33" name="ln-33" href="#ln-33"></a>
+<a id="ln-34" name="ln-34" href="#ln-34"></a><span class="k">end module </span><span class="n">shaing_callen_wrappers</span>
+</pre></div>
+
+      </section>
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

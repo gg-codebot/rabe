@@ -1,0 +1,1278 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>make_flock_from_labels &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>make_flock_from_labels
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 4.4% of total for procedures.">111 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/make_fieldline.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/make_fieldline.f90.html'>make_fieldline.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/make_fieldline.html'>make_fieldline</a></li>
+            <li class="breadcrumb-item active" aria-current="page">make_flock_from_labels</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine make_flock_from_labels(flock, xi_0, iota, field, M_pol, N_tor, nfp, split_maxima)  
+</h2>
+        <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='../module/error_handling.html'>error_handling</a></li>
+                  <li class="list-inline-item"><a href='../module/fieldline_integrals.html'>fieldline_integrals</a></li>
+                  <li class="list-inline-item"><a href='../module/fieldline_labels.html'>fieldline_labels</a></li>
+                  <li class="list-inline-item"><a href='../module/constants.html'>constants</a></li>
+                  <li class="list-inline-item"><a href='../module/field_checks.html'>field_checks</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~make_flock_from_labels~~UsesGraph Pages: 1 -->
+<svg id="procmake_flock_from_labelsUsesGraph" width="519pt" height="215pt"
+ viewBox="0.00 0.00 519.00 214.65" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~make_flock_from_labels~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 210.65)">
+<title>proc~~make_flock_from_labels~~UsesGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-210.65 515,-210.65 515,4 -4,4"/>
+<!-- proc~make_flock_from_labels -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_node1" class="node">
+<title>proc~make_flock_from_labels</title>
+<polygon fill="none" stroke="black" points="511,-127 371,-127 371,-103 511,-103 511,-127"/>
+<text text-anchor="middle" x="441" y="-112.6" font-family="Helvetica,sans-Serif" font-size="10.50">make_flock_from_labels</text>
+</g>
+<!-- module~constants -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_node2" class="node">
+<title>module~constants</title>
+<g id="a_proc~~make_flock_from_labels~~UsesGraph_node2"><a xlink:href="../module/constants.html" xlink:title="constants">
+<polygon fill="#337ab7" stroke="#337ab7" points="64,-106 0,-106 0,-82 64,-82 64,-106"/>
+<text text-anchor="middle" x="32" y="-91.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;module~constants -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge1" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M424.71,-127.18C405.17,-142 369.7,-166.48 335,-178 255.3,-204.46 228.95,-215.37 147,-197"/>
+</g>
+<!-- module~error_handling -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_node3" class="node">
+<title>module~error_handling</title>
+<g id="a_proc~~make_flock_from_labels~~UsesGraph_node3"><a xlink:href="../module/error_handling.html" xlink:title="error_handling">
+<polygon fill="#337ab7" stroke="#337ab7" points="327,-169 236,-169 236,-145 327,-145 327,-169"/>
+<text text-anchor="middle" x="281.5" y="-154.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">error_handling</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;module~error_handling -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge2" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;module~error_handling</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M394.87,-127.04C376.75,-131.87 355.72,-137.47 336.78,-142.53"/>
+<polygon fill="#000000" stroke="#000000" points="335.86,-139.15 327.1,-145.11 337.66,-145.91 335.86,-139.15"/>
+</g>
+<!-- module~field_checks -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_node4" class="node">
+<title>module~field_checks</title>
+<g id="a_proc~~make_flock_from_labels~~UsesGraph_node4"><a xlink:href="../module/field_checks.html" xlink:title="field_checks">
+<polygon fill="#337ab7" stroke="#337ab7" points="320.5,-127 242.5,-127 242.5,-103 320.5,-103 320.5,-127"/>
+<text text-anchor="middle" x="281.5" y="-112.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_checks</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;module~field_checks -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge3" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;module~field_checks</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M370.92,-115C357.49,-115 343.68,-115 331.08,-115"/>
+<polygon fill="#000000" stroke="#000000" points="330.81,-111.5 320.81,-115 330.81,-118.5 330.81,-111.5"/>
+</g>
+<!-- module~fieldline_integrals -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_node5" class="node">
+<title>module~fieldline_integrals</title>
+<g id="a_proc~~make_flock_from_labels~~UsesGraph_node5"><a xlink:href="../module/fieldline_integrals.html" xlink:title="fieldline_integrals">
+<polygon fill="#337ab7" stroke="#337ab7" points="335,-85 228,-85 228,-61 335,-61 335,-85"/>
+<text text-anchor="middle" x="281.5" y="-70.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_integrals</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;module~fieldline_integrals -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge4" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;module~fieldline_integrals</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M394.87,-102.96C376.99,-98.2 356.27,-92.67 337.53,-87.67"/>
+<polygon fill="#000000" stroke="#000000" points="338.2,-84.23 327.64,-85.04 336.4,-91 338.2,-84.23"/>
+</g>
+<!-- module~fieldline_labels -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_node6" class="node">
+<title>module~fieldline_labels</title>
+<g id="a_proc~~make_flock_from_labels~~UsesGraph_node6"><a xlink:href="../module/fieldline_labels.html" xlink:title="fieldline_labels">
+<polygon fill="#337ab7" stroke="#337ab7" points="192,-24 100,-24 100,0 192,0 192,-24"/>
+<text text-anchor="middle" x="146" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_labels</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;module~fieldline_labels -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge5" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;module~fieldline_labels</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M423.8,-102.93C403.9,-88.68 368.63,-65.24 335,-52 291.96,-35.06 240.41,-24.73 202.19,-18.83"/>
+<polygon fill="#000000" stroke="#000000" points="202.68,-15.37 192.27,-17.35 201.65,-22.29 202.68,-15.37"/>
+</g>
+<!-- module~field_checks&#45;&gt;module~constants -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge6" class="edge">
+<title>module~field_checks&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M246.55,-127.04C240.25,-129.71 233.82,-132.72 228,-136 188.73,-158.12 190.98,-206.86 147,-197"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M145,-197C99.57,-186.82 63.62,-141.85 45.62,-114.81"/>
+<polygon fill="#000000" stroke="#000000" points="48.36,-112.6 40.01,-106.08 42.47,-116.38 48.36,-112.6"/>
+</g>
+<!-- module~field_base -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_node7" class="node">
+<title>module~field_base</title>
+<g id="a_proc~~make_flock_from_labels~~UsesGraph_node7"><a xlink:href="../module/field_base.html" xlink:title="field_base">
+<polygon fill="#337ab7" stroke="#337ab7" points="179.5,-146 112.5,-146 112.5,-122 179.5,-122 179.5,-146"/>
+<text text-anchor="middle" x="146" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_base</text>
+</a>
+</g>
+</g>
+<!-- module~field_checks&#45;&gt;module~field_base -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge7" class="edge">
+<title>module~field_checks&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M242.24,-120.44C225.91,-122.77 206.77,-125.49 189.95,-127.89"/>
+<polygon fill="#000000" stroke="#000000" points="189.24,-124.45 179.83,-129.33 190.22,-131.38 189.24,-124.45"/>
+</g>
+<!-- module~fieldline_integrals&#45;&gt;module~constants -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge8" class="edge">
+<title>module~fieldline_integrals&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M227.71,-77.48C181.9,-81.37 116.5,-86.91 74.4,-90.49"/>
+<polygon fill="#000000" stroke="#000000" points="73.89,-87.02 64.22,-91.35 74.48,-93.99 73.89,-87.02"/>
+</g>
+<!-- module~fieldline_integrals&#45;&gt;module~field_base -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge9" class="edge">
+<title>module~fieldline_integrals&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M249.24,-85.04C242.21,-87.87 234.81,-90.96 228,-94 211.79,-101.23 194.07,-109.89 179.36,-117.3"/>
+<polygon fill="#000000" stroke="#000000" points="177.5,-114.32 170.16,-121.96 180.67,-120.56 177.5,-114.32"/>
+</g>
+<!-- module~fieldline_mod -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_node8" class="node">
+<title>module~fieldline_mod</title>
+<g id="a_proc~~make_flock_from_labels~~UsesGraph_node8"><a xlink:href="../module/fieldline_mod.html" xlink:title="fieldline_mod">
+<polygon fill="#337ab7" stroke="#337ab7" points="188.5,-66 103.5,-66 103.5,-42 188.5,-42 188.5,-66"/>
+<text text-anchor="middle" x="146" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_mod</text>
+</a>
+</g>
+</g>
+<!-- module~fieldline_integrals&#45;&gt;module~fieldline_mod -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge10" class="edge">
+<title>module~fieldline_integrals&#45;&gt;module~fieldline_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M227.74,-65.49C218.21,-64.13 208.29,-62.72 198.79,-61.37"/>
+<polygon fill="#000000" stroke="#000000" points="199.08,-57.88 188.69,-59.93 198.09,-64.81 199.08,-57.88"/>
+</g>
+<!-- module~fieldline_labels&#45;&gt;module~constants -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge11" class="edge">
+<title>module~fieldline_labels&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M115.73,-24.08C110.34,-26.74 104.88,-29.75 100,-33 82.22,-44.84 64.45,-61.29 51.68,-74.12"/>
+<polygon fill="#000000" stroke="#000000" points="48.89,-71.96 44.42,-81.57 53.91,-76.85 48.89,-71.96"/>
+</g>
+<!-- module~field_base&#45;&gt;module~constants -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge12" class="edge">
+<title>module~field_base&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M112.3,-122.32C100.16,-117.99 86.24,-113.01 73.48,-108.46"/>
+<polygon fill="#000000" stroke="#000000" points="74.6,-105.14 64.01,-105.07 72.25,-111.73 74.6,-105.14"/>
+</g>
+<!-- module~fieldline_mod&#45;&gt;module~constants -->
+<g id="proc~~make_flock_from_labels~~UsesGraph_edge13" class="edge">
+<title>module~fieldline_mod&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M111.4,-66C99.6,-70.21 86.22,-74.99 73.89,-79.4"/>
+<polygon fill="#000000" stroke="#000000" points="72.52,-76.17 64.28,-82.83 74.88,-82.76 72.52,-76.17"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="518pt" height="32pt"
+ viewBox="0.00 0.00 517.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 513.5,-28 513.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="386,-24 328,-24 328,0 386,0 386,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="509.5,-24 404.5,-24 404.5,0 509.5,0 509.5,-24"/>
+<text text-anchor="middle" x="457" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-flock~2"></span>
+              type(<a href='../type/flock_of_fieldlines_t.html'>flock_of_fieldlines_t</a>),
+            </td>
+<td>intent(inout)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>flock</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xi_0~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>xi_0</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iota~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iota</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-field~7"></span>
+              class(<a href='../type/field_t.html'>field_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>field</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-m_pol~3"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>M_pol</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_tor~3"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>N_tor</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nfp~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nfp</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-split_maxima~2"></span>
+              integer,
+            </td>
+<td>intent(out),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>split_maxima</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~make_flock_from_labels~~CallsGraph Pages: 1 -->
+<svg id="procmake_flock_from_labelsCallsGraph" width="641pt" height="457pt"
+ viewBox="0.00 0.00 641.00 457.34" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~make_flock_from_labels~~CallsGraph" class="graph" transform="scale(0.73 0.73) rotate(0) translate(4 626)">
+<title>proc~~make_flock_from_labels~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-626 879,-626 879,4 -4,4"/>
+<!-- proc~make_flock_from_labels -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node1" class="node">
+<title>proc~make_flock_from_labels</title>
+<polygon fill="none" stroke="black" points="140,-323 0,-323 0,-299 140,-299 140,-323"/>
+<text text-anchor="middle" x="70" y="-308.6" font-family="Helvetica,sans-Serif" font-size="10.50">make_flock_from_labels</text>
+</g>
+<!-- compute_B_mod -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node2" class="node">
+<title>compute_B_mod</title>
+<polygon fill="#777777" stroke="#777777" points="754,-464 652,-464 652,-440 754,-440 754,-464"/>
+<text text-anchor="middle" x="703" y="-449.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute_B_mod</text>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;compute_B_mod -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge1" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;compute_B_mod</title>
+<path fill="none" stroke="#000000" d="M77.77,-323.05C92.17,-347.33 128.46,-401.76 176,-424 330.96,-496.5 540.33,-477.99 641.84,-462.77"/>
+<polygon fill="#000000" stroke="#000000" points="642.56,-466.2 651.91,-461.22 641.5,-459.28 642.56,-466.2"/>
+</g>
+<!-- get_covariant_components -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node3" class="node">
+<title>get_covariant_components</title>
+<polygon fill="#777777" stroke="#777777" points="374,-580 217,-580 217,-556 374,-556 374,-580"/>
+<text text-anchor="middle" x="295.5" y="-565.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_covariant_components</text>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;get_covariant_components -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge2" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;get_covariant_components</title>
+<path fill="none" stroke="#000000" d="M72.67,-323.1C78.69,-361.69 102.87,-482.85 176,-542 185.15,-549.4 195.95,-554.81 207.24,-558.74"/>
+<polygon fill="#000000" stroke="#000000" points="206.23,-562.09 216.81,-561.71 208.3,-555.4 206.23,-562.09"/>
+</g>
+<!-- interface~not_same -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node4" class="node">
+<title>interface~not_same</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node4"><a xlink:href="../interface/not_same.html" xlink:title="not_same">
+<polygon fill="#a7506f" stroke="#a7506f" points="875,-302 811,-302 811,-278 875,-278 875,-302"/>
+<text text-anchor="middle" x="843" y="-287.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">not_same</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;interface~not_same -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge3" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;interface~not_same</title>
+<path fill="none" stroke="#000000" d="M75.2,-323.29C86.24,-353.43 119.18,-430.98 176,-464 337.25,-557.7 408.64,-494.24 595,-487 675.18,-483.89 711.06,-521.48 775,-473 826.26,-434.14 838.33,-352.06 841.16,-312.4"/>
+<polygon fill="#000000" stroke="#000000" points="844.65,-312.59 841.73,-302.4 837.66,-312.19 844.65,-312.59"/>
+</g>
+<!-- none~get_theta -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node5" class="node">
+<title>none~get_theta</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node5"><a xlink:href="../type/fieldline_t.html#boundprocedure-get_theta" xlink:title="fieldline_t%get_theta">
+<polygon fill="#a7506f" stroke="#a7506f" points="765,-386 641,-386 641,-362 765,-362 765,-386"/>
+<text text-anchor="middle" x="703" y="-371.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_t%get_theta</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;none~get_theta -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge4" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;none~get_theta</title>
+<path fill="none" stroke="#000000" d="M81.07,-323.18C98.16,-342.8 135.03,-380.63 176,-395 340.71,-452.78 552.43,-412.66 649.33,-388.55"/>
+<polygon fill="#000000" stroke="#000000" points="650.35,-391.91 659.18,-386.06 648.63,-385.12 650.35,-391.91"/>
+</g>
+<!-- proc~calc_fieldline_integrals -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node6" class="node">
+<title>proc~calc_fieldline_integrals</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node6"><a xlink:href="../proc/calc_fieldline_integrals.html" xlink:title="calc_fieldline_integrals">
+<polygon fill="#d9534f" stroke="#d9534f" points="362.5,-622 228.5,-622 228.5,-598 362.5,-598 362.5,-622"/>
+<text text-anchor="middle" x="295.5" y="-607.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">calc_fieldline_integrals</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~calc_fieldline_integrals -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge5" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~calc_fieldline_integrals</title>
+<path fill="none" stroke="#000000" d="M71.55,-323.11C74.23,-366.78 89.64,-517.35 176,-589 187.94,-598.9 202.92,-604.83 218.17,-608.25"/>
+<polygon fill="#000000" stroke="#000000" points="217.73,-611.73 228.2,-610.16 219.03,-604.85 217.73,-611.73"/>
+</g>
+<!-- proc~calc_iota_p -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node7" class="node">
+<title>proc~calc_iota_p</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node7"><a xlink:href="../proc/calc_iota_p.html" xlink:title="calc_iota_p">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="331.5,-386 259.5,-386 259.5,-362 331.5,-362 331.5,-386"/>
+<text text-anchor="middle" x="295.5" y="-371.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">calc_iota_p</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~calc_iota_p -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge6" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~calc_iota_p</title>
+<path fill="none" stroke="#000000" d="M96.8,-323.05C117.74,-332.41 148.25,-345.08 176,-353 199.76,-359.78 226.86,-364.78 249.14,-368.19"/>
+<polygon fill="#000000" stroke="#000000" points="248.93,-371.7 259.33,-369.7 249.95,-364.77 248.93,-371.7"/>
+</g>
+<!-- proc~failed_sanity_check -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node8" class="node">
+<title>proc~failed_sanity_check</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node8"><a xlink:href="../proc/failed_sanity_check.html" xlink:title="failed_sanity_check">
+<polygon fill="#d9534f" stroke="#d9534f" points="353.5,-344 237.5,-344 237.5,-320 353.5,-320 353.5,-344"/>
+<text text-anchor="middle" x="295.5" y="-329.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">failed_sanity_check</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~failed_sanity_check -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge7" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~failed_sanity_check</title>
+<path fill="none" stroke="#000000" d="M140.19,-317.5C167.81,-320.1 199.51,-323.08 226.97,-325.66"/>
+<polygon fill="#000000" stroke="#000000" points="226.99,-329.17 237.27,-326.62 227.64,-322.2 226.99,-329.17"/>
+</g>
+<!-- proc~find_maxima_along_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node9" class="node">
+<title>proc~find_maxima_along_fieldline</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node9"><a xlink:href="../proc/find_maxima_along_fieldline.html" xlink:title="find_maxima_along_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="378,-176 213,-176 213,-152 378,-152 378,-176"/>
+<text text-anchor="middle" x="295.5" y="-161.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_maxima_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~find_maxima_along_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge8" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~find_maxima_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M77.22,-298.88C91.09,-273.19 127.23,-213.29 176,-185 184.32,-180.18 193.47,-176.41 202.89,-173.47"/>
+<polygon fill="#000000" stroke="#000000" points="204.1,-176.77 212.79,-170.7 202.22,-170.03 204.1,-176.77"/>
+</g>
+<!-- proc~get_global_b_max -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node10" class="node">
+<title>proc~get_global_b_max</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node10"><a xlink:href="../proc/get_global_b_max.html" xlink:title="get_global_B_max">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="350,-260 241,-260 241,-236 350,-236 350,-260"/>
+<text text-anchor="middle" x="295.5" y="-245.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_global_B_max</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~get_global_b_max -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge9" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~get_global_b_max</title>
+<path fill="none" stroke="#000000" d="M96.8,-298.95C117.74,-289.59 148.25,-276.92 176,-269 193.55,-263.99 212.92,-259.96 230.82,-256.81"/>
+<polygon fill="#000000" stroke="#000000" points="231.6,-260.23 240.88,-255.11 230.44,-253.33 231.6,-260.23"/>
+</g>
+<!-- proc~is_not_integer -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node11" class="node">
+<title>proc~is_not_integer</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node11"><a xlink:href="../proc/is_not_integer.html" xlink:title="is_not_integer">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="339,-218 252,-218 252,-194 339,-194 339,-218"/>
+<text text-anchor="middle" x="295.5" y="-203.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">is_not_integer</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~is_not_integer -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge10" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~is_not_integer</title>
+<path fill="none" stroke="#000000" d="M82.25,-298.7C100.15,-279.97 137.08,-244.62 176,-227 196.45,-217.74 220.6,-212.56 241.75,-209.66"/>
+<polygon fill="#000000" stroke="#000000" points="242.36,-213.11 251.86,-208.41 241.5,-206.16 242.36,-213.11"/>
+</g>
+<!-- proc~linspace -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node12" class="node">
+<title>proc~linspace</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node12"><a xlink:href="../proc/linspace.html" xlink:title="linspace">
+<polygon fill="#d9534f" stroke="#d9534f" points="871.5,-260 814.5,-260 814.5,-236 871.5,-236 871.5,-260"/>
+<text text-anchor="middle" x="843" y="-245.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">linspace</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~linspace -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge11" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M72.74,-298.91C78.84,-261.53 102.99,-147.6 176,-101 288.21,-29.37 665.52,-33.27 775,-109 814.61,-136.4 831.63,-193.88 838.25,-225.67"/>
+<polygon fill="#000000" stroke="#000000" points="834.87,-226.59 840.18,-235.75 841.74,-225.27 834.87,-226.59"/>
+</g>
+<!-- proc~pick_maximum_on_each_side -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node13" class="node">
+<title>proc~pick_maximum_on_each_side</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node13"><a xlink:href="../proc/pick_maximum_on_each_side.html" xlink:title="pick_maximum_on_each_side">
+<polygon fill="#d9534f" stroke="#d9534f" points="381,-134 210,-134 210,-110 381,-110 381,-134"/>
+<text text-anchor="middle" x="295.5" y="-119.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">pick_maximum_on_each_side</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~pick_maximum_on_each_side -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge12" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~pick_maximum_on_each_side</title>
+<path fill="none" stroke="#000000" d="M74.73,-298.81C85.07,-267.27 117.28,-182.64 176,-143 183.36,-138.03 191.54,-134.13 200.07,-131.09"/>
+<polygon fill="#000000" stroke="#000000" points="201.35,-134.36 209.82,-128 199.23,-127.68 201.35,-134.36"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node14" class="node">
+<title>proc~suspect_omnigenous_origin_not_minimum</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node14"><a xlink:href="../proc/suspect_omnigenous_origin_not_minimum.html" xlink:title="suspect_omnigenous_origin_not_minimum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="415,-302 176,-302 176,-278 415,-278 415,-302"/>
+<text text-anchor="middle" x="295.5" y="-287.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">suspect_omnigenous_origin_not_minimum</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge13" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum</title>
+<path fill="none" stroke="#000000" d="M140.19,-304.5C148.48,-303.72 157.13,-302.91 165.93,-302.08"/>
+<polygon fill="#000000" stroke="#000000" points="166.29,-305.56 175.92,-301.14 165.63,-298.59 166.29,-305.56"/>
+</g>
+<!-- rel_accuracy_B -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node15" class="node">
+<title>rel_accuracy_B</title>
+<polygon fill="#777777" stroke="#777777" points="342,-24 249,-24 249,0 342,0 342,-24"/>
+<text text-anchor="middle" x="295.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">rel_accuracy_B</text>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;rel_accuracy_B -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge14" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;rel_accuracy_B</title>
+<path fill="none" stroke="#000000" d="M71.75,-298.92C75.09,-256.04 92.42,-109.81 176,-38 193.24,-23.19 217,-16.24 238.72,-13.17"/>
+<polygon fill="#000000" stroke="#000000" points="239.33,-16.62 248.85,-11.98 238.52,-9.67 239.33,-16.62"/>
+</g>
+<!-- proc~integrate_1d_substituted -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node21" class="node">
+<title>proc~integrate_1d_substituted</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node21"><a xlink:href="../proc/integrate_1d_substituted.html" xlink:title="integrate_1d_substituted">
+<polygon fill="#d9534f" stroke="#d9534f" points="595,-622 451,-622 451,-598 595,-598 595,-622"/>
+<text text-anchor="middle" x="523" y="-607.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">integrate_1d_substituted</text>
+</a>
+</g>
+</g>
+<!-- proc~calc_fieldline_integrals&#45;&gt;proc~integrate_1d_substituted -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge15" class="edge">
+<title>proc~calc_fieldline_integrals&#45;&gt;proc~integrate_1d_substituted</title>
+<path fill="none" stroke="#000000" d="M362.63,-610C387.07,-610 415.05,-610 440.68,-610"/>
+<polygon fill="#000000" stroke="#000000" points="440.75,-613.5 450.75,-610 440.75,-606.5 440.75,-613.5"/>
+</g>
+<!-- proc~b_mod_along_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node16" class="node">
+<title>proc~b_mod_along_fieldline</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node16"><a xlink:href="../proc/b_mod_along_fieldline.html" xlink:title="B_mod_along_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="589.5,-386 456.5,-386 456.5,-362 589.5,-362 589.5,-386"/>
+<text text-anchor="middle" x="523" y="-371.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">B_mod_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~find_maxima_along_fieldline&#45;&gt;proc~b_mod_along_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge16" class="edge">
+<title>proc~find_maxima_along_fieldline&#45;&gt;proc~b_mod_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M378.12,-165.46C391.82,-169.12 404.85,-175.21 415,-185 469.95,-238.02 399.11,-296.98 451,-353 451.91,-353.98 452.86,-354.92 453.85,-355.81"/>
+<polygon fill="#000000" stroke="#000000" points="451.98,-358.78 462.12,-361.85 456.11,-353.12 451.98,-358.78"/>
+</g>
+<!-- proc~db_dphi_along_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node17" class="node">
+<title>proc~db_dphi_along_fieldline</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node17"><a xlink:href="../proc/db_dphi_along_fieldline.html" xlink:title="dB_dphi_along_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="592.5,-344 453.5,-344 453.5,-320 592.5,-320 592.5,-344"/>
+<text text-anchor="middle" x="523" y="-329.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dB_dphi_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~find_maxima_along_fieldline&#45;&gt;proc~db_dphi_along_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge17" class="edge">
+<title>proc~find_maxima_along_fieldline&#45;&gt;proc~db_dphi_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M378.21,-166.19C391.73,-169.81 404.68,-175.69 415,-185 458.25,-224.01 410.01,-269.63 451,-311 452.1,-312.11 453.26,-313.17 454.47,-314.17"/>
+<polygon fill="#000000" stroke="#000000" points="452.81,-317.27 463.05,-319.99 456.74,-311.48 452.81,-317.27"/>
+</g>
+<!-- proc~find_local_maxima -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node19" class="node">
+<title>proc~find_local_maxima</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node19"><a xlink:href="../proc/find_local_maxima.html" xlink:title="find_local_maxima">
+<polygon fill="#d9534f" stroke="#d9534f" points="759,-301 647,-301 647,-277 759,-277 759,-301"/>
+<text text-anchor="middle" x="703" y="-286.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_local_maxima</text>
+</a>
+</g>
+</g>
+<!-- proc~find_maxima_along_fieldline&#45;&gt;proc~find_local_maxima -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge18" class="edge">
+<title>proc~find_maxima_along_fieldline&#45;&gt;proc~find_local_maxima</title>
+<path fill="none" stroke="#000000" d="M378.16,-173.64C439.4,-182.66 524.46,-199.06 595,-227 624.34,-238.62 655.27,-257.34 676.28,-271.17"/>
+<polygon fill="#000000" stroke="#000000" points="674.39,-274.12 684.65,-276.77 678.28,-268.3 674.39,-274.12"/>
+</g>
+<!-- proc~set_field_and_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node22" class="node">
+<title>proc~set_field_and_fieldline</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node22"><a xlink:href="../proc/set_field_and_fieldline.html" xlink:title="set_field_and_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="588,-142 458,-142 458,-118 588,-118 588,-142"/>
+<text text-anchor="middle" x="523" y="-127.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">set_field_and_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~find_maxima_along_fieldline&#45;&gt;proc~set_field_and_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge19" class="edge">
+<title>proc~find_maxima_along_fieldline&#45;&gt;proc~set_field_and_fieldline</title>
+<path fill="none" stroke="#000000" d="M376.32,-151.97C399.61,-148.45 424.95,-144.63 447.87,-141.18"/>
+<polygon fill="#000000" stroke="#000000" points="448.5,-144.62 457.87,-139.67 447.46,-137.7 448.5,-144.62"/>
+</g>
+<!-- proc~unset_field_and_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node23" class="node">
+<title>proc~unset_field_and_fieldline</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node23"><a xlink:href="../proc/unset_field_and_fieldline.html" xlink:title="unset_field_and_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="775,-142 631,-142 631,-118 775,-118 775,-142"/>
+<text text-anchor="middle" x="703" y="-127.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">unset_field_and_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~find_maxima_along_fieldline&#45;&gt;proc~unset_field_and_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge20" class="edge">
+<title>proc~find_maxima_along_fieldline&#45;&gt;proc~unset_field_and_fieldline</title>
+<path fill="none" stroke="#000000" d="M378.2,-155.98C390.93,-152.92 403.61,-148.73 415,-143 434.66,-133.11 430.55,-117.13 451,-109 510.47,-85.36 531.3,-102.81 595,-109 610.08,-110.47 626.19,-113.07 641.21,-115.95"/>
+<polygon fill="#000000" stroke="#000000" points="640.92,-119.46 651.41,-117.98 642.28,-112.6 640.92,-119.46"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;compute_B_mod -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge21" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;compute_B_mod</title>
+<path fill="none" stroke="#000000" d="M401,-302.07C405.95,-304.61 410.66,-307.56 415,-311 446.82,-336.24 419.79,-369 451,-395 504.65,-439.7 586.33,-451.07 641.83,-453.14"/>
+<polygon fill="#000000" stroke="#000000" points="641.78,-456.64 651.88,-453.42 641.98,-449.64 641.78,-456.64"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~b_mod_along_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge22" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~b_mod_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M395.37,-302.04C402.21,-304.52 408.83,-307.48 415,-311 436.35,-323.19 430.37,-339.63 451,-353 453.61,-354.69 456.37,-356.25 459.21,-357.69"/>
+<polygon fill="#000000" stroke="#000000" points="457.99,-360.98 468.55,-361.88 460.85,-354.59 457.99,-360.98"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~db_dphi_along_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge23" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~db_dphi_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M365.47,-302C381.72,-304.89 398.98,-308.01 415,-311 426.85,-313.21 439.42,-315.62 451.63,-318"/>
+<polygon fill="#000000" stroke="#000000" points="451.28,-321.5 461.77,-319.98 452.63,-314.63 451.28,-321.5"/>
+</g>
+<!-- proc~find_global_extrema -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node18" class="node">
+<title>proc~find_global_extrema</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node18"><a xlink:href="../proc/find_global_extrema.html" xlink:title="find_global_extrema">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="583,-260 463,-260 463,-236 583,-236 583,-260"/>
+<text text-anchor="middle" x="523" y="-245.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_global_extrema</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_global_extrema -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge24" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_global_extrema</title>
+<path fill="none" stroke="#000000" d="M365.47,-278C381.72,-275.11 398.98,-271.99 415,-269 427.26,-266.71 440.3,-264.21 452.9,-261.76"/>
+<polygon fill="#000000" stroke="#000000" points="453.75,-265.16 462.89,-259.8 452.4,-258.29 453.75,-265.16"/>
+</g>
+<!-- proc~find_local_minima -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node20" class="node">
+<title>proc~find_local_minima</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node20"><a xlink:href="../proc/find_local_minima.html" xlink:title="find_local_minima">
+<polygon fill="#d9534f" stroke="#d9534f" points="577.5,-302 468.5,-302 468.5,-278 577.5,-278 577.5,-302"/>
+<text text-anchor="middle" x="523" y="-287.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_local_minima</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge25" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima</title>
+<path fill="none" stroke="#000000" d="M415.19,-290C429.99,-290 444.65,-290 458.15,-290"/>
+<polygon fill="#000000" stroke="#000000" points="458.23,-293.5 468.23,-290 458.23,-286.5 458.23,-293.5"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~set_field_and_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge26" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~set_field_and_fieldline</title>
+<path fill="none" stroke="#000000" d="M400.25,-277.98C405.46,-275.44 410.42,-272.47 415,-269 444.45,-246.64 428.85,-223.6 451,-194 463.96,-176.67 482.14,-160.39 496.86,-148.59"/>
+<polygon fill="#000000" stroke="#000000" points="499.34,-151.09 505.06,-142.18 495.03,-145.58 499.34,-151.09"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~unset_field_and_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge27" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~unset_field_and_fieldline</title>
+<path fill="none" stroke="#000000" d="M395.37,-277.96C402.21,-275.48 408.83,-272.52 415,-269 436.35,-256.81 430.93,-241.19 451,-227 508.99,-185.99 586.63,-159.48 640.13,-144.71"/>
+<polygon fill="#000000" stroke="#000000" points="641.09,-148.08 649.83,-142.09 639.26,-141.32 641.09,-148.08"/>
+</g>
+<!-- proc~b_mod_along_fieldline&#45;&gt;compute_B_mod -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge28" class="edge">
+<title>proc~b_mod_along_fieldline&#45;&gt;compute_B_mod</title>
+<path fill="none" stroke="#000000" d="M551.42,-386.02C581.87,-399.36 631.17,-420.96 665.01,-435.79"/>
+<polygon fill="#000000" stroke="#000000" points="663.98,-439.16 674.55,-439.97 666.79,-432.75 663.98,-439.16"/>
+</g>
+<!-- proc~b_mod_along_fieldline&#45;&gt;none~get_theta -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge29" class="edge">
+<title>proc~b_mod_along_fieldline&#45;&gt;none~get_theta</title>
+<path fill="none" stroke="#000000" d="M589.52,-374C602.87,-374 616.98,-374 630.53,-374"/>
+<polygon fill="#000000" stroke="#000000" points="630.75,-377.5 640.75,-374 630.75,-370.5 630.75,-377.5"/>
+</g>
+<!-- proc~db_dphi_along_fieldline&#45;&gt;none~get_theta -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge31" class="edge">
+<title>proc~db_dphi_along_fieldline&#45;&gt;none~get_theta</title>
+<path fill="none" stroke="#000000" d="M575.01,-344.04C595.58,-348.89 619.49,-354.53 640.98,-359.6"/>
+<polygon fill="#000000" stroke="#000000" points="640.45,-363.07 650.98,-361.96 642.06,-356.26 640.45,-363.07"/>
+</g>
+<!-- compute_B_and_dB_dx -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node24" class="node">
+<title>compute_B_and_dB_dx</title>
+<polygon fill="#777777" stroke="#777777" points="771,-344 635,-344 635,-320 771,-320 771,-344"/>
+<text text-anchor="middle" x="703" y="-329.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute_B_and_dB_dx</text>
+</g>
+<!-- proc~db_dphi_along_fieldline&#45;&gt;compute_B_and_dB_dx -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge30" class="edge">
+<title>proc~db_dphi_along_fieldline&#45;&gt;compute_B_and_dB_dx</title>
+<path fill="none" stroke="#000000" d="M592.56,-332C603.1,-332 614.05,-332 624.76,-332"/>
+<polygon fill="#000000" stroke="#000000" points="624.94,-335.5 634.94,-332 624.94,-328.5 624.94,-335.5"/>
+</g>
+<!-- proc~find_global_extrema&#45;&gt;proc~linspace -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge32" class="edge">
+<title>proc~find_global_extrema&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M583.07,-248C647.73,-248 749.47,-248 804.18,-248"/>
+<polygon fill="#000000" stroke="#000000" points="804.47,-251.5 814.47,-248 804.47,-244.5 804.47,-251.5"/>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;interface~not_same -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge33" class="edge">
+<title>proc~find_local_maxima&#45;&gt;interface~not_same</title>
+<path fill="none" stroke="#000000" d="M759.33,-289.4C773.18,-289.5 787.79,-289.61 800.81,-289.7"/>
+<polygon fill="#000000" stroke="#000000" points="800.85,-293.2 810.87,-289.77 800.9,-286.2 800.85,-293.2"/>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;proc~linspace -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge34" class="edge">
+<title>proc~find_local_maxima&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M744.66,-276.92C763.66,-271.27 786.14,-264.6 804.7,-259.08"/>
+<polygon fill="#000000" stroke="#000000" points="805.7,-262.44 814.29,-256.23 803.71,-255.73 805.7,-262.44"/>
+</g>
+<!-- proc~find_local_minima&#45;&gt;proc~find_local_maxima -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge35" class="edge">
+<title>proc~find_local_minima&#45;&gt;proc~find_local_maxima</title>
+<path fill="none" stroke="#000000" d="M577.89,-289.7C596.36,-289.59 617.24,-289.48 636.53,-289.37"/>
+<polygon fill="#000000" stroke="#000000" points="636.78,-292.87 646.76,-289.31 636.74,-285.87 636.78,-292.87"/>
+</g>
+<!-- proc~integrate_1d -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node25" class="node">
+<title>proc~integrate_1d</title>
+<g id="a_proc~~make_flock_from_labels~~CallsGraph_node25"><a xlink:href="../proc/integrate_1d.html" xlink:title="integrate_1d">
+<polygon fill="#d9534f" stroke="#d9534f" points="743,-622 663,-622 663,-598 743,-598 743,-622"/>
+<text text-anchor="middle" x="703" y="-607.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">integrate_1d</text>
+</a>
+</g>
+</g>
+<!-- proc~integrate_1d_substituted&#45;&gt;proc~integrate_1d -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge36" class="edge">
+<title>proc~integrate_1d_substituted&#45;&gt;proc~integrate_1d</title>
+<path fill="none" stroke="#000000" d="M595.12,-610C614.46,-610 634.99,-610 652.82,-610"/>
+<polygon fill="#000000" stroke="#000000" points="652.98,-613.5 662.98,-610 652.98,-606.5 652.98,-613.5"/>
+</g>
+<!-- proc~set_field_and_fieldline&#45;&gt;proc~unset_field_and_fieldline -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge37" class="edge">
+<title>proc~set_field_and_fieldline&#45;&gt;proc~unset_field_and_fieldline</title>
+<path fill="none" stroke="#000000" d="M588.01,-130C598.62,-130 609.74,-130 620.71,-130"/>
+<polygon fill="#000000" stroke="#000000" points="620.71,-133.5 630.71,-130 620.71,-126.5 620.71,-133.5"/>
+</g>
+<!-- qag -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_node26" class="node">
+<title>qag</title>
+<polygon fill="#777777" stroke="#777777" points="870,-622 816,-622 816,-598 870,-598 870,-622"/>
+<text text-anchor="middle" x="843" y="-607.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">qag</text>
+</g>
+<!-- proc~integrate_1d&#45;&gt;qag -->
+<g id="proc~~make_flock_from_labels~~CallsGraph_edge38" class="edge">
+<title>proc~integrate_1d&#45;&gt;qag</title>
+<path fill="none" stroke="#000000" d="M743.18,-610C762.81,-610 786.43,-610 805.66,-610"/>
+<polygon fill="#000000" stroke="#000000" points="805.83,-613.5 815.83,-610 805.83,-606.5 805.83,-613.5"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocmake_flock_from_labelsCallsGraph = svgPanZoom('#procmake_flock_from_labelsCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~make_flock_from_labels~~CalledByGraph Pages: 1 -->
+<svg id="procmake_flock_from_labelsCalledByGraph" width="444pt" height="74pt"
+ viewBox="0.00 0.00 444.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~make_flock_from_labels~~CalledByGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
+<title>proc~~make_flock_from_labels~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 440,-70 440,4 -4,4"/>
+<!-- proc~make_flock_from_labels -->
+<g id="proc~~make_flock_from_labels~~CalledByGraph_node1" class="node">
+<title>proc~make_flock_from_labels</title>
+<polygon fill="none" stroke="black" points="436,-45 296,-45 296,-21 436,-21 436,-45"/>
+<text text-anchor="middle" x="366" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">make_flock_from_labels</text>
+</g>
+<!-- proc~make_flock_of_fieldlines -->
+<g id="proc~~make_flock_from_labels~~CalledByGraph_node2" class="node">
+<title>proc~make_flock_of_fieldlines</title>
+<g id="a_proc~~make_flock_from_labels~~CalledByGraph_node2"><a xlink:href="../proc/make_flock_of_fieldlines.html" xlink:title="make_flock_of_fieldlines">
+<polygon fill="#d9534f" stroke="#d9534f" points="260,-45 118,-45 118,-21 260,-21 260,-45"/>
+<text text-anchor="middle" x="189" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_of_fieldlines</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels -->
+<g id="proc~~make_flock_from_labels~~CalledByGraph_edge1" class="edge">
+<title>proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels</title>
+<path fill="none" stroke="#000000" d="M260.17,-33C268.65,-33 277.35,-33 285.94,-33"/>
+<polygon fill="#000000" stroke="#000000" points="285.95,-36.5 295.95,-33 285.95,-29.5 285.95,-36.5"/>
+</g>
+<!-- program~electric_rabe -->
+<g id="proc~~make_flock_from_labels~~CalledByGraph_node3" class="node">
+<title>program~electric_rabe</title>
+<g id="a_proc~~make_flock_from_labels~~CalledByGraph_node3"><a xlink:href="../program/electric_rabe.html" xlink:title="electric_rabe">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="82,-66 0,-66 0,-42 82,-42 82,-66"/>
+<text text-anchor="middle" x="41" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe</text>
+</a>
+</g>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="proc~~make_flock_from_labels~~CalledByGraph_edge2" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M82.28,-48.21C90.32,-47.05 99.02,-45.8 107.86,-44.53"/>
+<polygon fill="#000000" stroke="#000000" points="108.47,-47.98 117.87,-43.09 107.47,-41.05 108.47,-47.98"/>
+</g>
+<!-- program~main -->
+<g id="proc~~make_flock_from_labels~~CalledByGraph_node4" class="node">
+<title>program~main</title>
+<g id="a_proc~~make_flock_from_labels~~CalledByGraph_node4"><a xlink:href="../program/main.html" xlink:title="main">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="68,-24 14,-24 14,0 68,0 68,-24"/>
+<text text-anchor="middle" x="41" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">main</text>
+</a>
+</g>
+</g>
+<!-- program~main&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="proc~~make_flock_from_labels~~CalledByGraph_edge3" class="edge">
+<title>program~main&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M68.1,-15.75C79.5,-17.39 93.54,-19.41 107.95,-21.49"/>
+<polygon fill="#000000" stroke="#000000" points="107.56,-24.97 117.95,-22.93 108.56,-18.04 107.56,-24.97"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

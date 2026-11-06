@@ -1,0 +1,800 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>not_same &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>not_same
+      <small>Interface</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="<p> 0.2% of total for procedures.</p>Including implementation: 83 statements,  3.3% of total for procedures.">5 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/utils.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/utils.f90.html'>utils.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/utils.html'>utils</a></li>
+            <li class="breadcrumb-item active" aria-current="page">not_same</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#modprocs-0"
+         aria-expanded="false" aria-controls="modprocs-0">
+         <h4 class="card-header bg-primary text-white">Module Procedures</h4>
+      </a>
+      <div id="modprocs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../interface/not_same.html#moduleprocedure-not_same_scalar~2">not_same_scalar</a>
+            <a class="list-group-item" href="../interface/not_same.html#moduleprocedure-not_same_array~2">not_same_array</a>
+            <a class="list-group-item" href="../interface/not_same.html#moduleprocedure-not_same_matrix~2">not_same_matrix</a>
+        </div>
+      </div>
+    </div>
+
+  
+
+
+  </div>
+
+    </div>
+
+    <div class="col-md-9" id='text'>
+      <h2>public interface not_same</h2>
+      
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Called by</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: interface~~not_same~~CalledByGraph Pages: 1 -->
+<svg id="interfacenot_sameCalledByGraph" width="641pt" height="90pt"
+ viewBox="0.00 0.00 641.00 90.48" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="interface~~not_same~~CalledByGraph" class="graph" transform="scale(0.51 0.51) rotate(0) translate(4 174)">
+<title>interface~~not_same~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-174 1257,-174 1257,4 -4,4"/>
+<!-- interface~not_same -->
+<g id="interface~~not_same~~CalledByGraph_node1" class="node">
+<title>interface~not_same</title>
+<polygon fill="none" stroke="black" points="1253,-50 1189,-50 1189,-26 1253,-26 1253,-50"/>
+<text text-anchor="middle" x="1221" y="-35.6" font-family="Helvetica,sans-Serif" font-size="10.50">not_same</text>
+</g>
+<!-- proc~find_local_maxima -->
+<g id="interface~~not_same~~CalledByGraph_node2" class="node">
+<title>proc~find_local_maxima</title>
+<g id="a_interface~~not_same~~CalledByGraph_node2"><a xlink:href="../proc/find_local_maxima.html" xlink:title="find_local_maxima">
+<polygon fill="#d9534f" stroke="#d9534f" points="1153,-90 1041,-90 1041,-66 1153,-66 1153,-90"/>
+<text text-anchor="middle" x="1097" y="-75.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_local_maxima</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;interface~not_same -->
+<g id="interface~~not_same~~CalledByGraph_edge1" class="edge">
+<title>proc~find_local_maxima&#45;&gt;interface~not_same</title>
+<path fill="none" stroke="#000000" d="M1134.6,-66C1148.63,-61.4 1164.72,-56.12 1179.13,-51.4"/>
+<polygon fill="#000000" stroke="#000000" points="1180.37,-54.68 1188.78,-48.24 1178.19,-48.03 1180.37,-54.68"/>
+</g>
+<!-- proc~make_flock_from_labels -->
+<g id="interface~~not_same~~CalledByGraph_node3" class="node">
+<title>proc~make_flock_from_labels</title>
+<g id="a_interface~~not_same~~CalledByGraph_node3"><a xlink:href="../proc/make_flock_from_labels.html" xlink:title="make_flock_from_labels">
+<polygon fill="#d9534f" stroke="#d9534f" points="529,-88 389,-88 389,-64 529,-64 529,-88"/>
+<text text-anchor="middle" x="459" y="-73.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_from_labels</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;interface~not_same -->
+<g id="interface~~not_same~~CalledByGraph_edge2" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;interface~not_same</title>
+<path fill="none" stroke="#000000" d="M529.12,-72.54C683.79,-64.81 1053.94,-46.3 1178.38,-40.08"/>
+<polygon fill="#000000" stroke="#000000" points="1178.81,-43.56 1188.62,-39.57 1178.46,-36.57 1178.81,-43.56"/>
+</g>
+<!-- proc~find_maxima_along_fieldline -->
+<g id="interface~~not_same~~CalledByGraph_node6" class="node">
+<title>proc~find_maxima_along_fieldline</title>
+<g id="a_interface~~not_same~~CalledByGraph_node6"><a xlink:href="../proc/find_maxima_along_fieldline.html" xlink:title="find_maxima_along_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="1005,-90 840,-90 840,-66 1005,-66 1005,-90"/>
+<text text-anchor="middle" x="922.5" y="-75.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_maxima_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~find_maxima_along_fieldline -->
+<g id="interface~~not_same~~CalledByGraph_edge11" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~find_maxima_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M529.09,-76.3C609.11,-76.65 741.26,-77.22 829.82,-77.6"/>
+<polygon fill="#000000" stroke="#000000" points="829.84,-81.1 839.86,-77.65 829.87,-74.1 829.84,-81.1"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum -->
+<g id="interface~~not_same~~CalledByGraph_node11" class="node">
+<title>proc~suspect_omnigenous_origin_not_minimum</title>
+<g id="a_interface~~not_same~~CalledByGraph_node11"><a xlink:href="../proc/suspect_omnigenous_origin_not_minimum.html" xlink:title="suspect_omnigenous_origin_not_minimum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="804,-128 565,-128 565,-104 804,-104 804,-128"/>
+<text text-anchor="middle" x="684.5" y="-113.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">suspect_omnigenous_origin_not_minimum</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum -->
+<g id="interface~~not_same~~CalledByGraph_edge15" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum</title>
+<path fill="none" stroke="#000000" d="M527.06,-88C551.92,-92.45 580.31,-97.53 606.02,-102.13"/>
+<polygon fill="#000000" stroke="#000000" points="605.64,-105.62 616.1,-103.94 606.88,-98.73 605.64,-105.62"/>
+</g>
+<!-- proc~read_namelist -->
+<g id="interface~~not_same~~CalledByGraph_node4" class="node">
+<title>proc~read_namelist</title>
+<g id="a_interface~~not_same~~CalledByGraph_node4"><a xlink:href="../proc/read_namelist.html" xlink:title="read_namelist">
+<polygon fill="#d9534f" stroke="#d9534f" points="308,-46 220,-46 220,-22 308,-22 308,-46"/>
+<text text-anchor="middle" x="264" y="-31.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_namelist</text>
+</a>
+</g>
+</g>
+<!-- proc~read_namelist&#45;&gt;interface~not_same -->
+<g id="interface~~not_same~~CalledByGraph_edge3" class="edge">
+<title>proc~read_namelist&#45;&gt;interface~not_same</title>
+<path fill="none" stroke="#000000" d="M308.28,-28.16C384.14,-18.43 546.09,0 683.5,0 683.5,0 683.5,0 923.5,0 1015.1,0 1121.35,-18.07 1178.49,-29.28"/>
+<polygon fill="#000000" stroke="#000000" points="1178.08,-32.77 1188.58,-31.29 1179.45,-25.91 1178.08,-32.77"/>
+</g>
+<!-- proc~find_local_minima -->
+<g id="interface~~not_same~~CalledByGraph_node5" class="node">
+<title>proc~find_local_minima</title>
+<g id="a_interface~~not_same~~CalledByGraph_node5"><a xlink:href="../proc/find_local_minima.html" xlink:title="find_local_minima">
+<polygon fill="#d9534f" stroke="#d9534f" points="977,-132 868,-132 868,-108 977,-108 977,-132"/>
+<text text-anchor="middle" x="922.5" y="-117.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_local_minima</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_minima&#45;&gt;proc~find_local_maxima -->
+<g id="interface~~not_same~~CalledByGraph_edge4" class="edge">
+<title>proc~find_local_minima&#45;&gt;proc~find_local_maxima</title>
+<path fill="none" stroke="#000000" d="M972.93,-107.96C992.78,-103.13 1015.83,-97.52 1036.58,-92.47"/>
+<polygon fill="#000000" stroke="#000000" points="1037.67,-95.8 1046.56,-90.04 1036.02,-89 1037.67,-95.8"/>
+</g>
+<!-- proc~find_maxima_along_fieldline&#45;&gt;proc~find_local_maxima -->
+<g id="interface~~not_same~~CalledByGraph_edge5" class="edge">
+<title>proc~find_maxima_along_fieldline&#45;&gt;proc~find_local_maxima</title>
+<path fill="none" stroke="#000000" d="M1005.2,-78C1013.65,-78 1022.16,-78 1030.4,-78"/>
+<polygon fill="#000000" stroke="#000000" points="1030.67,-81.5 1040.67,-78 1030.67,-74.5 1030.67,-81.5"/>
+</g>
+<!-- proc~make_flock_of_fieldlines -->
+<g id="interface~~not_same~~CalledByGraph_node7" class="node">
+<title>proc~make_flock_of_fieldlines</title>
+<g id="a_interface~~not_same~~CalledByGraph_node7"><a xlink:href="../proc/make_flock_of_fieldlines.html" xlink:title="make_flock_of_fieldlines">
+<polygon fill="#d9534f" stroke="#d9534f" points="335,-88 193,-88 193,-64 335,-64 335,-88"/>
+<text text-anchor="middle" x="264" y="-73.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_of_fieldlines</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels -->
+<g id="interface~~not_same~~CalledByGraph_edge6" class="edge">
+<title>proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels</title>
+<path fill="none" stroke="#000000" d="M335.22,-76C349.27,-76 364.13,-76 378.47,-76"/>
+<polygon fill="#000000" stroke="#000000" points="378.8,-79.5 388.8,-76 378.8,-72.5 378.8,-79.5"/>
+</g>
+<!-- program~electric_rabe -->
+<g id="interface~~not_same~~CalledByGraph_node8" class="node">
+<title>program~electric_rabe</title>
+<g id="a_interface~~not_same~~CalledByGraph_node8"><a xlink:href="../program/electric_rabe.html" xlink:title="electric_rabe">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="110.5,-88 28.5,-88 28.5,-64 110.5,-64 110.5,-88"/>
+<text text-anchor="middle" x="69.5" y="-73.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe</text>
+</a>
+</g>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~read_namelist -->
+<g id="interface~~not_same~~CalledByGraph_edge7" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~read_namelist</title>
+<path fill="none" stroke="#000000" d="M110.85,-67.2C139.6,-60.92 178.54,-52.43 209.82,-45.6"/>
+<polygon fill="#000000" stroke="#000000" points="210.66,-49 219.69,-43.45 209.17,-42.16 210.66,-49"/>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="interface~~not_same~~CalledByGraph_edge12" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M110.85,-76C131.69,-76 157.87,-76 182.61,-76"/>
+<polygon fill="#000000" stroke="#000000" points="182.74,-79.5 192.74,-76 182.74,-72.5 182.74,-79.5"/>
+</g>
+<!-- proc~make_fieldlines_for_precession -->
+<g id="interface~~not_same~~CalledByGraph_node13" class="node">
+<title>proc~make_fieldlines_for_precession</title>
+<g id="a_interface~~not_same~~CalledByGraph_node13"><a xlink:href="../proc/make_fieldlines_for_precession.html" xlink:title="make_fieldlines_for_precession">
+<polygon fill="#d9534f" stroke="#d9534f" points="353,-140 175,-140 175,-116 353,-116 353,-140"/>
+<text text-anchor="middle" x="264" y="-125.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_fieldlines_for_precession</text>
+</a>
+</g>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~make_fieldlines_for_precession -->
+<g id="interface~~not_same~~CalledByGraph_edge18" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~make_fieldlines_for_precession</title>
+<path fill="none" stroke="#000000" d="M110.85,-86.9C139.21,-94.56 177.46,-104.89 208.52,-113.28"/>
+<polygon fill="#000000" stroke="#000000" points="207.76,-116.7 218.33,-115.93 209.59,-109.95 207.76,-116.7"/>
+</g>
+<!-- program~main -->
+<g id="interface~~not_same~~CalledByGraph_node9" class="node">
+<title>program~main</title>
+<g id="a_interface~~not_same~~CalledByGraph_node9"><a xlink:href="../program/main.html" xlink:title="main">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="96.5,-46 42.5,-46 42.5,-22 96.5,-22 96.5,-46"/>
+<text text-anchor="middle" x="69.5" y="-31.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">main</text>
+</a>
+</g>
+</g>
+<!-- program~main&#45;&gt;proc~read_namelist -->
+<g id="interface~~not_same~~CalledByGraph_edge8" class="edge">
+<title>program~main&#45;&gt;proc~read_namelist</title>
+<path fill="none" stroke="#000000" d="M96.86,-34C125.85,-34 173.19,-34 209.94,-34"/>
+<polygon fill="#000000" stroke="#000000" points="210,-37.5 220,-34 210,-30.5 210,-37.5"/>
+</g>
+<!-- program~main&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="interface~~not_same~~CalledByGraph_edge13" class="edge">
+<title>program~main&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M96.86,-39.75C122.73,-45.4 163.21,-54.23 197.73,-61.76"/>
+<polygon fill="#000000" stroke="#000000" points="197.24,-65.24 207.76,-63.95 198.74,-58.4 197.24,-65.24"/>
+</g>
+<!-- proc~find_magnetic_well_bottom -->
+<g id="interface~~not_same~~CalledByGraph_node10" class="node">
+<title>proc~find_magnetic_well_bottom</title>
+<g id="a_interface~~not_same~~CalledByGraph_node10"><a xlink:href="../proc/find_magnetic_well_bottom.html" xlink:title="find_magnetic_well_bottom">
+<polygon fill="#d9534f" stroke="#d9534f" points="763.5,-170 605.5,-170 605.5,-146 763.5,-146 763.5,-170"/>
+<text text-anchor="middle" x="684.5" y="-155.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_magnetic_well_bottom</text>
+</a>
+</g>
+</g>
+<!-- proc~find_magnetic_well_bottom&#45;&gt;proc~find_local_minima -->
+<g id="interface~~not_same~~CalledByGraph_edge9" class="edge">
+<title>proc~find_magnetic_well_bottom&#45;&gt;proc~find_local_minima</title>
+<path fill="none" stroke="#000000" d="M760.17,-145.98C791.6,-140.92 827.78,-135.09 857.91,-130.24"/>
+<polygon fill="#000000" stroke="#000000" points="858.56,-133.68 867.87,-128.63 857.44,-126.77 858.56,-133.68"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima -->
+<g id="interface~~not_same~~CalledByGraph_edge10" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima</title>
+<path fill="none" stroke="#000000" d="M804.19,-118.01C822.63,-118.32 841.05,-118.64 857.64,-118.92"/>
+<polygon fill="#000000" stroke="#000000" points="857.67,-122.42 867.72,-119.09 857.78,-115.42 857.67,-122.42"/>
+</g>
+<!-- proc~set_fieldline_minima -->
+<g id="interface~~not_same~~CalledByGraph_node12" class="node">
+<title>proc~set_fieldline_minima</title>
+<g id="a_interface~~not_same~~CalledByGraph_node12"><a xlink:href="../proc/set_fieldline_minima.html" xlink:title="set_fieldline_minima">
+<polygon fill="#d9534f" stroke="#d9534f" points="520,-150 398,-150 398,-126 520,-126 520,-150"/>
+<text text-anchor="middle" x="459" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">set_fieldline_minima</text>
+</a>
+</g>
+</g>
+<!-- proc~set_fieldline_minima&#45;&gt;proc~find_magnetic_well_bottom -->
+<g id="interface~~not_same~~CalledByGraph_edge14" class="edge">
+<title>proc~set_fieldline_minima&#45;&gt;proc~find_magnetic_well_bottom</title>
+<path fill="none" stroke="#000000" d="M520.19,-143.39C543.14,-145.44 569.81,-147.83 594.87,-150.07"/>
+<polygon fill="#000000" stroke="#000000" points="594.84,-153.58 605.11,-150.99 595.47,-146.61 594.84,-153.58"/>
+</g>
+<!-- proc~make_fieldlines_for_precession&#45;&gt;proc~set_fieldline_minima -->
+<g id="interface~~not_same~~CalledByGraph_edge16" class="edge">
+<title>proc~make_fieldlines_for_precession&#45;&gt;proc~set_fieldline_minima</title>
+<path fill="none" stroke="#000000" d="M353.03,-132.56C364.67,-133.16 376.49,-133.78 387.78,-134.36"/>
+<polygon fill="#000000" stroke="#000000" points="387.81,-137.87 397.98,-134.89 388.18,-130.88 387.81,-137.87"/>
+</g>
+<!-- proc~setup_bounce_integrals -->
+<g id="interface~~not_same~~CalledByGraph_node14" class="node">
+<title>proc~setup_bounce_integrals</title>
+<g id="a_interface~~not_same~~CalledByGraph_node14"><a xlink:href="../proc/setup_bounce_integrals.html" xlink:title="setup_bounce_integrals">
+<polygon fill="#d9534f" stroke="#d9534f" points="139,-140 0,-140 0,-116 139,-116 139,-140"/>
+<text text-anchor="middle" x="69.5" y="-125.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">setup_bounce_integrals</text>
+</a>
+</g>
+</g>
+<!-- proc~setup_bounce_integrals&#45;&gt;proc~make_fieldlines_for_precession -->
+<g id="interface~~not_same~~CalledByGraph_edge17" class="edge">
+<title>proc~setup_bounce_integrals&#45;&gt;proc~make_fieldlines_for_precession</title>
+<path fill="none" stroke="#000000" d="M139.18,-128C147.49,-128 156.09,-128 164.71,-128"/>
+<polygon fill="#000000" stroke="#000000" points="164.83,-131.5 174.83,-128 164.83,-124.5 164.83,-131.5"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var paninterfacenot_sameCalledByGraph = svgPanZoom('#interfacenot_sameCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+<br>
+
+
+        <h2>Module Procedures</h2>
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-not_same_scalar"></span> <h3>private  function not_same_scalar(scalar_1, scalar_2, reltol_in, abstol_in)  
+</h3></div>
+    <div class="card-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-scalar_1"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>scalar_1</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-scalar_2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>scalar_2</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reltol_in"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reltol_in</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-abstol_in"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>abstol_in</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-not_same_array"></span> <h3>private  function not_same_array(array_1, array_2, reltol_in, abstol_in)  
+</h3></div>
+    <div class="card-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-array_1"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>array_1</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-array_2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>array_2</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reltol_in~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reltol_in</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-abstol_in~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>abstol_in</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+            <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-not_same_matrix"></span> <h3>private  function not_same_matrix(matrix_1, matrix_2, reltol_in, abstol_in)  
+</h3></div>
+    <div class="card-body">
+        
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-matrix_1"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:, :)
+            </td>
+            <td>::</td>
+            <td><strong>matrix_1</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-matrix_2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:, :)
+            </td>
+            <td>::</td>
+            <td><strong>matrix_2</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-reltol_in~3"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>reltol_in</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-abstol_in~3"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>abstol_in</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+</div>
+  </div>
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

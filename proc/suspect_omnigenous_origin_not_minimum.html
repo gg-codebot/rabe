@@ -1,0 +1,967 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>suspect_omnigenous_origin_not_minimum &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>suspect_omnigenous_origin_not_minimum
+      <small>Function</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 3.3% of total for procedures.">82 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/field_checks.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/field_checks.f90.html'>field_checks.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/field_checks.html'>field_checks</a></li>
+            <li class="breadcrumb-item active" aria-current="page">suspect_omnigenous_origin_not_minimum</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  function suspect_omnigenous_origin_not_minimum(field, N_tor, M_pol, retol)  
+</h2>
+        <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='../module/find_extrema.html'>find_extrema</a></li>
+                  <li class="list-inline-item"><a href='../module/field_base.html'>field_base</a></li>
+                  <li class="list-inline-item"><a href='../module/fieldline_mod.html'>fieldline_mod</a></li>
+                  <li class="list-inline-item"><a href='../module/field_along_fieldline.html'>field_along_fieldline</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph Pages: 1 -->
+<svg id="procsuspect_omnigenous_origin_not_minimumUsesGraph" width="623pt" height="152pt"
+ viewBox="0.00 0.00 623.00 152.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 148)">
+<title>proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-148 619,-148 619,4 -4,4"/>
+<!-- proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node1" class="node">
+<title>proc~suspect_omnigenous_origin_not_minimum</title>
+<polygon fill="none" stroke="black" points="615,-84 376,-84 376,-60 615,-60 615,-84"/>
+<text text-anchor="middle" x="495.5" y="-69.6" font-family="Helvetica,sans-Serif" font-size="10.50">suspect_omnigenous_origin_not_minimum</text>
+</g>
+<!-- module~field_along_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node2" class="node">
+<title>module~field_along_fieldline</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node2"><a xlink:href="../module/field_along_fieldline.html" xlink:title="field_along_fieldline">
+<polygon fill="#337ab7" stroke="#337ab7" points="340,-104 221,-104 221,-80 340,-80 340,-104"/>
+<text text-anchor="middle" x="280.5" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~field_along_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge1" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~field_along_fieldline</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M375.86,-83.14C367.19,-83.95 358.64,-84.76 350.42,-85.53"/>
+<polygon fill="#000000" stroke="#000000" points="349.85,-82.07 340.22,-86.49 350.5,-89.04 349.85,-82.07"/>
+</g>
+<!-- module~field_base -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node3" class="node">
+<title>module~field_base</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node3"><a xlink:href="../module/field_base.html" xlink:title="field_base">
+<polygon fill="#337ab7" stroke="#337ab7" points="176,-144 109,-144 109,-120 176,-120 176,-144"/>
+<text text-anchor="middle" x="142.5" y="-129.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_base</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~field_base -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge2" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M456.16,-84.04C425.13,-93.33 380.15,-105.78 340,-113 287.51,-122.44 226.24,-127.42 186.25,-129.88"/>
+<polygon fill="#000000" stroke="#000000" points="185.84,-126.4 176.06,-130.48 186.25,-133.39 185.84,-126.4"/>
+</g>
+<!-- module~fieldline_mod -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node4" class="node">
+<title>module~fieldline_mod</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node4"><a xlink:href="../module/fieldline_mod.html" xlink:title="fieldline_mod">
+<polygon fill="#337ab7" stroke="#337ab7" points="185,-64 100,-64 100,-40 185,-40 185,-64"/>
+<text text-anchor="middle" x="142.5" y="-49.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_mod</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~fieldline_mod -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge3" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~fieldline_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M375.67,-65.23C314.34,-61.73 242.66,-57.65 195.36,-54.95"/>
+<polygon fill="#000000" stroke="#000000" points="195.53,-51.46 185.35,-54.38 195.13,-58.45 195.53,-51.46"/>
+</g>
+<!-- module~find_extrema -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node5" class="node">
+<title>module~find_extrema</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node5"><a xlink:href="../module/find_extrema.html" xlink:title="find_extrema">
+<polygon fill="#337ab7" stroke="#337ab7" points="321.5,-24 239.5,-24 239.5,0 321.5,0 321.5,-24"/>
+<text text-anchor="middle" x="280.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_extrema</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~find_extrema -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge4" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;module~find_extrema</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M451.65,-59.93C417.01,-50.17 368.17,-36.41 331.69,-26.14"/>
+<polygon fill="#000000" stroke="#000000" points="332.33,-22.68 321.76,-23.34 330.43,-29.42 332.33,-22.68"/>
+</g>
+<!-- module~field_along_fieldline&#45;&gt;module~field_base -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge6" class="edge">
+<title>module~field_along_fieldline&#45;&gt;module~field_base</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M238.7,-104C221.95,-108.93 202.57,-114.63 185.69,-119.59"/>
+<polygon fill="#000000" stroke="#000000" points="184.68,-116.24 176.08,-122.42 186.66,-122.96 184.68,-116.24"/>
+</g>
+<!-- module~field_along_fieldline&#45;&gt;module~fieldline_mod -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge7" class="edge">
+<title>module~field_along_fieldline&#45;&gt;module~fieldline_mod</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M238.7,-80C224.84,-75.92 209.17,-71.32 194.61,-67.03"/>
+<polygon fill="#000000" stroke="#000000" points="195.33,-63.6 184.75,-64.13 193.35,-70.31 195.33,-63.6"/>
+</g>
+<!-- module~constants -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node6" class="node">
+<title>module~constants</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_node6"><a xlink:href="../module/constants.html" xlink:title="constants">
+<polygon fill="#337ab7" stroke="#337ab7" points="64,-84 0,-84 0,-60 64,-60 64,-84"/>
+<text text-anchor="middle" x="32" y="-69.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants</text>
+</a>
+</g>
+</g>
+<!-- module~field_along_fieldline&#45;&gt;module~constants -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge5" class="edge">
+<title>module~field_along_fieldline&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M220.77,-87.23C175.67,-83.58 114.52,-78.61 74.43,-75.36"/>
+<polygon fill="#000000" stroke="#000000" points="74.47,-71.85 64.22,-74.53 73.9,-78.83 74.47,-71.85"/>
+</g>
+<!-- module~field_base&#45;&gt;module~constants -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge8" class="edge">
+<title>module~field_base&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M119.54,-119.86C103.51,-110.99 81.57,-98.86 63.79,-89.03"/>
+<polygon fill="#000000" stroke="#000000" points="65.37,-85.9 54.92,-84.12 61.98,-92.03 65.37,-85.9"/>
+</g>
+<!-- module~fieldline_mod&#45;&gt;module~constants -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge9" class="edge">
+<title>module~fieldline_mod&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M99.86,-59.68C91.45,-61.23 82.61,-62.86 74.21,-64.4"/>
+<polygon fill="#000000" stroke="#000000" points="73.45,-60.99 64.25,-66.24 74.72,-67.87 73.45,-60.99"/>
+</g>
+<!-- module~find_extrema&#45;&gt;module~constants -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~UsesGraph_edge10" class="edge">
+<title>module~find_extrema&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M239.2,-11.25C202.1,-11.71 145.99,-15.38 100,-31 84.52,-36.26 68.84,-45.58 56.55,-54.01"/>
+<polygon fill="#000000" stroke="#000000" points="54.36,-51.27 48.25,-59.92 58.42,-56.98 54.36,-51.27"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="518pt" height="32pt"
+ viewBox="0.00 0.00 517.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 513.5,-28 513.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="386,-24 328,-24 328,0 386,0 386,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="509.5,-24 404.5,-24 404.5,0 509.5,0 509.5,-24"/>
+<text text-anchor="middle" x="457" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-field~22"></span>
+              class(<a href='../type/field_t.html'>field_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>field</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_tor~7"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>N_tor</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-m_pol~9"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>M_pol</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-retol~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>retol</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+      <h3>Return Value
+        <small>
+          <span class="anchor" id="variable-suspect_omnigenous_origin_not_minimum"></span>
+          logical
+        </small>
+      </h3>
+      
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph Pages: 1 -->
+<svg id="procsuspect_omnigenous_origin_not_minimumCallsGraph" width="641pt" height="240pt"
+ viewBox="0.00 0.00 641.00 240.31" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph" class="graph" transform="scale(0.91 0.91) rotate(0) translate(4 259.18)">
+<title>proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-259.18 698,-259.18 698,4 -4,4"/>
+<!-- proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node1" class="node">
+<title>proc~suspect_omnigenous_origin_not_minimum</title>
+<polygon fill="none" stroke="black" points="239,-131.18 0,-131.18 0,-107.18 239,-107.18 239,-131.18"/>
+<text text-anchor="middle" x="119.5" y="-116.78" font-family="Helvetica,sans-Serif" font-size="10.50">suspect_omnigenous_origin_not_minimum</text>
+</g>
+<!-- compute_B_mod -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node2" class="node">
+<title>compute_B_mod</title>
+<polygon fill="#777777" stroke="#777777" points="573,-255.18 471,-255.18 471,-231.18 573,-231.18 573,-255.18"/>
+<text text-anchor="middle" x="522" y="-240.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute_B_mod</text>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;compute_B_mod -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge1" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;compute_B_mod</title>
+<path fill="none" stroke="#000000" d="M133.23,-131.36C158.11,-154.31 215.93,-203.48 275,-224.18 335.7,-245.44 409.83,-248.3 460.75,-247.02"/>
+<polygon fill="#000000" stroke="#000000" points="461.04,-250.52 470.93,-246.71 460.82,-243.52 461.04,-250.52"/>
+</g>
+<!-- proc~b_mod_along_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node3" class="node">
+<title>proc~b_mod_along_fieldline</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node3"><a xlink:href="../proc/b_mod_along_fieldline.html" xlink:title="B_mod_along_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="411,-215.18 278,-215.18 278,-191.18 411,-191.18 411,-215.18"/>
+<text text-anchor="middle" x="344.5" y="-200.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">B_mod_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~b_mod_along_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge2" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~b_mod_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M147.84,-131.19C178.5,-144.47 229.84,-166.08 275,-182.18 280.55,-184.15 286.4,-186.12 292.24,-188.01"/>
+<polygon fill="#000000" stroke="#000000" points="291.42,-191.42 302.01,-191.11 293.54,-184.75 291.42,-191.42"/>
+</g>
+<!-- proc~db_dphi_along_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node4" class="node">
+<title>proc~db_dphi_along_fieldline</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node4"><a xlink:href="../proc/db_dphi_along_fieldline.html" xlink:title="dB_dphi_along_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="414,-173.18 275,-173.18 275,-149.18 414,-149.18 414,-173.18"/>
+<text text-anchor="middle" x="344.5" y="-158.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">dB_dphi_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~db_dphi_along_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge3" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~db_dphi_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M184.4,-131.21C211,-136.22 242.04,-142.07 269.6,-147.26"/>
+<polygon fill="#000000" stroke="#000000" points="269.11,-150.73 279.59,-149.14 270.41,-143.85 269.11,-150.73"/>
+</g>
+<!-- proc~find_global_extrema -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node5" class="node">
+<title>proc~find_global_extrema</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node5"><a xlink:href="../proc/find_global_extrema.html" xlink:title="find_global_extrema">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="404.5,-131.18 284.5,-131.18 284.5,-107.18 404.5,-107.18 404.5,-131.18"/>
+<text text-anchor="middle" x="344.5" y="-116.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_global_extrema</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_global_extrema -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge4" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_global_extrema</title>
+<path fill="none" stroke="#000000" d="M239.18,-119.18C251.21,-119.18 263.12,-119.18 274.36,-119.18"/>
+<polygon fill="#000000" stroke="#000000" points="274.48,-122.68 284.48,-119.18 274.48,-115.68 274.48,-122.68"/>
+</g>
+<!-- proc~find_local_minima -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node6" class="node">
+<title>proc~find_local_minima</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node6"><a xlink:href="../proc/find_local_minima.html" xlink:title="find_local_minima">
+<polygon fill="#d9534f" stroke="#d9534f" points="399,-89.18 290,-89.18 290,-65.18 399,-65.18 399,-89.18"/>
+<text text-anchor="middle" x="344.5" y="-74.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_local_minima</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge5" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima</title>
+<path fill="none" stroke="#000000" d="M184.4,-107.14C214.35,-101.5 249.94,-94.8 279.86,-89.16"/>
+<polygon fill="#000000" stroke="#000000" points="280.59,-92.59 289.77,-87.3 279.29,-85.71 280.59,-92.59"/>
+</g>
+<!-- proc~set_field_and_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node7" class="node">
+<title>proc~set_field_and_fieldline</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node7"><a xlink:href="../proc/set_field_and_fieldline.html" xlink:title="set_field_and_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="409.5,-47.18 279.5,-47.18 279.5,-23.18 409.5,-23.18 409.5,-47.18"/>
+<text text-anchor="middle" x="344.5" y="-32.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">set_field_and_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~set_field_and_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge6" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~set_field_and_fieldline</title>
+<path fill="none" stroke="#000000" d="M147.84,-107.16C178.5,-93.88 229.84,-72.27 275,-56.18 280.55,-54.2 286.4,-52.23 292.24,-50.34"/>
+<polygon fill="#000000" stroke="#000000" points="293.54,-53.6 302.01,-47.24 291.42,-46.93 293.54,-53.6"/>
+</g>
+<!-- proc~unset_field_and_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node8" class="node">
+<title>proc~unset_field_and_fieldline</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node8"><a xlink:href="../proc/unset_field_and_fieldline.html" xlink:title="unset_field_and_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="594,-27.18 450,-27.18 450,-3.18 594,-3.18 594,-27.18"/>
+<text text-anchor="middle" x="522" y="-12.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">unset_field_and_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~unset_field_and_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge7" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~unset_field_and_fieldline</title>
+<path fill="none" stroke="#000000" d="M132.72,-106.94C157.15,-83.44 214.87,-32.68 275,-14.18 328.16,2.18 390.9,1.64 439.71,-2.85"/>
+<polygon fill="#000000" stroke="#000000" points="439.61,-6.35 449.91,-3.86 440.31,0.61 439.61,-6.35"/>
+</g>
+<!-- proc~b_mod_along_fieldline&#45;&gt;compute_B_mod -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge8" class="edge">
+<title>proc~b_mod_along_fieldline&#45;&gt;compute_B_mod</title>
+<path fill="none" stroke="#000000" d="M398.16,-215.18C417.94,-219.69 440.57,-224.84 460.97,-229.49"/>
+<polygon fill="#000000" stroke="#000000" points="460.26,-232.92 470.79,-231.73 461.82,-226.1 460.26,-232.92"/>
+</g>
+<!-- none~get_theta -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node10" class="node">
+<title>none~get_theta</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node10"><a xlink:href="../type/fieldline_t.html#boundprocedure-get_theta" xlink:title="fieldline_t%get_theta">
+<polygon fill="#a7506f" stroke="#a7506f" points="584,-213.18 460,-213.18 460,-189.18 584,-189.18 584,-213.18"/>
+<text text-anchor="middle" x="522" y="-198.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_t%get_theta</text>
+</a>
+</g>
+</g>
+<!-- proc~b_mod_along_fieldline&#45;&gt;none~get_theta -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge9" class="edge">
+<title>proc~b_mod_along_fieldline&#45;&gt;none~get_theta</title>
+<path fill="none" stroke="#000000" d="M411.35,-202.42C423.94,-202.28 437.16,-202.13 449.91,-201.99"/>
+<polygon fill="#000000" stroke="#000000" points="450.04,-205.48 460,-201.87 449.96,-198.48 450.04,-205.48"/>
+</g>
+<!-- compute_B_and_dB_dx -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node9" class="node">
+<title>compute_B_and_dB_dx</title>
+<polygon fill="#777777" stroke="#777777" points="590,-171.18 454,-171.18 454,-147.18 590,-147.18 590,-171.18"/>
+<text text-anchor="middle" x="522" y="-156.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">compute_B_and_dB_dx</text>
+</g>
+<!-- proc~db_dphi_along_fieldline&#45;&gt;compute_B_and_dB_dx -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge10" class="edge">
+<title>proc~db_dphi_along_fieldline&#45;&gt;compute_B_and_dB_dx</title>
+<path fill="none" stroke="#000000" d="M414.11,-160.39C423.81,-160.28 433.84,-160.17 443.7,-160.06"/>
+<polygon fill="#000000" stroke="#000000" points="443.92,-163.55 453.88,-159.94 443.84,-156.55 443.92,-163.55"/>
+</g>
+<!-- proc~db_dphi_along_fieldline&#45;&gt;none~get_theta -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge11" class="edge">
+<title>proc~db_dphi_along_fieldline&#45;&gt;none~get_theta</title>
+<path fill="none" stroke="#000000" d="M398.16,-173.18C417.07,-177.49 438.59,-182.39 458.28,-186.88"/>
+<polygon fill="#000000" stroke="#000000" points="457.55,-190.3 468.08,-189.11 459.11,-183.48 457.55,-190.3"/>
+</g>
+<!-- proc~linspace -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node12" class="node">
+<title>proc~linspace</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node12"><a xlink:href="../proc/linspace.html" xlink:title="linspace">
+<polygon fill="#d9534f" stroke="#d9534f" points="690.5,-131.18 633.5,-131.18 633.5,-107.18 690.5,-107.18 690.5,-131.18"/>
+<text text-anchor="middle" x="662" y="-116.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">linspace</text>
+</a>
+</g>
+</g>
+<!-- proc~find_global_extrema&#45;&gt;proc~linspace -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge12" class="edge">
+<title>proc~find_global_extrema&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M404.84,-119.18C468.94,-119.18 569.11,-119.18 623.24,-119.18"/>
+<polygon fill="#000000" stroke="#000000" points="623.43,-122.68 633.43,-119.18 623.43,-115.68 623.43,-122.68"/>
+</g>
+<!-- proc~find_local_maxima -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node11" class="node">
+<title>proc~find_local_maxima</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node11"><a xlink:href="../proc/find_local_maxima.html" xlink:title="find_local_maxima">
+<polygon fill="#d9534f" stroke="#d9534f" points="578,-89.18 466,-89.18 466,-65.18 578,-65.18 578,-89.18"/>
+<text text-anchor="middle" x="522" y="-74.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_local_maxima</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_minima&#45;&gt;proc~find_local_maxima -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge13" class="edge">
+<title>proc~find_local_minima&#45;&gt;proc~find_local_maxima</title>
+<path fill="none" stroke="#000000" d="M399.11,-77.18C416.97,-77.18 437.07,-77.18 455.71,-77.18"/>
+<polygon fill="#000000" stroke="#000000" points="455.9,-80.68 465.9,-77.18 455.9,-73.68 455.9,-80.68"/>
+</g>
+<!-- proc~set_field_and_fieldline&#45;&gt;proc~unset_field_and_fieldline -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge14" class="edge">
+<title>proc~set_field_and_fieldline&#45;&gt;proc~unset_field_and_fieldline</title>
+<path fill="none" stroke="#000000" d="M409.85,-27.84C419.61,-26.73 429.79,-25.57 439.84,-24.42"/>
+<polygon fill="#000000" stroke="#000000" points="440.31,-27.89 449.84,-23.28 439.51,-20.94 440.31,-27.89"/>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;proc~linspace -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge16" class="edge">
+<title>proc~find_local_maxima&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M562.55,-89.21C581.72,-95.05 604.63,-102.02 623.52,-107.77"/>
+<polygon fill="#000000" stroke="#000000" points="622.69,-111.17 633.27,-110.74 624.73,-104.48 622.69,-111.17"/>
+</g>
+<!-- interface~not_same -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node13" class="node">
+<title>interface~not_same</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_node13"><a xlink:href="../interface/not_same.html" xlink:title="not_same">
+<polygon fill="#a7506f" stroke="#a7506f" points="694,-89.18 630,-89.18 630,-65.18 694,-65.18 694,-89.18"/>
+<text text-anchor="middle" x="662" y="-74.78" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">not_same</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;interface~not_same -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CallsGraph_edge15" class="edge">
+<title>proc~find_local_maxima&#45;&gt;interface~not_same</title>
+<path fill="none" stroke="#000000" d="M578.33,-77.18C592.18,-77.18 606.79,-77.18 619.81,-77.18"/>
+<polygon fill="#000000" stroke="#000000" points="619.87,-80.68 629.87,-77.18 619.87,-73.68 619.87,-80.68"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocsuspect_omnigenous_origin_not_minimumCallsGraph = svgPanZoom('#procsuspect_omnigenous_origin_not_minimumCallsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph Pages: 1 -->
+<svg id="procsuspect_omnigenous_origin_not_minimumCalledByGraph" width="641pt" height="66pt"
+ viewBox="0.00 0.00 641.00 65.97" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph" class="graph" transform="scale(0.89 0.89) rotate(0) translate(4 70)">
+<title>proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 715,-70 715,4 -4,4"/>
+<!-- proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_node1" class="node">
+<title>proc~suspect_omnigenous_origin_not_minimum</title>
+<polygon fill="none" stroke="black" points="711,-45 472,-45 472,-21 711,-21 711,-45"/>
+<text text-anchor="middle" x="591.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">suspect_omnigenous_origin_not_minimum</text>
+</g>
+<!-- proc~make_flock_from_labels -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_node2" class="node">
+<title>proc~make_flock_from_labels</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_node2"><a xlink:href="../proc/make_flock_from_labels.html" xlink:title="make_flock_from_labels">
+<polygon fill="#d9534f" stroke="#d9534f" points="436,-45 296,-45 296,-21 436,-21 436,-45"/>
+<text text-anchor="middle" x="366" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_from_labels</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_edge1" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum</title>
+<path fill="none" stroke="#000000" d="M436.19,-33C444.39,-33 452.95,-33 461.65,-33"/>
+<polygon fill="#000000" stroke="#000000" points="461.92,-36.5 471.92,-33 461.92,-29.5 461.92,-36.5"/>
+</g>
+<!-- proc~make_flock_of_fieldlines -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_node3" class="node">
+<title>proc~make_flock_of_fieldlines</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_node3"><a xlink:href="../proc/make_flock_of_fieldlines.html" xlink:title="make_flock_of_fieldlines">
+<polygon fill="#d9534f" stroke="#d9534f" points="260,-45 118,-45 118,-21 260,-21 260,-45"/>
+<text text-anchor="middle" x="189" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_of_fieldlines</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_edge2" class="edge">
+<title>proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels</title>
+<path fill="none" stroke="#000000" d="M260.17,-33C268.65,-33 277.35,-33 285.94,-33"/>
+<polygon fill="#000000" stroke="#000000" points="285.95,-36.5 295.95,-33 285.95,-29.5 285.95,-36.5"/>
+</g>
+<!-- program~electric_rabe -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_node4" class="node">
+<title>program~electric_rabe</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_node4"><a xlink:href="../program/electric_rabe.html" xlink:title="electric_rabe">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="82,-66 0,-66 0,-42 82,-42 82,-66"/>
+<text text-anchor="middle" x="41" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe</text>
+</a>
+</g>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_edge3" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M82.28,-48.21C90.32,-47.05 99.02,-45.8 107.86,-44.53"/>
+<polygon fill="#000000" stroke="#000000" points="108.47,-47.98 117.87,-43.09 107.47,-41.05 108.47,-47.98"/>
+</g>
+<!-- program~main -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_node5" class="node">
+<title>program~main</title>
+<g id="a_proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_node5"><a xlink:href="../program/main.html" xlink:title="main">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="68,-24 14,-24 14,0 68,0 68,-24"/>
+<text text-anchor="middle" x="41" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">main</text>
+</a>
+</g>
+</g>
+<!-- program~main&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="proc~~suspect_omnigenous_origin_not_minimum~~CalledByGraph_edge4" class="edge">
+<title>program~main&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M68.1,-15.75C79.5,-17.39 93.54,-19.41 107.95,-21.49"/>
+<polygon fill="#000000" stroke="#000000" points="107.56,-24.97 117.95,-22.93 108.56,-18.04 107.56,-24.97"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocsuspect_omnigenous_origin_not_minimumCalledByGraph = svgPanZoom('#procsuspect_omnigenous_origin_not_minimumCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

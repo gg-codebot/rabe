@@ -1,0 +1,819 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>linspace &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>linspace
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 1.1% of total for procedures.">28 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/utils.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/utils.f90.html'>utils.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/utils.html'>utils</a></li>
+            <li class="breadcrumb-item active" aria-current="page">linspace</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine linspace(a, b, n, x, include_endpoint)  
+</h2>
+    
+
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-a~7"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>a</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b~6"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>b</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n~12"></span>
+              integer,
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>n</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-x~25"></span>
+              real(kind=dp),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>x</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-include_endpoint"></span>
+              logical,
+            </td>
+<td>intent(in),</td>
+              <td>optional</td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>include_endpoint</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~linspace~~CalledByGraph Pages: 1 -->
+<svg id="proclinspaceCalledByGraph" width="641pt" height="245pt"
+ viewBox="0.00 0.00 641.00 244.73" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~linspace~~CalledByGraph" class="graph" transform="scale(0.51 0.51) rotate(0) translate(4 474)">
+<title>proc~~linspace~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-474 1248,-474 1248,4 -4,4"/>
+<!-- proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_node1" class="node">
+<title>proc~linspace</title>
+<polygon fill="none" stroke="black" points="1244,-228 1187,-228 1187,-204 1244,-204 1244,-228"/>
+<text text-anchor="middle" x="1215.5" y="-213.6" font-family="Helvetica,sans-Serif" font-size="10.50">linspace</text>
+</g>
+<!-- proc~find_global_extrema -->
+<g id="proc~~linspace~~CalledByGraph_node2" class="node">
+<title>proc~find_global_extrema</title>
+<g id="a_proc~~linspace~~CalledByGraph_node2"><a xlink:href="../proc/find_global_extrema.html" xlink:title="find_global_extrema">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="971,-344 851,-344 851,-320 971,-320 971,-344"/>
+<text text-anchor="middle" x="911" y="-329.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_global_extrema</text>
+</a>
+</g>
+</g>
+<!-- proc~find_global_extrema&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge1" class="edge">
+<title>proc~find_global_extrema&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M967.54,-319.99C1027.65,-306.48 1119.18,-284.32 1151,-268 1167.48,-259.55 1183.6,-246.27 1195.47,-235.25"/>
+<polygon fill="#000000" stroke="#000000" points="1198.17,-237.51 1202.97,-228.06 1193.33,-232.46 1198.17,-237.51"/>
+</g>
+<!-- proc~find_global_minimum -->
+<g id="proc~~linspace~~CalledByGraph_node3" class="node">
+<title>proc~find_global_minimum</title>
+<g id="a_proc~~linspace~~CalledByGraph_node3"><a xlink:href="../proc/find_global_minimum.html" xlink:title="find_global_minimum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1143.5,-150 1016.5,-150 1016.5,-126 1143.5,-126 1143.5,-150"/>
+<text text-anchor="middle" x="1080" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_global_minimum</text>
+</a>
+</g>
+</g>
+<!-- proc~find_global_minimum&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge2" class="edge">
+<title>proc~find_global_minimum&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M1120.54,-150.1C1130.77,-153.92 1141.55,-158.58 1151,-164 1166.87,-173.1 1182.79,-186.15 1194.72,-196.9"/>
+<polygon fill="#000000" stroke="#000000" points="1192.57,-199.68 1202.29,-203.9 1197.32,-194.54 1192.57,-199.68"/>
+</g>
+<!-- proc~find_local_maxima -->
+<g id="proc~~linspace~~CalledByGraph_node4" class="node">
+<title>proc~find_local_maxima</title>
+<g id="a_proc~~linspace~~CalledByGraph_node4"><a xlink:href="../proc/find_local_maxima.html" xlink:title="find_local_maxima">
+<polygon fill="#d9534f" stroke="#d9534f" points="1136,-344 1024,-344 1024,-320 1136,-320 1136,-344"/>
+<text text-anchor="middle" x="1080" y="-329.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_local_maxima</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge3" class="edge">
+<title>proc~find_local_maxima&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M1125.67,-319.99C1134.59,-316.37 1143.5,-311.77 1151,-306 1174.96,-287.56 1193.55,-257.56 1204.26,-237.32"/>
+<polygon fill="#000000" stroke="#000000" points="1207.45,-238.76 1208.87,-228.26 1201.22,-235.58 1207.45,-238.76"/>
+</g>
+<!-- proc~fourier_field_init -->
+<g id="proc~~linspace~~CalledByGraph_node5" class="node">
+<title>proc~fourier_field_init</title>
+<g id="a_proc~~linspace~~CalledByGraph_node5"><a xlink:href="../proc/fourier_field_init.html" xlink:title="fourier_field_init">
+<polygon fill="#d9534f" stroke="#d9534f" points="1129.5,-108 1030.5,-108 1030.5,-84 1129.5,-84 1129.5,-108"/>
+<text text-anchor="middle" x="1080" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fourier_field_init</text>
+</a>
+</g>
+</g>
+<!-- proc~fourier_field_init&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge4" class="edge">
+<title>proc~fourier_field_init&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M1129.85,-105.74C1137.37,-108.59 1144.72,-112.26 1151,-117 1177.72,-137.15 1196.26,-172.08 1206.13,-194.6"/>
+<polygon fill="#000000" stroke="#000000" points="1202.97,-196.11 1210.06,-203.98 1209.43,-193.4 1202.97,-196.11"/>
+</g>
+<!-- proc~get_eta_integration_grid -->
+<g id="proc~~linspace~~CalledByGraph_node6" class="node">
+<title>proc~get_eta_integration_grid</title>
+<g id="a_proc~~linspace~~CalledByGraph_node6"><a xlink:href="../proc/get_eta_integration_grid.html" xlink:title="get_eta_integration_grid">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="764.5,-188 622.5,-188 622.5,-164 764.5,-164 764.5,-188"/>
+<text text-anchor="middle" x="693.5" y="-173.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_eta_integration_grid</text>
+</a>
+</g>
+</g>
+<!-- proc~get_eta_integration_grid&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge5" class="edge">
+<title>proc~get_eta_integration_grid&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M764.83,-176.52C854.77,-177.98 1015.15,-183.28 1151,-202 1159.43,-203.16 1168.4,-204.85 1176.86,-206.66"/>
+<polygon fill="#000000" stroke="#000000" points="1176.33,-210.13 1186.85,-208.9 1177.86,-203.3 1176.33,-210.13"/>
+</g>
+<!-- proc~get_labels -->
+<g id="proc~~linspace~~CalledByGraph_node7" class="node">
+<title>proc~get_labels</title>
+<g id="a_proc~~linspace~~CalledByGraph_node7"><a xlink:href="../proc/get_labels.html" xlink:title="get_labels">
+<polygon fill="#d9534f" stroke="#d9534f" points="944.5,-428 877.5,-428 877.5,-404 944.5,-404 944.5,-428"/>
+<text text-anchor="middle" x="911" y="-413.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_labels</text>
+</a>
+</g>
+</g>
+<!-- proc~get_labels&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge6" class="edge">
+<title>proc~get_labels&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M944.53,-415.85C994.54,-413.95 1090.8,-403.42 1151,-353 1186.62,-323.17 1203.35,-268.98 1210.28,-238.45"/>
+<polygon fill="#000000" stroke="#000000" points="1213.77,-238.88 1212.41,-228.37 1206.92,-237.43 1213.77,-238.88"/>
+</g>
+<!-- proc~get_phi_integration_grid -->
+<g id="proc~~linspace~~CalledByGraph_node8" class="node">
+<title>proc~get_phi_integration_grid</title>
+<g id="a_proc~~linspace~~CalledByGraph_node8"><a xlink:href="../proc/get_phi_integration_grid.html" xlink:title="get_phi_integration_grid">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1151,-66 1009,-66 1009,-42 1151,-42 1151,-66"/>
+<text text-anchor="middle" x="1080" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_phi_integration_grid</text>
+</a>
+</g>
+</g>
+<!-- proc~get_phi_integration_grid&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge7" class="edge">
+<title>proc~get_phi_integration_grid&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M1137.56,-66.13C1142.42,-68.56 1146.99,-71.49 1151,-75 1187.12,-106.65 1203.77,-162.93 1210.52,-193.95"/>
+<polygon fill="#000000" stroke="#000000" points="1207.1,-194.68 1212.51,-203.79 1213.96,-193.3 1207.1,-194.68"/>
+</g>
+<!-- proc~integrate_over_phi_grid -->
+<g id="proc~~linspace~~CalledByGraph_node9" class="node">
+<title>proc~integrate_over_phi_grid</title>
+<g id="a_proc~~linspace~~CalledByGraph_node9"><a xlink:href="../proc/integrate_over_phi_grid.html" xlink:title="integrate_over_phi_grid">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="1149.5,-24 1010.5,-24 1010.5,0 1149.5,0 1149.5,-24"/>
+<text text-anchor="middle" x="1080" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">integrate_over_phi_grid</text>
+</a>
+</g>
+</g>
+<!-- proc~integrate_over_phi_grid&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge8" class="edge">
+<title>proc~integrate_over_phi_grid&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M1138.58,-24.12C1143.11,-26.56 1147.34,-29.49 1151,-33 1196.74,-76.84 1209.55,-155.27 1213.12,-193.63"/>
+<polygon fill="#000000" stroke="#000000" points="1209.65,-194.06 1213.94,-203.75 1216.62,-193.5 1209.65,-194.06"/>
+</g>
+<!-- proc~make_flock_from_labels -->
+<g id="proc~~linspace~~CalledByGraph_node10" class="node">
+<title>proc~make_flock_from_labels</title>
+<g id="a_proc~~linspace~~CalledByGraph_node10"><a xlink:href="../proc/make_flock_from_labels.html" xlink:title="make_flock_from_labels">
+<polygon fill="#d9534f" stroke="#d9534f" points="538,-306 398,-306 398,-282 538,-282 538,-306"/>
+<text text-anchor="middle" x="468" y="-291.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_from_labels</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge9" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M522.47,-281.99C538.93,-278.64 557.15,-275.3 574,-273 828.78,-238.16 896.57,-267.33 1151,-230 1159.42,-228.76 1168.38,-227.04 1176.84,-225.23"/>
+<polygon fill="#000000" stroke="#000000" points="1177.84,-228.59 1186.84,-223 1176.32,-221.76 1177.84,-228.59"/>
+</g>
+<!-- proc~find_maxima_along_fieldline -->
+<g id="proc~~linspace~~CalledByGraph_node15" class="node">
+<title>proc~find_maxima_along_fieldline</title>
+<g id="a_proc~~linspace~~CalledByGraph_node15"><a xlink:href="../proc/find_maxima_along_fieldline.html" xlink:title="find_maxima_along_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="776,-306 611,-306 611,-282 776,-282 776,-306"/>
+<text text-anchor="middle" x="693.5" y="-291.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_maxima_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~find_maxima_along_fieldline -->
+<g id="proc~~linspace~~CalledByGraph_edge25" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~find_maxima_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M538.19,-294C557.91,-294 579.71,-294 600.56,-294"/>
+<polygon fill="#000000" stroke="#000000" points="600.7,-297.5 610.7,-294 600.7,-290.5 600.7,-297.5"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~linspace~~CalledByGraph_node19" class="node">
+<title>proc~suspect_omnigenous_origin_not_minimum</title>
+<g id="a_proc~~linspace~~CalledByGraph_node19"><a xlink:href="../proc/suspect_omnigenous_origin_not_minimum.html" xlink:title="suspect_omnigenous_origin_not_minimum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="813,-348 574,-348 574,-324 813,-324 813,-348"/>
+<text text-anchor="middle" x="693.5" y="-333.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">suspect_omnigenous_origin_not_minimum</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~linspace~~CalledByGraph_edge31" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum</title>
+<path fill="none" stroke="#000000" d="M527.82,-306C542.86,-309.01 559.02,-312.18 574,-315 586.68,-317.39 600.14,-319.85 613.26,-322.21"/>
+<polygon fill="#000000" stroke="#000000" points="612.75,-325.67 623.21,-323.99 613.99,-318.78 612.75,-325.67"/>
+</g>
+<!-- proc~read_namelist -->
+<g id="proc~~linspace~~CalledByGraph_node11" class="node">
+<title>proc~read_namelist</title>
+<g id="a_proc~~linspace~~CalledByGraph_node11"><a xlink:href="../proc/read_namelist.html" xlink:title="read_namelist">
+<polygon fill="#d9534f" stroke="#d9534f" points="312.5,-234 224.5,-234 224.5,-210 312.5,-210 312.5,-234"/>
+<text text-anchor="middle" x="268.5" y="-219.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">read_namelist</text>
+</a>
+</g>
+</g>
+<!-- proc~read_namelist&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge10" class="edge">
+<title>proc~read_namelist&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M312.73,-220.98C389.28,-219.27 553.69,-216 692.5,-216 692.5,-216 692.5,-216 912,-216 1007.42,-216 1119.77,-216 1176.95,-216"/>
+<polygon fill="#000000" stroke="#000000" points="1176.97,-219.5 1186.97,-216 1176.97,-212.5 1176.97,-219.5"/>
+</g>
+<!-- proc~set_integration_grids -->
+<g id="proc~~linspace~~CalledByGraph_node12" class="node">
+<title>proc~set_integration_grids</title>
+<g id="a_proc~~linspace~~CalledByGraph_node12"><a xlink:href="../proc/set_integration_grids.html" xlink:title="set_integration_grids">
+<polygon fill="#d9534f" stroke="#d9534f" points="973,-470 849,-470 849,-446 973,-446 973,-470"/>
+<text text-anchor="middle" x="911" y="-455.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">set_integration_grids</text>
+</a>
+</g>
+</g>
+<!-- proc~set_integration_grids&#45;&gt;proc~linspace -->
+<g id="proc~~linspace~~CalledByGraph_edge11" class="edge">
+<title>proc~set_integration_grids&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M973.21,-457.22C1026.51,-453.32 1102.61,-439.53 1151,-395 1196.72,-352.94 1209.54,-275.84 1213.12,-238.05"/>
+<polygon fill="#000000" stroke="#000000" points="1216.61,-238.34 1213.93,-228.08 1209.63,-237.77 1216.61,-238.34"/>
+</g>
+<!-- proc~calc_trapped_fraction -->
+<g id="proc~~linspace~~CalledByGraph_node13" class="node">
+<title>proc~calc_trapped_fraction</title>
+<g id="a_proc~~linspace~~CalledByGraph_node13"><a xlink:href="../proc/calc_trapped_fraction.html" xlink:title="calc_trapped_fraction">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="532,-150 404,-150 404,-126 532,-126 532,-150"/>
+<text text-anchor="middle" x="468" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">calc_trapped_fraction</text>
+</a>
+</g>
+</g>
+<!-- proc~calc_trapped_fraction&#45;&gt;proc~get_eta_integration_grid -->
+<g id="proc~~linspace~~CalledByGraph_edge15" class="edge">
+<title>proc~calc_trapped_fraction&#45;&gt;proc~get_eta_integration_grid</title>
+<path fill="none" stroke="#000000" d="M532.15,-148.74C557.1,-152.98 586.07,-157.9 612.46,-162.39"/>
+<polygon fill="#000000" stroke="#000000" points="612,-165.86 622.44,-164.09 613.17,-158.96 612,-165.86"/>
+</g>
+<!-- proc~find_local_minima -->
+<g id="proc~~linspace~~CalledByGraph_node14" class="node">
+<title>proc~find_local_minima</title>
+<g id="a_proc~~linspace~~CalledByGraph_node14"><a xlink:href="../proc/find_local_minima.html" xlink:title="find_local_minima">
+<polygon fill="#d9534f" stroke="#d9534f" points="965.5,-386 856.5,-386 856.5,-362 965.5,-362 965.5,-386"/>
+<text text-anchor="middle" x="911" y="-371.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_local_minima</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_minima&#45;&gt;proc~find_local_maxima -->
+<g id="proc~~linspace~~CalledByGraph_edge13" class="edge">
+<title>proc~find_local_minima&#45;&gt;proc~find_local_maxima</title>
+<path fill="none" stroke="#000000" d="M959.86,-361.96C978.98,-357.15 1001.19,-351.57 1021.2,-346.54"/>
+<polygon fill="#000000" stroke="#000000" points="1022.29,-349.87 1031.14,-344.04 1020.59,-343.08 1022.29,-349.87"/>
+</g>
+<!-- proc~find_maxima_along_fieldline&#45;&gt;proc~find_local_maxima -->
+<g id="proc~~linspace~~CalledByGraph_edge14" class="edge">
+<title>proc~find_maxima_along_fieldline&#45;&gt;proc~find_local_maxima</title>
+<path fill="none" stroke="#000000" d="M776.12,-296.09C831.77,-298.22 907.06,-302.5 973,-311 986.85,-312.79 1001.61,-315.31 1015.57,-317.99"/>
+<polygon fill="#000000" stroke="#000000" points="1015.09,-321.46 1025.58,-319.96 1016.44,-314.59 1015.09,-321.46"/>
+</g>
+<!-- proc~get_non_omnigenous_remainder -->
+<g id="proc~~linspace~~CalledByGraph_node16" class="node">
+<title>proc~get_non_omnigenous_remainder</title>
+<g id="a_proc~~linspace~~CalledByGraph_node16"><a xlink:href="../proc/get_non_omnigenous_remainder.html" xlink:title="get_non_omnigenous_remainder">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="362,-192 175,-192 175,-168 362,-168 362,-192"/>
+<text text-anchor="middle" x="268.5" y="-177.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">get_non_omnigenous_remainder</text>
+</a>
+</g>
+</g>
+<!-- proc~get_non_omnigenous_remainder&#45;&gt;proc~get_eta_integration_grid -->
+<g id="proc~~linspace~~CalledByGraph_edge16" class="edge">
+<title>proc~get_non_omnigenous_remainder&#45;&gt;proc~get_eta_integration_grid</title>
+<path fill="none" stroke="#000000" d="M362.07,-179.12C436.81,-178.42 540.9,-177.43 612.17,-176.76"/>
+<polygon fill="#000000" stroke="#000000" points="612.47,-180.26 622.44,-176.66 612.4,-173.26 612.47,-180.26"/>
+</g>
+<!-- proc~make_fieldlines_for_precession -->
+<g id="proc~~linspace~~CalledByGraph_node17" class="node">
+<title>proc~make_fieldlines_for_precession</title>
+<g id="a_proc~~linspace~~CalledByGraph_node17"><a xlink:href="../proc/make_fieldlines_for_precession.html" xlink:title="make_fieldlines_for_precession">
+<polygon fill="#d9534f" stroke="#d9534f" points="357.5,-428 179.5,-428 179.5,-404 357.5,-404 357.5,-428"/>
+<text text-anchor="middle" x="268.5" y="-413.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_fieldlines_for_precession</text>
+</a>
+</g>
+</g>
+<!-- proc~make_fieldlines_for_precession&#45;&gt;proc~set_integration_grids -->
+<g id="proc~~linspace~~CalledByGraph_edge21" class="edge">
+<title>proc~make_fieldlines_for_precession&#45;&gt;proc~set_integration_grids</title>
+<path fill="none" stroke="#000000" d="M333.68,-428.05C354.16,-431.48 376.97,-434.86 398,-437 554.64,-452.95 739.42,-456.88 838.55,-457.79"/>
+<polygon fill="#000000" stroke="#000000" points="838.72,-461.29 848.75,-457.88 838.78,-454.29 838.72,-461.29"/>
+</g>
+<!-- proc~set_fieldline_minima -->
+<g id="proc~~linspace~~CalledByGraph_node25" class="node">
+<title>proc~set_fieldline_minima</title>
+<g id="a_proc~~linspace~~CalledByGraph_node25"><a xlink:href="../proc/set_fieldline_minima.html" xlink:title="set_fieldline_minima">
+<polygon fill="#d9534f" stroke="#d9534f" points="529,-428 407,-428 407,-404 529,-404 529,-428"/>
+<text text-anchor="middle" x="468" y="-413.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">set_fieldline_minima</text>
+</a>
+</g>
+</g>
+<!-- proc~make_fieldlines_for_precession&#45;&gt;proc~set_fieldline_minima -->
+<g id="proc~~linspace~~CalledByGraph_edge34" class="edge">
+<title>proc~make_fieldlines_for_precession&#45;&gt;proc~set_fieldline_minima</title>
+<path fill="none" stroke="#000000" d="M357.56,-416C370.71,-416 384.12,-416 396.83,-416"/>
+<polygon fill="#000000" stroke="#000000" points="396.86,-419.5 406.86,-416 396.86,-412.5 396.86,-419.5"/>
+</g>
+<!-- proc~make_flock_of_fieldlines -->
+<g id="proc~~linspace~~CalledByGraph_node18" class="node">
+<title>proc~make_flock_of_fieldlines</title>
+<g id="a_proc~~linspace~~CalledByGraph_node18"><a xlink:href="../proc/make_flock_of_fieldlines.html" xlink:title="make_flock_of_fieldlines">
+<polygon fill="#d9534f" stroke="#d9534f" points="339.5,-306 197.5,-306 197.5,-282 339.5,-282 339.5,-306"/>
+<text text-anchor="middle" x="268.5" y="-291.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_of_fieldlines</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_of_fieldlines&#45;&gt;proc~get_labels -->
+<g id="proc~~linspace~~CalledByGraph_edge17" class="edge">
+<title>proc~make_flock_of_fieldlines&#45;&gt;proc~get_labels</title>
+<path fill="none" stroke="#000000" d="M323.81,-306.03C384.6,-319.31 486.11,-340.93 574,-357 679.8,-376.35 707.29,-375.17 813,-395 830.81,-398.34 850.36,-402.48 867.21,-406.2"/>
+<polygon fill="#000000" stroke="#000000" points="866.79,-409.69 877.32,-408.45 868.32,-402.86 866.79,-409.69"/>
+</g>
+<!-- proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels -->
+<g id="proc~~linspace~~CalledByGraph_edge18" class="edge">
+<title>proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels</title>
+<path fill="none" stroke="#000000" d="M339.69,-294C355.15,-294 371.63,-294 387.43,-294"/>
+<polygon fill="#000000" stroke="#000000" points="387.7,-297.5 397.7,-294 387.7,-290.5 387.7,-297.5"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_global_extrema -->
+<g id="proc~~linspace~~CalledByGraph_edge12" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_global_extrema</title>
+<path fill="none" stroke="#000000" d="M813.28,-333.8C822.61,-333.62 831.82,-333.45 840.65,-333.29"/>
+<polygon fill="#000000" stroke="#000000" points="840.87,-336.78 850.8,-333.1 840.74,-329.79 840.87,-336.78"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima -->
+<g id="proc~~linspace~~CalledByGraph_edge24" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima</title>
+<path fill="none" stroke="#000000" d="M762.69,-348.02C789.47,-352.75 820.05,-358.14 846.38,-362.78"/>
+<polygon fill="#000000" stroke="#000000" points="845.79,-366.23 856.25,-364.52 847.01,-359.34 845.79,-366.23"/>
+</g>
+<!-- program~electric_rabe -->
+<g id="proc~~linspace~~CalledByGraph_node20" class="node">
+<title>program~electric_rabe</title>
+<g id="a_proc~~linspace~~CalledByGraph_node20"><a xlink:href="../program/electric_rabe.html" xlink:title="electric_rabe">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="110.5,-306 28.5,-306 28.5,-282 110.5,-282 110.5,-306"/>
+<text text-anchor="middle" x="69.5" y="-291.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe</text>
+</a>
+</g>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~read_namelist -->
+<g id="proc~~linspace~~CalledByGraph_edge19" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~read_namelist</title>
+<path fill="none" stroke="#000000" d="M103.47,-281.95C136.71,-269.8 188.17,-250.99 224.58,-237.69"/>
+<polygon fill="#000000" stroke="#000000" points="226.23,-240.81 234.42,-234.09 223.83,-234.24 226.23,-240.81"/>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~make_fieldlines_for_precession -->
+<g id="proc~~linspace~~CalledByGraph_edge28" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~make_fieldlines_for_precession</title>
+<path fill="none" stroke="#000000" d="M90.11,-306.14C125.22,-327.88 198.9,-373.52 239.39,-398.59"/>
+<polygon fill="#000000" stroke="#000000" points="237.63,-401.62 247.97,-403.91 241.31,-395.66 237.63,-401.62"/>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="proc~~linspace~~CalledByGraph_edge29" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M110.84,-294C132.8,-294 160.78,-294 186.99,-294"/>
+<polygon fill="#000000" stroke="#000000" points="187.32,-297.5 197.32,-294 187.32,-290.5 187.32,-297.5"/>
+</g>
+<!-- program~main -->
+<g id="proc~~linspace~~CalledByGraph_node21" class="node">
+<title>program~main</title>
+<g id="a_proc~~linspace~~CalledByGraph_node21"><a xlink:href="../program/main.html" xlink:title="main">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="96.5,-213 42.5,-213 42.5,-189 96.5,-189 96.5,-213"/>
+<text text-anchor="middle" x="69.5" y="-198.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">main</text>
+</a>
+</g>
+</g>
+<!-- program~main&#45;&gt;proc~read_namelist -->
+<g id="proc~~linspace~~CalledByGraph_edge20" class="edge">
+<title>program~main&#45;&gt;proc~read_namelist</title>
+<path fill="none" stroke="#000000" d="M96.66,-203.79C126.41,-206.96 175.79,-212.22 213.83,-216.28"/>
+<polygon fill="#000000" stroke="#000000" points="213.92,-219.81 224.23,-217.39 214.66,-212.85 213.92,-219.81"/>
+</g>
+<!-- program~main&#45;&gt;proc~get_non_omnigenous_remainder -->
+<g id="proc~~linspace~~CalledByGraph_edge26" class="edge">
+<title>program~main&#45;&gt;proc~get_non_omnigenous_remainder</title>
+<path fill="none" stroke="#000000" d="M96.66,-198.21C114.49,-196.31 139.38,-193.66 164.64,-190.96"/>
+<polygon fill="#000000" stroke="#000000" points="165.14,-194.43 174.71,-189.89 164.39,-187.47 165.14,-194.43"/>
+</g>
+<!-- program~main&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="proc~~linspace~~CalledByGraph_edge30" class="edge">
+<title>program~main&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M96.25,-213.16C131.16,-229.63 193.59,-259.11 232.65,-277.55"/>
+<polygon fill="#000000" stroke="#000000" points="231.51,-280.88 242.05,-281.99 234.5,-274.55 231.51,-280.88"/>
+</g>
+<!-- proc~calc_lambda_lc -->
+<g id="proc~~linspace~~CalledByGraph_node22" class="node">
+<title>proc~calc_lambda_lc</title>
+<g id="a_proc~~linspace~~CalledByGraph_node22"><a xlink:href="../proc/calc_lambda_lc.html" xlink:title="calc_lambda_LC">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="318,-150 219,-150 219,-126 318,-126 318,-150"/>
+<text text-anchor="middle" x="268.5" y="-135.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">calc_lambda_LC</text>
+</a>
+</g>
+</g>
+<!-- program~main&#45;&gt;proc~calc_lambda_lc -->
+<g id="proc~~linspace~~CalledByGraph_edge32" class="edge">
+<title>program~main&#45;&gt;proc~calc_lambda_lc</title>
+<path fill="none" stroke="#000000" d="M96.71,-189.11C117.59,-179.97 147.75,-167.51 175,-159 185.82,-155.62 197.51,-152.54 208.82,-149.84"/>
+<polygon fill="#000000" stroke="#000000" points="209.67,-153.24 218.63,-147.57 208.1,-146.42 209.67,-153.24"/>
+</g>
+<!-- proc~calc_lambda_lc&#45;&gt;proc~calc_trapped_fraction -->
+<g id="proc~~linspace~~CalledByGraph_edge22" class="edge">
+<title>proc~calc_lambda_lc&#45;&gt;proc~calc_trapped_fraction</title>
+<path fill="none" stroke="#000000" d="M318.07,-138C340.75,-138 368.25,-138 393.42,-138"/>
+<polygon fill="#000000" stroke="#000000" points="393.67,-141.5 403.67,-138 393.67,-134.5 393.67,-141.5"/>
+</g>
+<!-- proc~find_magnetic_well_bottom -->
+<g id="proc~~linspace~~CalledByGraph_node23" class="node">
+<title>proc~find_magnetic_well_bottom</title>
+<g id="a_proc~~linspace~~CalledByGraph_node23"><a xlink:href="../proc/find_magnetic_well_bottom.html" xlink:title="find_magnetic_well_bottom">
+<polygon fill="#d9534f" stroke="#d9534f" points="772.5,-428 614.5,-428 614.5,-404 772.5,-404 772.5,-428"/>
+<text text-anchor="middle" x="693.5" y="-413.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_magnetic_well_bottom</text>
+</a>
+</g>
+</g>
+<!-- proc~find_magnetic_well_bottom&#45;&gt;proc~find_local_minima -->
+<g id="proc~~linspace~~CalledByGraph_edge23" class="edge">
+<title>proc~find_magnetic_well_bottom&#45;&gt;proc~find_local_minima</title>
+<path fill="none" stroke="#000000" d="M756.25,-403.96C784.51,-398.46 817.97,-391.94 846.44,-386.39"/>
+<polygon fill="#000000" stroke="#000000" points="847.15,-389.82 856.29,-384.47 845.81,-382.95 847.15,-389.82"/>
+</g>
+<!-- proc~setup_bounce_integrals -->
+<g id="proc~~linspace~~CalledByGraph_node24" class="node">
+<title>proc~setup_bounce_integrals</title>
+<g id="a_proc~~linspace~~CalledByGraph_node24"><a xlink:href="../proc/setup_bounce_integrals.html" xlink:title="setup_bounce_integrals">
+<polygon fill="#d9534f" stroke="#d9534f" points="139,-428 0,-428 0,-404 139,-404 139,-428"/>
+<text text-anchor="middle" x="69.5" y="-413.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">setup_bounce_integrals</text>
+</a>
+</g>
+</g>
+<!-- proc~setup_bounce_integrals&#45;&gt;proc~make_fieldlines_for_precession -->
+<g id="proc~~linspace~~CalledByGraph_edge27" class="edge">
+<title>proc~setup_bounce_integrals&#45;&gt;proc~make_fieldlines_for_precession</title>
+<path fill="none" stroke="#000000" d="M139.12,-416C148.87,-416 159.04,-416 169.22,-416"/>
+<polygon fill="#000000" stroke="#000000" points="169.37,-419.5 179.37,-416 169.37,-412.5 169.37,-419.5"/>
+</g>
+<!-- proc~set_fieldline_minima&#45;&gt;proc~find_magnetic_well_bottom -->
+<g id="proc~~linspace~~CalledByGraph_edge33" class="edge">
+<title>proc~set_fieldline_minima&#45;&gt;proc~find_magnetic_well_bottom</title>
+<path fill="none" stroke="#000000" d="M529.19,-416C552.14,-416 578.81,-416 603.87,-416"/>
+<polygon fill="#000000" stroke="#000000" points="604.11,-419.5 614.11,-416 604.11,-412.5 604.11,-419.5"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panproclinspaceCalledByGraph = svgPanZoom('#proclinspaceCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

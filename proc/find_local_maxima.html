@@ -1,0 +1,843 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>find_local_maxima &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>find_local_maxima
+      <small>Subroutine</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 3.4% of total for procedures.">86 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/find_extrema.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/find_extrema.f90.html'>find_extrema.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/find_extrema.html'>find_extrema</a></li>
+            <li class="breadcrumb-item active" aria-current="page">find_local_maxima</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+    <h2>public  subroutine find_local_maxima(func, interval, location, achieved_error)  
+</h2>
+        <div class="card mb-4">
+      <h3 class="card-header card-title bg-light">Uses</h3>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <ul class="list-inline">
+                  <li class="list-inline-item"><a href='../module/utils.html'>utils</a></li>
+                  <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/ieee_arithmetic'>ieee_arithmetic</a></li>
+              </ul>
+            </li>
+            <li class="list-group-item">
+              <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~find_local_maxima~~UsesGraph Pages: 1 -->
+<svg id="procfind_local_maximaUsesGraph" width="352pt" height="74pt"
+ viewBox="0.00 0.00 352.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~find_local_maxima~~UsesGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
+<title>proc~~find_local_maxima~~UsesGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 348,-70 348,4 -4,4"/>
+<!-- proc~find_local_maxima -->
+<g id="proc~~find_local_maxima~~UsesGraph_node1" class="node">
+<title>proc~find_local_maxima</title>
+<polygon fill="none" stroke="black" points="344,-45 232,-45 232,-21 344,-21 344,-45"/>
+<text text-anchor="middle" x="288" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">find_local_maxima</text>
+</g>
+<!-- ieee_arithmetic -->
+<g id="proc~~find_local_maxima~~UsesGraph_node2" class="node">
+<title>ieee_arithmetic</title>
+<g id="a_proc~~find_local_maxima~~UsesGraph_node2"><a xlink:href="http://fortranwiki.org/fortran/show/ieee_arithmetic" xlink:title="ieee_arithmetic">
+<polygon fill="#337ab7" stroke="#337ab7" points="196,-66 100,-66 100,-42 196,-42 196,-66"/>
+<text text-anchor="middle" x="148" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">ieee_arithmetic</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;ieee_arithmetic -->
+<g id="proc~~find_local_maxima~~UsesGraph_edge1" class="edge">
+<title>proc~find_local_maxima&#45;&gt;ieee_arithmetic</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M231.67,-41.42C223.35,-42.69 214.76,-43.99 206.4,-45.27"/>
+<polygon fill="#000000" stroke="#000000" points="205.71,-41.83 196.35,-46.79 206.77,-48.75 205.71,-41.83"/>
+</g>
+<!-- module~utils -->
+<g id="proc~~find_local_maxima~~UsesGraph_node3" class="node">
+<title>module~utils</title>
+<g id="a_proc~~find_local_maxima~~UsesGraph_node3"><a xlink:href="../module/utils.html" xlink:title="utils">
+<polygon fill="#337ab7" stroke="#337ab7" points="175,-24 121,-24 121,0 175,0 175,-24"/>
+<text text-anchor="middle" x="148" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">utils</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;module~utils -->
+<g id="proc~~find_local_maxima~~UsesGraph_edge2" class="edge">
+<title>proc~find_local_maxima&#45;&gt;module~utils</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M231.67,-24.58C216.13,-22.22 199.63,-19.7 185.49,-17.55"/>
+<polygon fill="#000000" stroke="#000000" points="185.61,-14.03 175.2,-15.99 184.55,-20.95 185.61,-14.03"/>
+</g>
+<!-- module~constants -->
+<g id="proc~~find_local_maxima~~UsesGraph_node4" class="node">
+<title>module~constants</title>
+<g id="a_proc~~find_local_maxima~~UsesGraph_node4"><a xlink:href="../module/constants.html" xlink:title="constants">
+<polygon fill="#337ab7" stroke="#337ab7" points="64,-24 0,-24 0,0 64,0 64,-24"/>
+<text text-anchor="middle" x="32" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants</text>
+</a>
+</g>
+</g>
+<!-- module~utils&#45;&gt;module~constants -->
+<g id="proc~~find_local_maxima~~UsesGraph_edge3" class="edge">
+<title>module~utils&#45;&gt;module~constants</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M120.85,-12C107.17,-12 90.11,-12 74.67,-12"/>
+<polygon fill="#000000" stroke="#000000" points="74.3,-8.5 64.3,-12 74.3,-15.5 74.3,-8.5"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#UsesGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="UsesGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="518pt" height="32pt"
+ viewBox="0.00 0.00 517.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 513.5,-28 513.5,4 -4,4"/>
+<!-- Module -->
+<g id="node1" class="node">
+<title>Module</title>
+<polygon fill="#337ab7" stroke="#337ab7" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Module</text>
+</g>
+<!-- Submodule -->
+<g id="node2" class="node">
+<title>Submodule</title>
+<polygon fill="#5bc0de" stroke="#5bc0de" points="145.5,-24 72.5,-24 72.5,0 145.5,0 145.5,-24"/>
+<text text-anchor="middle" x="109" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Submodule</text>
+</g>
+<!-- Subroutine -->
+<g id="node3" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="234,-24 164,-24 164,0 234,0 234,-24"/>
+<text text-anchor="middle" x="199" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node4" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="310,-24 252,-24 252,0 310,0 310,-24"/>
+<text text-anchor="middle" x="281" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Program -->
+<g id="node5" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="386,-24 328,-24 328,0 386,0 386,-24"/>
+<text text-anchor="middle" x="357" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node6" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="509.5,-24 404.5,-24 404.5,0 509.5,0 509.5,-24"/>
+<text text-anchor="middle" x="457" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a submodule to the (sub)module which it is
+descended from. Dashed arrows point from a module or program unit to 
+modules which it uses.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+            </li>
+        </ul>
+      </div>
+    </div>
+
+
+
+
+    <h3>Arguments</h3>
+        <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-func~2"></span>
+              procedure(func1d)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>func</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-interval~4"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>interval</strong>(2)</td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-location~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(out),</td>
+              <td></td>            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>location</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-achieved_error~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(out),</td>
+              <td>optional,</td>            <td>
+              dimension(:), allocatable
+            </td>
+            <td>::</td>
+            <td><strong>achieved_error</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <br>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Calls</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~find_local_maxima~~CallsGraph Pages: 1 -->
+<svg id="procfind_local_maximaCallsGraph" width="220pt" height="74pt"
+ viewBox="0.00 0.00 220.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~find_local_maxima~~CallsGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
+<title>proc~~find_local_maxima~~CallsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 216,-70 216,4 -4,4"/>
+<!-- proc~find_local_maxima -->
+<g id="proc~~find_local_maxima~~CallsGraph_node1" class="node">
+<title>proc~find_local_maxima</title>
+<polygon fill="none" stroke="black" points="112,-45 0,-45 0,-21 112,-21 112,-45"/>
+<text text-anchor="middle" x="56" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">find_local_maxima</text>
+</g>
+<!-- interface~not_same -->
+<g id="proc~~find_local_maxima~~CallsGraph_node2" class="node">
+<title>interface~not_same</title>
+<g id="a_proc~~find_local_maxima~~CallsGraph_node2"><a xlink:href="../interface/not_same.html" xlink:title="not_same">
+<polygon fill="#a7506f" stroke="#a7506f" points="212,-66 148,-66 148,-42 212,-42 212,-66"/>
+<text text-anchor="middle" x="180" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">not_same</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;interface~not_same -->
+<g id="proc~~find_local_maxima~~CallsGraph_edge1" class="edge">
+<title>proc~find_local_maxima&#45;&gt;interface~not_same</title>
+<path fill="none" stroke="#000000" d="M112.29,-42.52C120.89,-44 129.64,-45.5 137.85,-46.92"/>
+<polygon fill="#000000" stroke="#000000" points="137.47,-50.4 147.92,-48.65 138.66,-43.5 137.47,-50.4"/>
+</g>
+<!-- proc~linspace -->
+<g id="proc~~find_local_maxima~~CallsGraph_node3" class="node">
+<title>proc~linspace</title>
+<g id="a_proc~~find_local_maxima~~CallsGraph_node3"><a xlink:href="../proc/linspace.html" xlink:title="linspace">
+<polygon fill="#d9534f" stroke="#d9534f" points="208.5,-24 151.5,-24 151.5,0 208.5,0 208.5,-24"/>
+<text text-anchor="middle" x="180" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">linspace</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_maxima&#45;&gt;proc~linspace -->
+<g id="proc~~find_local_maxima~~CallsGraph_edge2" class="edge">
+<title>proc~find_local_maxima&#45;&gt;proc~linspace</title>
+<path fill="none" stroke="#000000" d="M112.29,-23.48C122.09,-21.8 132.09,-20.07 141.27,-18.49"/>
+<polygon fill="#000000" stroke="#000000" points="141.96,-21.93 151.22,-16.78 140.77,-15.03 141.96,-21.93"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CallsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CallsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-header">
+  <h3 class="card-title">Called by</h3>
+      </div>
+      <div class="card-body">
+  <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: proc~~find_local_maxima~~CalledByGraph Pages: 1 -->
+<svg id="procfind_local_maximaCalledByGraph" width="641pt" height="69pt"
+ viewBox="0.00 0.00 641.00 69.01" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="proc~~find_local_maxima~~CalledByGraph" class="graph" transform="scale(0.55 0.55) rotate(0) translate(4 121)">
+<title>proc~~find_local_maxima~~CalledByGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-121 1157,-121 1157,4 -4,4"/>
+<!-- proc~find_local_maxima -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node1" class="node">
+<title>proc~find_local_maxima</title>
+<polygon fill="none" stroke="black" points="1153,-96 1041,-96 1041,-72 1153,-72 1153,-96"/>
+<text text-anchor="middle" x="1097" y="-81.6" font-family="Helvetica,sans-Serif" font-size="10.50">find_local_maxima</text>
+</g>
+<!-- proc~find_local_minima -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node2" class="node">
+<title>proc~find_local_minima</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node2"><a xlink:href="../proc/find_local_minima.html" xlink:title="find_local_minima">
+<polygon fill="#d9534f" stroke="#d9534f" points="977,-75 868,-75 868,-51 977,-51 977,-75"/>
+<text text-anchor="middle" x="922.5" y="-60.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_local_minima</text>
+</a>
+</g>
+</g>
+<!-- proc~find_local_minima&#45;&gt;proc~find_local_maxima -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge1" class="edge">
+<title>proc~find_local_minima&#45;&gt;proc~find_local_maxima</title>
+<path fill="none" stroke="#000000" d="M977.13,-69.53C994.08,-71.59 1013,-73.9 1030.67,-76.05"/>
+<polygon fill="#000000" stroke="#000000" points="1030.56,-79.56 1040.91,-77.29 1031.41,-72.61 1030.56,-79.56"/>
+</g>
+<!-- proc~find_maxima_along_fieldline -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node3" class="node">
+<title>proc~find_maxima_along_fieldline</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node3"><a xlink:href="../proc/find_maxima_along_fieldline.html" xlink:title="find_maxima_along_fieldline">
+<polygon fill="#d9534f" stroke="#d9534f" points="1005,-117 840,-117 840,-93 1005,-93 1005,-117"/>
+<text text-anchor="middle" x="922.5" y="-102.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_maxima_along_fieldline</text>
+</a>
+</g>
+</g>
+<!-- proc~find_maxima_along_fieldline&#45;&gt;proc~find_local_maxima -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge2" class="edge">
+<title>proc~find_maxima_along_fieldline&#45;&gt;proc~find_local_maxima</title>
+<path fill="none" stroke="#000000" d="M1005.2,-95.05C1013.75,-94.01 1022.35,-92.97 1030.68,-91.95"/>
+<polygon fill="#000000" stroke="#000000" points="1031.17,-95.42 1040.67,-90.74 1030.32,-88.47 1031.17,-95.42"/>
+</g>
+<!-- proc~find_magnetic_well_bottom -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node4" class="node">
+<title>proc~find_magnetic_well_bottom</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node4"><a xlink:href="../proc/find_magnetic_well_bottom.html" xlink:title="find_magnetic_well_bottom">
+<polygon fill="#d9534f" stroke="#d9534f" points="763.5,-35 605.5,-35 605.5,-11 763.5,-11 763.5,-35"/>
+<text text-anchor="middle" x="684.5" y="-20.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_magnetic_well_bottom</text>
+</a>
+</g>
+</g>
+<!-- proc~find_magnetic_well_bottom&#45;&gt;proc~find_local_minima -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge3" class="edge">
+<title>proc~find_magnetic_well_bottom&#45;&gt;proc~find_local_minima</title>
+<path fill="none" stroke="#000000" d="M756.31,-35C788.53,-40.46 826.37,-46.88 857.7,-52.19"/>
+<polygon fill="#000000" stroke="#000000" points="857.18,-55.65 867.63,-53.87 858.35,-48.75 857.18,-55.65"/>
+</g>
+<!-- proc~make_flock_from_labels -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node5" class="node">
+<title>proc~make_flock_from_labels</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node5"><a xlink:href="../proc/make_flock_from_labels.html" xlink:title="make_flock_from_labels">
+<polygon fill="#d9534f" stroke="#d9534f" points="529,-87 389,-87 389,-63 529,-63 529,-87"/>
+<text text-anchor="middle" x="459" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_from_labels</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~find_maxima_along_fieldline -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge5" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~find_maxima_along_fieldline</title>
+<path fill="none" stroke="#000000" d="M529.14,-82.75C541.09,-83.95 553.4,-85.08 565,-86 654.66,-93.08 757.22,-98.24 829.25,-101.38"/>
+<polygon fill="#000000" stroke="#000000" points="829.51,-104.89 839.65,-101.83 829.81,-97.9 829.51,-104.89"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node6" class="node">
+<title>proc~suspect_omnigenous_origin_not_minimum</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node6"><a xlink:href="../proc/suspect_omnigenous_origin_not_minimum.html" xlink:title="suspect_omnigenous_origin_not_minimum">
+<polygon fill="#d94e8f" stroke="#d94e8f" points="804,-77 565,-77 565,-53 804,-53 804,-77"/>
+<text text-anchor="middle" x="684.5" y="-62.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">suspect_omnigenous_origin_not_minimum</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge8" class="edge">
+<title>proc~make_flock_from_labels&#45;&gt;proc~suspect_omnigenous_origin_not_minimum</title>
+<path fill="none" stroke="#000000" d="M529.19,-71.9C537.39,-71.54 545.95,-71.15 554.65,-70.77"/>
+<polygon fill="#000000" stroke="#000000" points="555.08,-74.25 564.92,-70.31 554.77,-67.26 555.08,-74.25"/>
+</g>
+<!-- proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge4" class="edge">
+<title>proc~suspect_omnigenous_origin_not_minimum&#45;&gt;proc~find_local_minima</title>
+<path fill="none" stroke="#000000" d="M804.19,-63.99C822.63,-63.84 841.05,-63.68 857.64,-63.54"/>
+<polygon fill="#000000" stroke="#000000" points="857.75,-67.04 867.72,-63.46 857.69,-60.04 857.75,-67.04"/>
+</g>
+<!-- proc~make_flock_of_fieldlines -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node7" class="node">
+<title>proc~make_flock_of_fieldlines</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node7"><a xlink:href="../proc/make_flock_of_fieldlines.html" xlink:title="make_flock_of_fieldlines">
+<polygon fill="#d9534f" stroke="#d9534f" points="335,-87 193,-87 193,-63 335,-63 335,-87"/>
+<text text-anchor="middle" x="264" y="-72.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_flock_of_fieldlines</text>
+</a>
+</g>
+</g>
+<!-- proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge7" class="edge">
+<title>proc~make_flock_of_fieldlines&#45;&gt;proc~make_flock_from_labels</title>
+<path fill="none" stroke="#000000" d="M335.22,-75C349.27,-75 364.13,-75 378.47,-75"/>
+<polygon fill="#000000" stroke="#000000" points="378.8,-78.5 388.8,-75 378.8,-71.5 378.8,-78.5"/>
+</g>
+<!-- proc~set_fieldline_minima -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node8" class="node">
+<title>proc~set_fieldline_minima</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node8"><a xlink:href="../proc/set_fieldline_minima.html" xlink:title="set_fieldline_minima">
+<polygon fill="#d9534f" stroke="#d9534f" points="520,-35 398,-35 398,-11 520,-11 520,-35"/>
+<text text-anchor="middle" x="459" y="-20.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">set_fieldline_minima</text>
+</a>
+</g>
+</g>
+<!-- proc~set_fieldline_minima&#45;&gt;proc~find_magnetic_well_bottom -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge6" class="edge">
+<title>proc~set_fieldline_minima&#45;&gt;proc~find_magnetic_well_bottom</title>
+<path fill="none" stroke="#000000" d="M520.19,-23C543.14,-23 569.81,-23 594.87,-23"/>
+<polygon fill="#000000" stroke="#000000" points="595.11,-26.5 605.11,-23 595.11,-19.5 595.11,-26.5"/>
+</g>
+<!-- proc~make_fieldlines_for_precession -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node9" class="node">
+<title>proc~make_fieldlines_for_precession</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node9"><a xlink:href="../proc/make_fieldlines_for_precession.html" xlink:title="make_fieldlines_for_precession">
+<polygon fill="#d9534f" stroke="#d9534f" points="353,-35 175,-35 175,-11 353,-11 353,-35"/>
+<text text-anchor="middle" x="264" y="-20.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_fieldlines_for_precession</text>
+</a>
+</g>
+</g>
+<!-- proc~make_fieldlines_for_precession&#45;&gt;proc~set_fieldline_minima -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge11" class="edge">
+<title>proc~make_fieldlines_for_precession&#45;&gt;proc~set_fieldline_minima</title>
+<path fill="none" stroke="#000000" d="M353.03,-23C364.67,-23 376.49,-23 387.78,-23"/>
+<polygon fill="#000000" stroke="#000000" points="387.98,-26.5 397.98,-23 387.98,-19.5 387.98,-26.5"/>
+</g>
+<!-- program~electric_rabe -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node10" class="node">
+<title>program~electric_rabe</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node10"><a xlink:href="../program/electric_rabe.html" xlink:title="electric_rabe">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="110.5,-66 28.5,-66 28.5,-42 110.5,-42 110.5,-66"/>
+<text text-anchor="middle" x="69.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe</text>
+</a>
+</g>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge9" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M110.85,-58.4C131.69,-60.67 157.87,-63.53 182.61,-66.23"/>
+<polygon fill="#000000" stroke="#000000" points="182.42,-69.73 192.74,-67.33 183.17,-62.77 182.42,-69.73"/>
+</g>
+<!-- program~electric_rabe&#45;&gt;proc~make_fieldlines_for_precession -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge13" class="edge">
+<title>program~electric_rabe&#45;&gt;proc~make_fieldlines_for_precession</title>
+<path fill="none" stroke="#000000" d="M110.85,-47.5C130.44,-44.35 154.74,-40.43 178.14,-36.67"/>
+<polygon fill="#000000" stroke="#000000" points="178.78,-40.11 188.1,-35.06 177.67,-33.2 178.78,-40.11"/>
+</g>
+<!-- program~main -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node11" class="node">
+<title>program~main</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node11"><a xlink:href="../program/main.html" xlink:title="main">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="96.5,-108 42.5,-108 42.5,-84 96.5,-84 96.5,-108"/>
+<text text-anchor="middle" x="69.5" y="-93.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">main</text>
+</a>
+</g>
+</g>
+<!-- program~main&#45;&gt;proc~make_flock_of_fieldlines -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge10" class="edge">
+<title>program~main&#45;&gt;proc~make_flock_of_fieldlines</title>
+<path fill="none" stroke="#000000" d="M96.86,-93.12C118.97,-90.71 151.76,-87.14 182.38,-83.8"/>
+<polygon fill="#000000" stroke="#000000" points="183.1,-87.24 192.66,-82.67 182.34,-80.28 183.1,-87.24"/>
+</g>
+<!-- proc~setup_bounce_integrals -->
+<g id="proc~~find_local_maxima~~CalledByGraph_node12" class="node">
+<title>proc~setup_bounce_integrals</title>
+<g id="a_proc~~find_local_maxima~~CalledByGraph_node12"><a xlink:href="../proc/setup_bounce_integrals.html" xlink:title="setup_bounce_integrals">
+<polygon fill="#d9534f" stroke="#d9534f" points="139,-24 0,-24 0,0 139,0 139,-24"/>
+<text text-anchor="middle" x="69.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">setup_bounce_integrals</text>
+</a>
+</g>
+</g>
+<!-- proc~setup_bounce_integrals&#45;&gt;proc~make_fieldlines_for_precession -->
+<g id="proc~~find_local_maxima~~CalledByGraph_edge12" class="edge">
+<title>proc~setup_bounce_integrals&#45;&gt;proc~make_fieldlines_for_precession</title>
+<path fill="none" stroke="#000000" d="M139.18,-15.92C147.49,-16.4 156.09,-16.89 164.71,-17.38"/>
+<polygon fill="#000000" stroke="#000000" points="164.65,-20.89 174.83,-17.96 165.05,-13.9 164.65,-20.89"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var panprocfind_local_maximaCalledByGraph = svgPanZoom('#procfind_local_maximaCalledByGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#CalledByGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="CalledByGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="641pt" height="28pt"
+ viewBox="0.00 0.00 641.00 27.51" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(0.86 0.86) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 741.5,-28 741.5,4 -4,4"/>
+<!-- Subroutine -->
+<g id="node1" class="node">
+<title>Subroutine</title>
+<polygon fill="#d9534f" stroke="#d9534f" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Subroutine</text>
+</g>
+<!-- Function -->
+<g id="node2" class="node">
+<title>Function</title>
+<polygon fill="#d94e8f" stroke="#d94e8f" points="146,-24 88,-24 88,0 146,0 146,-24"/>
+<text text-anchor="middle" x="117" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Function</text>
+</g>
+<!-- Interface -->
+<g id="node3" class="node">
+<title>Interface</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="225.5,-24 164.5,-24 164.5,0 225.5,0 225.5,-24"/>
+<text text-anchor="middle" x="195" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Interface</text>
+</g>
+<!-- Type Bound Procedure -->
+<g id="node4" class="node">
+<title>Type Bound Procedure</title>
+<polygon fill="#a7506f" stroke="#a7506f" points="374,-24 244,-24 244,0 374,0 374,-24"/>
+<text text-anchor="middle" x="309" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type Bound Procedure</text>
+</g>
+<!-- Unknown Procedure Type -->
+<g id="node5" class="node">
+<title>Unknown Procedure Type</title>
+<polygon fill="#777777" stroke="#777777" points="537.5,-24 392.5,-24 392.5,0 537.5,0 537.5,-24"/>
+<text text-anchor="middle" x="465" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Unknown Procedure Type</text>
+</g>
+<!-- Program -->
+<g id="node6" class="node">
+<title>Program</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="614,-24 556,-24 556,0 614,0 614,-24"/>
+<text text-anchor="middle" x="585" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Program</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node7" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="737.5,-24 632.5,-24 632.5,0 737.5,0 737.5,-24"/>
+<text text-anchor="middle" x="685" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a procedure to one which it calls. Dashed 
+arrows point from an interface to procedures which implement that interface.
+This could include the module procedures in a generic interface or the
+implementation in a submodule of an interface in a parent module.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <br>
+
+
+    
+    
+
+    
+    
+
+
+
+    
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

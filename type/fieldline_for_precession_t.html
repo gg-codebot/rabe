@@ -1,0 +1,846 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>fieldline_for_precession_t &ndash; rabe </title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>fieldline_for_precession_t
+      <small>Derived Type</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title="<p> 4.4% of total for derived types.</p>Including implementation: 8 statements,  0.9% of total for derived types.">8 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/grid.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+                <li class="breadcrumb-item"><a href='../sourcefile/grid.f90.html'>grid.f90</a></li>
+                <li class="breadcrumb-item"><a href='../module/grid_mod.html'>grid_mod</a></li>
+            <li class="breadcrumb-item active" aria-current="page">fieldline_for_precession_t</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+      <div id="sidebar">
+      <h3>Contents</h3>
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#vars-0"
+         aria-expanded="false" aria-controls="vars-0">
+         <h4 class="card-header bg-primary text-white">Variables</h4>
+      </a>
+      <div id="vars-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-xi_0~5">xi_0</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-theta_0">theta_0</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-phi_0~3">phi_0</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-iota~10">iota</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-phi_max~3">phi_max</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-phi_max_error~2">phi_max_error</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-b_max~2">B_max</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-eta_b~4">eta_b</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-delta_eta">delta_eta</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-integral_lambda_b_over_b_squared">integral_lambda_b_over_B_squared</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-delta_aspect_ratio">delta_aspect_ratio</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-integral_one_over_b_squared">integral_one_over_B_squared</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-radial_drift~2">radial_drift</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-integral_nabla_s_over_b_squared">integral_nabla_s_over_B_squared</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-m_pol~15">M_pol</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-n_tor~13">N_tor</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-nfp~16">nfp</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-phi_min~2">phi_min</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-b_min~3">B_min</a>
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#variable-grid~3">grid</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#boundprocs-0"
+         aria-expanded="false" aria-controls="boundprocs-0">
+         <h4 class="card-header bg-primary text-white">Type-Bound Procedures</h4>
+      </a>
+      <div id="boundprocs-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../type/fieldline_for_precession_t.html#boundprocedure-get_theta~2">get_theta</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+
+
+  </div>
+
+    </div>
+    
+    <div class="col-md-9" id='text'>
+      <h2 id="type-def-statement">
+        type, public, extends(<a href='fieldline_t.html'>fieldline_t</a>) :: fieldline_for_precession_t</h2>
+    
+<br>      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">Inherits</h3>
+        </div>
+        <div class="card-body">
+          <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: type~~fieldline_for_precession_t~~InheritsGraph Pages: 1 -->
+<svg id="typefieldline_for_precession_tInheritsGraph" width="641pt" height="51pt"
+ viewBox="0.00 0.00 641.00 51.28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="type~~fieldline_for_precession_t~~InheritsGraph" class="graph" transform="scale(0.69 0.69) rotate(0) translate(4 70)">
+<title>type~~fieldline_for_precession_t~~InheritsGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 921,-70 921,4 -4,4"/>
+<!-- type~fieldline_for_precession_t -->
+<g id="type~~fieldline_for_precession_t~~InheritsGraph_node1" class="node">
+<title>type~fieldline_for_precession_t</title>
+<polygon fill="none" stroke="black" points="917,-45 770,-45 770,-21 917,-21 917,-45"/>
+<text text-anchor="middle" x="843.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">fieldline_for_precession_t</text>
+</g>
+<!-- type~fieldline_t -->
+<g id="type~~fieldline_for_precession_t~~InheritsGraph_node2" class="node">
+<title>type~fieldline_t</title>
+<g id="a_type~~fieldline_for_precession_t~~InheritsGraph_node2"><a xlink:href="../type/fieldline_t.html" xlink:title="fieldline_t">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="694,-66 630,-66 630,-42 694,-42 694,-66"/>
+<text text-anchor="middle" x="662" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_t</text>
+</a>
+</g>
+</g>
+<!-- type~fieldline_for_precession_t&#45;&gt;type~fieldline_t -->
+<g id="type~~fieldline_for_precession_t~~InheritsGraph_edge2" class="edge">
+<title>type~fieldline_for_precession_t&#45;&gt;type~fieldline_t</title>
+<path fill="none" stroke="#000000" d="M769.75,-41.51C747.51,-44.11 723.82,-46.88 704.42,-49.15"/>
+<polygon fill="#000000" stroke="#000000" points="703.94,-45.69 694.41,-50.32 704.75,-52.64 703.94,-45.69"/>
+</g>
+<!-- type~integration_grid_t -->
+<g id="type~~fieldline_for_precession_t~~InheritsGraph_node3" class="node">
+<title>type~integration_grid_t</title>
+<g id="a_type~~fieldline_for_precession_t~~InheritsGraph_node3"><a xlink:href="../type/integration_grid_t.html" xlink:title="integration_grid_t">
+<polygon fill="#5cb85c" stroke="#5cb85c" points="715,-24 609,-24 609,0 715,0 715,-24"/>
+<text text-anchor="middle" x="662" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">integration_grid_t</text>
+</a>
+</g>
+</g>
+<!-- type~fieldline_for_precession_t&#45;&gt;type~integration_grid_t -->
+<g id="type~~fieldline_for_precession_t~~InheritsGraph_edge1" class="edge">
+<title>type~fieldline_for_precession_t&#45;&gt;type~integration_grid_t</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M769.75,-24.49C755.05,-22.77 739.71,-20.97 725.41,-19.3"/>
+<polygon fill="#000000" stroke="#000000" points="725.53,-15.79 715.19,-18.11 724.72,-22.74 725.53,-15.79"/>
+<text text-anchor="middle" x="742.5" y="-23.4" font-family="Helvetica,sans-Serif" font-size="9.50">grid</text>
+</g>
+<!-- SplineData1D -->
+<g id="type~~fieldline_for_precession_t~~InheritsGraph_node4" class="node">
+<title>SplineData1D</title>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="86,-24 0,-24 0,0 86,0 86,-24"/>
+<text text-anchor="middle" x="43" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">SplineData1D</text>
+</g>
+<!-- type~integration_grid_t&#45;&gt;SplineData1D -->
+<g id="type~~fieldline_for_precession_t~~InheritsGraph_edge3" class="edge">
+<title>type~integration_grid_t&#45;&gt;SplineData1D</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M608.93,-12C492.59,-12 212.7,-12 96.23,-12"/>
+<polygon fill="#000000" stroke="#000000" points="96.14,-8.5 86.14,-12 96.14,-15.5 96.14,-8.5"/>
+<text text-anchor="middle" x="347.5" y="-14.4" font-family="Helvetica,sans-Serif" font-size="9.50">I_j_spline, bounce_time_weighted_spline, radial_drift_weighted_spline, poloidal_drift_weighted_spline</text>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var pantypefieldline_for_precession_tInheritsGraph = svgPanZoom('#typefieldline_for_precession_tInheritsGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#InheritsGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="InheritsGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="186pt" height="32pt"
+ viewBox="0.00 0.00 185.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 181.5,-28 181.5,4 -4,4"/>
+<!-- Type -->
+<g id="node1" class="node">
+<title>Type</title>
+<polygon fill="#5cb85c" stroke="#5cb85c" points="54,-24 0,-24 0,0 54,0 54,-24"/>
+<text text-anchor="middle" x="27" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Type</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="177.5,-24 72.5,-24 72.5,0 177.5,0 177.5,-24"/>
+<text text-anchor="middle" x="125" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a derived type to the parent type which it
+extends. Dashed arrows point from a derived type to the other
+types it contains as a components, with a label listing the name(s) of
+said component(s).
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+        </div>
+      </div>
+    <br>
+
+    <section>
+    <h2>Components</h2>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Visibility</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+<th></th><th scope="col">Initial</th>        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-xi_0~5"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>xi_0</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-theta_0"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>theta_0</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-phi_0~3"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>phi_0</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-iota~10"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>iota</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-phi_max~3"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>phi_max</strong>(2)</td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-phi_max_error~2"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>phi_max_error</strong>(2)</td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b_max~2"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>B_max</strong>(2)</td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-eta_b~4"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>eta_b</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-delta_eta"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>delta_eta</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-integral_lambda_b_over_b_squared"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>integral_lambda_b_over_B_squared</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-delta_aspect_ratio"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>delta_aspect_ratio</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-integral_one_over_b_squared"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>integral_one_over_B_squared</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-radial_drift~2"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>radial_drift</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-integral_nabla_s_over_b_squared"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>integral_nabla_s_over_B_squared</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-m_pol~15"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>M_pol</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-n_tor~13"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>N_tor</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-nfp~16"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>nfp</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-phi_min~2"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>phi_min</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-b_min~3"></span>
+              real(kind=dp),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>B_min</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-grid~3"></span>
+              type(<a href='integration_grid_t.html'>integration_grid_t</a>),
+            </td>
+              <td>public</td>
+            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>grid</strong></td>
+                <td></td>
+                <td></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    </section>
+    <br>
+    
+
+
+      <section>
+        <h2>Type-Bound Procedures</h2>
+          <div class="row">
+              <div class="card mt-3">
+    <div class="card-header codesum">
+      <span class="anchor" id="boundprocedure-get_theta~2"></span>
+      <h3>
+          generic, public ::
+  <strong>get_theta</strong> => get_theta_scalar, get_theta_array
+        
+      </h3>
+    </div>
+      <ul class="list-group">
+          <li class="list-group-item">
+                    <h3>
+    private  function get_theta_scalar(self, phi) result(theta)  
+</h3>
+
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='fieldline_t.html'>fieldline_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>self</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=dp)
+            </td>
+<td></td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>phi</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp)</small>
+    </h4>
+    
+
+          </li>
+          <li class="list-group-item">
+                    <h3>
+    private  function get_theta_array(self, phi) result(theta)  
+</h3>
+
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              class(<a href='fieldline_t.html'>fieldline_t</a>),
+            </td>
+<td>intent(in)</td>
+              <td></td>            <td>
+              
+            </td>
+            <td>::</td>
+            <td><strong>self</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" ></span>
+              real(kind=dp),
+            </td>
+<td></td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>phi</strong></td>
+            <td>
+                
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>real(kind=dp), dimension(size(phi))</small>
+    </h4>
+    
+
+          </li>
+      </ul>
+  </div>
+
+          </div>
+      </section>
+
+    
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>

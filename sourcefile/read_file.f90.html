@@ -1,0 +1,971 @@
+<!-- -*- mode: jinja2 -*- -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta name="description" content="Asymptotic bootstrap current expressions for near-omnigenous stellarators">
+    <meta name="author" content="Georg Grassler" >
+    <link rel="icon" href="../favicon.png">
+
+    <title>read_file.f90 &ndash; rabe</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Font Awesome -->
+    <link href="../css/fontawesome.min.css" rel="stylesheet">
+    <link href="../css/brands.min.css" rel="stylesheet">
+    <link href="../css/regular.min.css" rel="stylesheet">
+    <link href="../css/solid.min.css" rel="stylesheet">
+    <link href="../css/v4-font-face.min.css" rel="stylesheet">
+    <link href="../css/v4-shims.min.css" rel="stylesheet">
+    <!-- MathJax -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        TeX: { equationNumbers: { autoNumber: "AMS" } }
+      });
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.9/MathJax.js?config=TeX-AMS-MML_HTMLorMML" async
+            integrity="sha256-DViIOMYdwlM/axqoGDPeUyf0urLoHMN4QACBKyB58Uw=" crossorigin="anonymous"></script>
+    <!-- Other scripts and stylesheets -->
+    <link href="../css/local.css" rel="stylesheet">
+    <link href="../css/pygments.css" rel="stylesheet">
+    <script src="../js/svg-pan-zoom.min.js"></script>
+  </head>
+
+  <body>
+
+    <!-- Fixed navbar -->
+    <div class="container-fluid mb-sm-4 mb-xl-2">
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+        <div class="container">
+          <a class="navbar-brand" href="../index.html">rabe </a>
+          <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar"
+                  aria-expanded="false" aria-controls="navbar" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon">
+          </button>
+
+          <div id="navbar" class="navbar-collapse collapse">
+            <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link" href="../lists/files.html">Source Files</a>
+                  </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/modules.html">Modules</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/procedures.html">Procedures</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/absint.html">Abstract Interfaces</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/types.html">Derived Types</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="../lists/programs.html">Programs</a>
+                </li>
+            </ul>
+              <div class="d-flex align-items-end flex-grow-1">
+                <form action="../search.html" role="search" class="ms-auto">
+                  <input type="text" class="form-control" aria-label="Search" placeholder="Search" name="q" id="tipue_search_input" autocomplete="off" required>
+                </form>
+              </div>
+          </div><!--/.nav-collapse -->
+        </div>
+      </nav>
+    </div>
+
+    <div class="container">
+  <div class="row">
+    <h1>read_file.f90
+      <small>Source File</small>
+      
+    </h1>
+      <div class="container p-2 mb-4 bg-light border rounded-3">
+    <div class="row align-items-center justify-content-between" id="info-bar">
+      <div class="col">
+        <ul class="list-inline" style="margin-bottom:0px;display:inline">
+
+            <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
+              <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
+                 title=" 3.3% of total for source files.">157 statements</a>
+            </li>
+
+            <li class="list-inline-item" id="source-file">
+              <i class="fa fa-code"></i>
+              <a href="../src/read_file.f90"> Source File</a>
+            </li>
+        </ul>
+      </div>
+      <div class="col">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb justify-content-end mb-0">
+            <li class="breadcrumb-item active" aria-current="page">read_file.f90</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+  <script>
+    // Enable Bootstrap tooltips
+    (function () {
+      const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+      const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+    })();
+  </script>
+
+  </div>
+  <div class="row">
+    <div class="col-md-3 hidden-xs hidden-sm visible-md visible-lg">
+        <div id="sidebar">
+      <h3>Contents</h3>
+  
+  
+  
+  
+  
+      <div class="card mb-4">
+      <a data-bs-toggle="collapse" href="#mods-0"
+         aria-expanded="false" aria-controls="mods-0">
+         <h4 class="card-header bg-primary text-white">Modules</h4>
+      </a>
+      <div id="mods-0" class="collapse">
+        <div class="list-group list-group-flush">
+            <a class="list-group-item" href="../module/read_file.html">read_file</a>
+        </div>
+      </div>
+    </div>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    <div class="card card-primary">
+      <div class="card-header text-left"><h3 class="card-title">Source Code</h3></div>
+      <div class="list-group">
+        <a class="list-group-item" href="../sourcefile/read_file.f90.html#src">read_file.f90</a>
+      </div>
+    </div>
+
+
+  </div>
+
+    </div>
+    <div class="col-md-9" id='text'>
+      
+      <br>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">This file depends on</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: sourcefile~~read_file.f90~~EfferentGraph Pages: 1 -->
+<svg id="sourcefileread_filef90EfferentGraph" width="641pt" height="425pt"
+ viewBox="0.00 0.00 641.00 425.47" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~read_file.f90~~EfferentGraph" class="graph" transform="scale(0.78 0.78) rotate(0) translate(4 543.6)">
+<title>sourcefile~~read_file.f90~~EfferentGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-543.6 821,-543.6 821,4 -4,4"/>
+<!-- sourcefile~read_file.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node1" class="node">
+<title>sourcefile~read_file.f90</title>
+<polygon fill="none" stroke="black" points="817,-227 738,-227 738,-203 817,-203 817,-227"/>
+<text text-anchor="middle" x="777.5" y="-212.6" font-family="Helvetica,sans-Serif" font-size="10.50">read_file.f90</text>
+</g>
+<!-- sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node2" class="node">
+<title>sourcefile~constants.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node2"><a xlink:href="../sourcefile/constants.f90.html" xlink:title="constants.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="84,-186 0,-186 0,-162 84,-162 84,-186"/>
+<text text-anchor="middle" x="42" y="-171.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">constants.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~read_file.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge1" class="edge">
+<title>sourcefile~read_file.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M770.48,-227.11C748.46,-270.05 667.61,-416.1 555,-483 464.89,-536.53 425.3,-552.97 323.5,-528"/>
+</g>
+<!-- sourcefile~make_fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node3" class="node">
+<title>sourcefile~make_fieldline.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node3"><a xlink:href="../sourcefile/make_fieldline.f90.html" xlink:title="make_fieldline.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="702,-227 591,-227 591,-203 702,-203 702,-227"/>
+<text text-anchor="middle" x="646.5" y="-212.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">make_fieldline.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~read_file.f90&#45;&gt;sourcefile~make_fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge2" class="edge">
+<title>sourcefile~read_file.f90&#45;&gt;sourcefile~make_fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M737.8,-215C729.79,-215 721.16,-215 712.51,-215"/>
+<polygon fill="#000000" stroke="#000000" points="712.39,-211.5 702.39,-215 712.39,-218.5 712.39,-211.5"/>
+</g>
+<!-- sourcefile~utils.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node4" class="node">
+<title>sourcefile~utils.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node4"><a xlink:href="../sourcefile/utils.f90.html" xlink:title="utils.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="196,-146 141,-146 141,-122 196,-122 196,-146"/>
+<text text-anchor="middle" x="168.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">utils.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~read_file.f90&#45;&gt;sourcefile~utils.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge3" class="edge">
+<title>sourcefile~read_file.f90&#45;&gt;sourcefile~utils.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M754.66,-202.87C715.82,-181.92 631.59,-139.23 555,-119 454.95,-92.57 426.74,-86.8 323.5,-94"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M321.5,-94C280.98,-96.17 236.26,-109.32 205.88,-119.95"/>
+<polygon fill="#000000" stroke="#000000" points="204.38,-116.77 196.15,-123.45 206.74,-123.36 204.38,-116.77"/>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge4" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M490.5,-469C423.75,-510.72 399.95,-546.75 323.5,-528"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M321.5,-528C290.82,-520.47 279.59,-526.06 253,-509 204.55,-477.92 214.85,-445.45 169.5,-410"/>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~utils.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge13" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~utils.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M631.03,-202.76C613.87,-188.78 583.94,-166.04 555,-152 528.88,-139.33 520.94,-138.85 492.5,-133"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M490.5,-133C415.85,-117.64 399.53,-88.7 323.5,-94"/>
+</g>
+<!-- sourcefile~error_handling.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node5" class="node">
+<title>sourcefile~error_handling.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node5"><a xlink:href="../sourcefile/error_handling.f90.html" xlink:title="error_handling.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="547,-185 436,-185 436,-161 547,-161 547,-185"/>
+<text text-anchor="middle" x="491.5" y="-170.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">error_handling.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~error_handling.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge5" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~error_handling.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M601.66,-202.96C584.37,-198.22 564.35,-192.72 546.21,-187.74"/>
+<polygon fill="#000000" stroke="#000000" points="546.92,-184.31 536.35,-185.04 545.07,-191.06 546.92,-184.31"/>
+</g>
+<!-- sourcefile~field_along_fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node6" class="node">
+<title>sourcefile~field_along_fieldline.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node6"><a xlink:href="../sourcefile/field_along_fieldline.f90.html" xlink:title="field_along_fieldline.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="392,-264 253,-264 253,-240 392,-240 392,-264"/>
+<text text-anchor="middle" x="322.5" y="-249.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_along_fieldline.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_along_fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge6" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_along_fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M599.73,-227.11C585.49,-230.47 569.68,-233.8 555,-236 504.54,-243.55 447.36,-247.54 402.45,-249.65"/>
+<polygon fill="#000000" stroke="#000000" points="402.02,-246.17 392.18,-250.11 402.33,-253.16 402.02,-246.17"/>
+</g>
+<!-- sourcefile~field_base.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node7" class="node">
+<title>sourcefile~field_base.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node7"><a xlink:href="../sourcefile/field_base.f90.html" xlink:title="field_base.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="212,-226 125,-226 125,-202 212,-202 212,-226"/>
+<text text-anchor="middle" x="168.5" y="-211.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_base.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge7" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M490.5,-133C410.08,-116.45 405.05,-202.41 323.5,-212"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M321.5,-212C288.68,-215.86 251.59,-216.42 222.27,-215.99"/>
+<polygon fill="#000000" stroke="#000000" points="222.31,-212.49 212.24,-215.8 222.17,-219.49 222.31,-212.49"/>
+</g>
+<!-- sourcefile~field_checks.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node8" class="node">
+<title>sourcefile~field_checks.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node8"><a xlink:href="../sourcefile/field_checks.f90.html" xlink:title="field_checks.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="540.5,-227 442.5,-227 442.5,-203 540.5,-203 540.5,-227"/>
+<text text-anchor="middle" x="491.5" y="-212.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">field_checks.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_checks.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge8" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~field_checks.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M590.7,-215C577.77,-215 563.95,-215 550.88,-215"/>
+<polygon fill="#000000" stroke="#000000" points="550.58,-211.5 540.58,-215 550.58,-218.5 550.58,-211.5"/>
+</g>
+<!-- sourcefile~fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node9" class="node">
+<title>sourcefile~fieldline.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node9"><a xlink:href="../sourcefile/fieldline.f90.html" xlink:title="fieldline.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="206.5,-306 130.5,-306 130.5,-282 206.5,-282 206.5,-306"/>
+<text text-anchor="middle" x="168.5" y="-291.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge9" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M642.33,-227.29C630.73,-269.5 586.27,-409.24 492.5,-469"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M490.5,-469C467.85,-483.44 275.26,-439.02 253,-424 213.42,-397.29 188.51,-344.87 177.01,-315.41"/>
+<polygon fill="#000000" stroke="#000000" points="180.28,-314.16 173.49,-306.02 173.72,-316.62 180.28,-314.16"/>
+</g>
+<!-- sourcefile~fieldline_integrals.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node10" class="node">
+<title>sourcefile~fieldline_integrals.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node10"><a xlink:href="../sourcefile/fieldline_integrals.f90.html" xlink:title="fieldline_integrals.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="555,-382 428,-382 428,-358 555,-358 555,-382"/>
+<text text-anchor="middle" x="491.5" y="-367.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_integrals.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~fieldline_integrals.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge10" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~fieldline_integrals.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M633.49,-227.16C607.02,-253.99 543.43,-318.41 511.49,-350.77"/>
+<polygon fill="#000000" stroke="#000000" points="508.98,-348.32 504.45,-357.89 513.97,-353.24 508.98,-348.32"/>
+</g>
+<!-- sourcefile~fieldline_labels.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node11" class="node">
+<title>sourcefile~fieldline_labels.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node11"><a xlink:href="../sourcefile/fieldline_labels.f90.html" xlink:title="fieldline_labels.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="378.5,-66 266.5,-66 266.5,-42 378.5,-42 378.5,-66"/>
+<text text-anchor="middle" x="322.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_labels.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~fieldline_labels.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge11" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~fieldline_labels.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M637.53,-203C623.38,-182.62 591.84,-141.3 555,-119 503.82,-88.02 437.4,-71.36 388.83,-62.69"/>
+<polygon fill="#000000" stroke="#000000" points="389.2,-59.2 378.75,-60.96 388.02,-66.1 389.2,-59.2"/>
+</g>
+<!-- sourcefile~find_extrema.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node12" class="node">
+<title>sourcefile~find_extrema.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node12"><a xlink:href="../sourcefile/find_extrema.f90.html" xlink:title="find_extrema.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="373.5,-146 271.5,-146 271.5,-122 373.5,-122 373.5,-146"/>
+<text text-anchor="middle" x="322.5" y="-131.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">find_extrema.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~make_fieldline.f90&#45;&gt;sourcefile~find_extrema.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge12" class="edge">
+<title>sourcefile~make_fieldline.f90&#45;&gt;sourcefile~find_extrema.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M490.5,-133C455.65,-125.83 415.84,-125.76 383.83,-127.64"/>
+<polygon fill="#000000" stroke="#000000" points="383.47,-124.15 373.72,-128.31 383.93,-131.14 383.47,-124.15"/>
+</g>
+<!-- sourcefile~utils.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge14" class="edge">
+<title>sourcefile~utils.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M140.79,-142.58C126.1,-147.3 107.43,-153.3 90.36,-158.79"/>
+<polygon fill="#000000" stroke="#000000" points="88.98,-155.55 80.53,-161.94 91.12,-162.22 88.98,-155.55"/>
+</g>
+<!-- sourcefile~field_along_fieldline.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge15" class="edge">
+<title>sourcefile~field_along_fieldline.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M252.55,-255.91C212.55,-255.83 161.94,-251.61 120,-235 97.12,-225.94 75.57,-207.72 61.12,-193.54"/>
+<polygon fill="#000000" stroke="#000000" points="63.37,-190.83 53.86,-186.16 58.38,-195.74 63.37,-190.83"/>
+</g>
+<!-- sourcefile~field_along_fieldline.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge16" class="edge">
+<title>sourcefile~field_along_fieldline.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M273.41,-239.98C257.13,-235.91 238.87,-231.34 222.25,-227.19"/>
+<polygon fill="#000000" stroke="#000000" points="222.69,-223.69 212.14,-224.66 221,-230.48 222.69,-223.69"/>
+</g>
+<!-- sourcefile~field_along_fieldline.f90&#45;&gt;sourcefile~fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge17" class="edge">
+<title>sourcefile~field_along_fieldline.f90&#45;&gt;sourcefile~fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M277.94,-264.04C258.66,-269.36 235.94,-275.64 216.29,-281.07"/>
+<polygon fill="#000000" stroke="#000000" points="215.33,-277.7 206.63,-283.74 217.2,-284.45 215.33,-277.7"/>
+</g>
+<!-- sourcefile~field_base.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge18" class="edge">
+<title>sourcefile~field_base.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M130.15,-202C117.7,-198 103.67,-193.49 90.56,-189.28"/>
+<polygon fill="#000000" stroke="#000000" points="91.35,-185.86 80.76,-186.13 89.21,-192.52 91.35,-185.86"/>
+</g>
+<!-- sourcefile~field_checks.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge19" class="edge">
+<title>sourcefile~field_checks.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M442.28,-203.01C379.64,-188.78 266.77,-167.71 169.5,-174"/>
+</g>
+<!-- sourcefile~field_checks.f90&#45;&gt;sourcefile~field_along_fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge20" class="edge">
+<title>sourcefile~field_checks.f90&#45;&gt;sourcefile~field_along_fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M442.2,-225.7C425.21,-229.47 405.84,-233.76 387.75,-237.76"/>
+<polygon fill="#000000" stroke="#000000" points="386.86,-234.38 377.86,-239.96 388.38,-241.21 386.86,-234.38"/>
+</g>
+<!-- sourcefile~field_checks.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge21" class="edge">
+<title>sourcefile~field_checks.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M442.46,-210.72C409,-208.57 363.39,-207.31 323.5,-212"/>
+</g>
+<!-- sourcefile~field_checks.f90&#45;&gt;sourcefile~fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge22" class="edge">
+<title>sourcefile~field_checks.f90&#45;&gt;sourcefile~fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M474.83,-227.21C456.23,-240.96 423.72,-262.73 392,-273 333.78,-291.85 262.85,-295.44 216.96,-295.43"/>
+<polygon fill="#000000" stroke="#000000" points="216.74,-291.92 206.71,-295.36 216.69,-298.92 216.74,-291.92"/>
+</g>
+<!-- sourcefile~field_checks.f90&#45;&gt;sourcefile~find_extrema.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge23" class="edge">
+<title>sourcefile~field_checks.f90&#45;&gt;sourcefile~find_extrema.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M446.39,-202.88C440.01,-200.36 433.69,-197.42 428,-194 409.13,-182.68 410.65,-171.69 392,-160 386.06,-156.28 379.51,-152.95 372.88,-150.03"/>
+<polygon fill="#000000" stroke="#000000" points="373.75,-146.6 363.17,-146.03 371.08,-153.08 373.75,-146.6"/>
+</g>
+<!-- sourcefile~fieldline.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge24" class="edge">
+<title>sourcefile~fieldline.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M141.21,-281.93C133.97,-278.01 126.37,-273.28 120,-268 94.1,-246.5 70.57,-215.29 56.52,-194.82"/>
+<polygon fill="#000000" stroke="#000000" points="59.24,-192.59 50.76,-186.24 53.43,-196.49 59.24,-192.59"/>
+</g>
+<!-- sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge25" class="edge">
+<title>sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M321.5,-410C254.08,-405.69 222.73,-451.6 169.5,-410"/>
+</g>
+<!-- sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge26" class="edge">
+<title>sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M453.93,-357.99C406.25,-341.68 320.96,-310.25 253,-273 231.59,-261.27 209.09,-245.11 192.84,-232.67"/>
+<polygon fill="#000000" stroke="#000000" points="194.55,-229.57 184.51,-226.2 190.26,-235.1 194.55,-229.57"/>
+</g>
+<!-- sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge27" class="edge">
+<title>sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M462.59,-382.06C429.78,-394.97 373.48,-413.2 323.5,-410"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M321.5,-410C289.97,-407.98 279.68,-407.92 253,-391 222.13,-371.42 196.46,-336.95 182.05,-314.81"/>
+<polygon fill="#000000" stroke="#000000" points="184.88,-312.74 176.58,-306.16 178.96,-316.48 184.88,-312.74"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node14" class="node">
+<title>sourcefile~fieldline_integrands.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node14"><a xlink:href="../sourcefile/fieldline_integrands.f90.html" xlink:title="fieldline_integrands.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="391.5,-382 253.5,-382 253.5,-358 391.5,-358 391.5,-382"/>
+<text text-anchor="middle" x="322.5" y="-367.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fieldline_integrands.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~fieldline_integrands.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge28" class="edge">
+<title>sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~fieldline_integrands.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M427.84,-370C419.33,-370 410.5,-370 401.76,-370"/>
+<polygon fill="#000000" stroke="#000000" points="401.55,-366.5 391.55,-370 401.55,-373.5 401.55,-366.5"/>
+</g>
+<!-- sourcefile~integrate.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node16" class="node">
+<title>sourcefile~integrate.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node16"><a xlink:href="../sourcefile/integrate.f90.html" xlink:title="integrate.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="363.5,-500 281.5,-500 281.5,-476 363.5,-476 363.5,-500"/>
+<text text-anchor="middle" x="322.5" y="-485.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">integrate.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~integrate.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge29" class="edge">
+<title>sourcefile~fieldline_integrals.f90&#45;&gt;sourcefile~integrate.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M473.26,-382.18C443.88,-402.94 383.97,-445.27 349.49,-469.63"/>
+<polygon fill="#000000" stroke="#000000" points="347.05,-467.08 340.9,-475.71 351.09,-472.79 347.05,-467.08"/>
+</g>
+<!-- sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge30" class="edge">
+<title>sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M266.25,-46.92C223.65,-44.12 164.67,-46.22 120,-71 87.05,-89.28 64.09,-128.21 52.26,-152.63"/>
+<polygon fill="#000000" stroke="#000000" points="49.03,-151.26 48,-161.81 55.38,-154.2 49.03,-151.26"/>
+</g>
+<!-- sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~utils.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge34" class="edge">
+<title>sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~utils.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M281.89,-66.12C272.1,-69.89 261.88,-74.53 253,-80 234.52,-91.39 235.17,-101.12 217,-113 213.43,-115.33 209.57,-117.52 205.63,-119.53"/>
+<polygon fill="#000000" stroke="#000000" points="203.95,-116.45 196.43,-123.91 206.96,-122.77 203.95,-116.45"/>
+</g>
+<!-- sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~fieldline.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge32" class="edge">
+<title>sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~fieldline.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M302.25,-66.01C286.81,-76.59 265.69,-93.35 253,-113 222.33,-160.49 243.23,-184.92 217,-235 209.51,-249.3 198.29,-263.44 188.63,-274.3"/>
+<polygon fill="#000000" stroke="#000000" points="185.83,-272.18 181.64,-281.91 190.98,-276.91 185.83,-272.18"/>
+</g>
+<!-- sourcefile~diophantine.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node13" class="node">
+<title>sourcefile~diophantine.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node13"><a xlink:href="../sourcefile/diophantine.f90.html" xlink:title="diophantine.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="217,-24 120,-24 120,0 217,0 217,-24"/>
+<text text-anchor="middle" x="168.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">diophantine.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~diophantine.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge31" class="edge">
+<title>sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~diophantine.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M277.94,-41.96C260.77,-37.22 240.88,-31.72 222.85,-26.74"/>
+<polygon fill="#000000" stroke="#000000" points="223.63,-23.33 213.06,-24.04 221.77,-30.07 223.63,-23.33"/>
+</g>
+<!-- sourcefile~fourier.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_node15" class="node">
+<title>sourcefile~fourier.f90</title>
+<g id="a_sourcefile~~read_file.f90~~EfferentGraph_node15"><a xlink:href="../sourcefile/fourier.f90.html" xlink:title="fourier.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="202,-104 135,-104 135,-80 202,-80 202,-104"/>
+<text text-anchor="middle" x="168.5" y="-89.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">fourier.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~fourier.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge33" class="edge">
+<title>sourcefile~fieldline_labels.f90&#45;&gt;sourcefile~fourier.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M273.41,-66.02C253.8,-70.93 231.31,-76.55 212.28,-81.31"/>
+<polygon fill="#000000" stroke="#000000" points="211.24,-77.96 202.39,-83.78 212.94,-84.75 211.24,-77.96"/>
+</g>
+<!-- sourcefile~find_extrema.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge35" class="edge">
+<title>sourcefile~find_extrema.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M290.07,-146.08C259.74,-156.82 212.25,-171.24 169.5,-174"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M167.5,-174C143.46,-175.55 116.76,-175.76 94.27,-175.49"/>
+<polygon fill="#000000" stroke="#000000" points="94.31,-171.99 84.26,-175.33 94.2,-178.99 94.31,-171.99"/>
+</g>
+<!-- sourcefile~find_extrema.f90&#45;&gt;sourcefile~utils.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge36" class="edge">
+<title>sourcefile~find_extrema.f90&#45;&gt;sourcefile~utils.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M271.31,-134C250.05,-134 225.74,-134 206.2,-134"/>
+<polygon fill="#000000" stroke="#000000" points="206.18,-130.5 196.18,-134 206.18,-137.5 206.18,-130.5"/>
+</g>
+<!-- sourcefile~diophantine.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge37" class="edge">
+<title>sourcefile~diophantine.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M139.11,-24.21C132.34,-27.98 125.49,-32.59 120,-38 86.1,-71.42 62.5,-122.91 51,-152.01"/>
+<polygon fill="#000000" stroke="#000000" points="47.62,-151.05 47.32,-161.64 54.16,-153.55 47.62,-151.05"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge38" class="edge">
+<title>sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M287.22,-382.06C245.33,-396.32 178.83,-417.29 169.5,-410"/>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M167.5,-410C95.04,-353.37 60.09,-242.63 48.05,-195.77"/>
+<polygon fill="#000000" stroke="#000000" points="51.44,-194.91 45.65,-186.04 44.65,-196.59 51.44,-194.91"/>
+</g>
+<!-- sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~field_base.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge39" class="edge">
+<title>sourcefile~fieldline_integrands.f90&#45;&gt;sourcefile~field_base.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M275.34,-357.88C267.28,-354.33 259.43,-349.78 253,-344 226.69,-320.35 236.2,-302.72 217,-273 208.13,-259.27 196.67,-244.96 187.23,-233.87"/>
+<polygon fill="#000000" stroke="#000000" points="189.68,-231.35 180.49,-226.09 184.39,-235.94 189.68,-231.35"/>
+</g>
+<!-- sourcefile~fourier.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge40" class="edge">
+<title>sourcefile~fourier.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M137.02,-104.1C131.23,-106.78 125.33,-109.78 120,-113 99.67,-125.27 78.68,-142.24 63.76,-155.16"/>
+<polygon fill="#000000" stroke="#000000" points="61.33,-152.63 56.14,-161.87 65.96,-157.89 61.33,-152.63"/>
+</g>
+<!-- sourcefile~integrate.f90&#45;&gt;sourcefile~constants.f90 -->
+<g id="sourcefile~~read_file.f90~~EfferentGraph_edge41" class="edge">
+<title>sourcefile~integrate.f90&#45;&gt;sourcefile~constants.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M285.74,-475.92C275.03,-471.91 263.37,-467.14 253,-462 213.82,-442.6 203.95,-436.92 169.5,-410"/>
+</g>
+</g>
+</svg>
+</div>                <script>
+                  var pansourcefileread_filef90EfferentGraph = svgPanZoom('#sourcefileread_filef90EfferentGraph',
+                    {zoomEnabled: true, controlIconsEnabled: true, fit: true, center: true,}
+                  );
+                </script>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#EfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="EfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="202pt" height="32pt"
+ viewBox="0.00 0.00 201.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 197.5,-28 197.5,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="193.5,-24 88.5,-24 88.5,0 193.5,0 193.5,-24"/>
+<text text-anchor="middle" x="141" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Files dependent on this one</h3>
+          </div>
+          <div class="card-body">
+            <div class="depgraph"><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: sourcefile~~read_file.f90~~AfferentGraph Pages: 1 -->
+<svg id="sourcefileread_filef90AfferentGraph" width="226pt" height="74pt"
+ viewBox="0.00 0.00 226.00 74.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="sourcefile~~read_file.f90~~AfferentGraph" class="graph" transform="scale(1 1) rotate(0) translate(4 70)">
+<title>sourcefile~~read_file.f90~~AfferentGraph</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-70 222,-70 222,4 -4,4"/>
+<!-- sourcefile~read_file.f90 -->
+<g id="sourcefile~~read_file.f90~~AfferentGraph_node1" class="node">
+<title>sourcefile~read_file.f90</title>
+<polygon fill="none" stroke="black" points="79,-45 0,-45 0,-21 79,-21 79,-45"/>
+<text text-anchor="middle" x="39.5" y="-30.6" font-family="Helvetica,sans-Serif" font-size="10.50">read_file.f90</text>
+</g>
+<!-- sourcefile~electric_rabe.f90 -->
+<g id="sourcefile~~read_file.f90~~AfferentGraph_node2" class="node">
+<title>sourcefile~electric_rabe.f90</title>
+<g id="a_sourcefile~~read_file.f90~~AfferentGraph_node2"><a xlink:href="../sourcefile/electric_rabe.f90.html" xlink:title="electric_rabe.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="218,-66 115,-66 115,-42 218,-42 218,-66"/>
+<text text-anchor="middle" x="166.5" y="-51.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">electric_rabe.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~electric_rabe.f90&#45;&gt;sourcefile~read_file.f90 -->
+<g id="sourcefile~~read_file.f90~~AfferentGraph_edge1" class="edge">
+<title>sourcefile~electric_rabe.f90&#45;&gt;sourcefile~read_file.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M114.66,-45.46C106.2,-44.04 97.45,-42.57 89.05,-41.16"/>
+<polygon fill="#000000" stroke="#000000" points="89.47,-37.68 79.02,-39.47 88.31,-44.58 89.47,-37.68"/>
+</g>
+<!-- sourcefile~main.f90 -->
+<g id="sourcefile~~read_file.f90~~AfferentGraph_node3" class="node">
+<title>sourcefile~main.f90</title>
+<g id="a_sourcefile~~read_file.f90~~AfferentGraph_node3"><a xlink:href="../sourcefile/main.f90.html" xlink:title="main.f90">
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="196.5,-24 136.5,-24 136.5,0 196.5,0 196.5,-24"/>
+<text text-anchor="middle" x="166.5" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">main.f90</text>
+</a>
+</g>
+</g>
+<!-- sourcefile~main.f90&#45;&gt;sourcefile~read_file.f90 -->
+<g id="sourcefile~~read_file.f90~~AfferentGraph_edge2" class="edge">
+<title>sourcefile~main.f90&#45;&gt;sourcefile~read_file.f90</title>
+<path fill="none" stroke="#000000" stroke-dasharray="5,2" d="M136.19,-16.92C122.22,-19.27 105.14,-22.14 89.29,-24.8"/>
+<polygon fill="#000000" stroke="#000000" points="88.38,-21.41 79.1,-26.52 89.54,-28.31 88.38,-21.41"/>
+</g>
+</g>
+</svg>
+</div>          <div>
+            <a type="button" class="graph-help" data-bs-toggle="modal" href="#AfferentGraph-help-text">Help</a>
+          </div>
+          <div class="modal fade" id="AfferentGraph-help-text" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-lg" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="-graph-help-label">Graph Key</h4>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+<p>Nodes of different colours represent the following: </p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.43.0 (0)
+ -->
+<!-- Title: Graph Key Pages: 1 -->
+<svg width="202pt" height="32pt"
+ viewBox="0.00 0.00 201.50 32.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 28)">
+<title>Graph Key</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-28 197.5,-28 197.5,4 -4,4"/>
+<!-- Source File -->
+<g id="node1" class="node">
+<title>Source File</title>
+<polygon fill="#f0ad4e" stroke="#f0ad4e" points="70,-24 0,-24 0,0 70,0 70,-24"/>
+<text text-anchor="middle" x="35" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50" fill="white">Source File</text>
+</g>
+<!-- This Page&#39;s Entity -->
+<g id="node2" class="node">
+<title>This Page&#39;s Entity</title>
+<polygon fill="none" stroke="black" points="193.5,-24 88.5,-24 88.5,0 193.5,0 193.5,-24"/>
+<text text-anchor="middle" x="141" y="-9.6" font-family="Helvetica,sans-Serif" font-size="10.50">This Page&#39;s Entity</text>
+</g>
+</g>
+</svg>
+
+<p>Solid arrows point from a file to a file which it depends on. A file
+is dependent upon another if the latter must be compiled before the former
+can be.
+</p>
+ </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </div>
+<br>
+      <section>
+        <h2><span class="anchor" id="src"></span>Source Code</h2>
+        <div class="hl codehilite"><pre><span></span><a id="ln-1" name="ln-1" href="#ln-1"></a><span class="k">module </span><span class="n">read_file</span>
+<a id="ln-2" name="ln-2" href="#ln-2"></a><span class="w">    </span><span class="k">use </span><span class="n">constants</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">dp</span>
+<a id="ln-3" name="ln-3" href="#ln-3"></a><span class="w">    </span><span class="k">use</span><span class="p">,</span><span class="w"> </span><span class="k">intrinsic</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ieee_arithmetic</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">ieee_value</span><span class="p">,</span><span class="w"> </span><span class="n">ieee_quiet_nan</span>
+<a id="ln-4" name="ln-4" href="#ln-4"></a><span class="w">    </span><span class="k">use</span><span class="p">,</span><span class="w"> </span><span class="k">intrinsic</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ieee_arithmetic</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">ieee_is_nan</span>
+<a id="ln-5" name="ln-5" href="#ln-5"></a>
+<a id="ln-6" name="ln-6" href="#ln-6"></a><span class="w">    </span><span class="k">implicit none</span>
+<a id="ln-7" name="ln-7" href="#ln-7"></a><span class="k">    private</span>
+<a id="ln-8" name="ln-8" href="#ln-8"></a>
+<a id="ln-9" name="ln-9" href="#ln-9"></a><span class="k">    public</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">read_namelist</span>
+<a id="ln-10" name="ln-10" href="#ln-10"></a>
+<a id="ln-11" name="ln-11" href="#ln-11"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">100</span><span class="p">),</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_file</span>
+<a id="ln-12" name="ln-12" href="#ln-12"></a><span class="w">    </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=</span><span class="mi">20</span><span class="p">),</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">field_type</span>
+<a id="ln-13" name="ln-13" href="#ln-13"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">M_pol</span>
+<a id="ln-14" name="ln-14" href="#ln-14"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">N_tor</span>
+<a id="ln-15" name="ln-15" href="#ln-15"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">allocatable</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s_tor</span>
+<a id="ln-16" name="ln-16" href="#ln-16"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">sign_sqrtg</span>
+<a id="ln-17" name="ln-17" href="#ln-17"></a><span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">max_n_fieldlines</span>
+<a id="ln-18" name="ln-18" href="#ln-18"></a><span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">should_calc_shaing_callen</span>
+<a id="ln-19" name="ln-19" href="#ln-19"></a><span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_eta</span>
+<a id="ln-20" name="ln-20" href="#ln-20"></a><span class="w">    </span><span class="kt">logical</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">unsafe_mode</span>
+<a id="ln-21" name="ln-21" href="#ln-21"></a>
+<a id="ln-22" name="ln-22" href="#ln-22"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s_tor_min</span>
+<a id="ln-23" name="ln-23" href="#ln-23"></a><span class="w">    </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s_tor_max</span>
+<a id="ln-24" name="ln-24" href="#ln-24"></a><span class="w">    </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">public</span><span class="p">,</span><span class="w"> </span><span class="k">protected</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_s_tor</span>
+<a id="ln-25" name="ln-25" href="#ln-25"></a>
+<a id="ln-26" name="ln-26" href="#ln-26"></a><span class="w">    </span><span class="k">namelist</span><span class="w"> </span><span class="o">/</span><span class="n">rabe_config</span><span class="o">/</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-27" name="ln-27" href="#ln-27"></a><span class="w">        </span><span class="n">field_file</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-28" name="ln-28" href="#ln-28"></a><span class="w">        </span><span class="n">field_type</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-29" name="ln-29" href="#ln-29"></a><span class="w">        </span><span class="n">M_pol</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-30" name="ln-30" href="#ln-30"></a><span class="w">        </span><span class="n">N_tor</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-31" name="ln-31" href="#ln-31"></a><span class="w">        </span><span class="n">s_tor</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-32" name="ln-32" href="#ln-32"></a><span class="w">        </span><span class="n">s_tor_min</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-33" name="ln-33" href="#ln-33"></a><span class="w">        </span><span class="n">s_tor_max</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-34" name="ln-34" href="#ln-34"></a><span class="w">        </span><span class="n">n_s_tor</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-35" name="ln-35" href="#ln-35"></a><span class="w">        </span><span class="n">sign_sqrtg</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-36" name="ln-36" href="#ln-36"></a><span class="w">        </span><span class="n">max_n_fieldlines</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-37" name="ln-37" href="#ln-37"></a><span class="w">        </span><span class="n">should_calc_shaing_callen</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-38" name="ln-38" href="#ln-38"></a><span class="w">        </span><span class="n">n_eta</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-39" name="ln-39" href="#ln-39"></a><span class="w">        </span><span class="n">unsafe_mode</span>
+<a id="ln-40" name="ln-40" href="#ln-40"></a>
+<a id="ln-41" name="ln-41" href="#ln-41"></a><span class="k">contains</span>
+<a id="ln-42" name="ln-42" href="#ln-42"></a>
+<a id="ln-43" name="ln-43" href="#ln-43"></a><span class="k">    subroutine </span><span class="n">read_namelist</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
+<a id="ln-44" name="ln-44" href="#ln-44"></a><span class="w">        </span><span class="k">use </span><span class="n">utils</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">linspace</span>
+<a id="ln-45" name="ln-45" href="#ln-45"></a><span class="w">        </span><span class="k">implicit none</span>
+<a id="ln-46" name="ln-46" href="#ln-46"></a><span class="k">        </span><span class="kt">character</span><span class="p">(</span><span class="nb">len</span><span class="o">=*</span><span class="p">),</span><span class="w"> </span><span class="k">intent</span><span class="p">(</span><span class="n">in</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">filename</span>
+<a id="ln-47" name="ln-47" href="#ln-47"></a><span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">ios</span><span class="p">,</span><span class="w"> </span><span class="n">unit</span>
+<a id="ln-48" name="ln-48" href="#ln-48"></a><span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">file_exists</span>
+<a id="ln-49" name="ln-49" href="#ln-49"></a>
+<a id="ln-50" name="ln-50" href="#ln-50"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">dimension</span><span class="p">(:),</span><span class="w"> </span><span class="k">allocatable</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">s_tor_temp</span>
+<a id="ln-51" name="ln-51" href="#ln-51"></a><span class="w">        </span><span class="kt">integer</span><span class="p">,</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_stor_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1000</span>
+<a id="ln-52" name="ln-52" href="#ln-52"></a><span class="w">        </span><span class="kt">integer</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">n_list</span>
+<a id="ln-53" name="ln-53" href="#ln-53"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">)</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">nan_value</span>
+<a id="ln-54" name="ln-54" href="#ln-54"></a><span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">has_list</span><span class="p">,</span><span class="w"> </span><span class="n">has_range</span>
+<a id="ln-55" name="ln-55" href="#ln-55"></a>
+<a id="ln-56" name="ln-56" href="#ln-56"></a><span class="w">        </span><span class="k">inquire</span><span class="w"> </span><span class="p">(</span><span class="k">file</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">exist</span><span class="o">=</span><span class="n">file_exists</span><span class="p">)</span>
+<a id="ln-57" name="ln-57" href="#ln-57"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">file_exists</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-58" name="ln-58" href="#ln-58"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"Error in read_namelist: file not found: "</span><span class="p">,</span><span class="w"> </span><span class="n">filename</span>
+<a id="ln-59" name="ln-59" href="#ln-59"></a><span class="w">            </span><span class="k">error stop</span>
+<a id="ln-60" name="ln-60" href="#ln-60"></a><span class="k">        end if</span>
+<a id="ln-61" name="ln-61" href="#ln-61"></a>
+<a id="ln-62" name="ln-62" href="#ln-62"></a><span class="k">        open</span><span class="w"> </span><span class="p">(</span><span class="n">newunit</span><span class="o">=</span><span class="n">unit</span><span class="p">,</span><span class="w"> </span><span class="k">file</span><span class="o">=</span><span class="n">filename</span><span class="p">,</span><span class="w"> </span><span class="n">status</span><span class="o">=</span><span class="s2">"old"</span><span class="p">,</span><span class="w"> </span><span class="n">action</span><span class="o">=</span><span class="s2">"read"</span><span class="p">,</span><span class="w"> </span><span class="n">iostat</span><span class="o">=</span><span class="n">ios</span><span class="p">)</span>
+<a id="ln-63" name="ln-63" href="#ln-63"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ios</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-64" name="ln-64" href="#ln-64"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"Error in read_namelist: cannot open file: "</span><span class="p">,</span><span class="w"> </span><span class="n">filename</span>
+<a id="ln-65" name="ln-65" href="#ln-65"></a><span class="w">            </span><span class="k">error stop</span>
+<a id="ln-66" name="ln-66" href="#ln-66"></a><span class="k">        end if</span>
+<a id="ln-67" name="ln-67" href="#ln-67"></a>
+<a id="ln-68" name="ln-68" href="#ln-68"></a><span class="k">        </span><span class="n">nan_value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ieee_value</span><span class="p">(</span><span class="n">nan_value</span><span class="p">,</span><span class="w"> </span><span class="n">ieee_quiet_nan</span><span class="p">)</span>
+<a id="ln-69" name="ln-69" href="#ln-69"></a>
+<a id="ln-70" name="ln-70" href="#ln-70"></a><span class="w">        </span><span class="c">! Default values</span>
+<a id="ln-71" name="ln-71" href="#ln-71"></a><span class="w">        </span><span class="n">field_type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s1">'vmec_nc'</span>
+<a id="ln-72" name="ln-72" href="#ln-72"></a><span class="w">        </span><span class="n">unsafe_mode</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-73" name="ln-73" href="#ln-73"></a><span class="w">        </span><span class="n">should_calc_shaing_callen</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-74" name="ln-74" href="#ln-74"></a><span class="w">        </span><span class="n">n_eta</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span>
+<a id="ln-75" name="ln-75" href="#ln-75"></a><span class="w">        </span><span class="n">s_tor_min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nan_value</span>
+<a id="ln-76" name="ln-76" href="#ln-76"></a><span class="w">        </span><span class="n">s_tor_max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nan_value</span>
+<a id="ln-77" name="ln-77" href="#ln-77"></a><span class="w">        </span><span class="n">n_s_tor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span>
+<a id="ln-78" name="ln-78" href="#ln-78"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">s_tor</span><span class="p">))</span><span class="w"> </span><span class="k">deallocate</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor</span><span class="p">)</span>
+<a id="ln-79" name="ln-79" href="#ln-79"></a><span class="w">        </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor</span><span class="p">(</span><span class="n">n_stor_max</span><span class="p">))</span>
+<a id="ln-80" name="ln-80" href="#ln-80"></a><span class="w">        </span><span class="n">s_tor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">nan_value</span>
+<a id="ln-81" name="ln-81" href="#ln-81"></a>
+<a id="ln-82" name="ln-82" href="#ln-82"></a><span class="w">        </span><span class="k">read</span><span class="w"> </span><span class="p">(</span><span class="n">unit</span><span class="p">,</span><span class="w"> </span><span class="n">nml</span><span class="o">=</span><span class="n">rabe_config</span><span class="p">,</span><span class="w"> </span><span class="n">iostat</span><span class="o">=</span><span class="n">ios</span><span class="p">)</span>
+<a id="ln-83" name="ln-83" href="#ln-83"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">ios</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-84" name="ln-84" href="#ln-84"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"Error in read_namelist:"</span>
+<a id="ln-85" name="ln-85" href="#ln-85"></a><span class="w">            </span><span class="k">print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"iostat = "</span><span class="p">,</span><span class="w"> </span><span class="n">ios</span>
+<a id="ln-86" name="ln-86" href="#ln-86"></a><span class="w">            </span><span class="k">error stop</span>
+<a id="ln-87" name="ln-87" href="#ln-87"></a><span class="k">        end if</span>
+<a id="ln-88" name="ln-88" href="#ln-88"></a><span class="k">        close</span><span class="w"> </span><span class="p">(</span><span class="n">unit</span><span class="p">)</span>
+<a id="ln-89" name="ln-89" href="#ln-89"></a>
+<a id="ln-90" name="ln-90" href="#ln-90"></a><span class="w">        </span><span class="n">n_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">count</span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">ieee_is_nan</span><span class="p">(</span><span class="n">s_tor</span><span class="p">))</span>
+<a id="ln-91" name="ln-91" href="#ln-91"></a><span class="w">        </span><span class="n">has_list</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n_list</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span>
+<a id="ln-92" name="ln-92" href="#ln-92"></a><span class="w">        </span><span class="n">has_range</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">ieee_is_nan</span><span class="p">(</span><span class="n">s_tor_min</span><span class="p">))</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-93" name="ln-93" href="#ln-93"></a><span class="w">                    </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">ieee_is_nan</span><span class="p">(</span><span class="n">s_tor_max</span><span class="p">))</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-94" name="ln-94" href="#ln-94"></a><span class="w">                    </span><span class="p">(</span><span class="n">n_s_tor</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span>
+<a id="ln-95" name="ln-95" href="#ln-95"></a>
+<a id="ln-96" name="ln-96" href="#ln-96"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">has_list</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">has_range</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-97" name="ln-97" href="#ln-97"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"Error in read_namelist: both s_tor list and s_tor range "</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-98" name="ln-98" href="#ln-98"></a><span class="w">                </span><span class="o">//</span><span class="s2">"(s_tor_min, s_tor_max, n_s_tor) are specified. Use one or the other."</span>
+<a id="ln-99" name="ln-99" href="#ln-99"></a><span class="w">            </span><span class="k">error stop</span>
+<a id="ln-100" name="ln-100" href="#ln-100"></a><span class="k">        end if</span>
+<a id="ln-101" name="ln-101" href="#ln-101"></a>
+<a id="ln-102" name="ln-102" href="#ln-102"></a><span class="k">        if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">has_list</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">has_range</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-103" name="ln-103" href="#ln-103"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"Error in read_namelist: no s_tor values provided. "</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-104" name="ln-104" href="#ln-104"></a><span class="w">                </span><span class="o">//</span><span class="s2">"Set either s_tor or (s_tor_min, s_tor_max, n_s_tor)."</span>
+<a id="ln-105" name="ln-105" href="#ln-105"></a><span class="w">            </span><span class="k">error stop</span>
+<a id="ln-106" name="ln-106" href="#ln-106"></a><span class="k">        end if</span>
+<a id="ln-107" name="ln-107" href="#ln-107"></a>
+<a id="ln-108" name="ln-108" href="#ln-108"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">has_range</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-109" name="ln-109" href="#ln-109"></a><span class="k">            deallocate</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor</span><span class="p">)</span>
+<a id="ln-110" name="ln-110" href="#ln-110"></a><span class="w">            </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor</span><span class="p">(</span><span class="n">n_s_tor</span><span class="p">))</span>
+<a id="ln-111" name="ln-111" href="#ln-111"></a><span class="w">            </span><span class="k">call </span><span class="n">linspace</span><span class="p">(</span><span class="n">s_tor_min</span><span class="p">,</span><span class="w"> </span><span class="n">s_tor_max</span><span class="p">,</span><span class="w"> </span><span class="n">n_s_tor</span><span class="p">,</span><span class="w"> </span><span class="n">s_tor</span><span class="p">)</span>
+<a id="ln-112" name="ln-112" href="#ln-112"></a><span class="w">        </span><span class="k">else</span>
+<a id="ln-113" name="ln-113" href="#ln-113"></a><span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">n_list</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">n_stor_max</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-114" name="ln-114" href="#ln-114"></a><span class="k">                print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"Error in read_namelist: too many s_tor values "</span><span class="p">,</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-115" name="ln-115" href="#ln-115"></a><span class="w">                    </span><span class="s2">"provided in namelist"</span>
+<a id="ln-116" name="ln-116" href="#ln-116"></a><span class="w">                </span><span class="k">error stop</span>
+<a id="ln-117" name="ln-117" href="#ln-117"></a><span class="k">            end if</span>
+<a id="ln-118" name="ln-118" href="#ln-118"></a><span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="nb">allocated</span><span class="p">(</span><span class="n">s_tor_temp</span><span class="p">))</span><span class="w"> </span><span class="k">deallocate</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor_temp</span><span class="p">)</span>
+<a id="ln-119" name="ln-119" href="#ln-119"></a><span class="w">            </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor_temp</span><span class="p">(</span><span class="n">n_list</span><span class="p">))</span>
+<a id="ln-120" name="ln-120" href="#ln-120"></a><span class="w">            </span><span class="n">s_tor_temp</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nb">pack</span><span class="p">(</span><span class="n">s_tor</span><span class="p">,.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">ieee_is_nan</span><span class="p">(</span><span class="n">s_tor</span><span class="p">))</span>
+<a id="ln-121" name="ln-121" href="#ln-121"></a><span class="w">            </span><span class="k">deallocate</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor</span><span class="p">)</span>
+<a id="ln-122" name="ln-122" href="#ln-122"></a><span class="w">            </span><span class="k">allocate</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor</span><span class="p">(</span><span class="n">n_list</span><span class="p">))</span>
+<a id="ln-123" name="ln-123" href="#ln-123"></a><span class="w">            </span><span class="n">s_tor</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s_tor_temp</span>
+<a id="ln-124" name="ln-124" href="#ln-124"></a><span class="w">            </span><span class="k">deallocate</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor_temp</span><span class="p">)</span>
+<a id="ln-125" name="ln-125" href="#ln-125"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-126" name="ln-126" href="#ln-126"></a>
+<a id="ln-127" name="ln-127" href="#ln-127"></a><span class="k">        call </span><span class="n">check_if_valid_namelist</span><span class="p">()</span>
+<a id="ln-128" name="ln-128" href="#ln-128"></a>
+<a id="ln-129" name="ln-129" href="#ln-129"></a><span class="w">    </span><span class="k">end subroutine </span><span class="n">read_namelist</span>
+<a id="ln-130" name="ln-130" href="#ln-130"></a>
+<a id="ln-131" name="ln-131" href="#ln-131"></a><span class="w">    </span><span class="k">subroutine </span><span class="n">check_if_valid_namelist</span><span class="p">()</span>
+<a id="ln-132" name="ln-132" href="#ln-132"></a><span class="w">        </span><span class="k">use </span><span class="n">make_fieldline</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">is_not_integer</span>
+<a id="ln-133" name="ln-133" href="#ln-133"></a><span class="w">        </span><span class="k">use </span><span class="n">utils</span><span class="p">,</span><span class="w"> </span><span class="k">only</span><span class="p">:</span><span class="w"> </span><span class="n">not_same</span>
+<a id="ln-134" name="ln-134" href="#ln-134"></a>
+<a id="ln-135" name="ln-135" href="#ln-135"></a><span class="w">        </span><span class="kt">real</span><span class="p">(</span><span class="n">dp</span><span class="p">),</span><span class="w"> </span><span class="k">parameter</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">tol</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">1e-15</span>
+<a id="ln-136" name="ln-136" href="#ln-136"></a><span class="w">        </span><span class="kt">logical</span><span class="w"> </span><span class="kd">::</span><span class="w"> </span><span class="n">is_valid</span>
+<a id="ln-137" name="ln-137" href="#ln-137"></a>
+<a id="ln-138" name="ln-138" href="#ln-138"></a><span class="w">        </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">true</span><span class="p">.</span>
+<a id="ln-139" name="ln-139" href="#ln-139"></a>
+<a id="ln-140" name="ln-140" href="#ln-140"></a><span class="w">        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">field_file</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-141" name="ln-141" href="#ln-141"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"field_file is empty!"</span>
+<a id="ln-142" name="ln-142" href="#ln-142"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-143" name="ln-143" href="#ln-143"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-144" name="ln-144" href="#ln-144"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">field_type</span><span class="p">))</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="mi">0</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-145" name="ln-145" href="#ln-145"></a><span class="w">            </span><span class="p">(</span><span class="nb">trim</span><span class="p">(</span><span class="n">field_type</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="s1">'vmec_nc'</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-146" name="ln-146" href="#ln-146"></a><span class="w">             </span><span class="nb">trim</span><span class="p">(</span><span class="n">field_type</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="s1">'booz_xform'</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-147" name="ln-147" href="#ln-147"></a><span class="w">             </span><span class="nb">trim</span><span class="p">(</span><span class="n">field_type</span><span class="p">)</span><span class="w"> </span><span class="o">/=</span><span class="w"> </span><span class="s1">'chartmap'</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-148" name="ln-148" href="#ln-148"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"field_type must be 'vmec_nc', 'booz_xform', or 'chartmap'"</span>
+<a id="ln-149" name="ln-149" href="#ln-149"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-150" name="ln-150" href="#ln-150"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-151" name="ln-151" href="#ln-151"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">ieee_is_nan</span><span class="p">(</span><span class="n">M_pol</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-152" name="ln-152" href="#ln-152"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"M_pol is NaN!"</span>
+<a id="ln-153" name="ln-153" href="#ln-153"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-154" name="ln-154" href="#ln-154"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-155" name="ln-155" href="#ln-155"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">ieee_is_nan</span><span class="p">(</span><span class="n">N_tor</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-156" name="ln-156" href="#ln-156"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"N_tor is NaN!"</span>
+<a id="ln-157" name="ln-157" href="#ln-157"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-158" name="ln-158" href="#ln-158"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-159" name="ln-159" href="#ln-159"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">ieee_is_nan</span><span class="p">(</span><span class="n">s_tor</span><span class="p">)))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-160" name="ln-160" href="#ln-160"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"s_tor is NaN!"</span>
+<a id="ln-161" name="ln-161" href="#ln-161"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-162" name="ln-162" href="#ln-162"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-163" name="ln-163" href="#ln-163"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">ieee_is_nan</span><span class="p">(</span><span class="n">sign_sqrtg</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-164" name="ln-164" href="#ln-164"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"sign_sqrtg is NaN!"</span>
+<a id="ln-165" name="ln-165" href="#ln-165"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-166" name="ln-166" href="#ln-166"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-167" name="ln-167" href="#ln-167"></a>
+<a id="ln-168" name="ln-168" href="#ln-168"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">is_not_integer</span><span class="p">(</span><span class="n">M_pol</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-169" name="ln-169" href="#ln-169"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"M_pol must be integer"</span>
+<a id="ln-170" name="ln-170" href="#ln-170"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-171" name="ln-171" href="#ln-171"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-172" name="ln-172" href="#ln-172"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">is_not_integer</span><span class="p">(</span><span class="n">N_tor</span><span class="p">,</span><span class="w"> </span><span class="n">tol</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-173" name="ln-173" href="#ln-173"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"N_tor must be integer"</span>
+<a id="ln-174" name="ln-174" href="#ln-174"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-175" name="ln-175" href="#ln-175"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-176" name="ln-176" href="#ln-176"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">not_same</span><span class="p">(</span><span class="n">sign_sqrtg</span><span class="p">,</span><span class="w"> </span><span class="mf">1.0_dp</span><span class="p">,</span><span class="w"> </span><span class="n">reltol_in</span><span class="o">=</span><span class="mf">0.0_dp</span><span class="p">,</span><span class="w"> </span><span class="n">abstol_in</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="p">&amp;</span>
+<a id="ln-177" name="ln-177" href="#ln-177"></a><span class="w">            </span><span class="n">not_same</span><span class="p">(</span><span class="n">sign_sqrtg</span><span class="p">,</span><span class="w"> </span><span class="o">-</span><span class="mf">1.0_dp</span><span class="p">,</span><span class="w"> </span><span class="n">reltol_in</span><span class="o">=</span><span class="mf">0.0_dp</span><span class="p">,</span><span class="w"> </span><span class="n">abstol_in</span><span class="o">=</span><span class="n">tol</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-178" name="ln-178" href="#ln-178"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"sign_sqrtg must be +-1"</span>
+<a id="ln-179" name="ln-179" href="#ln-179"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-180" name="ln-180" href="#ln-180"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-181" name="ln-181" href="#ln-181"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="nb">any</span><span class="p">(</span><span class="n">s_tor</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mf">0.0_dp</span><span class="p">)</span><span class="w"> </span><span class="p">.</span><span class="nb">or</span><span class="p">.</span><span class="w"> </span><span class="nb">any</span><span class="p">(</span><span class="n">s_tor</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mf">1.0_dp</span><span class="p">))</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-182" name="ln-182" href="#ln-182"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"s_tor must be in ]0.0, 1.0["</span>
+<a id="ln-183" name="ln-183" href="#ln-183"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-184" name="ln-184" href="#ln-184"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-185" name="ln-185" href="#ln-185"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">n_s_tor</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-186" name="ln-186" href="#ln-186"></a><span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">s_tor_min</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="n">s_tor_max</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-187" name="ln-187" href="#ln-187"></a><span class="k">                print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"s_tor_min must be less than s_tor_max"</span>
+<a id="ln-188" name="ln-188" href="#ln-188"></a><span class="w">                </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-189" name="ln-189" href="#ln-189"></a><span class="w">            </span><span class="k">end if</span>
+<a id="ln-190" name="ln-190" href="#ln-190"></a><span class="k">            if</span><span class="w"> </span><span class="p">(</span><span class="n">n_s_tor</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-191" name="ln-191" href="#ln-191"></a><span class="k">                print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"n_s_tor must be at least 2"</span>
+<a id="ln-192" name="ln-192" href="#ln-192"></a><span class="w">                </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-193" name="ln-193" href="#ln-193"></a><span class="w">            </span><span class="k">end if</span>
+<a id="ln-194" name="ln-194" href="#ln-194"></a><span class="k">        end if</span>
+<a id="ln-195" name="ln-195" href="#ln-195"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">max_n_fieldlines</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-196" name="ln-196" href="#ln-196"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"max_n_fieldlines must be bigger than 1"</span>
+<a id="ln-197" name="ln-197" href="#ln-197"></a><span class="w">            </span><span class="n">is_valid</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">.</span><span class="n">false</span><span class="p">.</span>
+<a id="ln-198" name="ln-198" href="#ln-198"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-199" name="ln-199" href="#ln-199"></a><span class="k">        if</span><span class="w"> </span><span class="p">(</span><span class="n">should_calc_shaing_callen</span><span class="w"> </span><span class="p">.</span><span class="nb">and</span><span class="p">.</span><span class="w"> </span><span class="n">n_eta</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">3</span><span class="p">)</span><span class="w"> </span><span class="k">then</span>
+<a id="ln-200" name="ln-200" href="#ln-200"></a><span class="k">            print</span><span class="w"> </span><span class="o">*</span><span class="p">,</span><span class="w"> </span><span class="s2">"n_eta must be bigger than 3"</span>
+<a id="ln-201" name="ln-201" href="#ln-201"></a><span class="w">        </span><span class="k">end if</span>
+<a id="ln-202" name="ln-202" href="#ln-202"></a>
+<a id="ln-203" name="ln-203" href="#ln-203"></a><span class="k">        if</span><span class="w"> </span><span class="p">(.</span><span class="nb">not</span><span class="p">.</span><span class="w"> </span><span class="n">is_valid</span><span class="p">)</span><span class="w"> </span><span class="k">error stop</span>
+<a id="ln-204" name="ln-204" href="#ln-204"></a>
+<a id="ln-205" name="ln-205" href="#ln-205"></a><span class="k">    end subroutine </span><span class="n">check_if_valid_namelist</span>
+<a id="ln-206" name="ln-206" href="#ln-206"></a>
+<a id="ln-207" name="ln-207" href="#ln-207"></a><span class="k">end module </span><span class="n">read_file</span>
+</pre></div>
+
+      </section>
+    </div>
+  </div>
+
+      <hr>
+    </div> <!-- /container -->
+    <footer>
+      <div class="container">
+        <div class="row justify-content-between">
+          <div class="col">
+            <p>
+              rabe
+ was developed by Georg Grassler<br>              &copy; 2026 
+</p>
+          </div>
+          <div class="col">
+            <p class="text-end">
+              Documentation generated by
+              <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
+ on 2026-11-06T16:50:59.602183+0000             </p>
+          </div>
+        </div>
+        <br>
+      </div> <!-- /container -->
+    </footer>
+  </body>
+</html>
