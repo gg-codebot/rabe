@@ -2,13 +2,24 @@
 
 ## `test_precession_analytic`
 
-Compares the numerical flux mode $\Gamma_1$ with its large-$A$ asymptote
-$\Gamma_1^\mathrm{an}$ for $A_1 > 200$.
+Compares the numerical mode of the offset correction with its large-$A_m$ asymptote
+for $A_1 > 200$.
+
+$$
+   A_m
+   \define
+   \left|{\frac{\pi R m \v_E^\ast \eta_b^2}{r \nu_\ast I_B(\eta_b)}
+   \right|^{1/2}
+   \left|
+   2 \eta_b B^{\prime\prime}
+   \right|^{-1/4}
+$$
 
 **Expected error.** The next correction to the asymptote is
-$\mathcal{O}(1/\ln A_1)$, so the test uses the tolerance $0.5/\ln A_1$. The
-measured ratio $\Gamma_1/\Gamma_1^\mathrm{an}$ is about $0.95$ and approaches $1$
-as $A_1$ grows.
+$\mathcal{O}(1/\ln A_1)$, so the test uses the tolerance $0.5/\ln A_1$. The scaling
+is a result of ignoring the change of the bounce time $\tau_b$ with $\eta$ near
+the trapped passing boundary $\eta_b$, expressing the analytic solution only by quantities
+at $\eta = \eta_b$.
 
 **Resolution limit.** For large $l_c\hat\Omega$ the solution is confined to a thin
 layer at $\eta_c$. Once the layer is narrower than the $\eta$ grid near $\eta_c$,
