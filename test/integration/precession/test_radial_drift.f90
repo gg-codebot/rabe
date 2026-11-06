@@ -39,9 +39,7 @@ program test_radial_drift
     real(dp), dimension(:), allocatable :: analytic_drift, drift
     real(dp) :: drift_1_analytic, drift_1
     real(dp) :: dAtheta_dr, B_theta_covar, B_phi_covar
-    real(dp), dimension(:, :), allocatable :: modes_I_B, modes_dIV_deta
     real(dp) :: reltol, abstol, max_error, delta_eta, delta_trapped
-    real(dp) :: B_min, B_varphi, B_vartheta
     type(fieldline_for_precession_t), dimension(:), allocatable :: fieldlines
 
     logical :: test_failed

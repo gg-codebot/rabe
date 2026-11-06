@@ -77,7 +77,7 @@ program plot_integrate_radial_drift
     call compute_bounce_integrals(field, precession_fieldline, s_tor, grid)
     call set_splines(grid)
 
-    call integrate_radial_drift(grid, precession_fieldline%fieldline_t, radial_drift_integral)
+    call integrate_radial_drift(grid, radial_drift_integral)
     print *, "integrate_radial_drift: ", radial_drift_integral
     check = precession_fieldline%radial_drift
     check = check/0.75_dp*(B_covariant_phi + iota*B_covariant_theta)/field%psi_tor_edge

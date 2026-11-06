@@ -1,8 +1,5 @@
 program plot_bounce_time_averages
     use constants, only: dp, pi, machine_eps
-    use anti_sigma_field, only: anti_sigma_field_t
-    use mock_perturbed_field, only: mock_perturbed_field_t
-    use mock_field_3d, only: mock_field_3d_t
     use boozer_field, only: boozer_field_t
     use fieldline_mod, only: flock_of_fieldlines_t
     use make_fieldline, only: make_flock_from_labels
@@ -23,11 +20,6 @@ program plot_bounce_time_averages
     implicit none
 
     real(dp), parameter :: M_pol = 0.0_dp, N_tor = 4.0_dp
-    real(dp), parameter :: B_0 = 1.0_dp, eps_0 = -0.0125_dp, eps_1 = -0.0005_dp
-    type(anti_sigma_field_t) :: field_2D
-    real(dp), parameter :: B_pert = 0.001_dp, M_pol_pert = 1.0_dp, N_tor_pert = 0.0_dp
-    type(mock_perturbed_field_t) :: perturbed_field_2D
-    type(mock_field_3d_t) :: field_mock
 
     integer, parameter :: n_fieldlines = 50
     real(dp), dimension(n_fieldlines) :: xi_0
@@ -62,14 +54,6 @@ program plot_bounce_time_averages
     type(boozer_field_t) :: field
 
     type(myplot) :: plt
-
-    ! call field_2D%anti_sigma_field_init(M_pol, N_tor, B_0, eps_0, eps_1)
-    ! call perturbed_field_2D%mock_perturbed_field_init(field_2D, &
-    !                                                   M_pol_pert, &
-    !                                                   N_tor_pert, &
-    !                                                   B_pert)
-    ! call field%mock_field_3d_init(perturbed_field_2D)
-    ! call field%get_iota(s_tor, iota)
 
     inquire (file=nc_file, exist=field_file_exists)
     if (.not. field_file_exists) then

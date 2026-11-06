@@ -1,5 +1,5 @@
 module mock_field_3d
-    use constants, only: dp, pi
+    use constants, only: dp
     use field_base, only: field_t
     use field_base, only: field_3D_t
 
