@@ -9,7 +9,6 @@ program test_trace_till_bounce
     implicit none
 
     real(dp), parameter :: reltol = 1e-6, abstol = 1e-20
-    real(dp), parameter :: abstol_for_zero = 1e-4
     character(len=*), parameter :: nc_filename = &
                       "input/wout_LandremanPaul2021_QA_reactorScale_lowres_reference.nc"
 

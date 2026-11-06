@@ -80,7 +80,6 @@ program test_zero_precession
     do idx = 1, n_fieldlines
         call set_splines(fieldlines(idx)%grid)
         call integrate_radial_drift(fieldlines(idx)%grid, &
-                                    fieldlines(idx)%fieldline_t, &
                                     radial_drift_integrals(idx))
     end do
 

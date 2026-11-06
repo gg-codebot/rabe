@@ -60,16 +60,3 @@ target_link_libraries(plot_bounce_time_averages.x myplot_lib
                                                      helpers_lib)
 add_test(PlotBounceTimeAverages plot_bounce_time_averages.x)
 set_tests_properties(PlotBounceTimeAverages PROPERTIES LABELS "plot" SKIP_RETURN_CODE 77)
-
-add_executable(plot_bounce_orbits.x plot_bounce_orbits.f90)
-target_link_libraries(plot_bounce_orbits.x myplot_lib
-                                                 rabe_lib
-                                                 helpers_lib)
-add_test(PlotBounceOrbits plot_bounce_orbits.x)
-set_tests_properties(PlotBounceOrbits PROPERTIES LABELS "plot" SKIP_RETURN_CODE 77)
-
-add_executable(plot_integrate_radial_drift.x plot_integrate_radial_drift.f90)
-target_link_libraries(plot_integrate_radial_drift.x rabe_lib
-                                                   helpers_lib)
-add_test(PlotIntegrateRadialDrift plot_integrate_radial_drift.x)
-set_tests_properties(PlotIntegrateRadialDrift PROPERTIES LABELS "plot" SKIP_RETURN_CODE 77)

@@ -311,7 +311,6 @@ contains
         real(dp), intent(in) :: eps_0, B_0, N_tor
 
         real(dp), dimension(size(eta)) :: tau
-        real(dp), dimension(size(eta)) :: k_squared
         real(dp) :: d2B_dphi2, eta_c
 
         d2B_dphi2 = abs(B_0*eps_0*N_tor**2.0_dp)
