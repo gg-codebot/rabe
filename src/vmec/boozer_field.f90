@@ -80,13 +80,15 @@ contains
     !> Load Boozer-coordinate splines from a booz_xform boozmn netCDF file.
     !!
     !! The boozmn file fixes its own grid and spline orders.
-    subroutine init_from_boozmn(self, boozmn_file)
+    !> n_zeta is per field period; omitted sizes keep the libneo defaults.
+    subroutine init_from_boozmn(self, boozmn_file, n_rho, n_theta, n_zeta)
         use boozmn_reader, only: load_boozer_from_boozmn
         class(boozer_field_t), intent(inout) :: self
         character(len=*), intent(in) :: boozmn_file
+        integer, intent(in), optional :: n_rho, n_theta, n_zeta
 
         call assert_no_active_field("init_from_boozmn")
-        call load_boozer_from_boozmn(boozmn_file)
+        call load_boozer_from_boozmn(boozmn_file, n_rho, n_theta, n_zeta)
         call finish_init(self)
 
     end subroutine init_from_boozmn
