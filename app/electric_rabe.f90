@@ -169,8 +169,8 @@ program electric_rabe
 
             end do
         end do
-        lambda_off = lambda_off*0.75_dp/covariant_factor*sign_sqrtg/average%nabla_s
- lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor*sign_sqrtg/average%nabla_s
+        lambda_off = lambda_off*0.75_dp/covariant_factor/average%nabla_s
+ lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor/average%nabla_s
 
         deallocate (fieldlines_precession)
         deallocate (is_complete)
