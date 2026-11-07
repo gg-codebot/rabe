@@ -27,12 +27,13 @@ contains
     end function lcm
 
     subroutine rational_approx(x, max_denom, p, q)
-        ! Approximate x ~ p/q via continued fraction convergents, q <= max_denom
+        ! Best approximation x ~ p/q with q <= max_denom: the last continued
+        ! fraction convergent or the largest semiconvergent that still fits
         real(dp), intent(in) :: x
         integer, intent(in) :: max_denom
         integer, intent(out) :: p, q
-        integer :: a, p0, p1, q0, q1, pt, qt
-        real(dp) :: r
+        integer :: a, k, p0, p1, q0, q1, pt, qt
+        real(dp) :: r, xa
 
         p0 = 0; q0 = 1
         p1 = 1; q1 = 0
@@ -40,13 +41,25 @@ contains
         if (max_denom <= 0) then
             error stop "max_denom must be positive"
         end if
-        r = abs(x)
+        xa = abs(x)
+        r = xa
 
         do
             a = int(r)
             pt = a*p1 + p0
             qt = a*q1 + q0
-            if (qt > max_denom) exit
+            if (qt > max_denom) then
+                if (q1 + q0 <= max_denom) then
+                    k = (max_denom - q0)/q1
+                    pt = k*p1 + p0
+                    qt = k*q1 + q0
+                    if (abs(xa - real(pt, dp)/qt) < abs(xa - real(p1, dp)/q1)) then
+                        p1 = pt
+                        q1 = qt
+                    end if
+                end if
+                exit
+            end if
             p0 = p1; q0 = q1
             p1 = pt; q1 = qt
             if (abs(r - a) < 1.0d-12) exit
