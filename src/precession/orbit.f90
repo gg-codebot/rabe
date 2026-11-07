@@ -3,6 +3,9 @@ module orbit
 
     implicit none
 
+    !> orbit state: s, theta, phi, p, lambda, I, tau, radial excursion, int B^2 dtau
+    integer, parameter :: n_orbit = 9
+
 contains
 
     !ToDo make module from all global things like this one
@@ -155,6 +158,7 @@ contains
         ! radial excursion integrated from zero, avoids cancellation in
         ! z_end(1) - z_start(1) when the drift is tiny compared to s
         vz(8) = vz(1)
+        vz(9) = bmod**2
     end subroutine velo_can
     !
     !ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc
@@ -170,7 +174,7 @@ contains
         real(dp), intent(in) :: z_axis(:)
         real(dp), intent(out) :: vz_axis(:)
         real(dp) :: derlogsqs
-        integer, parameter :: ndim = 8
+        integer, parameter :: ndim = n_orbit
         real(dp), dimension(ndim) :: z, vz
         !
         z(1) = sqrt(z_axis(1)**2 + z_axis(2)**2)
@@ -194,7 +198,7 @@ contains
         !
         implicit none
         !
-        integer, parameter :: ndim = 8, nstepmax = 1000000
+        integer, parameter :: ndim = n_orbit, nstepmax = 1000000
         real(dp), parameter :: snear_axis = 0.01d0
         !
         logical :: near_axis

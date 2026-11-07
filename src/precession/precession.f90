@@ -18,6 +18,10 @@ module precession
         real(dp), dimension(:), allocatable :: t, eta
         real(dp), dimension(:), allocatable :: avg_I_j
         real(dp), dimension(:), allocatable :: avg_bounce_time_weighted
+        real(dp), dimension(:), allocatable :: avg_B_squared_weighted
+        !> weight of Omega_hat: bounce time (exact E x B drift, default) or
+        !> int B^2 dtau/<B^2> (DKES/MONKES, see use_dkes_electric_drift)
+        real(dp), dimension(:), allocatable :: electric_weight
         real(dp), dimension(:), allocatable :: avg_magnetic_drift_weighted
         real(dp), dimension(:, :), allocatable :: radial_drift_sin
         integer :: n_modes
@@ -118,6 +122,8 @@ contains
         allocate (bounce_integrals%avg_bounce_time_weighted(n_grid))
         allocate (bounce_integrals%avg_I_j(n_grid))
         allocate (bounce_integrals%avg_magnetic_drift_weighted(n_grid))
+        allocate (bounce_integrals%avg_B_squared_weighted(n_grid))
+        bounce_integrals%avg_B_squared_weighted = 0.0_dp
         bounce_integrals%avg_bounce_time_weighted = 0.0_dp
         bounce_integrals%avg_I_j = 0.0_dp
         bounce_integrals%avg_magnetic_drift_weighted = 0.0_dp
@@ -128,6 +134,9 @@ contains
                 fieldlines(idx)%grid%bounce_time_weighted
             bounce_integrals%avg_I_j = bounce_integrals%avg_I_j + &
                                        fieldlines(idx)%grid%I_j
+            bounce_integrals%avg_B_squared_weighted = &
+                bounce_integrals%avg_B_squared_weighted + &
+                fieldlines(idx)%grid%B_squared_weighted
             bounce_integrals%avg_magnetic_drift_weighted = &
                 bounce_integrals%avg_magnetic_drift_weighted + &
                 fieldlines(idx)%grid%poloidal_drift_weighted
@@ -141,6 +150,9 @@ contains
         bounce_integrals%avg_bounce_time_weighted = &
             bounce_integrals%avg_bounce_time_weighted/n_fieldlines
         bounce_integrals%avg_I_j = bounce_integrals%avg_I_j/n_fieldlines
+        bounce_integrals%avg_B_squared_weighted = &
+            bounce_integrals%avg_B_squared_weighted/n_fieldlines
+        bounce_integrals%electric_weight = bounce_integrals%avg_bounce_time_weighted
 
         bounce_integrals%n_modes = n_fieldlines/2 + 1
         allocate (radial_drift_cos(bounce_integrals%n_modes, n_grid))
@@ -171,7 +183,7 @@ contains
         integer :: idx
 
         allocate (electric_drift_weighted(size(bounce_integrals%t)))
-        electric_drift_weighted = Omega_hat*bounce_integrals%avg_bounce_time_weighted
+        electric_drift_weighted = Omega_hat*bounce_integrals%electric_weight
         poloidal_drift_weighted = bounce_integrals%avg_magnetic_drift_weighted + &
                                   electric_drift_weighted
 
@@ -198,6 +210,36 @@ contains
         deallocate (electric_drift_weighted)
 
     end subroutine compute_flux_modes
+
+    !> Weight Omega_hat like DKES/MONKES, whose E x B drift has 1/<B^2> instead of
+    !! 1/B^2: the precession then scales with int B^2 dtau/<B^2> along the orbit.
+    !! <B^2> is the Boozer flux-surface average (Jacobian ~ 1/B^2) on s_tor.
+    subroutine use_dkes_electric_drift(bounce_integrals, s_tor)
+        use constants, only: pi
+        use field_instance, only: magfie
+        type(bounce_integrals_t), intent(inout) :: bounce_integrals
+        real(dp), intent(in) :: s_tor
+
+        integer, parameter :: n_angle = 128
+        integer :: i, j
+        real(dp) :: x(3), bmod, sqrtg, bder(3), hcovar(3), hctrvr(3), hcurl(3)
+        real(dp) :: sum_sqrtg, sum_sqrtg_B2, B_squared_average
+
+        sum_sqrtg = 0.0_dp
+        sum_sqrtg_B2 = 0.0_dp
+        do i = 1, n_angle
+            do j = 1, n_angle
+                x = [s_tor, 2.0_dp*pi*(i - 1)/n_angle, &
+                     2.0_dp*pi*(j - 1)/(n_angle*bounce_integrals%nfp)]
+                call magfie(x, bmod, sqrtg, bder, hcovar, hctrvr, hcurl)
+                sum_sqrtg = sum_sqrtg + abs(sqrtg)
+                sum_sqrtg_B2 = sum_sqrtg_B2 + abs(sqrtg)*bmod**2
+            end do
+        end do
+        B_squared_average = sum_sqrtg_B2/sum_sqrtg
+        bounce_integrals%electric_weight = &
+            bounce_integrals%avg_B_squared_weighted/B_squared_average
+    end subroutine use_dkes_electric_drift
 
     !> Longest l_c for which the flux modes are resolved by the eta grid (m=1).
     !! For large l_c*Omega_hat the solution is confined to a layer at eta_c of

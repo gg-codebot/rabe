@@ -9,6 +9,7 @@ program electric_rabe
     use precession, only: make_fieldlines_for_precession
     use precession, only: assemble_bounce_integrals
     use precession, only: compute_flux_modes
+    use precession, only: use_dkes_electric_drift
     use grid_mod, only: fieldline_for_precession_t
     use grid_mod, only: compute_bounce_integrals
     use saved_bounce_integrals, only: bounce_integrals_header_t
@@ -35,7 +36,8 @@ program electric_rabe
     use read_precession, only: read_precession_namelist
     use read_precession, only: Omega_hat, &
                                nu_star, &
-                               n_eta
+                               n_eta, &
+                               electric_drift
 
     implicit none
 
@@ -165,6 +167,10 @@ program electric_rabe
             end if
         end do
         call assemble_bounce_integrals(fieldlines_precession, bounce_integrals)
+        if (trim(electric_drift) == 'dkes') then
+            call use_dkes_electric_drift(bounce_integrals, s_tor(this))
+        end if
+        print *, "E x B drift: ", trim(electric_drift)
         n_modes = bounce_integrals%n_modes
 
         allocate (lambda_off_modes(n_modes, n_nu, n_Omega_hat))
@@ -229,6 +235,7 @@ program electric_rabe
     call nc_output%add_attr("lambda_off", "unit", &
                             "[1]")
     call nc_output%add_attr("lambda_off", "radial_label", radial_label)
+    call nc_output%add_attr("lambda_off", "electric_drift", trim(electric_drift))
 
     call nc_output%def_dim("label_mode", n_modes)
     call nc_output%add_real_1d("mode_numbers", "label_mode")
