@@ -95,8 +95,15 @@ program main
                                       field, M_pol, N_tor, nfp, &
                                       split_maxima(this))
 
-        dr_dAtheta = calc_gradient_scaling_factor_r_eff(flock, field%psi_tor_edge, &
-                                                        nint(sign_sqrtg))
+        if (field%has_nabla_s) then
+            dr_dAtheta = calc_gradient_scaling_factor_r_eff(flock, &
+                                                            field%psi_tor_edge, &
+                                                            nint(sign_sqrtg))
+        else
+            ! no metric (boozmn or chartmap): coefficients per s instead of r
+            dr_dAtheta = sign_sqrtg/field%psi_tor_edge
+            print *, "no |grad s|: coefficients given with respect to s"
+        end if
         R = field%R
         call calc_offset_coefficients(flock, R, dr_dAtheta, &
                                       Lambda_A(this), Lambda_B(this))
