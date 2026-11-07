@@ -18,6 +18,9 @@ module read_file
     logical, public, protected :: should_calc_shaing_callen
     integer, public, protected :: n_eta
     logical, public, protected :: unsafe_mode
+    integer, public, protected :: n_rho
+    integer, public, protected :: n_theta
+    integer, public, protected :: n_zeta
 
     real(dp), public, protected :: s_tor_min
     real(dp), public, protected :: s_tor_max
@@ -36,7 +39,10 @@ module read_file
         max_n_fieldlines, &
         should_calc_shaing_callen, &
         n_eta, &
-        unsafe_mode
+        unsafe_mode, &
+        n_rho, &
+        n_theta, &
+        n_zeta
 
 contains
 
@@ -72,6 +78,9 @@ contains
         unsafe_mode = .false.
         should_calc_shaing_callen = .false.
         n_eta = 100
+        n_rho = 30
+        n_theta = 48
+        n_zeta = 96
         s_tor_min = nan_value
         s_tor_max = nan_value
         n_s_tor = 0

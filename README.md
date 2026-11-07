@@ -196,6 +196,11 @@ nu_star_crit       = flock.calc_nu_star_crit(R)
 /
 ```
 
+`field_type` selects the input format of `field_file`: `vmec_nc` (default),
+`booz_xform` (a `boozmn` file) or `chartmap`. For `booz_xform`, `n_rho`,
+`n_theta` and `n_zeta` (per field period) set the spline grid, by default
+30, 48 and 96. Check that results do not change when each is refined.
+
 The type of omnigenity is set by the helicity
 
 | type of omnigenity | `M_pol` | `N_tor` |

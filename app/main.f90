@@ -5,6 +5,7 @@ program main
     use read_file, only: read_namelist, &
                          field_file, &
                          field_type, &
+                         n_rho, n_theta, n_zeta, &
                          M_pol, &
                          N_tor, &
                          s_tor, &
@@ -78,7 +79,7 @@ program main
     case ('vmec_nc')
         call field%init_from_vmec(field_file, grid_refinement=6)
     case ('booz_xform')
-        call field%init_from_boozmn(field_file)
+        call field%init_from_boozmn(field_file, n_rho, n_theta, n_zeta)
     case ('chartmap')
         call field%init_from_chartmap(field_file)
     case default
