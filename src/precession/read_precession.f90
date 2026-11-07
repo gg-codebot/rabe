@@ -8,11 +8,14 @@ module read_precession
     real(dp), dimension(:), allocatable, public, protected :: Omega_hat
     real(dp), dimension(:), allocatable, public, protected :: nu_star
     integer, public, protected :: n_eta ! eta grid points of the bounce integrals
+    ! E x B drift with 1/B^2 ('exact') or with 1/<B^2> as in DKES/MONKES ('dkes')
+    character(len=8), public, protected :: electric_drift
 
     namelist /precession_config/ &
         Omega_hat, &
         nu_star, &
-        n_eta
+        n_eta, &
+        electric_drift
 
 contains
 
@@ -51,6 +54,7 @@ contains
         allocate (nu_star(n_nu_star_max))
         nu_star = nan_value
         n_eta = 200
+        electric_drift = 'exact'
 
         read (unit, nml=precession_config, iostat=ios)
         if (ios /= 0) then
@@ -91,6 +95,12 @@ contains
         allocate (Omega_hat(n_Omega_hat))
         Omega_hat = Omega_hat_temp
         deallocate (Omega_hat_temp)
+
+        if (trim(electric_drift) /= 'exact' .and. trim(electric_drift) /= 'dkes') then
+            print *, "Error in read_precession_namelist: electric_drift must be ", &
+                "'exact' or 'dkes'"
+            error stop
+        end if
 
         close (unit)
     end subroutine read_precession_namelist

@@ -17,6 +17,7 @@ module grid_mod
         real(dp), dimension(:), allocatable :: radial_drift_weighted
         real(dp), dimension(:), allocatable :: poloidal_drift
         real(dp), dimension(:), allocatable :: poloidal_drift_weighted
+        real(dp), dimension(:), allocatable :: B_squared_weighted
         type(SplineData1D) :: I_j_spline
         type(SplineData1D) :: bounce_time_weighted_spline
         type(SplineData1D) :: radial_drift_weighted_spline
@@ -103,6 +104,7 @@ contains
         if (allocated(grid%poloidal_drift_weighted)) then
             deallocate (grid%poloidal_drift_weighted)
         end if
+        if (allocated(grid%B_squared_weighted)) deallocate (grid%B_squared_weighted)
 
         allocate (grid%bounce_time_weighted(n))
         allocate (grid%normalized_bounce_time(n))
@@ -111,6 +113,7 @@ contains
         allocate (grid%radial_drift_weighted(n))
         allocate (grid%poloidal_drift(n))
         allocate (grid%poloidal_drift_weighted(n))
+        allocate (grid%B_squared_weighted(n))
 
         grid%bounce_time_weighted = ieee_value(1.0_dp, ieee_quiet_nan)
         grid%normalized_bounce_time = ieee_value(1.0_dp, ieee_quiet_nan)
@@ -119,6 +122,7 @@ contains
         grid%radial_drift_weighted = ieee_value(1.0_dp, ieee_quiet_nan)
         grid%poloidal_drift = ieee_value(1.0_dp, ieee_quiet_nan)
         grid%poloidal_drift_weighted = ieee_value(1.0_dp, ieee_quiet_nan)
+        grid%B_squared_weighted = ieee_value(1.0_dp, ieee_quiet_nan)
 
         if (any(ieee_is_nan(grid%eta))) then
             print *, "Error: NaN values found in eta grid."
@@ -134,6 +138,7 @@ contains
     subroutine compute_bounce_integrals(field, fieldline, s_tor, grid, orbit_history)
         use params, only: params_init, ntau, ntimstep
         use bounce, only: trace_orbit_till_bounce
+        use orbit, only: n_orbit
         use fieldline_integrands, only: calc_lambda_squared
         use constants, only: machine_eps
         use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
@@ -147,7 +152,7 @@ contains
 
         real(dp) :: theta_min, phi_min
 
-        integer, parameter :: n_dim = 8
+        integer, parameter :: n_dim = n_orbit
         real(dp), parameter :: cm2m = 1e-2_dp, gauss2tesla = 1e-4_dp
         real(dp), parameter :: lamor_radius = 1e-8_dp !m*Tesla
         real(dp) :: well_depth
@@ -193,6 +198,7 @@ contains
         ! vanishing velocity). TODO: use scale_floor of odeint_allroutines
         ! instead once the libneo pin includes it (libneo c92b336)
         z_template(8) = lamor_radius
+        z_template(9) = 0.0_dp
 
         do idx = 1, grid%n
             t_weight = 2.0_dp*grid%t(idx)
@@ -204,6 +210,7 @@ contains
                 grid%radial_drift_weighted(idx) = 0.0_dp
                 grid%poloidal_drift(idx) = ieee_value(1.0_dp, ieee_quiet_nan)
                 grid%poloidal_drift_weighted(idx) = 0.0_dp
+                grid%B_squared_weighted(idx) = 0.0_dp
                 cycle
             end if
 
@@ -227,6 +234,7 @@ contains
             z_start = z_end
             z_start(6:7) = 0.0_dp
             z_start(8) = lamor_radius
+            z_start(9) = 0.0_dp
             if (present(orbit_history)) then
                 call trace_orbit_till_bounce(z_start, z_end, orbit_history(:, :, idx))
             else
@@ -241,6 +249,8 @@ contains
             grid%radial_drift_weighted(idx) = t_weight*grid%normalized_radial_drift(idx)
             grid%poloidal_drift(idx) = (z_end(2) - z_start(2))/lamor_radius
             grid%poloidal_drift_weighted(idx) = t_weight*grid%poloidal_drift(idx)
+            ! same units as the bounce time; divide by <B^2> from magfie
+            grid%B_squared_weighted(idx) = t_weight*z_end(9)*cm2m
 
             print *, "idx:", idx, "out of", grid%n
         end do

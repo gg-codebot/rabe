@@ -140,6 +140,8 @@ No system NetCDF library is required.
   are computed. Only a clean build of the same commit reuses the file.
   The file is kept after the run as a cache. `n_eta` in
   `precession_config` sets the eta grid points of the bounce integrals (default 200).
+  `electric_drift` there selects the E x B drift weight: `'exact'` (1/B^2, default)
+  or `'dkes'` (1/<B^2> as in DKES/MONKES).
 
 ## Code Style
 
