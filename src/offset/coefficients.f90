@@ -103,6 +103,10 @@ contains
 
         call calc_surface_averages(flock, average)
 
+        if (ieee_is_nan(average%nabla_s)) then
+            print *, "error: the field provides no |grad s| (boozmn or chartmap input)."
+            error stop
+        end if
         if (abs(average%nabla_s*psi_tor_edge) < machine_eps) then
             print *, "error: nabla_s * psi_tor_edge is zero."
             print *, "nabla_s =", average%nabla_s
