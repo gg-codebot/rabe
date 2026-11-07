@@ -24,6 +24,8 @@ program electric_rabe
 
     use read_file, only: read_namelist
     use read_file, only: field_file, &
+                         field_type, &
+                         n_rho, n_theta, n_zeta, &
                          M_pol, &
                          N_tor, &
                          s_tor, &
@@ -94,7 +96,16 @@ program electric_rabe
     n_nu = size(nu_star)
     allocate (lambda_off(n_nu, n_Omega_hat))
 
-    call field%init_from_vmec(field_file, grid_refinement=6)
+    select case (trim(field_type))
+    case ('vmec_nc')
+        call field%init_from_vmec(field_file, grid_refinement=6)
+    case ('booz_xform')
+        call field%init_from_boozmn(field_file, n_rho, n_theta, n_zeta)
+    case ('chartmap')
+        call field%init_from_chartmap(field_file)
+    case default
+        error stop "electric_rabe: unknown field_type"
+    end select
     do this = 1, n_stor
         call field%fix_to_surface(s_tor(this))
         call field%get_iota(s_tor(this), iota)
