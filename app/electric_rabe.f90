@@ -1,5 +1,6 @@
 program electric_rabe
-    use constants, only: dp, pi
+    use constants, only: dp, pi, machine_eps
+    use, intrinsic :: ieee_arithmetic, only: ieee_is_nan
     use boozer_field, only: boozer_field_t
     use fieldline_mod, only: flock_of_fieldlines_t
     use make_fieldline, only: make_flock_of_fieldlines
@@ -82,6 +83,7 @@ program electric_rabe
     type(netcdf_t) :: nc_output
     character(len=*), parameter :: dim_name = "surface"
     character(len=1024) :: description
+    character(len=1) :: radial_label
 
     call read_namelist(input_file)
     call read_precession_namelist(input_file)
@@ -180,8 +182,17 @@ program electric_rabe
 
             end do
         end do
-        lambda_off = lambda_off*0.75_dp/covariant_factor*sign_sqrtg/average%nabla_s
- lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor*sign_sqrtg/average%nabla_s
+        lambda_off = lambda_off*0.75_dp/covariant_factor*sign_sqrtg
+        lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor*sign_sqrtg
+        ! per effective radius r if <|grad s|> is known, otherwise per s
+        if (ieee_is_nan(average%nabla_s) .or. abs(average%nabla_s) < machine_eps) then
+            radial_label = "s"
+        else
+            radial_label = "r"
+            lambda_off = lambda_off/average%nabla_s
+            lambda_off_modes = lambda_off_modes/average%nabla_s
+        end if
+        print *, "lambda_off given with respect to ", radial_label
 
         deallocate (fieldlines_precession)
         deallocate (is_complete)
@@ -217,6 +228,7 @@ program electric_rabe
                             "geometrical factor")
     call nc_output%add_attr("lambda_off", "unit", &
                             "[1]")
+    call nc_output%add_attr("lambda_off", "radial_label", radial_label)
 
     call nc_output%def_dim("label_mode", n_modes)
     call nc_output%add_real_1d("mode_numbers", "label_mode")
