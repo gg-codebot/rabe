@@ -188,8 +188,8 @@ program electric_rabe
 
             end do
         end do
-        lambda_off = lambda_off*0.75_dp/covariant_factor*sign_sqrtg
-        lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor*sign_sqrtg
+        lambda_off = lambda_off*0.75_dp/covariant_factor
+        lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor
         ! per effective radius r if <|grad s|> is known, otherwise per s
         if (ieee_is_nan(average%nabla_s) .or. abs(average%nabla_s) < machine_eps) then
             radial_label = "s"
