@@ -30,6 +30,7 @@ program main
     character(len=*), parameter :: input_file = "rabe.in"
     character(len=*), parameter :: output_file = "rabe.nc"
     character(len=*), parameter :: dat_file = "rabe.dat"
+    character(len=*), parameter :: fieldlines_file = "fieldlines.nc"
 
     type(boozer_field_t) :: field
 
@@ -53,6 +54,13 @@ program main
     real(dp) :: trapped_fraction
     real(dp), dimension(:), allocatable :: lambda_LC, remainder
 
+    ! per field line and surface, NaN beyond n_fieldlines of a surface
+    real(dp), dimension(:, :), allocatable :: xi_0, phi_max_left, phi_max_right
+    real(dp), dimension(:, :), allocatable :: B_max_left, B_max_right, delta_eta
+    real(dp), dimension(:), allocatable :: eta_b
+    integer, dimension(:), allocatable :: n_fieldlines
+    integer :: n_lines
+
     real(dp) :: nan_value
 
     type(netcdf_t) :: nc_output
@@ -73,6 +81,14 @@ program main
         allocate (lambda_LC(n_stor))
         allocate (remainder(n_stor))
     end if
+    allocate (xi_0(max_n_fieldlines, n_stor), source=nan_value)
+    allocate (phi_max_left(max_n_fieldlines, n_stor), source=nan_value)
+    allocate (phi_max_right(max_n_fieldlines, n_stor), source=nan_value)
+    allocate (B_max_left(max_n_fieldlines, n_stor), source=nan_value)
+    allocate (B_max_right(max_n_fieldlines, n_stor), source=nan_value)
+    allocate (delta_eta(max_n_fieldlines, n_stor), source=nan_value)
+    allocate (eta_b(n_stor), source=nan_value)
+    allocate (n_fieldlines(n_stor), source=0)
 
     select case (trim(field_type))
     case ('vmec_nc')
@@ -93,6 +109,16 @@ program main
         call make_flock_of_fieldlines(flock, max_n_fieldlines, iota, &
                                       field, M_pol, N_tor, nfp, &
                                       split_maxima(this))
+
+        n_lines = min(size(flock%fieldlines), max_n_fieldlines)
+        n_fieldlines(this) = n_lines
+        eta_b(this) = flock%eta_b
+        xi_0(1:n_lines, this) = flock%fieldlines(1:n_lines)%xi_0
+        phi_max_left(1:n_lines, this) = flock%fieldlines(1:n_lines)%phi_max(1)
+        phi_max_right(1:n_lines, this) = flock%fieldlines(1:n_lines)%phi_max(2)
+        B_max_left(1:n_lines, this) = flock%fieldlines(1:n_lines)%B_max(1)
+        B_max_right(1:n_lines, this) = flock%fieldlines(1:n_lines)%B_max(2)
+        delta_eta(1:n_lines, this) = flock%fieldlines(1:n_lines)%delta_eta
 
         dr_dAtheta = calc_gradient_scaling_factor_r_eff(flock, field%psi_tor_edge, &
                                                         nint(sign_sqrtg))
@@ -196,6 +222,8 @@ program main
     call nc_output%write_real("R", field%R)
     call nc_output%close()
 
+    call write_fieldlines_output(fieldlines_file)
+
     if (should_calc_shaing_callen) then
         call write_dat_output(dat_file, git_hash, field%R, n_stor, &
                               s_tor, Lambda_A, Lambda_B, &
@@ -215,6 +243,57 @@ program main
     if (allocated(remainder)) deallocate (remainder)
 
 contains
+
+    subroutine write_fieldlines_output(filename)
+        character(len=*), intent(in) :: filename
+        type(netcdf_t) :: nc
+        character(len=*), parameter :: line_dim = "fieldline"
+
+        call nc%create(filename)
+        call nc%add_global_attribute("title", "field lines of rabe per surface")
+        call nc%add_global_attribute("git_hash", git_hash)
+        call nc%def_dim(dim_name, n_stor)
+        call nc%def_dim(line_dim, max_n_fieldlines)
+        call nc%add_real_1d("s_tor", dim_name)
+        call nc%add_attr("s_tor", "long_name", "normalized toroidal flux label")
+        call nc%add_int_1d("n_fieldlines", dim_name)
+        call nc%add_attr("n_fieldlines", "long_name", &
+                         "number of field lines; entries beyond are NaN")
+        call nc%add_real_1d("eta_b", dim_name)
+        call nc%add_attr("eta_b", "long_name", &
+                         "trapped-passing boundary 1/max(B_max)")
+        call nc%add_attr("eta_b", "unit", "[1/T]")
+        call nc%add_real_2d("xi_0", line_dim, dim_name)
+        call nc%add_attr("xi_0", "long_name", "field line label")
+        call nc%add_attr("xi_0", "unit", "[rad]")
+        call nc%add_real_2d("phi_max_left", line_dim, dim_name)
+        call nc%add_real_2d("phi_max_right", line_dim, dim_name)
+        call nc%add_attr("phi_max_left", "long_name", &
+                         "Boozer phi of the left maximum bounding the well")
+        call nc%add_attr("phi_max_right", "long_name", &
+                         "Boozer phi of the right maximum bounding the well")
+        call nc%add_real_2d("B_max_left", line_dim, dim_name)
+        call nc%add_real_2d("B_max_right", line_dim, dim_name)
+        call nc%add_attr("B_max_left", "long_name", "B at the left maximum")
+        call nc%add_attr("B_max_right", "long_name", "B at the right maximum")
+        call nc%add_attr("B_max_left", "unit", "[T]")
+        call nc%add_attr("B_max_right", "unit", "[T]")
+        call nc%add_real_2d("delta_eta", line_dim, dim_name)
+        call nc%add_attr("delta_eta", "long_name", &
+                         "1/B_max_left - eta_b")
+        call nc%add_attr("delta_eta", "unit", "[1/T]")
+
+        call nc%write_real_1d("s_tor", s_tor)
+        call nc%write_int_1d("n_fieldlines", n_fieldlines)
+        call nc%write_real_1d("eta_b", eta_b)
+        call nc%write_real_2d("xi_0", xi_0)
+        call nc%write_real_2d("phi_max_left", phi_max_left)
+        call nc%write_real_2d("phi_max_right", phi_max_right)
+        call nc%write_real_2d("B_max_left", B_max_left)
+        call nc%write_real_2d("B_max_right", B_max_right)
+        call nc%write_real_2d("delta_eta", delta_eta)
+        call nc%close()
+    end subroutine write_fieldlines_output
 
     subroutine write_dat_output(filename, git_hash, R, n, s_tor, &
                                 Lambda_A, Lambda_B, nu_star_crit, &

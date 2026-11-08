@@ -238,6 +238,21 @@ value per flux surface. Both files contain the same variables:
 violation of omnigenity is too strong, local maxima contours are not merely
 deformed, but also get split, which this flag notes.
 
+The field lines behind these coefficients are written to `fieldlines.nc`, per surface
+and field line (entries beyond `n_fieldlines` of a surface are NaN):
+
+| Variable | Description |
+| --- | --- |
+| `n_fieldlines` | number of field lines on the surface |
+| `eta_b` | trapped-passing boundary $1/\max B_\mathrm{max}$ |
+| `xi_0` | field line label |
+| `phi_max_left`, `phi_max_right` | Boozer $\varphi$ of the maxima bounding the well |
+| `B_max_left`, `B_max_right` | $B$ at these maxima |
+| `delta_eta` | $1/B_\mathrm{max,left} - \eta_b$ |
+
+The spread of `B_max_left` over `xi_0` measures the violation of omnigenity at the
+maxima, which sets `nu_star_crit`.
+
 For fast runs suited for **optimization**, we recommend to set
 `should_calc_shaing_callen = .false.`. If it is enabled, the output
 is extended by
