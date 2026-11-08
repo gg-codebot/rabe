@@ -18,6 +18,7 @@ module read_file
     logical, public, protected :: should_calc_shaing_callen
     integer, public, protected :: n_eta
     logical, public, protected :: unsafe_mode
+    character(len=256), public, protected :: flocks_dir
 
     real(dp), public, protected :: s_tor_min
     real(dp), public, protected :: s_tor_max
@@ -36,7 +37,8 @@ module read_file
         max_n_fieldlines, &
         should_calc_shaing_callen, &
         n_eta, &
-        unsafe_mode
+        unsafe_mode, &
+        flocks_dir
 
 contains
 
@@ -70,6 +72,7 @@ contains
         ! Default values
         field_type = 'vmec_nc'
         unsafe_mode = .false.
+        flocks_dir = ''
         should_calc_shaing_callen = .false.
         n_eta = 100
         s_tor_min = nan_value

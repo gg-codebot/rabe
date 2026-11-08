@@ -9,6 +9,7 @@
     sign_sqrtg = -1.0d0,
     max_n_fieldlines = 200,
     should_calc_shaing_callen = .true.,
-    n_eta = 100
-    unsafe_mode = .false.
+    n_eta = 100,
+    unsafe_mode = .false.,
+    flocks_dir = ""
 /
