@@ -13,7 +13,8 @@ program main
                          max_n_fieldlines, &
                          should_calc_shaing_callen, &
                          n_eta, &
-                         unsafe_mode
+                         unsafe_mode, &
+                         flocks_dir
     use boozer_field, only: boozer_field_t
     use fieldline_mod, only: flock_of_fieldlines_t
     use make_fieldline, only: make_flock_of_fieldlines
@@ -31,7 +32,6 @@ program main
     character(len=*), parameter :: input_file = "rabe.in"
     character(len=*), parameter :: output_file = "rabe.nc"
     character(len=*), parameter :: dat_file = "rabe.dat"
-    character(len=*), parameter :: fieldlines_file = "fieldlines.nc"
 
     type(boozer_field_t) :: field
 
@@ -55,13 +55,6 @@ program main
     real(dp) :: trapped_fraction
     real(dp), dimension(:), allocatable :: lambda_LC, remainder
 
-    ! per field line and surface, NaN beyond n_fieldlines of a surface
-    real(dp), dimension(:, :), allocatable :: xi_0, phi_max_left, phi_max_right
-    real(dp), dimension(:, :), allocatable :: B_max_left, B_max_right, delta_eta
-    real(dp), dimension(:), allocatable :: eta_b
-    integer, dimension(:), allocatable :: n_fieldlines
-    integer :: n_lines
-
     real(dp) :: nan_value
 
     type(netcdf_t) :: nc_output
@@ -70,6 +63,7 @@ program main
 
     call read_namelist(input_file)
     call set_unsafe_mode(unsafe_mode)
+    if (len_trim(flocks_dir) > 0) call check_flocks_dir()
     nan_value = ieee_value(nan_value, ieee_quiet_nan)
 
     n_stor = size(s_tor)
@@ -82,14 +76,6 @@ program main
         allocate (lambda_LC(n_stor))
         allocate (remainder(n_stor))
     end if
-    allocate (xi_0(max_n_fieldlines, n_stor), source=nan_value)
-    allocate (phi_max_left(max_n_fieldlines, n_stor), source=nan_value)
-    allocate (phi_max_right(max_n_fieldlines, n_stor), source=nan_value)
-    allocate (B_max_left(max_n_fieldlines, n_stor), source=nan_value)
-    allocate (B_max_right(max_n_fieldlines, n_stor), source=nan_value)
-    allocate (delta_eta(max_n_fieldlines, n_stor), source=nan_value)
-    allocate (eta_b(n_stor), source=nan_value)
-    allocate (n_fieldlines(n_stor), source=0)
 
     select case (trim(field_type))
     case ('vmec_nc')
@@ -110,16 +96,7 @@ program main
         call make_flock_of_fieldlines(flock, max_n_fieldlines, iota, &
                                       field, M_pol, N_tor, nfp, &
                                       split_maxima(this))
-
-        n_lines = min(size(flock%fieldlines), max_n_fieldlines)
-        n_fieldlines(this) = n_lines
-        eta_b(this) = flock%eta_b
-        xi_0(1:n_lines, this) = flock%fieldlines(1:n_lines)%xi_0
-        phi_max_left(1:n_lines, this) = flock%fieldlines(1:n_lines)%phi_max(1)
-        phi_max_right(1:n_lines, this) = flock%fieldlines(1:n_lines)%phi_max(2)
-        B_max_left(1:n_lines, this) = flock%fieldlines(1:n_lines)%B_max(1)
-        B_max_right(1:n_lines, this) = flock%fieldlines(1:n_lines)%B_max(2)
-        delta_eta(1:n_lines, this) = flock%fieldlines(1:n_lines)%delta_eta
+        if (len_trim(flocks_dir) > 0) call write_flock(flock, this)
 
         if (field%has_nabla_s) then
             dr_dAtheta = calc_gradient_scaling_factor_r_eff(flock, &
@@ -230,8 +207,6 @@ program main
     call nc_output%write_real("R", field%R)
     call nc_output%close()
 
-    call write_fieldlines_output(fieldlines_file)
-
     if (should_calc_shaing_callen) then
         call write_dat_output(dat_file, git_hash, field%R, n_stor, &
                               s_tor, Lambda_A, Lambda_B, &
@@ -252,56 +227,88 @@ program main
 
 contains
 
-    subroutine write_fieldlines_output(filename)
-        character(len=*), intent(in) :: filename
+    !> Stop before any computation if flocks_dir cannot be written to.
+    subroutine check_flocks_dir()
+        integer :: unit, ios
+        character(len=:), allocatable :: probe
+
+        probe = trim(flocks_dir)//"/.rabe_write_test"
+        open (newunit=unit, file=probe, status="replace", action="write", iostat=ios)
+        if (ios /= 0) then
+            print *, "Error: flocks_dir '", trim(flocks_dir), &
+                "' does not exist or is not writable."
+            error stop
+        end if
+        close (unit, status="delete")
+    end subroutine check_flocks_dir
+
+    !> Field line diagnostic of surface k: flocks_dir/flock_<k>.nc
+    subroutine write_flock(flock, k)
+        type(flock_of_fieldlines_t), intent(in) :: flock
+        integer, intent(in) :: k
+
         type(netcdf_t) :: nc
-        character(len=*), parameter :: line_dim = "fieldline"
+        character(len=16) :: name
+        character(len=*), parameter :: line = "fieldline"
+        character(len=*), parameter :: scalars(*) = [character(len=6) :: &
+                                       "s_tor", "iota", "iota_p", "M_pol", &
+                                       "N_tor", "nfp", "eta_b", "I_ref"]
+        character(len=*), parameter :: lines(*) = [character(len=32) :: &
+                                       "xi_0", "theta_0", "phi_0", &
+                                       "phi_max_left", "phi_max_right", &
+                                       "phi_max_error_left", "phi_max_error_right", &
+                                       "B_max_left", "B_max_right", "delta_eta", &
+                                       "delta_aspect_ratio", "radial_drift", &
+                                       "integral_lambda_b_over_B_squared", &
+                                       "integral_one_over_B_squared", &
+                                       "integral_nabla_s_over_B_squared"]
+        integer :: i
 
-        call nc%create(filename)
-        call nc%add_global_attribute("title", "field lines of rabe per surface")
+        write (name, '(a,i4.4,a)') "flock_", k, ".nc"
+        call nc%create(trim(flocks_dir)//"/"//trim(name))
+        call nc%add_global_attribute("title", "field lines of rabe on one surface")
+        call nc%add_global_attribute("definition", "components of " &
+                                     //"flock_of_fieldlines_t and fieldline_t; " &
+                                     //"_left/_right are the maxima bounding the well")
         call nc%add_global_attribute("git_hash", git_hash)
-        call nc%def_dim(dim_name, n_stor)
-        call nc%def_dim(line_dim, max_n_fieldlines)
-        call nc%add_real_1d("s_tor", dim_name)
-        call nc%add_attr("s_tor", "long_name", "normalized toroidal flux label")
-        call nc%add_int_1d("n_fieldlines", dim_name)
-        call nc%add_attr("n_fieldlines", "long_name", &
-                         "number of field lines; entries beyond are NaN")
-        call nc%add_real_1d("eta_b", dim_name)
-        call nc%add_attr("eta_b", "long_name", &
-                         "trapped-passing boundary 1/max(B_max)")
-        call nc%add_attr("eta_b", "unit", "[1/T]")
-        call nc%add_real_2d("xi_0", line_dim, dim_name)
-        call nc%add_attr("xi_0", "long_name", "field line label")
-        call nc%add_attr("xi_0", "unit", "[rad]")
-        call nc%add_real_2d("phi_max_left", line_dim, dim_name)
-        call nc%add_real_2d("phi_max_right", line_dim, dim_name)
-        call nc%add_attr("phi_max_left", "long_name", &
-                         "Boozer phi of the left maximum bounding the well")
-        call nc%add_attr("phi_max_right", "long_name", &
-                         "Boozer phi of the right maximum bounding the well")
-        call nc%add_real_2d("B_max_left", line_dim, dim_name)
-        call nc%add_real_2d("B_max_right", line_dim, dim_name)
-        call nc%add_attr("B_max_left", "long_name", "B at the left maximum")
-        call nc%add_attr("B_max_right", "long_name", "B at the right maximum")
-        call nc%add_attr("B_max_left", "unit", "[T]")
-        call nc%add_attr("B_max_right", "unit", "[T]")
-        call nc%add_real_2d("delta_eta", line_dim, dim_name)
-        call nc%add_attr("delta_eta", "long_name", &
-                         "1/B_max_left - eta_b")
-        call nc%add_attr("delta_eta", "unit", "[1/T]")
+        call nc%def_dim(line, size(flock%fieldlines))
+        do i = 1, size(scalars)
+            call nc%add_real(trim(scalars(i)))
+        end do
+        do i = 1, size(lines)
+            call nc%add_real_1d(trim(lines(i)), line)
+        end do
 
-        call nc%write_real_1d("s_tor", s_tor)
-        call nc%write_int_1d("n_fieldlines", n_fieldlines)
-        call nc%write_real_1d("eta_b", eta_b)
-        call nc%write_real_2d("xi_0", xi_0)
-        call nc%write_real_2d("phi_max_left", phi_max_left)
-        call nc%write_real_2d("phi_max_right", phi_max_right)
-        call nc%write_real_2d("B_max_left", B_max_left)
-        call nc%write_real_2d("B_max_right", B_max_right)
-        call nc%write_real_2d("delta_eta", delta_eta)
+        call nc%write_real("s_tor", s_tor(k))
+        call nc%write_real("iota", flock%iota)
+        call nc%write_real("iota_p", flock%iota_p)
+        call nc%write_real("M_pol", flock%M_pol)
+        call nc%write_real("N_tor", flock%N_tor)
+        call nc%write_real("nfp", flock%nfp)
+        call nc%write_real("eta_b", flock%eta_b)
+        call nc%write_real("I_ref", flock%I_ref)
+        associate (f => flock%fieldlines)
+            call nc%write_real_1d("xi_0", f%xi_0)
+            call nc%write_real_1d("theta_0", f%theta_0)
+            call nc%write_real_1d("phi_0", f%phi_0)
+            call nc%write_real_1d("phi_max_left", f%phi_max(1))
+            call nc%write_real_1d("phi_max_right", f%phi_max(2))
+            call nc%write_real_1d("phi_max_error_left", f%phi_max_error(1))
+            call nc%write_real_1d("phi_max_error_right", f%phi_max_error(2))
+            call nc%write_real_1d("B_max_left", f%B_max(1))
+            call nc%write_real_1d("B_max_right", f%B_max(2))
+            call nc%write_real_1d("delta_eta", f%delta_eta)
+            call nc%write_real_1d("delta_aspect_ratio", f%delta_aspect_ratio)
+            call nc%write_real_1d("radial_drift", f%radial_drift)
+            call nc%write_real_1d("integral_lambda_b_over_B_squared", &
+                                  f%integral_lambda_b_over_B_squared)
+            call nc%write_real_1d("integral_one_over_B_squared", &
+                                  f%integral_one_over_B_squared)
+            call nc%write_real_1d("integral_nabla_s_over_B_squared", &
+                                  f%integral_nabla_s_over_B_squared)
+        end associate
         call nc%close()
-    end subroutine write_fieldlines_output
+    end subroutine write_flock
 
     subroutine write_dat_output(filename, git_hash, R, n, s_tor, &
                                 Lambda_A, Lambda_B, nu_star_crit, &

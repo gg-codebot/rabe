@@ -21,6 +21,7 @@ module read_file
     integer, public, protected :: n_rho
     integer, public, protected :: n_theta
     integer, public, protected :: n_zeta
+    character(len=256), public, protected :: flocks_dir
 
     real(dp), public, protected :: s_tor_min
     real(dp), public, protected :: s_tor_max
@@ -42,7 +43,8 @@ module read_file
         unsafe_mode, &
         n_rho, &
         n_theta, &
-        n_zeta
+        n_zeta, &
+        flocks_dir
 
 contains
 
@@ -76,6 +78,7 @@ contains
         ! Default values
         field_type = 'vmec_nc'
         unsafe_mode = .false.
+        flocks_dir = ''
         should_calc_shaing_callen = .false.
         n_eta = 100
         n_rho = 30
