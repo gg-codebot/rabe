@@ -190,9 +190,11 @@ nu_star_crit       = flock.calc_nu_star_crit(R)
     should_calc_shaing_callen = .true.,  ! compute $\lambda_{bB}^\mathrm{LC}$
     n_eta = 100,                         ! level resolution for trapped
                                          ! particle fraction computation
-    unsafe_mode = .false.                ! if .true., NaN-fill outputs for
+    unsafe_mode = .false.,               ! if .true., NaN-fill outputs for
                                          ! surfaces that fail a sanity check
                                          ! instead of aborting execution
+    flocks_dir = ""                      ! if not empty, writes field line
+                                         ! diagnostic to an existing directory
 /
 ```
 
@@ -221,6 +223,13 @@ immediately with an error. This is the recommended behaviour as those checks poi
 Setting `unsafe_mode = .true.` allows the run to continue, but outputs
 are set to `NaN` for any surface where a check failed.
 
+If `flocks_dir` is set, each surface's field lines are written to
+`flocks_dir/flock_<k>.nc` (`k` in the order of `s_tor`) as soon as they are computed:
+the components of `flock_of_fieldlines_t` as scalars and of `fieldline_t` along the
+dimension `fieldline`, with `_left`/`_right` for the two maxima bounding the well. The
+spread of `B_max_left` over `xi_0` shows the violation of omnigenity at the maxima,
+which sets `nu_star_crit`.
+
 Results are written to `rabe.nc` (NetCDF) and `rabe.dat` (plain text), with one
 value per flux surface. Both files contain the same variables:
 
@@ -237,21 +246,6 @@ value per flux surface. Both files contain the same variables:
 `split_maxima` warns the user to treat the results with caution. If the
 violation of omnigenity is too strong, local maxima contours are not merely
 deformed, but also get split, which this flag notes.
-
-The field lines behind these coefficients are written to `fieldlines.nc`, per surface
-and field line (entries beyond `n_fieldlines` of a surface are NaN):
-
-| Variable | Description |
-| --- | --- |
-| `n_fieldlines` | number of field lines on the surface |
-| `eta_b` | trapped-passing boundary $1/\max B_\mathrm{max}$ |
-| `xi_0` | field line label |
-| `phi_max_left`, `phi_max_right` | Boozer $\varphi$ of the maxima bounding the well |
-| `B_max_left`, `B_max_right` | $B$ at these maxima |
-| `delta_eta` | $1/B_\mathrm{max,left} - \eta_b$ |
-
-The spread of `B_max_left` over `xi_0` measures the violation of omnigenity at the
-maxima, which sets `nu_star_crit`.
 
 For fast runs suited for **optimization**, we recommend to set
 `should_calc_shaing_callen = .false.`. If it is enabled, the output
