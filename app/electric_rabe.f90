@@ -275,8 +275,8 @@ contains
             call allocate_modes(g_off_modes, max_mode)
         end if
 
-        prefactor_A = 2.0_dp*sqrt(covariant_factor*flock%eta_b* &
-                                  flock%I_ref/l_c)
+        ! flock%I_ref already contains the covariant factor (857dc93)
+        prefactor_A = 2.0_dp*sqrt(flock%eta_b*flock%I_ref/l_c)
         g_off_modes%sin_coeffs = prefactor_A*modes%delta_aspect_ratio%cos_coeffs* &
                                  S_A(flock%iota_p*modes%delta_aspect_ratio%mode_numbers)
         g_off_modes%sin_coeffs = g_off_modes%sin_coeffs + &
