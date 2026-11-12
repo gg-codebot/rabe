@@ -15,8 +15,8 @@ module saved_bounce_integrals
     public :: append_bounce_integrals
     public :: read_bounce_integrals
 
-    character(len=*), parameter :: line_format = '(I6, 6(1X, ES25.17E3))'
-    integer, parameter :: line_width = 6 + 6*26
+    character(len=*), parameter :: line_format = '(I6, 7(1X, ES25.17E3))'
+    integer, parameter :: line_width = 6 + 7*26
     integer, parameter :: n_header_lines = 12
     integer, parameter :: git_hash_line = 2
 
@@ -66,7 +66,8 @@ contains
                 grid%bounce_time_weighted(i_grid), &
                 grid%I_j(i_grid), &
                 grid%radial_drift_weighted(i_grid), &
-                grid%poloidal_drift_weighted(i_grid)
+                grid%poloidal_drift_weighted(i_grid), &
+                grid%B_squared_weighted(i_grid)
         end do
         close (file_unit)
     end subroutine append_bounce_integrals
@@ -83,7 +84,7 @@ contains
 
         character(len=1024), dimension(n_header_lines) :: expected
         character(len=1024) :: line
-        real(dp), dimension(6) :: values
+        real(dp), dimension(7) :: values
         integer :: file_unit, ios, i, id, line_id, n_lines
 
         expected = header_lines(header)
@@ -119,6 +120,7 @@ contains
             fieldlines(id)%grid%I_j(n_lines) = values(4)
             fieldlines(id)%grid%radial_drift_weighted(n_lines) = values(5)
             fieldlines(id)%grid%poloidal_drift_weighted(n_lines) = values(6)
+            fieldlines(id)%grid%B_squared_weighted(n_lines) = values(7)
         end do
         if (id > 0) is_complete(id) = n_lines == fieldlines(id)%grid%n
         close (file_unit)
@@ -147,7 +149,8 @@ contains
         write (lines(10), '(A, ES26.17E3)') "# eta_c =", header%eta_c
         write (lines(11), '(A, ES26.17E3)') "# eta_t =", header%eta_t
         lines(12) = "# columns: fieldline  t  eta  bounce_time_weighted  I_j" &
-                    //"  radial_drift_weighted  poloidal_drift_weighted"
+                    //"  radial_drift_weighted  poloidal_drift_weighted" &
+                    //"  B_squared_weighted"
     end function header_lines
 
 end module saved_bounce_integrals

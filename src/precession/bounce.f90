@@ -8,10 +8,10 @@ contains
 
     subroutine trace_orbit_till_bounce(z_start, z_end, orbit_buffer)
         use plag_coeff_sub, only: plag_coeff
-        use orbit, only: orbit_timestep_axis
+        use orbit, only: orbit_timestep_axis, n_orbit
         use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
 
-        integer, parameter :: ndim = 8
+        integer, parameter :: ndim = n_orbit
         real(dp), dimension(ndim), intent(in) :: z_start
         real(dp), dimension(ndim), intent(out) :: z_end
         real(dp), dimension(:, :), intent(inout), optional :: orbit_buffer

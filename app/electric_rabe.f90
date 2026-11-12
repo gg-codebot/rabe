@@ -1,5 +1,6 @@
 program electric_rabe
-    use constants, only: dp, pi
+    use constants, only: dp, pi, machine_eps
+    use, intrinsic :: ieee_arithmetic, only: ieee_is_nan
     use boozer_field, only: boozer_field_t
     use fieldline_mod, only: flock_of_fieldlines_t
     use make_fieldline, only: make_flock_of_fieldlines
@@ -8,6 +9,7 @@ program electric_rabe
     use precession, only: make_fieldlines_for_precession
     use precession, only: assemble_bounce_integrals
     use precession, only: compute_flux_modes
+    use precession, only: use_dkes_electric_drift
     use grid_mod, only: fieldline_for_precession_t
     use grid_mod, only: compute_bounce_integrals
     use saved_bounce_integrals, only: bounce_integrals_header_t
@@ -24,6 +26,8 @@ program electric_rabe
 
     use read_file, only: read_namelist
     use read_file, only: field_file, &
+                         field_type, &
+                         n_rho, n_theta, n_zeta, &
                          M_pol, &
                          N_tor, &
                          s_tor, &
@@ -32,7 +36,8 @@ program electric_rabe
     use read_precession, only: read_precession_namelist
     use read_precession, only: Omega_hat, &
                                nu_star, &
-                               n_eta
+                               n_eta, &
+                               electric_drift
 
     implicit none
 
@@ -80,6 +85,7 @@ program electric_rabe
     type(netcdf_t) :: nc_output
     character(len=*), parameter :: dim_name = "surface"
     character(len=1024) :: description
+    character(len=1) :: radial_label
 
     call read_namelist(input_file)
     call read_precession_namelist(input_file)
@@ -94,7 +100,16 @@ program electric_rabe
     n_nu = size(nu_star)
     allocate (lambda_off(n_nu, n_Omega_hat))
 
-    call field%init_from_vmec(field_file, grid_refinement=6)
+    select case (trim(field_type))
+    case ('vmec_nc')
+        call field%init_from_vmec(field_file, grid_refinement=6)
+    case ('booz_xform')
+        call field%init_from_boozmn(field_file, n_rho, n_theta, n_zeta)
+    case ('chartmap')
+        call field%init_from_chartmap(field_file)
+    case default
+        error stop "electric_rabe: unknown field_type"
+    end select
     do this = 1, n_stor
         call field%fix_to_surface(s_tor(this))
         call field%get_iota(s_tor(this), iota)
@@ -152,6 +167,10 @@ program electric_rabe
             end if
         end do
         call assemble_bounce_integrals(fieldlines_precession, bounce_integrals)
+        if (trim(electric_drift) == 'dkes') then
+            call use_dkes_electric_drift(bounce_integrals, s_tor(this))
+        end if
+        print *, "E x B drift: ", trim(electric_drift)
         n_modes = bounce_integrals%n_modes
 
         allocate (lambda_off_modes(n_modes, n_nu, n_Omega_hat))
@@ -169,8 +188,17 @@ program electric_rabe
 
             end do
         end do
-        lambda_off = lambda_off*0.75_dp/covariant_factor*sign_sqrtg/average%nabla_s
- lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor*sign_sqrtg/average%nabla_s
+        lambda_off = lambda_off*0.75_dp/covariant_factor
+        lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor
+        ! per effective radius r if <|grad s|> is known, otherwise per s
+        if (ieee_is_nan(average%nabla_s) .or. abs(average%nabla_s) < machine_eps) then
+            radial_label = "s"
+        else
+            radial_label = "r"
+            lambda_off = lambda_off/average%nabla_s
+            lambda_off_modes = lambda_off_modes/average%nabla_s
+        end if
+        print *, "lambda_off given with respect to ", radial_label
 
         deallocate (fieldlines_precession)
         deallocate (is_complete)
@@ -206,6 +234,8 @@ program electric_rabe
                             "geometrical factor")
     call nc_output%add_attr("lambda_off", "unit", &
                             "[1]")
+    call nc_output%add_attr("lambda_off", "radial_label", radial_label)
+    call nc_output%add_attr("lambda_off", "electric_drift", trim(electric_drift))
 
     call nc_output%def_dim("label_mode", n_modes)
     call nc_output%add_real_1d("mode_numbers", "label_mode")

@@ -96,7 +96,7 @@ No system NetCDF library is required.
    `init_from_vmec`, `booz_xform` -> `init_from_boozmn`, `chartmap` ->
    `init_from_chartmap`) and initialize from the `.nc` file named by `field_file`
 3. Per flux surface: fix field, compute field lines, deviation factors, surface averages, optionally Shaing-Callen trapped fraction; if `unsafe_mode = .true.` and a sanity check fails, NaN-fill that surface's outputs instead of halting
-4. Write results to `rabe.nc` (NetCDF)
+4. Write results to `rabe.nc` (NetCDF); with `flocks_dir` set, step 3 also writes each surface's field lines to `flocks_dir/flock_<k>.nc`
 
 ### Key derived types
 
@@ -129,7 +129,7 @@ No system NetCDF library is required.
 
 - **Input**: Namelist file `rabe.in` (namelist `rabe_config`)
 - **Field data**: VMEC `.nc` files
-- **Output**: `rabe.nc` (NetCDF)
+- **Output**: `rabe.nc` (NetCDF); optional `flocks_dir/flock_<k>.nc` field line diagnostic
 - **`electric_rabe`**: reads `rabe.in` (namelists `rabe_config` and
   `precession_config`, single surface only), writes `electric_rabe.nc` and the
   bounce integrals to `saved_bounce_integrals.dat`. That file is plain text: a
@@ -140,6 +140,8 @@ No system NetCDF library is required.
   are computed. Only a clean build of the same commit reuses the file.
   The file is kept after the run as a cache. `n_eta` in
   `precession_config` sets the eta grid points of the bounce integrals (default 200).
+  `electric_drift` there selects the E x B drift weight: `'exact'` (1/B^2, default)
+  or `'dkes'` (1/<B^2> as in DKES/MONKES).
 
 ## Code Style
 

@@ -20,7 +20,6 @@ contains
     !! Requires at least two field lines in flock.
     subroutine calc_surface_averages(flock, surface_average)
         use fieldline_mod, only: flock_of_fieldlines_t
-        use, intrinsic :: ieee_arithmetic, only: ieee_is_nan
         type(flock_of_fieldlines_t), intent(in) :: flock
         type(surface_average_t), intent(out) :: surface_average
 
@@ -61,10 +60,6 @@ contains
         end if
         if (surface_average%B_squared < machine_eps) then
             print *, "error: average B_squared <= 0."
-            error stop
-        end if
-        if (ieee_is_nan(surface_average%nabla_s)) then
-            print *, "error: average sqrt_g11 is NaN."
             error stop
         end if
     end subroutine calc_surface_averages

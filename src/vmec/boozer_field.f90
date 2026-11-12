@@ -27,6 +27,8 @@ module boozer_field
         real(dp) :: nfp
         real(dp) :: psi_tor_edge
         real(dp) :: R
+        logical :: has_nabla_s = .true.
+            !! false for boozmn and chartmap input, which carry no metric
     contains
         procedure :: init_from_vmec
         procedure :: init_from_boozmn
@@ -80,14 +82,17 @@ contains
     !> Load Boozer-coordinate splines from a booz_xform boozmn netCDF file.
     !!
     !! The boozmn file fixes its own grid and spline orders.
-    subroutine init_from_boozmn(self, boozmn_file)
+    !> n_zeta is per field period; omitted sizes keep the libneo defaults.
+    subroutine init_from_boozmn(self, boozmn_file, n_rho, n_theta, n_zeta)
         use boozmn_reader, only: load_boozer_from_boozmn
         class(boozer_field_t), intent(inout) :: self
         character(len=*), intent(in) :: boozmn_file
+        integer, intent(in), optional :: n_rho, n_theta, n_zeta
 
         call assert_no_active_field("init_from_boozmn")
-        call load_boozer_from_boozmn(boozmn_file)
+        call load_boozer_from_boozmn(boozmn_file, n_rho, n_theta, n_zeta)
         call finish_init(self)
+        self%has_nabla_s = .false.
 
     end subroutine init_from_boozmn
 
@@ -102,6 +107,7 @@ contains
         call assert_no_active_field("init_from_chartmap")
         call load_boozer_from_chartmap(chartmap_file)
         call finish_init(self)
+        self%has_nabla_s = .false.
 
     end subroutine init_from_chartmap
 
@@ -340,8 +346,10 @@ contains
                            hcovar, hctrvr, hcurl)
     end subroutine compute_B_mod
 
+    !> NaN if the field carries no metric (boozmn, chartmap input).
     subroutine compute_nabla_s(self, theta, phi, nabla_s)
         use boozer_sub, only: splint_boozer_coord
+        use, intrinsic :: ieee_arithmetic, only: ieee_value, ieee_quiet_nan
         class(boozer_field_t), intent(in) :: self
         real(dp), intent(in) :: theta, phi
         real(dp), intent(out) :: nabla_s
@@ -350,6 +358,10 @@ contains
 
         if (.not. self%fixed_to_surface) &
             error stop "compute_nabla_s: call fix_to_surface first"
+        if (.not. self%has_nabla_s) then
+            nabla_s = ieee_value(nabla_s, ieee_quiet_nan)
+            return
+        end if
 
         call splint_boozer_coord(self%fixed_stor, theta, phi, 0, &
                                  dummy(1), dummy(2), dummy(3), &

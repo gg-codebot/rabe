@@ -21,7 +21,7 @@ program test_saved_bounce_integrals
     real(dp), parameter :: test_value = 1.0_dp/3.0_dp ! not exact in decimal
     character(len=*), parameter :: field_file = "wout_test.nc"
     character(len=*), parameter :: git_hash = "abc1234"
-    integer, parameter :: line_length = 163 ! 162 characters + newline
+    integer, parameter :: line_length = 189 ! 188 characters + newline
 
     type(bounce_integrals_header_t) :: header
     type(integration_grid_t) :: grid
@@ -36,6 +36,7 @@ program test_saved_bounce_integrals
     grid%I_j = test_value
     grid%radial_drift_weighted = test_value
     grid%poloidal_drift_weighted = test_value
+    grid%B_squared_weighted = test_value
     fieldlines%grid = grid
 
     header = bounce_integrals_header_t(git_hash=git_hash, &

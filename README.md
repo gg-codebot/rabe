@@ -190,11 +190,18 @@ nu_star_crit       = flock.calc_nu_star_crit(R)
     should_calc_shaing_callen = .true.,  ! compute $\lambda_{bB}^\mathrm{LC}$
     n_eta = 100,                         ! level resolution for trapped
                                          ! particle fraction computation
-    unsafe_mode = .false.                ! if .true., NaN-fill outputs for
+    unsafe_mode = .false.,               ! if .true., NaN-fill outputs for
                                          ! surfaces that fail a sanity check
                                          ! instead of aborting execution
+    flocks_dir = ""                      ! if not empty, writes field line
+                                         ! diagnostic to an existing directory
 /
 ```
+
+`field_type` selects the input format of `field_file`: `vmec_nc` (default),
+`booz_xform` (a `boozmn` file) or `chartmap`. For `booz_xform`, `n_rho`,
+`n_theta` and `n_zeta` (per field period) set the spline grid, by default
+30, 48 and 96. Check that results do not change when each is refined.
 
 The type of omnigenity is set by the helicity
 
@@ -220,6 +227,13 @@ By default (`unsafe_mode = .false.`), any failed sanity check halts the run
 immediately with an error. This is the recommended behaviour as those checks point out not suited inputs e.g. violation of stellarator symmetry.
 Setting `unsafe_mode = .true.` allows the run to continue, but outputs
 are set to `NaN` for any surface where a check failed.
+
+If `flocks_dir` is set, each surface's field lines are written to
+`flocks_dir/flock_<k>.nc` (`k` in the order of `s_tor`) as soon as they are computed:
+the components of `flock_of_fieldlines_t` as scalars and of `fieldline_t` along the
+dimension `fieldline`, with `_left`/`_right` for the two maxima bounding the well. The
+spread of `B_max_left` over `xi_0` shows the violation of omnigenity at the maxima,
+which sets `nu_star_crit`.
 
 Results are written to `rabe.nc` (NetCDF) and `rabe.dat` (plain text), with one
 value per flux surface. Both files contain the same variables:
