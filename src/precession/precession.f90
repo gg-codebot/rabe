@@ -261,8 +261,7 @@ contains
         eta_c = bounce_integrals%eta(n)
         x_1 = bounce_integrals%eta(n - 1) - eta_c
         I_B = bounce_integrals%avg_I_j(n - 1)
-        tau_b = bounce_integrals%avg_bounce_time_weighted(n - 1) &
-                /(2.0_dp*bounce_integrals%t(n - 1))
+        tau_b = get_boundary_bounce_length(bounce_integrals)
         delta_min = min_points_in_layer**2*x_1
 
         l_c_max = 2.0_dp*eta_c*I_B &
@@ -274,6 +273,30 @@ contains
             error stop "Error: get_max_valid_l_c is not positive."
         end if
     end function get_max_valid_l_c
+
+    !> Bounce time times v [m] at the grid point next to the trapped-passing
+    !! boundary (t(n) = 0)
+    function get_boundary_bounce_length(bounce_integrals) result(tau_b)
+        type(bounce_integrals_t), intent(in) :: bounce_integrals
+        real(dp) :: tau_b
+
+        integer :: n
+
+        n = size(bounce_integrals%t)
+        tau_b = bounce_integrals%avg_bounce_time_weighted(n - 1) &
+                /(2.0_dp*bounce_integrals%t(n - 1))
+    end function get_boundary_bounce_length
+
+    !> Largest Omega_hat (precession frequency/v in the field line label) for
+    !! which the label drifts by less than the label scale 1/m_rms of g_off
+    !! during one bounce in the boundary layer
+    function get_maximum_valid_precession(boundary_bounce_length, m_rms) &
+        result(Omega_hat_max)
+        real(dp), intent(in) :: boundary_bounce_length, m_rms
+        real(dp) :: Omega_hat_max
+
+        Omega_hat_max = 1.0_dp/(boundary_bounce_length*m_rms)
+    end function get_maximum_valid_precession
 
     function get_smallest_maximum(fieldlines) result(smallest_maximum)
         class(fieldline_t), dimension(:), intent(in) :: fieldlines

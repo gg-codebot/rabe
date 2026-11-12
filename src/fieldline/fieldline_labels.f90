@@ -18,6 +18,7 @@ module fieldline_labels
     public :: modes_t, fieldline_modes_t
     public :: fourier_transform_over_label, allocate_modes
     public :: get_labels, calc_iota_p
+    public :: calc_rms_mode_number
 
 contains
 
@@ -55,6 +56,18 @@ contains
                      fieldline_modes%delta_eta%sin_coeffs)
 
     end subroutine fourier_transform_over_label
+
+    !> Root mean square mode number sqrt(sum m^2 P_m/sum P_m) with the mode
+    !! power P_m = c_m^2 + s_m^2, i.e. ||df/dxi_0||/||f|| over the label
+    function calc_rms_mode_number(modes) result(m_rms)
+        type(modes_t), intent(in) :: modes
+        real(dp) :: m_rms
+
+        real(dp), dimension(size(modes%mode_numbers)) :: power
+
+        power = modes%cos_coeffs**2 + modes%sin_coeffs**2
+        m_rms = sqrt(sum(modes%mode_numbers**2*power)/sum(power))
+    end function calc_rms_mode_number
 
     subroutine allocate_modes(modes, n_modes)
         integer, intent(in) :: n_modes

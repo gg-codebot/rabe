@@ -10,13 +10,15 @@ program electric_rabe
     use precession, only: assemble_bounce_integrals
     use precession, only: compute_flux_modes
     use precession, only: use_dkes_electric_drift
+    use precession, only: get_boundary_bounce_length
+    use precession, only: get_maximum_valid_precession
     use grid_mod, only: fieldline_for_precession_t
     use grid_mod, only: compute_bounce_integrals
     use saved_bounce_integrals, only: bounce_integrals_header_t
     use saved_bounce_integrals, only: write_bounce_integrals_header
     use saved_bounce_integrals, only: append_bounce_integrals, read_bounce_integrals
     use field_instance, only: initialize_field_instance
-    use fieldline_labels, only: modes_t
+    use fieldline_labels, only: modes_t, calc_rms_mode_number
 
     use surface_average_mod, only: surface_average_t, calc_surface_averages
     use coefficients, only: calc_nu_star_crit
@@ -87,6 +89,12 @@ program electric_rabe
     real(dp) :: l_c
     real(dp), dimension(:, :), allocatable :: lambda_off
     real(dp), dimension(:, :, :), allocatable :: lambda_off_modes
+    ! rms mode number of g_off over the field line label, the poloidal
+    ! precession limit per collisionality and the lowest of them
+    real(dp), dimension(:), allocatable :: g_off_m_rms
+    real(dp), dimension(:, :), allocatable :: g_off_mode_coeffs
+    real(dp), dimension(:), allocatable :: Omega_hat_limits
+    real(dp), dimension(:), allocatable :: Omega_hat_lowest_limit
 
     type(netcdf_t) :: nc_output
     character(len=*), parameter :: dim_name = "surface"
@@ -103,10 +111,12 @@ program electric_rabe
     allocate (nu_star_crit(n_stor))
     allocate (l_c_crit(n_stor))
     allocate (err_flag(n_stor))
+    allocate (Omega_hat_lowest_limit(n_stor))
     n_Omega_hat = size(Omega_hat)
     n_nu = max(size(nu_star), size(l_c_input))
     allocate (l_c_grid(n_nu), nu_star_grid(n_nu))
     allocate (lambda_off(n_nu, n_Omega_hat))
+    allocate (g_off_m_rms(n_nu), Omega_hat_limits(n_nu))
 
     select case (trim(field_type))
     case ('vmec_nc')
@@ -189,6 +199,24 @@ program electric_rabe
         n_modes = bounce_integrals%n_modes
 
         allocate (lambda_off_modes(n_modes, n_nu, n_Omega_hat))
+        allocate (g_off_mode_coeffs(n_modes, n_nu))
+
+        ! g_off without precession does not depend on Omega_hat; the limit in
+        ! the label xi_0 is converted to the poloidal convention of the input
+        ! (xi_0 drifts by Omega_hat nfp/(M iota - N), see compute_flux_modes)
+        do id_nu = 1, n_nu
+            call get_g_modes_from_fieldlines(flock, l_c_grid(id_nu), g_off_modes, &
+                                             covariant_factor)
+            g_off_mode_coeffs(:, id_nu) = g_off_modes%sin_coeffs
+            g_off_m_rms(id_nu) = calc_rms_mode_number(g_off_modes)
+            Omega_hat_limits(id_nu) = get_maximum_valid_precession( &
+                                      get_boundary_bounce_length(bounce_integrals), &
+                                      g_off_m_rms(id_nu)) &
+                                      *abs(bounce_integrals%M_pol*bounce_integrals%iota &
+                                           - bounce_integrals%N_tor)/bounce_integrals%nfp
+        end do
+        Omega_hat_lowest_limit(this) = minval(Omega_hat_limits)
+        print *, "lowest Omega_hat limit: ", Omega_hat_lowest_limit(this)
 
         do idx_Omega = 1, n_Omega_hat
             print *, "idx_Omega: ", idx_Omega, " / ", n_Omega_hat
@@ -248,6 +276,19 @@ program electric_rabe
     call nc_output%add_attr("l_c", "long_name", &
                             "collision length l_c = pi*R/(2*nu_star); independent of the choice of R")
     call nc_output%add_attr("l_c", "unit", "[m]")
+    call nc_output%add_real_1d("g_off_m_rms", "collisionality")
+    call nc_output%add_attr("g_off_m_rms", "long_name", &
+                            "rms mode number of g_off over the field line label")
+    call nc_output%add_attr("g_off_m_rms", "unit", "[1]")
+    call nc_output%add_real_1d("Omega_hat_limits", "collisionality")
+    call nc_output%add_attr("Omega_hat_limits", "long_name", &
+                            "upper limit of the poloidal Omega_hat: drift of the "// &
+                            "field line label during a bounce below 1/g_off_m_rms")
+    call nc_output%add_attr("Omega_hat_limits", "unit", "[1/m]")
+    call nc_output%add_real_1d("Omega_hat_lowest_limit", dim_name)
+    call nc_output%add_attr("Omega_hat_lowest_limit", "long_name", &
+                            "lowest Omega_hat_limits, valid for all collisionalities")
+    call nc_output%add_attr("Omega_hat_lowest_limit", "unit", "[1/m]")
     call nc_output%def_dim("precession_frequency", n_Omega_hat)
     call nc_output%add_real_1d("Omega_hat", "precession_frequency")
 
@@ -270,6 +311,11 @@ program electric_rabe
                             "per-mode contribution to lambda_off")
     call nc_output%add_attr("lambda_off_modes", "unit", &
                             "[1]")
+    call nc_output%add_real_2d("g_off_modes", "label_mode", "collisionality")
+    call nc_output%add_attr("g_off_modes", "long_name", &
+                            "sine coefficients of g_off over the field line label, "// &
+                            "without precession")
+    call nc_output%add_attr("g_off_modes", "unit", "internal normalization of g_off")
 
     call nc_output%add_real_1d("nu_star_crit", dim_name)
     call nc_output%add_attr("nu_star_crit", "long_name", &
@@ -297,6 +343,10 @@ program electric_rabe
     call nc_output%write_real_1d("Omega_hat", Omega_hat)
     call nc_output%write_real_1d("nu_star", nu_star_grid)
     call nc_output%write_real_1d("l_c", l_c_grid)
+    call nc_output%write_real_2d("g_off_modes", g_off_mode_coeffs)
+    call nc_output%write_real_1d("g_off_m_rms", g_off_m_rms)
+    call nc_output%write_real_1d("Omega_hat_limits", Omega_hat_limits)
+    call nc_output%write_real_1d("Omega_hat_lowest_limit", Omega_hat_lowest_limit)
     call nc_output%write_real_1d("nu_star_crit", nu_star_crit)
     call nc_output%write_real_1d("l_c_crit", l_c_crit)
     call nc_output%write_int_1d("err_flag", err_flag)
@@ -308,6 +358,10 @@ program electric_rabe
     if (allocated(nu_star_crit)) deallocate (nu_star_crit)
     if (allocated(l_c_crit)) deallocate (l_c_crit)
     if (allocated(l_c_grid)) deallocate (l_c_grid)
+    if (allocated(g_off_m_rms)) deallocate (g_off_m_rms)
+    if (allocated(g_off_mode_coeffs)) deallocate (g_off_mode_coeffs)
+    if (allocated(Omega_hat_limits)) deallocate (Omega_hat_limits)
+    if (allocated(Omega_hat_lowest_limit)) deallocate (Omega_hat_lowest_limit)
     if (allocated(nu_star_grid)) deallocate (nu_star_grid)
     if (allocated(err_flag)) deallocate (err_flag)
 
