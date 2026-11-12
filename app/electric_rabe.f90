@@ -92,6 +92,7 @@ program electric_rabe
     ! rms mode number of g_off over the field line label, the poloidal
     ! precession limit per collisionality and the lowest of them
     real(dp), dimension(:), allocatable :: g_off_m_rms
+    real(dp), dimension(:, :), allocatable :: g_off_mode_coeffs
     real(dp), dimension(:), allocatable :: Omega_hat_limits
     real(dp), dimension(:), allocatable :: Omega_hat_lowest_limit
 
@@ -198,6 +199,7 @@ program electric_rabe
         n_modes = bounce_integrals%n_modes
 
         allocate (lambda_off_modes(n_modes, n_nu, n_Omega_hat))
+        allocate (g_off_mode_coeffs(n_modes, n_nu))
 
         ! g_off without precession does not depend on Omega_hat; the limit in
         ! the label xi_0 is converted to the poloidal convention of the input
@@ -205,6 +207,7 @@ program electric_rabe
         do id_nu = 1, n_nu
             call get_g_modes_from_fieldlines(flock, l_c_grid(id_nu), g_off_modes, &
                                              covariant_factor)
+            g_off_mode_coeffs(:, id_nu) = g_off_modes%sin_coeffs
             g_off_m_rms(id_nu) = calc_rms_mode_number(g_off_modes)
             Omega_hat_limits(id_nu) = get_maximum_valid_precession( &
                                       get_boundary_bounce_length(bounce_integrals), &
@@ -308,6 +311,11 @@ program electric_rabe
                             "per-mode contribution to lambda_off")
     call nc_output%add_attr("lambda_off_modes", "unit", &
                             "[1]")
+    call nc_output%add_real_2d("g_off_modes", "label_mode", "collisionality")
+    call nc_output%add_attr("g_off_modes", "long_name", &
+                            "sine coefficients of g_off over the field line label, "// &
+                            "without precession")
+    call nc_output%add_attr("g_off_modes", "unit", "internal normalization of g_off")
 
     call nc_output%add_real_1d("nu_star_crit", dim_name)
     call nc_output%add_attr("nu_star_crit", "long_name", &
@@ -335,6 +343,7 @@ program electric_rabe
     call nc_output%write_real_1d("Omega_hat", Omega_hat)
     call nc_output%write_real_1d("nu_star", nu_star_grid)
     call nc_output%write_real_1d("l_c", l_c_grid)
+    call nc_output%write_real_2d("g_off_modes", g_off_mode_coeffs)
     call nc_output%write_real_1d("g_off_m_rms", g_off_m_rms)
     call nc_output%write_real_1d("Omega_hat_limits", Omega_hat_limits)
     call nc_output%write_real_1d("Omega_hat_lowest_limit", Omega_hat_lowest_limit)
@@ -350,6 +359,7 @@ program electric_rabe
     if (allocated(l_c_crit)) deallocate (l_c_crit)
     if (allocated(l_c_grid)) deallocate (l_c_grid)
     if (allocated(g_off_m_rms)) deallocate (g_off_m_rms)
+    if (allocated(g_off_mode_coeffs)) deallocate (g_off_mode_coeffs)
     if (allocated(Omega_hat_limits)) deallocate (Omega_hat_limits)
     if (allocated(Omega_hat_lowest_limit)) deallocate (Omega_hat_lowest_limit)
     if (allocated(nu_star_grid)) deallocate (nu_star_grid)
