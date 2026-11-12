@@ -6,7 +6,10 @@ module read_precession
     implicit none
 
     real(dp), dimension(:), allocatable, public, protected :: Omega_hat
+    ! collisionality grid: either nu_star or l_c = pi*R/(2*nu_star) [m] is given;
+    ! the other one is allocated with size 0
     real(dp), dimension(:), allocatable, public, protected :: nu_star
+    real(dp), dimension(:), allocatable, public, protected :: l_c
     integer, public, protected :: n_eta ! eta grid points of the bounce integrals
     ! E x B drift with 1/B^2 ('exact') or with 1/<B^2> as in DKES/MONKES ('dkes')
     character(len=8), public, protected :: electric_drift
@@ -14,6 +17,7 @@ module read_precession
     namelist /precession_config/ &
         Omega_hat, &
         nu_star, &
+        l_c, &
         n_eta, &
         electric_drift
 
@@ -30,7 +34,7 @@ contains
         integer :: n_Omega_hat
         real(dp), dimension(:), allocatable :: nu_star_temp
         integer, parameter :: n_nu_star_max = 1000
-        integer :: n_nu_star
+        integer :: n_nu_star, n_l_c
         real(dp) :: nan_value
 
         inquire (file=filename, exist=file_exists)
@@ -53,6 +57,9 @@ contains
         if (allocated(nu_star)) deallocate (nu_star)
         allocate (nu_star(n_nu_star_max))
         nu_star = nan_value
+        if (allocated(l_c)) deallocate (l_c)
+        allocate (l_c(n_nu_star_max))
+        l_c = nan_value
         n_eta = 200
         electric_drift = 'exact'
 
@@ -64,14 +71,24 @@ contains
         end if
 
         n_nu_star = count(.not. ieee_is_nan(nu_star))
-        if (n_nu_star == 0) then
+        n_l_c = count(.not. ieee_is_nan(l_c))
+        if (n_nu_star == 0 .and. n_l_c == 0) then
             print *, "Error in read_reprecession_namelist: ", &
-                "no nu_star values provided in namelist"
+                "neither nu_star nor l_c values provided in namelist"
             error stop
         end if
-        if (n_nu_star >= n_nu_star_max) then
+        if (n_nu_star > 0 .and. n_l_c > 0) then
             print *, "Error in read_reprecession_namelist: ", &
-                "too many nu_star values provided in namelist"
+                "give either nu_star or l_c, not both"
+            error stop
+        end if
+        if (max(n_nu_star, n_l_c) >= n_nu_star_max) then
+            print *, "Error in read_reprecession_namelist: ", &
+                "too many nu_star or l_c values provided in namelist"
+            error stop
+        end if
+        if (any(l_c(1:n_l_c) <= 0.0_dp)) then
+            print *, "Error in read_reprecession_namelist: l_c must be positive"
             error stop
         end if
         if (allocated(nu_star_temp)) deallocate (nu_star_temp)
@@ -80,6 +97,12 @@ contains
         deallocate (nu_star)
         allocate (nu_star(n_nu_star))
         nu_star = nu_star_temp
+        deallocate (nu_star_temp)
+        allocate (nu_star_temp(n_l_c))
+        nu_star_temp = pack(l_c,.not. ieee_is_nan(l_c))
+        deallocate (l_c)
+        allocate (l_c(n_l_c))
+        l_c = nu_star_temp
         deallocate (nu_star_temp)
 
         n_Omega_hat = count(.not. ieee_is_nan(Omega_hat))
