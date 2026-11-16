@@ -15,6 +15,9 @@
         pkgs.gnumake
         pkgs.pkg-config
         pkgs.git
+        # libneo's boozer target, which rabe links, needs BLAS and LAPACK.
+        pkgs.blas
+        pkgs.lapack
       ];
       # Python for the golden-record compare; only needed where the test runs.
       pyenv = pkgs: pkgs.python3.withPackages (ps: [ ps.xarray ps.numpy ps.netcdf4 ]);
