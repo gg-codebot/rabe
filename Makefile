@@ -3,13 +3,13 @@ CONFIG ?= Debug
 # Forward dependency overrides only when given on the make command line;
 # an ambient shell value is ignored.
 ifeq ($(origin FORTIO_REF),command line)
-  _FORTIO_REF_ARG := -DFORTIO_REF=$(FORTIO_REF)
+  _FORTIO_REF_ARG := -DITP_FORTIO_REF=$(FORTIO_REF)
 endif
 ifeq ($(origin LIBNEO_REF),command line)
-  _LIBNEO_REF_ARG := -DLIBNEO_REF=$(LIBNEO_REF)
+  _LIBNEO_REF_ARG := -DITP_LIBNEO_REF=$(LIBNEO_REF)
 endif
 ifeq ($(origin LIBNEO_PATH),command line)
-  _LIBNEO_PATH_ARG := -DLIBNEO_PATH=$(LIBNEO_PATH)
+  _LIBNEO_PATH_ARG := -DFETCHCONTENT_SOURCE_DIR_LIBNEO=$(LIBNEO_PATH)
 endif
 
 .PHONY: all build test test_failed install clean plot golden golden_run dist internal python

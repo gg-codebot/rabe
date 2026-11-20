@@ -1,15 +1,6 @@
-include(FetchContent)
-
-# -DLIBNEO_PATH=<dir>: build against a local libneo checkout instead of fetching.
-set(LIBNEO_PATH "" CACHE PATH "Local libneo source directory (leave empty to fetch)")
-
-# -DLIBNEO_REF=<branch|tag|sha>: fetch this libneo revision instead of the pin.
-set(LIBNEO_REF "7262c32bf0406594a8ef27e84654d249aef2cb86" CACHE STRING
-    "libneo git ref (branch, tag, or sha) to fetch")
-
-# rabe links only libneo's light targets (boozer, vmec_support, interpolate);
-# skip its numerics-heavy core so BLAS/LAPACK and fortnum are not required here.
-set(LIBNEO_BUILD_NUMERICS OFF CACHE BOOL "rabe needs only light libneo targets" FORCE)
+# Override with -DITP_LIBNEO_REF=<branch|tag|sha> or use a local checkout with
+# -DFETCHCONTENT_SOURCE_DIR_LIBNEO=<dir>; see README.
+set(RABE_LIBNEO_REF 7262c32bf0406594a8ef27e84654d249aef2cb86)
 
 # libneo is built in-tree from its own CMakeLists (either a local checkout
 # or fetched), so it inherits our -Wall/-Wextra/... Debug flags. We do not
@@ -20,20 +11,11 @@ function(rabe_add_libneo)
     string(APPEND CMAKE_Fortran_FLAGS_DEBUG   " -w")
     string(APPEND CMAKE_Fortran_FLAGS_RELEASE " -w")
 
-    if(LIBNEO_PATH AND EXISTS "${LIBNEO_PATH}")
-        message(STATUS "Using libneo in ${LIBNEO_PATH}")
-        add_subdirectory("${LIBNEO_PATH}"
-                         "${CMAKE_CURRENT_BINARY_DIR}/libneo"
-                         EXCLUDE_FROM_ALL)
-    else()
-        FetchContent_Declare(
-            libneo
-            GIT_REPOSITORY https://github.com/itpplasma/libneo.git
-            GIT_TAG        ${LIBNEO_REF}
-            EXCLUDE_FROM_ALL
-        )
-        FetchContent_MakeAvailable(libneo)
-    endif()
+    # rabe links only libneo's light targets (boozer, vmec_support,
+    # interpolate); skip its numerics-heavy core so BLAS/LAPACK and fortnum
+    # are not required here.
+    itp_add_dependency(libneo REF ${RABE_LIBNEO_REF} TARGET LIBNEO::boozer
+        OPTIONS "LIBNEO_BUILD_NUMERICS OFF")
 endfunction()
 
 rabe_add_libneo()

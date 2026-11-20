@@ -292,35 +292,36 @@ The tests as well as their description, can be found in `test`.
 
 ### Overriding fetched dependencies
 
-By default the build fetches pinned commits for libneo and Fortio. Explicit
-options can select a different ref for a candidate or compatibility build:
+By default the build fetches pinned commits for libneo and Fortio through
+[ItpDeps](https://github.com/itpplasma/cmake-deps). Explicit options can select
+a different ref for a candidate or compatibility build:
 
-- `-DFORTIO_REF=<branch|tag|sha>` selects a different Fortio ref:
+- `-DITP_FORTIO_REF=<branch|tag|sha>` selects a different Fortio ref:
 
   ```bash
   make FORTIO_REF=main
-  # or directly: cmake -S . -B build -DFORTIO_REF=main
+  # or directly: cmake -S . -B build -DITP_FORTIO_REF=main
   ```
 
-- `-DLIBNEO_REF=<branch|tag|sha>` selects a different git ref:
+- `-DITP_LIBNEO_REF=<branch|tag|sha>` selects a different git ref:
 
   ```bash
   make LIBNEO_REF=main
-  # or directly: cmake -S . -B build -DLIBNEO_REF=main
+  # or directly: cmake -S . -B build -DITP_LIBNEO_REF=main
   ```
 
-- `-DLIBNEO_PATH=<dir>` uses a local checkout instead of fetching:
+- `-DFETCHCONTENT_SOURCE_DIR_LIBNEO=<dir>` uses a local checkout instead of fetching:
 
   ```bash
   make LIBNEO_PATH=/path/to/libneo
-  # or directly: cmake -S . -B build -DLIBNEO_PATH=/path/to/libneo
+  # or directly: cmake -S . -B build -DFETCHCONTENT_SOURCE_DIR_LIBNEO=/path/to/libneo
   ```
 
 ## Third Party
 
 Fetched automatically during build:
 
-- [libneo](https://github.com/itpplasma/libneo) for field file I/O; pass `-DLIBNEO_PATH=<dir>` to use a local checkout instead (MIT)
+- [libneo](https://github.com/itpplasma/libneo) for field file I/O; pass `-DFETCHCONTENT_SOURCE_DIR_LIBNEO=<dir>` to use a local checkout instead (MIT)
 - [`quadpack`](https://github.com/jacobwilliams/quadpack) for numerical integration (BSD-3-Clause)
 - [`fortio`](https://github.com/lazy-fortran/fortio) for NetCDF input/output (MIT)
 - [`pyplot-fortran`](https://github.com/jacobwilliams/pyplot-fortran) optional for visualization; source and license under `plot_lib` (BSD-3-Clause)
