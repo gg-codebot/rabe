@@ -1,6 +1,6 @@
 # Override with -DITP_LIBNEO_REF=<branch|tag|sha> or use a local checkout with
 # -DFETCHCONTENT_SOURCE_DIR_LIBNEO=<dir>; see README.
-set(RABE_LIBNEO_REF 7262c32bf0406594a8ef27e84654d249aef2cb86)
+set(RABE_LIBNEO_REF ca49926c784b1f4dece35b8252b9cbdf602c45cb)
 
 # libneo is built in-tree from its own CMakeLists (either a local checkout
 # or fetched), so it inherits our -Wall/-Wextra/... Debug flags. We do not
