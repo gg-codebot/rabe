@@ -25,3 +25,4 @@ else()
 endif()
 
 add_subdirectory(electric)
+add_subdirectory(electric_l_c)

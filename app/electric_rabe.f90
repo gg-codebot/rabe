@@ -36,6 +36,7 @@ program electric_rabe
     use read_precession, only: read_precession_namelist
     use read_precession, only: Omega_hat, &
                                nu_star, &
+                               l_c_input => l_c, &
                                n_eta, &
                                electric_drift
 
@@ -61,6 +62,11 @@ program electric_rabe
 
     real(dp) :: covariant_factor
     real(dp), dimension(:), allocatable :: nu_star_crit
+    real(dp), dimension(:), allocatable :: l_c_crit
+    ! collisionality grid as collision length l_c [m] and as nu_star with the
+    ! code's R; the input gives one of them, the other follows from
+    ! l_c = pi*R/(2*nu_star)
+    real(dp), dimension(:), allocatable :: l_c_grid, nu_star_grid
     integer, dimension(:), allocatable :: err_flag
 
     type(fieldline_for_precession_t), dimension(:), allocatable :: fieldlines_precession
@@ -95,9 +101,11 @@ program electric_rabe
         error stop "Error: only one surface allowed!"
     end if
     allocate (nu_star_crit(n_stor))
+    allocate (l_c_crit(n_stor))
     allocate (err_flag(n_stor))
     n_Omega_hat = size(Omega_hat)
-    n_nu = size(nu_star)
+    n_nu = max(size(nu_star), size(l_c_input))
+    allocate (l_c_grid(n_nu), nu_star_grid(n_nu))
     allocate (lambda_off(n_nu, n_Omega_hat))
 
     select case (trim(field_type))
@@ -126,6 +134,13 @@ program electric_rabe
         covariant_factor = (B_phi_covariant + B_theta_covariant*iota)
         call calc_surface_averages(flock, average)
         R = field%R
+        if (size(l_c_input) > 0) then
+            l_c_grid = l_c_input
+            nu_star_grid = pi*R/(2.0_dp*l_c_grid)
+        else
+            nu_star_grid = nu_star
+            l_c_grid = pi*R/(2.0_dp*nu_star_grid)
+        end if
 
 ! --------------------------------------------------------------------------
         call make_fieldlines_for_precession(field, flock, fieldlines_precession, n_eta)
@@ -178,7 +193,7 @@ program electric_rabe
         do idx_Omega = 1, n_Omega_hat
             print *, "idx_Omega: ", idx_Omega, " / ", n_Omega_hat
             do id_nu = 1, n_nu
-                l_c = pi*R/(2.0_dp*nu_star(id_nu))
+                l_c = l_c_grid(id_nu)
                 call compute_flux_modes(bounce_integrals, l_c, Omega_hat(idx_Omega), &
                                         flux_mode)
                 call get_g_modes_from_fieldlines(flock, l_c, g_off_modes, &
@@ -206,6 +221,7 @@ program electric_rabe
 ! --------------------------------------------------------------------------
 
         nu_star_crit(this) = calc_nu_star_crit(flock, R)
+        l_c_crit(this) = pi*R/(2.0_dp*nu_star_crit(this))
 
         print *, "s_tor: ", s_tor(this)
 
@@ -226,6 +242,12 @@ program electric_rabe
 
     call nc_output%def_dim("collisionality", n_nu)
     call nc_output%add_real_1d("nu_star", "collisionality")
+    call nc_output%add_attr("nu_star", "long_name", &
+                            "collisionality pi*R/(2*l_c) with the major radius R of this file")
+    call nc_output%add_real_1d("l_c", "collisionality")
+    call nc_output%add_attr("l_c", "long_name", &
+                            "collision length l_c = pi*R/(2*nu_star); independent of the choice of R")
+    call nc_output%add_attr("l_c", "unit", "[m]")
     call nc_output%def_dim("precession_frequency", n_Omega_hat)
     call nc_output%add_real_1d("Omega_hat", "precession_frequency")
 
@@ -254,6 +276,10 @@ program electric_rabe
                           "lower collisionality limit for validity of asymptotic model")
     call nc_output%add_attr("nu_star_crit", "unit", &
                             "[1]")
+    call nc_output%add_real_1d("l_c_crit", dim_name)
+    call nc_output%add_attr("l_c_crit", "long_name", &
+                            "upper collision length limit for validity of asymptotic model")
+    call nc_output%add_attr("l_c_crit", "unit", "[m]")
     call nc_output%add_int_1d("err_flag", dim_name)
     call nc_output%add_attr("err_flag", "long_name", &
                             "1 if violation of omnigeneity is too strong, 0 otherwise")
@@ -269,8 +295,10 @@ program electric_rabe
     call nc_output%write_real_1d("mode_numbers", g_off_modes%mode_numbers)
     call nc_output%write_real_3d("lambda_off_modes", lambda_off_modes)
     call nc_output%write_real_1d("Omega_hat", Omega_hat)
-    call nc_output%write_real_1d("nu_star", nu_star)
+    call nc_output%write_real_1d("nu_star", nu_star_grid)
+    call nc_output%write_real_1d("l_c", l_c_grid)
     call nc_output%write_real_1d("nu_star_crit", nu_star_crit)
+    call nc_output%write_real_1d("l_c_crit", l_c_crit)
     call nc_output%write_int_1d("err_flag", err_flag)
     call nc_output%write_real_1d("s_tor", s_tor)
     call nc_output%write_real("R", field%R)
@@ -278,6 +306,9 @@ program electric_rabe
 
     if (allocated(lambda_off_modes)) deallocate (lambda_off_modes)
     if (allocated(nu_star_crit)) deallocate (nu_star_crit)
+    if (allocated(l_c_crit)) deallocate (l_c_crit)
+    if (allocated(l_c_grid)) deallocate (l_c_grid)
+    if (allocated(nu_star_grid)) deallocate (nu_star_grid)
     if (allocated(err_flag)) deallocate (err_flag)
 
 contains
