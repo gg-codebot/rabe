@@ -58,7 +58,7 @@ contains
     subroutine make_fieldlines_for_precession(field, flock, fieldlines, n_eta)
         class(field_3D_t), intent(in) :: field
         type(flock_of_fieldlines_t), intent(in) :: flock
-        type(fieldline_for_precession_t), dimension(:), allocatable, intent(out) :: fieldlines
+  type(fieldline_for_precession_t), dimension(:), allocatable, intent(out) :: fieldlines
         integer, intent(in), optional :: n_eta
 
         real(dp) :: eta_t, eta_c
@@ -101,11 +101,13 @@ contains
 
     subroutine assemble_bounce_integrals(fieldlines, bounce_integrals)
         use fourier, only: real_ft
+        use error_handling, only: failed_sanity_check
         type(fieldline_for_precession_t), dimension(:), intent(in) :: fieldlines
         type(bounce_integrals_t), intent(out) :: bounce_integrals
 
         real(dp), dimension(:, :), allocatable :: radial_drift_weighted
-        real(dp), dimension(:, :), allocatable :: radial_drift_cos
+        real(dp), dimension(:), allocatable :: radial_drift_cos, radial_drift_sin
+        logical :: any_has_cos_part
         integer :: n_fieldlines, n_grid, idx
 
         n_fieldlines = size(fieldlines)
@@ -155,14 +157,26 @@ contains
         bounce_integrals%electric_weight = bounce_integrals%avg_bounce_time_weighted
 
         bounce_integrals%n_modes = n_fieldlines/2 + 1
-        allocate (radial_drift_cos(bounce_integrals%n_modes, n_grid))
+        allocate (radial_drift_sin(bounce_integrals%n_modes))
+        allocate (radial_drift_cos(bounce_integrals%n_modes))
         allocate (bounce_integrals%radial_drift_sin(bounce_integrals%n_modes, n_grid))
+        any_has_cos_part = .false.
         do idx = 1, n_grid
             call real_ft(fieldlines%xi_0, &
                          radial_drift_weighted(:, idx), &
-                         radial_drift_cos(:, idx), &
-                         bounce_integrals%radial_drift_sin(:, idx))
+                         radial_drift_cos, &
+                         radial_drift_sin)
+            if (has_cos_modes(radial_drift_sin, radial_drift_cos)) then
+                print *, "error: non-vanishing cos part of radial drift:"
+                print *, "at eta = ", bounce_integrals%eta(idx)
+                print *, "sin part: ", sum(abs(radial_drift_sin))
+                print *, "cos part: ", sum(abs(radial_drift_cos))
+               print *, "ratio: ", sum(abs(radial_drift_cos))/sum(abs(radial_drift_sin))
+                any_has_cos_part = .true.
+            end if
+            bounce_integrals%radial_drift_sin(:, idx) = radial_drift_sin
         end do
+        if (any_has_cos_part) call failed_sanity_check()
 
     end subroutine assemble_bounce_integrals
 
@@ -386,5 +400,23 @@ contains
         end subroutine B_along_fieldline
 
     end subroutine find_magnetic_well_bottom
+
+    function has_cos_modes(sin_coeffs, cos_coeffs)
+        use fieldline_labels, only: modes_t
+        real(dp), dimension(:), intent(in) :: sin_coeffs, cos_coeffs
+        logical :: has_cos_modes
+
+        real(dp), parameter :: tol = 1e-3, numerical_zero = 1e-8
+        real(dp) :: sum_sin, sum_cos
+
+        sum_sin = sum(abs(sin_coeffs))
+        sum_cos = sum(abs(cos_coeffs))
+
+        if (sum_sin > numerical_zero) then
+            has_cos_modes = sum_cos/sum_sin > tol
+        else
+            has_cos_modes = sum_cos > numerical_zero
+        end if
+    end function has_cos_modes
 
 end module precession
