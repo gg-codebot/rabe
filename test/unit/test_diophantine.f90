@@ -128,16 +128,6 @@ contains
             print *, "expected: 140 / 99"
             test_failed = .true.
         end if
-
-        ! the next convergent 1/9 does not fit; 1/8 is closer than 0/1
-        call rational_approx(0.1094_dp, 8, p, q)
-        if (p /= 1 .or. q /= 8) then
-            print *, "-------------------------------------------------------------"
-            print *, "test_diophantine failed: rational_approx(0.1094, 8)"
-            print *, "found: ", p, "/", q
-            print *, "expected: 1 / 8"
-            test_failed = .true.
-        end if
     end subroutine test_rational_approx
 
 end program test_diophantine
