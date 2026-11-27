@@ -15,6 +15,7 @@ target_link_libraries(precession_lib PRIVATE utils_lib
                       field_lib
                       fieldline_lib
                       vmec_lib
+                      error_handling_lib
                       LIBNEO::interpolate
                       LIBNEO::odeint
                       LIBNEO::util
