@@ -142,6 +142,10 @@ No system NetCDF library is required.
   `precession_config` sets the eta grid points of the bounce integrals (default 200).
   `electric_drift` there selects the E x B drift weight: `'exact'` (1/B^2, default)
   or `'dkes'` (1/<B^2> as in DKES/MONKES).
+  `Omega_hat_limits` (per collisionality) and `Omega_hat_lowest_limit` in the
+  output give the largest poloidal `Omega_hat` for which the field line label
+  drifts by less than 1/`g_off_m_rms` (rms mode number of g_off over the label)
+  during one bounce at the trapped-passing boundary.
 
 ## Code Style
 

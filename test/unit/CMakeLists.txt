@@ -103,3 +103,8 @@ target_link_libraries(test_saved_bounce_integrals_mismatch.x rabe_lib)
 add_test(TestSavedBounceIntegralsMismatch test_saved_bounce_integrals_mismatch.x)
 set_tests_properties(TestSavedBounceIntegralsMismatch PROPERTIES LABELS "quick"
     PASS_REGULAR_EXPRESSION "does not match the current input")
+
+add_executable(test_rms_mode_number.x test_rms_mode_number.f90)
+target_link_libraries(test_rms_mode_number.x fieldline_lib utils_lib)
+add_test(TestRmsModeNumber test_rms_mode_number.x)
+set_tests_properties(TestRmsModeNumber PROPERTIES LABELS "quick")
