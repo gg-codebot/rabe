@@ -18,6 +18,7 @@ module read_file
     logical, public, protected :: should_calc_shaing_callen
     integer, public, protected :: n_eta
     logical, public, protected :: unsafe_mode
+    character(len=1), public, protected :: radial_label
 
     real(dp), public, protected :: s_tor_min
     real(dp), public, protected :: s_tor_max
@@ -36,7 +37,8 @@ module read_file
         max_n_fieldlines, &
         should_calc_shaing_callen, &
         n_eta, &
-        unsafe_mode
+        unsafe_mode, &
+        radial_label
 
 contains
 
@@ -72,6 +74,7 @@ contains
         unsafe_mode = .false.
         should_calc_shaing_callen = .false.
         n_eta = 100
+        radial_label = 'r'
         s_tor_min = nan_value
         s_tor_max = nan_value
         n_s_tor = 0
@@ -146,6 +149,10 @@ contains
              trim(field_type) /= 'booz_xform' .and. &
              trim(field_type) /= 'chartmap')) then
             print *, "field_type must be 'vmec_nc', 'booz_xform', or 'chartmap'"
+            is_valid = .false.
+        end if
+        if (radial_label /= 'r' .and. radial_label /= 's') then
+            print *, "radial_label must be 'r' or 's'"
             is_valid = .false.
         end if
         if (ieee_is_nan(M_pol)) then

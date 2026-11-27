@@ -12,7 +12,8 @@ program main
                          max_n_fieldlines, &
                          should_calc_shaing_callen, &
                          n_eta, &
-                         unsafe_mode
+                         unsafe_mode, &
+                         radial_label
     use boozer_field, only: boozer_field_t
     use fieldline_mod, only: flock_of_fieldlines_t
     use make_fieldline, only: make_flock_of_fieldlines
@@ -94,14 +95,12 @@ program main
                                       field, M_pol, N_tor, nfp, &
                                       split_maxima(this))
 
-        if (field%has_nabla_s) then
+        if (radial_label == 'r') then
             dr_dAtheta = calc_gradient_scaling_factor_r_eff(flock, &
                                                             field%psi_tor_edge, &
                                                             nint(sign_sqrtg))
         else
-            ! no metric (boozmn or chartmap): coefficients per s instead of r
             dr_dAtheta = sign_sqrtg/field%psi_tor_edge
-            print *, "no |grad s|: coefficients given with respect to s"
         end if
         R = field%R
         call calc_offset_coefficients(flock, R, dr_dAtheta, &

@@ -190,9 +190,12 @@ nu_star_crit       = flock.calc_nu_star_crit(R)
     should_calc_shaing_callen = .true.,  ! compute $\lambda_{bB}^\mathrm{LC}$
     n_eta = 100,                         ! level resolution for trapped
                                          ! particle fraction computation
-    unsafe_mode = .false.                ! if .true., NaN-fill outputs for
+    unsafe_mode = .false.,               ! if .true., NaN-fill outputs for
                                          ! surfaces that fail a sanity check
                                          ! instead of aborting execution
+    radial_label = 'r'                   ! coefficients per effective radius r
+                                         ! or per s ('s', needed for boozmn
+                                         ! and chartmap input)
 /
 ```
 

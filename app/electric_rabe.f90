@@ -29,7 +29,8 @@ program electric_rabe
                          N_tor, &
                          s_tor, &
                          sign_sqrtg, &
-                         max_n_fieldlines
+                         max_n_fieldlines, &
+                         radial_label
     use read_precession, only: read_precession_namelist
     use read_precession, only: Omega_hat, &
                                nu_star, &
@@ -81,7 +82,6 @@ program electric_rabe
     type(netcdf_t) :: nc_output
     character(len=*), parameter :: dim_name = "surface"
     character(len=1024) :: description
-    character(len=1) :: radial_label
 
     call read_namelist(input_file)
     call read_precession_namelist(input_file)
@@ -173,15 +173,12 @@ program electric_rabe
         end do
         lambda_off = lambda_off*0.75_dp/covariant_factor*sign_sqrtg
         lambda_off_modes = lambda_off_modes*0.75_dp/covariant_factor*sign_sqrtg
-        ! per effective radius r if <|grad s|> is known, otherwise per s
-        if (ieee_is_nan(average%nabla_s) .or. abs(average%nabla_s) < machine_eps) then
-            radial_label = "s"
-        else
-            radial_label = "r"
+        if (radial_label == 'r') then
+            if (ieee_is_nan(average%nabla_s) .or. abs(average%nabla_s) < machine_eps) &
+                error stop "radial_label = 'r' needs <|grad s|>, which is NaN or zero"
             lambda_off = lambda_off/average%nabla_s
             lambda_off_modes = lambda_off_modes/average%nabla_s
         end if
-        print *, "lambda_off given with respect to ", radial_label
 
         deallocate (fieldlines_precession)
         deallocate (is_complete)
