@@ -5,6 +5,12 @@ project(rabe)
 enable_language(Fortran)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${PROJECT_SOURCE_DIR}/cmake)
+include(FetchContent)
+FetchContent_Declare(cmake_deps
+    GIT_REPOSITORY https://github.com/itpplasma/cmake-deps.git
+    GIT_TAG 79301263fe967262016403207f86ea5de5ccf5fd) # v1.0.0
+FetchContent_MakeAvailable(cmake_deps)
+include(${cmake_deps_SOURCE_DIR}/ItpDeps.cmake)
 include(compiler)
 
 # required for fetching dependencies
