@@ -94,7 +94,7 @@
 
             <li class="list-inline-item" id="statements"><i class="fa fa-list-ol"></i>
               <a data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-html="true"
-                 title=" 6.0% of total for modules and submodules.">258 statements</a>
+                 title=" 6.6% of total for modules and submodules.">286 statements</a>
             </li>
 
             <li class="list-inline-item" id="source-file">
@@ -170,6 +170,7 @@
             <a class="list-group-item" href="../module/precession.html#proc-get_max_valid_l_c">get_max_valid_l_c</a>
             <a class="list-group-item" href="../module/precession.html#proc-get_smallest_maximum">get_smallest_maximum</a>
             <a class="list-group-item" href="../module/precession.html#proc-get_biggest_minimum">get_biggest_minimum</a>
+            <a class="list-group-item" href="../module/precession.html#proc-has_cos_modes">has_cos_modes</a>
         </div>
       </div>
     </div>
@@ -213,8 +214,8 @@
             <li class="list-group-item">
               <ul class="list-inline">
                   <li class="list-inline-item"><a href='fieldline_mod.html'>fieldline_mod</a></li>
-                  <li class="list-inline-item"><a href='grid_mod.html'>grid_mod</a></li>
                   <li class="list-inline-item"><a href='field_base.html'>field_base</a></li>
+                  <li class="list-inline-item"><a href='grid_mod.html'>grid_mod</a></li>
                   <li class="list-inline-item"><a href='http://fortranwiki.org/fortran/show/ieee_arithmetic'>ieee_arithmetic</a></li>
                   <li class="list-inline-item"><a href='constants.html'>constants</a></li>
               </ul>
@@ -621,7 +622,7 @@ parameter
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-m_pol~12"></span>
+              <span class="anchor" id="variable-m_pol~8"></span>
               real(kind=dp),
             </td>
               <td>public</td>
@@ -638,7 +639,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n_tor~12"></span>
+              <span class="anchor" id="variable-n_tor~6"></span>
               real(kind=dp),
             </td>
               <td>public</td>
@@ -655,7 +656,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-nfp~11"></span>
+              <span class="anchor" id="variable-nfp~10"></span>
               real(kind=dp),
             </td>
               <td>public</td>
@@ -672,7 +673,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-iota~12"></span>
+              <span class="anchor" id="variable-iota~8"></span>
               real(kind=dp),
             </td>
               <td>public</td>
@@ -689,7 +690,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-t~11"></span>
+              <span class="anchor" id="variable-t"></span>
               real(kind=dp),
             </td>
               <td>public,</td>
@@ -706,7 +707,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-eta~6"></span>
+              <span class="anchor" id="variable-eta"></span>
               real(kind=dp),
             </td>
               <td>public,</td>
@@ -791,7 +792,7 @@ parameter
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n_modes~3"></span>
+              <span class="anchor" id="variable-n_modes~4"></span>
               integer,
             </td>
               <td>public</td>
@@ -845,7 +846,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-bounce_integrals~4"></span>
+              <span class="anchor" id="variable-bounce_integrals~5"></span>
               type(<a href='../type/bounce_integrals_t.html'>bounce_integrals_t</a>),
             </td>
 <td>intent(in)</td>
@@ -860,7 +861,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-omega_hat~2"></span>
+              <span class="anchor" id="variable-omega_hat~3"></span>
               real(kind=dp),
             </td>
 <td>intent(in)</td>
@@ -905,7 +906,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-fieldlines~7"></span>
+              <span class="anchor" id="variable-fieldlines~5"></span>
               class(<a href='../type/fieldline_t.html'>fieldline_t</a>),
             </td>
 <td>intent(in),</td>
@@ -950,7 +951,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-fieldlines~9"></span>
+              <span class="anchor" id="variable-fieldlines~7"></span>
               class(<a href='../type/fieldline_for_precession_t.html'>fieldline_for_precession_t</a>),
             </td>
 <td>intent(in),</td>
@@ -969,6 +970,66 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <h4>
     Return Value
     <small>real(kind=dp)</small>
+    </h4>
+    
+
+    </div>
+  </div>
+
+              <div class="card">
+    <div class="card-header codesum"><span class="anchor" id="proc-has_cos_modes"></span> <h3>public  function <a href='../proc/has_cos_modes.html'>has_cos_modes</a>(sin_coeffs, cos_coeffs)  
+</h3></div>
+    <div class="card-body">
+          
+  
+
+  <h4>Arguments</h4>
+      <table class="table table-striped varlist">
+    <thead>
+      <tr>
+        <th scope="col">Type</th>
+<th scope="col">Intent</th><th scope="col">Optional</th>        <th scope="col">Attributes</th>
+        <th scope="col"></th>
+        <th scope="col">Name</th>
+        <th scope="col"></th>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-sin_coeffs~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>sin_coeffs</strong></td>
+            <td>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+              <span class="anchor" id="variable-cos_coeffs~2"></span>
+              real(kind=dp),
+            </td>
+<td>intent(in),</td>
+              <td></td>            <td>
+              dimension(:)
+            </td>
+            <td>::</td>
+            <td><strong>cos_coeffs</strong></td>
+            <td>
+
+            </td>
+        </tr>
+    </tbody>
+  </table>
+
+    <h4>
+    Return Value
+    <small>logical</small>
     </h4>
     
 
@@ -1000,7 +1061,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-field~11"></span>
+              <span class="anchor" id="variable-field~10"></span>
               class(<a href='../type/field_3d_t.html'>field_3D_t</a>),
             </td>
 <td>intent(in)</td>
@@ -1015,7 +1076,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-flock~9"></span>
+              <span class="anchor" id="variable-flock~11"></span>
               type(<a href='../type/flock_of_fieldlines_t.html'>flock_of_fieldlines_t</a>),
             </td>
 <td>intent(in)</td>
@@ -1030,7 +1091,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-s_tor~3"></span>
+              <span class="anchor" id="variable-s_tor"></span>
               real(kind=dp),
             </td>
 <td>intent(in)</td>
@@ -1045,7 +1106,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bounce_integrals"></span>
+              <span class="anchor" id="variable-bounce_integrals~2"></span>
               type(<a href='../type/bounce_integrals_t.html'>bounce_integrals_t</a>),
             </td>
 <td>intent(out)</td>
@@ -1060,7 +1121,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n_eta~2"></span>
+              <span class="anchor" id="variable-n_eta~6"></span>
               integer,
             </td>
 <td>intent(in),</td>
@@ -1115,7 +1176,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-field~12"></span>
+              <span class="anchor" id="variable-field~11"></span>
               class(<a href='../type/field_3d_t.html'>field_3D_t</a>),
             </td>
 <td>intent(in)</td>
@@ -1130,7 +1191,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-flock~10"></span>
+              <span class="anchor" id="variable-flock~12"></span>
               type(<a href='../type/flock_of_fieldlines_t.html'>flock_of_fieldlines_t</a>),
             </td>
 <td>intent(in)</td>
@@ -1145,7 +1206,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fieldlines~5"></span>
+              <span class="anchor" id="variable-fieldlines~3"></span>
               type(<a href='../type/fieldline_for_precession_t.html'>fieldline_for_precession_t</a>),
             </td>
 <td>intent(out),</td>
@@ -1160,7 +1221,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-n_eta~3"></span>
+              <span class="anchor" id="variable-n_eta~7"></span>
               integer,
             </td>
 <td>intent(in),</td>
@@ -1200,7 +1261,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-fieldlines~6"></span>
+              <span class="anchor" id="variable-fieldlines~4"></span>
               type(<a href='../type/fieldline_for_precession_t.html'>fieldline_for_precession_t</a>),
             </td>
 <td>intent(in),</td>
@@ -1215,7 +1276,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-bounce_integrals~2"></span>
+              <span class="anchor" id="variable-bounce_integrals~3"></span>
               type(<a href='../type/bounce_integrals_t.html'>bounce_integrals_t</a>),
             </td>
 <td>intent(out)</td>
@@ -1255,7 +1316,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-bounce_integrals~3"></span>
+              <span class="anchor" id="variable-bounce_integrals~4"></span>
               type(<a href='../type/bounce_integrals_t.html'>bounce_integrals_t</a>),
             </td>
 <td>intent(in)</td>
@@ -1270,7 +1331,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-l_c"></span>
+              <span class="anchor" id="variable-l_c~3"></span>
               real(kind=dp),
             </td>
 <td>intent(in)</td>
@@ -1285,7 +1346,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-omega_hat"></span>
+              <span class="anchor" id="variable-omega_hat~2"></span>
               real(kind=dp),
             </td>
 <td>intent(in)</td>
@@ -1340,7 +1401,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-field~13"></span>
+              <span class="anchor" id="variable-field~12"></span>
               class(<a href='../type/field_t.html'>field_t</a>),
             </td>
 <td>intent(in)</td>
@@ -1355,7 +1416,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fieldlines~8"></span>
+              <span class="anchor" id="variable-fieldlines~6"></span>
               class(<a href='../type/fieldline_for_precession_t.html'>fieldline_for_precession_t</a>),
             </td>
 <td>intent(inout),</td>
@@ -1395,7 +1456,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
     <tbody>
         <tr>
             <td>
-              <span class="anchor" id="variable-field~14"></span>
+              <span class="anchor" id="variable-field~13"></span>
               class(<a href='../type/field_t.html'>field_t</a>),
             </td>
 <td>intent(in)</td>
@@ -1410,7 +1471,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
         </tr>
         <tr>
             <td>
-              <span class="anchor" id="variable-fieldline~6"></span>
+              <span class="anchor" id="variable-fieldline~4"></span>
               class(<a href='../type/fieldline_t.html'>fieldline_t</a>),
             </td>
 <td>intent(in)</td>
@@ -1483,7 +1544,7 @@ The weak log dependence of tau_b on delta is neglected.</p>
             <p class="text-end">
               Documentation generated by
               <a href="https://github.com/Fortran-FOSS-Programmers/ford">FORD</a>
- on 2026-11-06T19:17:08.698166+0000             </p>
+ on 2026-11-27T16:26:00.148137+0000             </p>
           </div>
         </div>
         <br>
